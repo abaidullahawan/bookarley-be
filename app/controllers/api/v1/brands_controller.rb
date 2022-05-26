@@ -66,16 +66,15 @@ module Api
       end
 
       private
+        # Use callbacks to share common setup or constraints between actions.
+        def set_brand
+          @brand = Brand.find(params[:id])
+        end
 
-      # Use callbacks to share common setup or constraints between actions.
-      def set_brand
-        @brand = Brand.find(params[:id])
-      end
-
-      # Only allow a list of trusted parameters through.
-      def brand_params
-        params.permit(:name, :country, :description)
-      end
+        # Only allow a list of trusted parameters through.
+        def brand_params
+          params.permit(:name, :country, :description)
+        end
     end
   end
 end

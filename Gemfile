@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -24,6 +26,16 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
+
+# Rubocop uses the official ruby style guide and helps curate a clean and readable codebase.
+gem 'rubocop', '~> 1.13', require: false
+gem 'rubocop-rails', require: false
+gem 'rubocop-rails_config'
+gem 'rubocop_runner', '~> 2.1', require: false
+
+# Brakeman is a command-line tool that analyzes the source code of Ruby on Rails applications
+# to find potential security vulnerabilities.
+gem 'brakeman'
 
 # gem 'bcrypt', '~> 3.1.7'
 

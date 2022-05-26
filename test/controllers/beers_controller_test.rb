@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class BeersControllerTest < ActionDispatch::IntegrationTest
@@ -37,7 +39,8 @@ class BeersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update beer' do
     patch beer_url(@beer),
-          params: { beer: { brand: @beer.brand, country: @beer.country, quantity: @beer.quantity, style: @beer.style } }
+          params: { beer: { brand: @beer.brand, country: @beer.country, quantity: @beer.quantity,
+style: @beer.style } }
     assert_redirected_to beer_url(@beer)
   end
 
