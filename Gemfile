@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -25,6 +27,16 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 
+# Rubocop uses the official ruby style guide and helps curate a clean and readable codebase.
+gem 'rubocop', '~> 1.13', require: false
+gem 'rubocop-rails', require: false
+gem 'rubocop-rails_config'
+gem 'rubocop_runner', '~> 2.1', require: false
+
+# Brakeman is a command-line tool that analyzes the source code of Ruby on Rails applications
+# to find potential security vulnerabilities.
+gem 'brakeman'
+
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
@@ -45,6 +57,7 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'listen', '~> 3.3'
   gem 'rack-mini-profiler', '~> 2.0'
+  gem 'bullet'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end

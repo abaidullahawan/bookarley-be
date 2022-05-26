@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::BeersController < ApplicationController
   before_action :set_beer, only: %i[show edit update destroy]
 
@@ -61,14 +63,13 @@ class Api::V1::BeersController < ApplicationController
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_beer
+      @beer = Beer.find(params[:id])
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_beer
-    @beer = Beer.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def beer_params
-    params.permit(:brand, :style, :country, :quantity)
-  end
+    # Only allow a list of trusted parameters through.
+    def beer_params
+      params.permit(:brand, :style, :country, :quantity)
+    end
 end
