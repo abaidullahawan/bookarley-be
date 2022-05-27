@@ -16,12 +16,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from "../components/App";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import AppRouter from "../src/routes/AppRouter"
 
 
 document.addEventListener('DOMContentLoaded', () => {
  ReactDOM.render(
 	 <Router>
-		 <Route path="/" component={App}/>
+		 <Route path="/" component={AppRouter}/>
 	 </Router>,
    document.body.appendChild(document.createElement('div')),
  )
