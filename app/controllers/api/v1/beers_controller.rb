@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::BeersController < ApplicationController
+  before_action :authenticate_api_v1_user!
   before_action :set_beer, only: %i[show edit update destroy]
 
   # GET /beers

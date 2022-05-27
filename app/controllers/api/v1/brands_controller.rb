@@ -4,6 +4,7 @@ module Api
   module V1
     # Brand api controller
     class BrandsController < ApplicationController
+      before_action :authenticate_api_v1_user!
       before_action :set_brand, only: %i[show edit update destroy]
 
       # GET /brands
