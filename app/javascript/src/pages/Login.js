@@ -19,7 +19,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await user.login(email, password);
-      debugger;
       console.log(result);
       result.error == false ? history.push("/") : alert("Invalid user");
     } catch (error) {

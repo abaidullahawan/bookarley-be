@@ -2,7 +2,6 @@ import axios from "axios";
 
 class User {
   signUp = async (email, password, confirmPassword) => {
-    debugger;
     return axios({
       method: "post",
       url: `http://localhost:3000/api/v1/auth?email=${email}&password=${password}&password_confirmation=${confirmPassword}`,
@@ -13,16 +12,12 @@ class User {
       },
     })
       .then((result) => {
-        debugger;
-        console.log(result);
         return {
           error: false,
           data: result.data,
         };
       })
       .catch((error) => {
-        debugger;
-        console.log(error);
         return {
           error: true,
           data: JSON.stringify(error),
@@ -31,7 +26,6 @@ class User {
   };
 
   login = async (email, password) => {
-    debugger;
     return axios({
       method: "post",
       url: `http://localhost:3000/api/v1/auth/sign_in?email=${email}&password=${password}`,
@@ -42,16 +36,12 @@ class User {
       },
     })
       .then((result) => {
-        debugger;
-        console.log(result);
         return {
           error: false,
           data: result.data,
         };
       })
       .catch((error) => {
-        debugger;
-        console.log(error);
         return {
           error: true,
           data: JSON.stringify(error),

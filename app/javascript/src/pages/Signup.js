@@ -17,21 +17,18 @@ const SignUp = () => {
 
   const createUserAccount = async (e) => {
     e.preventDefault();
-    debugger;
     if (password != confirmPassword) {
       setError("password not match");
       return;
     }
     try {
       const result = await user.signUp(email, password, confirmPassword);
-      debugger;
       console.log(result);
       result.error == false
         ? history.push("/login")
         : alert("Error user not create");
     } catch (error) {}
   };
-  console.log(email, confirmPassword, password);
 
   return (
     <>
