@@ -1,17 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Row, Col, Form, Button, Image } from "react-bootstrap";
 import * as Icon from "react-feather";
-
 // Logo image file path
 import Logo from "../assets/img/logo.png";
-class Signup extends React.Component {
-  onSignupHandler = () => {
-    this.props.history.push("/");
-  };
+import { user } from "../API/User/index";
 
-  render() {
-    return (
+const SignUp = () => {
+  const [email, setEmail] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+
+  const [password, setPassword] = useState();
+  const [error, setError] = useState("");
+
+  let history = useHistory();
+
+  const createUserAccount = async (e) => {
+    e.preventDefault();
+    debugger;
+    if (password != confirmPassword) {
+      setError("password not match");
+      return;
+    }
+    try {
+      const result = await user.signUp(email, password, confirmPassword);
+      debugger;
+      console.log(result);
+      result.error == false
+        ? history.push("/login")
+        : alert("Error user not create");
+    } catch (error) {}
+  };
+  console.log(email, confirmPassword, password);
+
+  return (
+    <>
       <div className="auth-main-content auth-bg-image">
         <div className="d-table">
           <div className="d-tablecell">
@@ -47,24 +70,47 @@ class Signup extends React.Component {
                 <Col md={6}>
                   <div className="form-content">
                     <h1 className="heading">Sign Up</h1>
-                    <Form onSubmit={this.onSignupHandler}>
+                    <Form>
                       <Form.Group>
-                        <Form.Label>Your name</Form.Label>
-                        <Form.Control type="text" />
-                      </Form.Group>
-
-                      <Form.Group>
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" />
+                        <Form.Label>Email Address</Form.Label>
+                        <Form.Control
+                          type="email"
+                          onChange={(event) => {
+                            setEmail(event.target.value);
+                          }}
+                        />
                       </Form.Group>
 
                       <Form.Group>
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" />
+                        <Form.Control
+                          type="password"
+                          onChange={(event) => {
+                            setPassword(event.target.value);
+                          }}
+                        />
                       </Form.Group>
 
+                      <Form.Group>
+                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          onChange={(event) => {
+                            setConfirmPassword(event.target.value);
+                          }}
+                        />
+                      </Form.Group>
+                      {error ? (
+                        <span className="text-danger">{error}</span>
+                      ) : (
+                        ""
+                      )}
                       <div className="text-center">
-                        <Button variant="primary" type="submit">
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          onClick={createUserAccount}
+                        >
                           Sign Up
                         </Button>
                       </div>
@@ -76,8 +122,8 @@ class Signup extends React.Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </>
+  );
+};
 
-export default Signup;
+export default SignUp;

@@ -55,46 +55,50 @@ const AppRouter = () => (
     <Route path="/dashboard/" exact component={Dashboard} />
     <Route path="/dashboard-two/" exact component={DashboardTwo} />
     <Route path="/dashboard-three/" exact component={DashboardThree} />
-    <Route path="/signup/" component={Signup} />
-    <Route path="/login/" component={Login} />
-    <Route path="/forgot-password/" component={ForgotPassword} />
-    <Route path="/profile/" component={Profile} />
-    <Route path="/profile-settings/" component={ProfileSettings} />
-    <Route path="/gallery/" component={CustomGallery} />
-    <Route path="/ui-components/cards/" component={Cards} />
-    <Route path="/inbox/" component={Inbox} />
-    <Route path="/chat/" component={Chat} />
-    <Route path="/todos/" component={Todos} />
-    <Route path="/notes/" component={Notes} />
-    {/* <Route path="/calendar/" component={Calendar} /> */}
-    <Route path="/search/" component={Search} />
-    <Route path="/error-404/" component={FourHandedFourError} />
-    <Route path="/notifications/" component={Notification} />
-    <Route path="/pricing/" component={Pricing} />
-    <Route path="/users-card/" component={UsersCard} />
-    <Route path="/ui-components/alerts/" component={Alerts} />
-    <Route path="/invoice-template/" component={InvoiceTemplate} />
-    <Route path="/faq/" component={Faq} />
-    <Route path="/ui-components/badges/" component={Badges} />
-    <Route path="/ui-components/buttons/" component={Buttons} />
-    <Route path="/ui-components/dropdowns/" component={Dropdowns} />
-    <Route path="/ui-components/forms/" component={Forms} />
-    <Route path="/ui-components/list-groups/" component={ListGroups} />
-    <Route path="/ui-components/modals/" component={Modals} />
-    <Route path="/ui-components/progress-bars/" component={ProgressBars} />
-    <Route path="/ui-components/tables/" component={Tables} />
-    <Route path="/ui-components/tabs/" component={TemplateTabs} />
-    <Route path="/time-line/" component={TimeLine} />
-    <Route path="/line-charts/" component={LineCharts} />
-    <Route path="/area-charts/" component={AreaCharts} />
-    <Route path="/column-charts/" component={ColumnCharts} />
-    <Route path="/bar-charts/" component={BarCharts} />
-    <Route path="/mixed-charts/" component={MixedCharts} />
-    <Route path="/pie-donuts-Charts/" component={PieDonutsCharts} />
-    <Route path="/google-map/" component={CustomGoogleMap} />
-    <Route path="/vector-map/" component={CustomJVectorMap} />
-    <Route path="/feather-icons/" component={FeatherIcons} />
-    <Route path="/icofont-icons/" component={IcofontIcons} />
+    <Route path="/signup/" exact component={Signup} />
+    <Route path="/login/" exact component={Login} />
+    <Route exact path="/forgot-password/" component={ForgotPassword} />
+    <Route exact path="/profile/" component={Profile} />
+    <Route exact path="/profile-settings/" component={ProfileSettings} />
+    <Route exact path="/gallery/" component={CustomGallery} />
+    <Route exact path="/ui-components/cards/" component={Cards} />
+    <Route exact path="/inbox/" component={Inbox} />
+    <Route exact path="/chat/" component={Chat} />
+    <Route exact path="/todos/" component={Todos} />
+    <Route exact path="/notes/" component={Notes} />
+    {/* <Route exact path="/calendar/" component={Calendar} /> */}
+    <Route exact path="/search/" component={Search} />
+    <Route component={FourHandedFourError} />
+    <Route exact path="/notifications/" component={Notification} />
+    <Route exact path="/pricing/" component={Pricing} />
+    <Route exact path="/users-card/" component={UsersCard} />
+    <Route exact path="/ui-components/alerts/" component={Alerts} />
+    <Route exact path="/invoice-template/" component={InvoiceTemplate} />
+    <Route exact path="/faq/" component={Faq} />
+    <Route exact path="/ui-components/badges/" component={Badges} />
+    <Route exact path="/ui-components/buttons/" component={Buttons} />
+    <Route exact path="/ui-components/dropdowns/" component={Dropdowns} />
+    <Route exact path="/ui-components/forms/" component={Forms} />
+    <Route exact path="/ui-components/list-groups/" component={ListGroups} />
+    <Route exact path="/ui-components/modals/" component={Modals} />
+    <Route
+      exact
+      path="/ui-components/progress-bars/"
+      component={ProgressBars}
+    />
+    <Route exact path="/ui-components/tables/" component={Tables} />
+    <Route exact path="/ui-components/tabs/" component={TemplateTabs} />
+    <Route exact path="/time-line/" component={TimeLine} />
+    <Route exact path="/line-charts/" component={LineCharts} />
+    <Route exact path="/area-charts/" component={AreaCharts} />
+    <Route exact path="/column-charts/" component={ColumnCharts} />
+    <Route exact path="/bar-charts/" component={BarCharts} />
+    <Route exact path="/mixed-charts/" component={MixedCharts} />
+    <Route exact path="/pie-donuts-Charts/" component={PieDonutsCharts} />
+    <Route exact path="/google-map/" component={CustomGoogleMap} />
+    <Route exact path="/vector-map/" component={CustomJVectorMap} />
+    <Route exact path="/feather-icons/" component={FeatherIcons} />
+    <Route exact path="/icofont-icons/" component={IcofontIcons} />
   </Switch>
 );
 
