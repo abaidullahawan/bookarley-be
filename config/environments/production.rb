@@ -1,3 +1,5 @@
+require 'active_support/core_ext/integer/time'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -25,6 +27,8 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  config.active_storage.service = :local
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
@@ -44,7 +48,7 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  config.log_level = :info
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
@@ -67,6 +71,10 @@ Rails.application.configure do
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
+
+  config.active_support.disallowed_deprecation = :log
+
+  config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
