@@ -58,14 +58,13 @@ namespace :deploy do
   end
 end
 
-before "deploy:assets:precompile", "deploy:npm_and_yarn_install"
+before "deploy:assets:precompile", "deploy:npm_install"
 namespace :deploy do
-  desc "Run rake npm and yarn install"
+  desc "Run rake npm install"
   task :npm_install do
     on roles(:web) do
       within release_path do
         execute("cd #{release_path} && npm install")
-        execute("cd #{release_path} && yarn install")
       end
     end
   end
