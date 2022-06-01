@@ -5833,3 +5833,234 @@ Processing by Api::V1::BrandsController#index as */*
 Completed 200 OK in 20ms (Views: 2.2ms | ActiveRecord: 8.1ms | Allocations: 3548)
 
 
+Started GET "/signup/" for ::1 at 2022-06-01 12:23:14 +0500
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by BeersController#index as HTML
+  Parameters: {"path"=>"signup"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 1.5ms | Allocations: 317)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /home/asad/TractorOnline/tractoronline/public/packs
+[Webpacker] warning package.json: No license field
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+Why you should do it regularly:
+https://github.com/browserslist/browserslist#browsers-data-updating
+
+[Webpacker] Hash: 345c2582fef1514fe8da
+Version: webpack 4.46.0
+Time: 90782ms
+Built at: 06/01/2022 12:24:47 PM
+                                                                     Asset       Size       Chunks                         Chunk Names
+                                    js/application-2181adcc3224cdc0c9c1.js   4.72 KiB  application  [emitted] [immutable]  application
+                                js/application-2181adcc3224cdc0c9c1.js.map    4.5 KiB  application  [emitted] [dev]        application
+                                          js/index-8b75f42bde4f42eba321.js   20.2 MiB        index  [emitted] [immutable]  index
+                                      js/index-8b75f42bde4f42eba321.js.map   18.3 MiB        index  [emitted] [dev]        index
+                                                             manifest.json   4.54 KiB               [emitted]              
+     media/src/assets/fonts/LineIcons-23586afcbed34f110de70937470877cf.eot    144 KiB               [emitted]              
+    media/src/assets/fonts/LineIcons-6106e3e25c6e52ebdceb846dc3f717b0.woff    144 KiB               [emitted]              
+     media/src/assets/fonts/LineIcons-6e9fb56e13ffdf56a053e86545cafe3e.ttf    144 KiB               [emitted]              
+     media/src/assets/fonts/LineIcons-a0ed6adf3563db2c6d93a0f2d4d2929e.svg    560 KiB               [emitted]              
+   media/src/assets/img/auth-bg-image-3f45b45076d844723de8577574409a0c.jpg   39.8 KiB               [emitted]              
+  media/src/assets/img/card-thumb-one-d8e269d7070b805773db63dfc5d12867.jpg   5.76 KiB               [emitted]              
+media/src/assets/img/card-thumb-three-d8e269d7070b805773db63dfc5d12867.jpg   5.76 KiB               [emitted]              
+  media/src/assets/img/card-thumb-two-d8e269d7070b805773db63dfc5d12867.jpg   5.76 KiB               [emitted]              
+            media/src/assets/img/logo-7c03733c265c2f2c6a1c94c4ed12ab95.png   14.4 KiB               [emitted]              
+media/src/assets/img/overlay-thumb-bg-4c9ed612221fd60d8f100d2d0790c0df.jpg   10.3 KiB               [emitted]              
+      media/src/assets/img/post-image-e6ac007326ad5ea046793a50dea5e89c.png   1.87 KiB               [emitted]              
+   media/src/assets/img/post/post-img-83872a6c9ea12989a80a88b52eb3a335.jpg   7.69 KiB               [emitted]              
+  media/src/assets/img/post/post-img2-83872a6c9ea12989a80a88b52eb3a335.jpg   7.69 KiB               [emitted]              
+  media/src/assets/img/post/post-img3-83872a6c9ea12989a80a88b52eb3a335.jpg   7.69 KiB               [emitted]              
+media/src/assets/img/product/product1-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+media/src/assets/img/product/product2-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+media/src/assets/img/product/product3-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+media/src/assets/img/product/product4-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+media/src/assets/img/product/product5-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+         media/src/assets/img/profile-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+      media/src/assets/img/small-logo-c182f6d1fa77b8a8da1b43bbb59c5fae.png   1.41 KiB               [emitted]              
+      media/src/assets/img/user/big/1-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/big/2-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/big/3-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/big/4-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/big/5-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/big/6-79230043aa9729cefe50ef28c71d7d77.png  373 bytes               [emitted]              
+      media/src/assets/img/user/user1-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+      media/src/assets/img/user/user2-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+      media/src/assets/img/user/user3-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+      media/src/assets/img/user/user4-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+      media/src/assets/img/user/user5-28d77dcdece972ddf40bdf53f1bd7f7c.jpg  917 bytes               [emitted]              
+Entrypoint application = js/application-2181adcc3224cdc0c9c1.js js/application-2181adcc3224cdc0c9c1.js.map
+Entrypoint index = js/index-8b75f42bde4f42eba321.js js/index-8b75f42bde4f42eba321.js.map
+[./app/javascript/packs/application.js] 845 bytes {application} [built]
+[./app/javascript/packs/index.jsx] 1.21 KiB {index} [built]
+[./app/javascript/src/assets/css/responsive.css] 624 bytes {index} [built]
+[./app/javascript/src/assets/css/style.css] 619 bytes {index} [built]
+[./app/javascript/src/pages/Apex-Charts/AreaCharts.js] 11.6 KiB {index} [built]
+[./app/javascript/src/pages/Apex-Charts/BarCharts.js] 11.6 KiB {index} [built]
+[./app/javascript/src/pages/Apex-Charts/ColumnCharts.js] 11.7 KiB {index} [built]
+[./app/javascript/src/pages/Apex-Charts/LineCharts.js] 11.6 KiB {index} [built]
+[./app/javascript/src/pages/Apex-Charts/MixedCharts.js] 11.7 KiB {index} [built]
+[./app/javascript/src/pages/Apex-Charts/PieDonutsCharts.js] 11.7 KiB {index} [built]
+[./app/javascript/src/pages/Chat/Chat.js] 112 KiB {index} [built]
+[./app/javascript/src/pages/Dashboard/Dashboard.js] 17.6 KiB {index} [built]
+[./app/javascript/src/pages/Dashboard/DashboardThree.js] 19.9 KiB {index} [built]
+[./app/javascript/src/pages/Dashboard/DashboardTwo.js] 12.6 KiB {index} [built]
+[./app/javascript/src/routes/AppRouter.js] 12.8 KiB {index} [built]
+    + 3669 hidden modules
+
+  Rendered layout layouts/application.html.erb (Duration: 92814.3ms | Allocations: 77833)
+Completed 200 OK in 92830ms (Views: 92818.6ms | ActiveRecord: 0.0ms | Allocations: 82634)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:24:49 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 27.8ms | Allocations: 8438)
+Completed 200 OK in 31ms (Views: 28.6ms | ActiveRecord: 0.0ms | Allocations: 10065)
+
+
+Started GET "/" for ::1 at 2022-06-01 12:25:01 +0500
+Processing by BeersController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 29.1ms | Allocations: 8347)
+Completed 200 OK in 32ms (Views: 29.9ms | ActiveRecord: 0.0ms | Allocations: 9780)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:05 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 32.8ms | Allocations: 8346)
+Completed 200 OK in 35ms (Views: 33.5ms | ActiveRecord: 0.0ms | Allocations: 9778)
+
+
+Started GET "/signup/" for ::1 at 2022-06-01 12:25:09 +0500
+Processing by BeersController#index as HTML
+  Parameters: {"path"=>"signup"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.2ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 28.3ms | Allocations: 8347)
+Completed 200 OK in 31ms (Views: 29.2ms | ActiveRecord: 0.0ms | Allocations: 9773)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:10 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 62.9ms | Allocations: 10417)
+Completed 200 OK in 66ms (Views: 64.0ms | ActiveRecord: 0.0ms | Allocations: 11849)
+
+
+Started GET "/login/" for ::1 at 2022-06-01 12:25:16 +0500
+Processing by BeersController#index as HTML
+  Parameters: {"path"=>"login"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 39.8ms | Allocations: 8448)
+Completed 200 OK in 52ms (Views: 43.1ms | ActiveRecord: 0.0ms | Allocations: 9875)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:17 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 21.1ms | Allocations: 8450)
+Completed 200 OK in 23ms (Views: 22.0ms | ActiveRecord: 0.0ms | Allocations: 9878)
+
+
+Started POST "/api/v1/auth?email=dbhrm@devbox.co&password=[FILTERED]&password_confirmation=[FILTERED]" for ::1 at 2022-06-01 12:25:33 +0500
+Processing by DeviseTokenAuth::RegistrationsController#create as HTML
+  Parameters: {"email"=>"dbhrm@devbox.co", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}
+Can't verify CSRF token authenticity.
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (2.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER($1) AND "users"."provider" = $2 LIMIT $3[0m  [["email", "dbhrm@devbox.co"], ["provider", "email"], ["LIMIT", 1]]
+  [1m[36mUser Create (2.8ms)[0m  [1m[32mINSERT INTO "users" ("uid", "encrypted_password", "email", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["uid", "dbhrm@devbox.co"], ["encrypted_password", "$2a$12$eWnCt6vJumibYP4C55ltEexjMBJSso7mPQNKOwmAgT67lnmZKBVsm"], ["email", "dbhrm@devbox.co"], ["created_at", "2022-06-01 07:25:33.740445"], ["updated_at", "2022-06-01 07:25:33.740445"]]
+  [1m[36mTRANSACTION (3.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (1.0ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "\"{\\\"LSiyYyAlZYO7h0RsTLjfGQ\\\":{\\\"token\\\":\\\"$2a$10$NjEGU/gCdT5jm/t/cgIeKe39xDKK3cWB6eFO9Eeq6290ST0f94QjC\\\",\\\"expiry\\\":1654673133}}\""], ["updated_at", "2022-06-01 07:25:33.815426"], ["id", 1]]
+  [1m[36mTRANSACTION (8.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 429ms (Views: 0.3ms | ActiveRecord: 33.7ms | Allocations: 35538)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:33 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 23.2ms | Allocations: 8346)
+Completed 200 OK in 26ms (Views: 23.8ms | ActiveRecord: 0.0ms | Allocations: 9778)
+
+
+Started POST "/api/v1/auth/sign_in?email=dbhrm@devbox.co&password=[FILTERED]" for ::1 at 2022-06-01 12:25:35 +0500
+Processing by DeviseTokenAuth::SessionsController#create as HTML
+  Parameters: {"email"=>"dbhrm@devbox.co", "password"=>"[FILTERED]"}
+Can't verify CSRF token authenticity.
+  [1m[36mUser Load (3.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 AND "users"."provider" = $2 LIMIT $3[0m  [["email", "dbhrm@devbox.co"], ["provider", "email"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (1.1ms)[0m  [1m[33mUPDATE "users" SET "tokens" = $1, "updated_at" = $2 WHERE "users"."id" = $3[0m  [["tokens", "\"{\\\"LSiyYyAlZYO7h0RsTLjfGQ\\\":{\\\"token\\\":\\\"$2a$10$NjEGU/gCdT5jm/t/cgIeKe39xDKK3cWB6eFO9Eeq6290ST0f94QjC\\\",\\\"expiry\\\":1654673133},\\\"cvz4Fzox13uaUDp1E_t5yA\\\":{\\\"token\\\":\\\"$2a$10$iEwXPITXQAoulerT8.bOYOorbfp3Ng8RwYprQ9YaLAtFXCjP7FofC\\\",\\\"expiry\\\":1654673135}}\""], ["updated_at", "2022-06-01 07:25:35.995908"], ["id", 1]]
+  [1m[36mTRANSACTION (20.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update (1.3ms)[0m  [1m[33mUPDATE "users" SET "sign_in_count" = $1, "current_sign_in_at" = $2, "last_sign_in_at" = $3, "current_sign_in_ip" = $4, "last_sign_in_ip" = $5, "updated_at" = $6 WHERE "users"."id" = $7[0m  [["sign_in_count", 1], ["current_sign_in_at", "2022-06-01 07:25:36.019682"], ["last_sign_in_at", "2022-06-01 07:25:36.019682"], ["current_sign_in_ip", "::1/128"], ["last_sign_in_ip", "::1/128"], ["updated_at", "2022-06-01 07:25:36.020152"], ["id", 1]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 389ms (Views: 0.2ms | ActiveRecord: 30.7ms | Allocations: 5717)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:36 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.1ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 55.8ms | Allocations: 8448)
+Completed 200 OK in 58ms (Views: 56.7ms | ActiveRecord: 0.0ms | Allocations: 9877)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:25:36 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.2ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 71.1ms | Allocations: 8348)
+Completed 200 OK in 78ms (Views: 72.1ms | ActiveRecord: 0.0ms | Allocations: 9777)
+
+
+Started GET "/javascript/src/assets/img/favicon.ico" for ::1 at 2022-06-01 12:28:27 +0500
+Processing by BeersController#index as */*
+  Parameters: {"path"=>"javascript/src/assets/img/favicon"}
+  Rendering layout layouts/application.html.erb
+  Rendering beers/index.html.erb within layouts/application
+  Rendered beers/index.html.erb within layouts/application (Duration: 0.2ms | Allocations: 37)
+[Webpacker] Everything's up-to-date. Nothing to do
+  Rendered layout layouts/application.html.erb (Duration: 27.0ms | Allocations: 8451)
+Completed 200 OK in 30ms (Views: 28.1ms | ActiveRecord: 0.0ms | Allocations: 9880)
+
+

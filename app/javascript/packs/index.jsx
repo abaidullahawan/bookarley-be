@@ -14,7 +14,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from "../components/App";
+// import App from "../components/App";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import AppRouter from "../src/routes/AppRouter"
 
