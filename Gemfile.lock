@@ -96,6 +96,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     devise (4.8.1)
       bcrypt (~> 3.0)
@@ -221,6 +222,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.6.0)
     regexp_parser (2.4.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -270,6 +272,10 @@ GEM
       sprockets-rails
       tilt
     semantic_range (3.0.0)
+    sidekiq (6.4.2)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     spring (4.0.0)
     sprockets (4.0.3)
       concurrent-ruby (~> 1.0)
@@ -340,6 +346,7 @@ DEPENDENCIES
   rubocop-rails_config
   rubocop_runner (~> 2.1)
   sass-rails (>= 6)
+  sidekiq
   spring
   turbolinks (~> 5)
   tzinfo-data
