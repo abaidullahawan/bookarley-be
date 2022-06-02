@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import LandingPage from "../pages/LandingPage/LandingPage";
 import DashboardTwo from "../pages/Dashboard/DashboardTwo";
 import DashboardThree from "../pages/Dashboard/DashboardThree";
 import Inbox from "../pages/Inbox/Inbox";
@@ -46,12 +47,14 @@ import FourHandedFourError from "../pages/FourHandedFourError";
 
 import "../assets/css/style.css";
 import "../assets/css/responsive.css";
+import "../assets/css/dashboard.scss";
 import Beers from "../../components/Beers";
 import Brand from "../../components/Brand";
 
 const AppRouter = () => (
   <Switch>
-    <Route exact path="/" render={() => <Redirect to="/dashboard/" />} />
+    {/* <Route exact path="/" render={() => <Redirect to="/landing_page/" />} /> */}
+    <Route path="/" exact component={LandingPage} />
     <Route path="/dashboard/" exact component={Dashboard} />
     <Route path="/dashboard-two/" exact component={DashboardTwo} />
     <Route path="/dashboard-three/" exact component={DashboardThree} />
