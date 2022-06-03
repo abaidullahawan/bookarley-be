@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.0"
 
-set :application, "tractor-online"
+set :application, "tractoronline"
 set :repo_url, "git@github.com:abaidullahawan/tractoronline.git"
 
 # Deploy to the user's home directory
