@@ -10,4 +10,7 @@ class User < ActiveRecord::Base
          :omniauthable, :timeoutable, :omniauthable,
          :trackable
   include DeviseTokenAuth::Concerns::User
+
+  has_one :personal_detail, as: :bio
+
 end
