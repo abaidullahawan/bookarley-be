@@ -6,7 +6,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      mount_devise_token_auth_for 'User', at: 'auth'
+      mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+        # confirmations:      'devise_token_auth/confirmations',
+        # passwords:          'devise_token_auth/passwords',
+        # omniauth_callbacks: 'devise_token_auth/omniauth_callbacks',
+        # sessions:           'devise_token_auth/sessions',
+        # token_validations:  'devise_token_auth/token_validations',
+        registrations:      'api/v1/devise/registrations'
+      }
       resources :beers
       resources :brands
     end
