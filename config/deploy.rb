@@ -7,7 +7,7 @@ set :repo_url, "git@github.com:abaidullahawan/tractoronline.git"
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
-set :branch, 'production'
+set :branch, 'remove-react'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -45,27 +45,3 @@ set :keep_releases, 2
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
-
-before "git:wrapper", "deploy:remove_logs"
-namespace :deploy do
-  desc 'Removeing log files'
-  task :remove_logs do
-    on roles(:web) do
-      within release_path do
-        execute("cd $HOME/tractor-online/shared && rm -r log")
-      end
-    end
-  end
-end
-
-before "deploy:assets:precompile", "deploy:npm_install"
-namespace :deploy do
-  desc "Run rake npm install"
-  task :npm_install do
-    on roles(:web) do
-      within release_path do
-        execute("cd #{release_path} && npm install")
-      end
-    end
-  end
-end

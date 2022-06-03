@@ -18,7 +18,9 @@ Rails.application.configure do
     'Cache-Control' => 'public, max-age=3600'
   }
 
-  # config.active_storage.service = :test
+  config.assets.check_precompiled_asset = false
+
+  config.active_storage.service = :test
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true

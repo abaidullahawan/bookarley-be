@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-server '159.223.106.131', user: 'deploy', roles: %w[app db web]
+server '159.223.165.18:4000', user: 'deploy', roles: %w[app db web]
 
 # server-based syntax
 # ======================
