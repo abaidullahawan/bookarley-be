@@ -14,11 +14,11 @@ Rails.application.routes.draw do
         # token_validations:  'devise_token_auth/token_validations',
         registrations:      'api/v1/devise/registrations'
       }
-      resources :beers
+      resources :app_users
       resources :brands
     end
   end
 
-  get '*path', to: 'beers#index', via: :all
+  get '*path', to: 'app_users#index', via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
