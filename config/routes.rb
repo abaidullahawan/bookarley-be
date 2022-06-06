@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  root 'beers#index'
   mount Sidekiq::Web => '/sidekiq'
 
   namespace :api do
@@ -14,11 +13,10 @@ Rails.application.routes.draw do
         # token_validations:  'devise_token_auth/token_validations',
         registrations:      'api/v1/devise/registrations'
       }
-      resources :app_users
+      resources :app_users,  only: %i[show]
       resources :brands
     end
   end
 
-  get '*path', to: 'app_users#index', via: :all
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
