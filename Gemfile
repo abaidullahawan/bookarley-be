@@ -42,6 +42,9 @@ gem 'rubocop_runner', '~> 2.1', require: false
 # to find potential security vulnerabilities.
 gem 'brakeman'
 
+gem 'rswag-api'
+gem 'rswag-ui'
+
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
@@ -53,6 +56,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails'
+  gem 'rswag-specs'
 end
 
 group :development do
