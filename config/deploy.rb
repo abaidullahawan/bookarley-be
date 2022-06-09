@@ -7,7 +7,7 @@ set :repo_url, "git@github.com:abaidullahawan/tractoronline.git"
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
-set :branch, 'remove-react'
+set :branch, 'production'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -45,3 +45,27 @@ set :keep_releases, 2
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+before 'deploy:migrate', 'git:pull_front_end'
+
+before 'git:wrapper', 'remove:production_log'
+
+namespace :remove do
+  desc "remove production log file"
+  task :production_log do
+    on roles(:web) do
+      execute("cd ~/tractoronline/current/log && rm -f production.log")
+    #   execute("cd #{release_path} && cp -a ~/tractoronline-fe/build/. public/")
+    end
+  end
+end
+
+namespace :git do
+  desc "git pull front end tractor online"
+  task :pull_front_end do
+    on roles(:web) do
+      execute("cd ~/tractoronline-fe && git pull origin main")
+    #   execute("cd #{release_path} && cp -a ~/tractoronline-fe/build/. public/")
+    end
+  end
+end
