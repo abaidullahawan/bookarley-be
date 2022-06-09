@@ -13,10 +13,11 @@ Rails.application.routes.draw do
         # omniauth_callbacks: 'devise_token_auth/omniauth_callbacks',
         # sessions:           'devise_token_auth/sessions',
         # token_validations:  'devise_token_auth/token_validations',
-        registrations:      'api/v1/devise/registrations'
+      # registrations:      'api/v1/devise/registrations'
       }
       resources :app_users,  only: %i[show]
       resources :brands
+      resources :countries
     end
   end
 

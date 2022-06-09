@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 describe 'User API' do
@@ -29,7 +31,8 @@ describe 'User API' do
   path '/api/v1/auth/sign_in' do
     post 'Sign in' do
       tags 'user'
-      description 'Sign-in a User from provided data. In response you will get access to the entire application.'
+      description 'Sign-in a User from provided data. In response you will get
+                    access to the entire application.'
       operationId 'LoggedInUser'
       consumes 'application/json'
       produces 'application/json'

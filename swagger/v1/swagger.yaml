@@ -52,6 +52,182 @@ paths:
                   type: string
                 password:
                   type: string
+
+  #  Country Module
+  "/api/v1/countries":
+    get:
+      summary: Show All countries
+      tags:
+      - Countries
+      description: Info Related to All Countries
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Countries
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Country
+      tags:
+      - Countries
+      description: "Creates a New Country"
+      operationId: postCountryCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Country Created
+          content: {}
+        '404':
+          description: Country not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                country:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    comments:
+                      type: text
+
+  "/api/v1/countries/{id}":
+    get:
+      summary: Show country
+      tags:
+      - Countries
+      description: Show a country by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a country
+      tags:
+      - Countries
+      description: Update a country by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                country:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    comments:
+                      type: text
+    delete:
+      summary: Delete country
+      tags:
+      - Countries
+      description: Delete a country by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/countries/{id}":
 servers:
 - url: http://{defaultHost}
   variables:

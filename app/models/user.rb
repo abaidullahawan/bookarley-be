@@ -14,5 +14,4 @@ class User < ActiveRecord::Base
   has_one :personal_detail, as: :bio
 
   accepts_nested_attributes_for :personal_detail
-
 end

@@ -7,18 +7,17 @@ class ApplicationController < ActionController::Base
   before_action :sign_in_params, if: :devise_controller?
 
   protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(
-      :account_update, keys: [
-      :name, :nickname, personal_detail_attributes: [
-        :id, :first_name, :last_name, :gender, :dob, :country, :city
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(
+        :account_update, keys: [
+        :name, :nickname, personal_detail_attributes: [
+          :id, :first_name, :last_name, :gender, :dob, :country, :city
+          ]
         ]
-      ]
-    )
-  end
+      )
+    end
 
-  def sign_in_params
-    params.permit(user: [:email, :password])
-  end
+    def sign_in_params
+      params.permit(user: [:email, :password])
+    end
 end
