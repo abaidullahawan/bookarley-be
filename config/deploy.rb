@@ -54,7 +54,7 @@ namespace :remove do
   desc "remove production log file"
   task :production_log do
     on roles(:web) do
-      execute("cd ~/tractoronline/current/log && rm -f production.log")
+      # execute("cd ~/tractoronline/current/log && rm -f production.log")
     #   execute("cd #{release_path} && cp -a ~/tractoronline-fe/build/. public/")
     end
   end
@@ -64,7 +64,7 @@ namespace :git do
   desc "git pull front end tractor online"
   task :pull_front_end do
     on roles(:web) do
-      execute("cd ~/tractoronline-fe && git pull origin main")
+      # execute("cd ~/tractoronline-fe && git pull origin main")
     #   execute("cd #{release_path} && cp -a ~/tractoronline-fe/build/. public/")
     end
   end
