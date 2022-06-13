@@ -444,4 +444,4 @@ servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
-      default: localhost:4000
+      default: 104.248.119.140
