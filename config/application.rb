@@ -25,7 +25,7 @@ module TractorOnline
     # -- all .rb files in that directory are automatically loaded.
     config.middleware.use Rack::Cors do
       allow do
-        origins '*' 
+        origins '*'
         resource '*',
         headers: :any,
         expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],

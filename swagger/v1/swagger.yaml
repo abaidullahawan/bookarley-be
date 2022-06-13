@@ -8,7 +8,7 @@ paths:
     post:
       summary: Sign Up
       tags:
-      - user
+      - User
       description: Creates a User from provided data
       operationId: createNewUser
       parameters: []
@@ -33,7 +33,7 @@ paths:
     post:
       summary: Sign in
       tags:
-      - user
+      - User
       description: Sign-in a User from provided data. In response you will get access
         to the entire application.
       parameters: []
@@ -228,6 +228,182 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/countries/{id}":
+
+  #  City Module
+  "/api/v1/cities":
+    get:
+      summary: Show All cities
+      tags:
+      - Cities
+      description: Info Related to All Cities
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Cities
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create City
+      tags:
+      - Cities
+      description: "Creates a New City"
+      operationId: postCityCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: City Created
+          content: {}
+        '404':
+          description: City not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    comments:
+                      type: text
+
+  "/api/v1/cities/{id}":
+    get:
+      summary: Show city
+      tags:
+      - Cities
+      description: Show a city by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a city
+      tags:
+      - Cities
+      description: Update a city by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    comments:
+                      type: text
+    delete:
+      summary: Delete city
+      tags:
+      - Cities
+      description: Delete a city by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/cities/{id}":
 servers:
 - url: http://{defaultHost}
   variables:

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resources :app_users,  only: %i[show]
       resources :brands
       resources :countries
+      resources :cities
     end
   end
 

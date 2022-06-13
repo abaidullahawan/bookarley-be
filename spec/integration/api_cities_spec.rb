@@ -2,13 +2,13 @@
 
 require 'swagger_helper'
 
-describe 'Countries Info API' do
+describe 'Cities Info API' do
   # for index function
 
-  path '/api/v1/countries' do
-    get 'Show All Countries' do
-      tags 'Countries'
-      description 'Info Related to All Countries'
+  path '/api/v1/cities' do
+    get 'Show All Cities' do
+      tags 'Cities'
+      description 'Info Related to All Cities'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
@@ -16,7 +16,7 @@ describe 'Countries Info API' do
       parameter name: :expiry, in: :header, type: :string
       parameter name: :uid, in: :header, type: :string
 
-      response '200', 'All Countries' do
+      response '200', 'All Cities' do
         run_test!
       end
 
@@ -27,11 +27,11 @@ describe 'Countries Info API' do
   end
 
   # For Create Method
-  path '/api/v1/countries' do
-    post 'Create Country' do
-      tags 'countries'
-      description 'Create Country'
-      operationId 'postCountryCreation'
+  path '/api/v1/cities' do
+    post 'Create City' do
+      tags 'cities'
+      description 'Create City'
+      operationId 'postCityCreation'
       consumes 'application/json'
       parameter name: 'access-token', in: :header, type: :string
       parameter name: :client, in: :header, type: :string
@@ -39,17 +39,17 @@ describe 'Countries Info API' do
       parameter name: :body, in: :body, schema: {
             type: :object,
             properties: {
-                plan: {
+                city: {
                     type: :object,
                     properties: {
                         name: { type: :string },
-                        comments: { type: :text },
+                        comments: { type: :text }
                         }
                     }
                         }
       }
 
-      response '200', 'Country Created' do
+      response '200', 'City Created' do
         run_test!
       end
 
@@ -64,10 +64,10 @@ describe 'Countries Info API' do
   end
 
   # For Show method
-  path '/api/v1/countries/{id}' do
-    get 'Show Country' do
-      tags 'Countries'
-      description 'Show a country by giving its id'
+  path '/api/v1/cities/{id}' do
+    get 'Show City' do
+      tags 'Cities'
+      description 'Show a city by giving its id'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
@@ -87,11 +87,11 @@ describe 'Countries Info API' do
     end
   end
   # for update method
-  path '/api/v1/countries/{id}' do
-    put 'Update Country' do
-      tags 'countries'
-      description 'Update Country'
-      operationId 'putCountryUpdation'
+  path '/api/v1/cities/{id}' do
+    put 'Update City' do
+      tags 'cities'
+      description 'Update City'
+      operationId 'patchCityUpdation'
       consumes 'application/json'
       parameter name: 'access-token', in: :header, type: :string
       parameter name: :client, in: :header, type: :string
@@ -99,7 +99,7 @@ describe 'Countries Info API' do
       parameter name: :body, in: :body, schema: {
             type: :object,
             properties: {
-                country: {
+                city: {
                     type: :object,
                     properties: {
                         name: { type: :string },
@@ -109,7 +109,7 @@ describe 'Countries Info API' do
                         }
       }
 
-      response '200', 'Country Created' do
+      response '200', 'City Created' do
         run_test!
       end
 
@@ -123,10 +123,10 @@ describe 'Countries Info API' do
     end
   end
   # For Delete Method
-  path '/api/v1/countries/{id}' do
-    delete 'Delete Country' do
-      tags 'Countries'
-      description 'Delete a country by giving its id'
+  path '/api/v1/cities/{id}' do
+    delete 'Delete City' do
+      tags 'Cities'
+      description 'Delete a city by giving its id'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
