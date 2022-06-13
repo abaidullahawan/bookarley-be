@@ -4,6 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
+# Sign_up
   "/api/v1/auth":
     post:
       summary: Sign Up
@@ -29,6 +30,8 @@ paths:
                     type: string
                   password_confirmation:
                     type: string
+
+# Sign_in
   "/api/v1/auth/sign_in":
     post:
       summary: Sign in
@@ -52,6 +55,39 @@ paths:
                   type: string
                 password:
                   type: string
+
+  # App Users Spec
+  "/api/v1/app_users/{id}":
+    get:
+      summary: Show User Profile
+      tags:
+      - Profile
+      description: Show user profile by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 
   #  Country Module
   "/api/v1/countries":
