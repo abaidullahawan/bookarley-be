@@ -12,6 +12,6 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_one :personal_detail, as: :bio
-
+  has_one_attached :profile
   accepts_nested_attributes_for :personal_detail
 end
