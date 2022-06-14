@@ -441,7 +441,5 @@ paths:
           content: {}
           "/api/v1/cities/{id}":
 servers:
-- url: http://{defaultHost}
-  variables:
-    defaultHost:
-      default: 104.248.119.140
+- url: https://portal.tractoronline.com.pk/
+- url: http://localhost:4000
