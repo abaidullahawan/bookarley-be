@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :countries
       resources :cities
       resources :roles
+      resources :users_roles
     end
   end
 
