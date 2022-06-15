@@ -620,6 +620,186 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/roles/{id}":
+
+  #  Users Roles
+  "/api/v1/users_roles":
+    get:
+      summary: Show All Users Roles
+      tags:
+      - Users Roles
+      description: Info Related to All Users Roles
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Users Roles
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Users Role
+      tags:
+      - Users Roles
+      description: "Creates a New Users Role"
+      operationId: postRoleCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Users Role Created
+          content: {}
+        '404':
+          description: Users Role not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    resource_type:
+                      type: string
+                    resource_id:
+                      type: integer
+
+  "/api/v1/users_roles/{id}":
+    get:
+      summary: Show Users Role
+      tags:
+      - Users Roles
+      description: Show a role by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Users role
+      tags:
+      - Users Roles
+      description: Update a Users role by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    resource_type:
+                      type: string
+                    resource_id:
+                      type: integer
+    delete:
+      summary: Delete Users role
+      tags:
+      - Users Roles
+      description: Delete a Users role by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/users_roles/{id}":
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000
