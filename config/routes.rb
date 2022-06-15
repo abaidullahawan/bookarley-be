@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :brands
       resources :countries
       resources :cities
+      resources :roles
     end
   end
 

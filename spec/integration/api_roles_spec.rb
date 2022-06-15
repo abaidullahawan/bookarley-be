@@ -2,13 +2,13 @@
 
 require 'swagger_helper'
 
-describe 'Countries Info API' do
+describe 'Roles Info API' do
   # for index function
 
-  path '/api/v1/countries' do
-    get 'Show All Countries' do
-      tags 'Countries'
-      description 'Info Related to All Countries'
+  path '/api/v1/roles' do
+    get 'Show All Roles' do
+      tags 'Roles'
+      description 'Info Related to All Roles'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
@@ -16,7 +16,7 @@ describe 'Countries Info API' do
       parameter name: :expiry, in: :header, type: :string
       parameter name: :uid, in: :header, type: :string
 
-      response '200', 'All Countries' do
+      response '200', 'All Roles' do
         run_test!
       end
 
@@ -27,11 +27,11 @@ describe 'Countries Info API' do
   end
 
   # For Create Method
-  path '/api/v1/countries' do
-    post 'Create Country' do
-      tags 'countries'
-      description 'Create Country'
-      operationId 'postCountryCreation'
+  path '/api/v1/roles' do
+    post 'Create Role' do
+      tags 'Roles'
+      description 'Create Role'
+      operationId 'postRoleCreation'
       consumes 'application/json'
       parameter name: 'access-token', in: :header, type: :string
       parameter name: :client, in: :header, type: :string
@@ -39,17 +39,18 @@ describe 'Countries Info API' do
       parameter name: :body, in: :body, schema: {
             type: :object,
             properties: {
-                country: {
+                role: {
                     type: :object,
                     properties: {
                         name: { type: :string },
-                        comments: { type: :text },
+                        resource_type: { type: :string },
+                        resource_id: { type: :integer }
                         }
                     }
                         }
       }
 
-      response '200', 'Country Created' do
+      response '200', 'Role Created' do
         run_test!
       end
 
@@ -64,10 +65,10 @@ describe 'Countries Info API' do
   end
 
   # For Show method
-  path '/api/v1/countries/{id}' do
-    get 'Show Country' do
-      tags 'Countries'
-      description 'Show a country by giving its id'
+  path '/api/v1/roles/{id}' do
+    get 'Show Role' do
+      tags 'Roles'
+      description 'Show a role by giving its id'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
@@ -87,11 +88,11 @@ describe 'Countries Info API' do
     end
   end
   # for update method
-  path '/api/v1/countries/{id}' do
-    put 'Update Country' do
-      tags 'countries'
-      description 'Update Country'
-      operationId 'putCountryUpdation'
+  path '/api/v1/roles/{id}' do
+    put 'Update Roles' do
+      tags 'Roles'
+      description 'Update Role'
+      operationId 'putRoleUpdation'
       consumes 'application/json'
       parameter name: 'access-token', in: :header, type: :string
       parameter name: :client, in: :header, type: :string
@@ -103,13 +104,14 @@ describe 'Countries Info API' do
                     type: :object,
                     properties: {
                         name: { type: :string },
-                        comments: { type: :text }
+                        resource_type: { type: :text },
+                        resource_id: { type: :integer }
                         }
                     }
                         }
       }
 
-      response '200', 'Country Created' do
+      response '200', 'Role updated' do
         run_test!
       end
 
@@ -123,10 +125,10 @@ describe 'Countries Info API' do
     end
   end
   # For Delete Method
-  path '/api/v1/countries/{id}' do
-    delete 'Delete Country' do
-      tags 'Countries'
-      description 'Delete a country by giving its id'
+  path '/api/v1/roles/{id}' do
+    delete 'Delete Role' do
+      tags 'Roles'
+      description 'Delete a role by giving its id'
       consumes 'application/json'
       produces 'application/json'
       parameter name: 'access-token', in: :header, type: :string
