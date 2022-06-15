@@ -38,6 +38,9 @@ gem 'rubocop-rails', require: false
 gem 'rubocop-rails_config'
 gem 'rubocop_runner', '~> 2.1', require: false
 
+gem "rolify"
+
+
 # Brakeman is a command-line tool that analyzes the source code of Ruby on Rails applications
 # to find potential security vulnerabilities.
 gem 'brakeman'
