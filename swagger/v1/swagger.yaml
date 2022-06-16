@@ -580,7 +580,7 @@ paths:
             schema:
               type: object
               properties:
-                city:
+                role:
                   type: object
                   properties:
                     name:
@@ -683,7 +683,7 @@ paths:
             schema:
               type: object
               properties:
-                role:
+                users_role:
                   type: object
                   properties:
                     name:
@@ -760,7 +760,7 @@ paths:
             schema:
               type: object
               properties:
-                city:
+                users_role:
                   type: object
                   properties:
                     name:
@@ -800,6 +800,374 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/users_roles/{id}":
+
+  #  Product Categories
+  "/api/v1/product_categories":
+    get:
+      summary: Show All Product Categories
+      tags:
+      - Product Categories
+      description: Info Related to All Product Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Product Category
+      tags:
+      - Product Categories
+      description: "Creates a New Product Category"
+      operationId: postProductCategoryCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Category Created
+          content: {}
+        '404':
+          description: Product Category not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+
+  "/api/v1/product_categories/{id}":
+    get:
+      summary: Show Product Category
+      tags:
+      - Product Categories
+      description: Show Product Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product Category
+      tags:
+      - Product Categories
+      description: Update Product Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+    delete:
+      summary: Delete Product Category
+      tags:
+      - Product Categories
+      description: Delete Product Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/product_categories/{id}":
+
+  #  Product Categories
+  "/api/v1/product_sub_categories":
+    get:
+      summary: Show All Product Sub Categories
+      tags:
+      - Product Sub Categories
+      description: Info Related to All Product Sub Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Sub Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Product Category
+      tags:
+      - Product Sub Categories
+      description: "Creates a New Product Sub Category"
+      operationId: postProductSubCategoryCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Sub Category Created
+          content: {}
+        '404':
+          description: Product Sub Category not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_sub_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+
+  "/api/v1/product_sub_categories/{id}":
+    get:
+      summary: Show Product Sub Category
+      tags:
+      - Product Sub Categories
+      description: Show Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product Category
+      tags:
+      - Product Sub Categories
+      description: Update Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_sub_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+    delete:
+      summary: Delete Product Sub Category
+      tags:
+      - Product Sub Categories
+      description: Delete Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/product_sub_categories/{id}":
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000
