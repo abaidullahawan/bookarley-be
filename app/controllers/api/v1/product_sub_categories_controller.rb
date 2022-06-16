@@ -81,7 +81,8 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_sub_category_params
-          params.require(:product_sub_category).permit(:title, :image, :description, :status)
+          params.require(:product_sub_category).permit(:title, :image, :description, :status,
+                                                       :product_category_head_id, :link)
         end
 
         def render_success
