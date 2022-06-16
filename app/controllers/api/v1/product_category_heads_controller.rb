@@ -55,7 +55,7 @@ module Api
       def update
         respond_to do |format|
           if @product_category_head.update(product_category_head_params)
-            format.html { redirect_to api_v1_product_category_heads_path(@product_category_head),
+            format.html { redirect_to api_v1_product_category_head_path(@product_category_head),
               notice: 'Product category head was successfully updated.' }
             format.json { render :show, status: :ok, location: @product_category_head }
           else
