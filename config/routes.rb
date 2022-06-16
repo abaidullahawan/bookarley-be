@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       resources :product_sub_categories
       resources :product_category_heads
       resources :product_categories
-      resources :category_brands
+      resources :product_brands
     end
   end
 

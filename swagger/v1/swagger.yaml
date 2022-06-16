@@ -1168,6 +1168,374 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/product_sub_categories/{id}":
+
+  #  Product Category Heads
+  "/api/v1/product_category_heads":
+    get:
+      summary: Show All Product Category Heads
+      tags:
+      - Product Category Heads
+      description: Info Related to All Product Category Heads
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Category Heads
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Product Category Head
+      tags:
+      - Product Category Heads
+      description: "Creates a New Product Category Head"
+      operationId: postProductCategoryHeadCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Category Head Created
+          content: {}
+        '404':
+          description: Product Category Head not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_category_head:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+
+  "/api/v1/product_category_heads/{id}":
+    get:
+      summary: Show Product Category Head
+      tags:
+      - Product Category Heads
+      description: Show Product Category Head by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product Category Head
+      tags:
+      - Product Category Heads
+      description: Update Product Category Head by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_category_head:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+    delete:
+      summary: Delete Product Category Head
+      tags:
+      - Product Category Heads
+      description: Delete Product Category Head by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/product_category_heads/{id}":
+
+#  Product Brands
+  "/api/v1/product_brands":
+    get:
+      summary: Show All Product Brands
+      tags:
+      - Product Brands
+      description: Info Related to All Product brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Brands
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Product Brands
+      tags:
+      - Product Brands
+      description: "Creates a New Product Brands"
+      operationId: postProductBrandsCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Brand Created
+          content: {}
+        '404':
+          description: Product Brand not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_brand:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+
+  "/api/v1/product_brands/{id}":
+    get:
+      summary: Show Product Brand
+      tags:
+      - Product Brands
+      description: Show Product Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product Brand
+      tags:
+      - Product Brands
+      description: Update Product Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_brand:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+    delete:
+      summary: Delete Product Brand
+      tags:
+      - Product Brands
+      description: Delete Product Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/products_brands/{id}":
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000

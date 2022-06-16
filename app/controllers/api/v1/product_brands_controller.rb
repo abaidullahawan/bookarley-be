@@ -5,7 +5,7 @@ module Api
     # Brand api controller
     class ProductBrandsController < ApplicationController
       before_action :authenticate_api_v1_user!
-      before_action :set_pproduct_brand, only: %i[show edit update destroy]
+      before_action :set_product_brand, only: %i[show edit update destroy]
 
       # GET /product_brands
       # GET /product_brands.json
@@ -23,16 +23,16 @@ module Api
       # GET /product_brands/1
       # GET /product_brands/1.json
       def show
-        if @pproduct_brand
+        if @product_brand
           render_success
         else
-          render json: @pproduct_brand.errors
+          render json: @product_brand.errors
         end
       end
 
       # GET /product_brands/new
       def new
-        @pproduct_brand = ProductBrand.new
+        @product_brand = ProductBrand.new
       end
 
       # GET /product_brands/1/edit
@@ -41,12 +41,12 @@ module Api
       # POST /pproduct_brand
       # POST /pproduct_brand.json
       def create
-        @pproduct_brand = ProductBrand.new(pproduct_brand_params)
+        @product_brand = ProductBrand.new(product_brand_params)
 
-        if @pproduct_brand.save
+        if @product_brand.save
           render_success
         else
-          render json: @pproduct_brand.errors
+          render json: @product_brand.errors
         end
       end
 
@@ -54,13 +54,13 @@ module Api
       # PATCH/PUT /product_brands/1.json
       def update
         respond_to do |format|
-          if @pproduct_brand.update(pproduct_brand_params)
-            format.html { redirect_to api_v1_product_brands_path(@pproduct_brand),
-              notice: 'Product head was successfully updated.' }
-            format.json { render :show, status: :ok, location: @pproduct_brand }
+          if @pproduct_brand.update(product_brand_params)
+            format.html { redirect_to api_v1_product_brand_path(@product_brand),
+              notice: 'Product Brand was successfully updated.' }
+            format.json { render :show, status: :ok, location: @product_brand }
           else
             format.html { render :edit }
-            format.json { render json: @pproduct_brand.errors, status: :unprocessable_entity }
+            format.json { render json: @product_brand.errors, status: :unprocessable_entity }
           end
         end
       end
@@ -68,26 +68,26 @@ module Api
       # DELETE /product_brands/1
       # DELETE /product_brands/1.json
       def destroy
-        @pproduct_brand.destroy
+        @product_brand.destroy
 
-        render json: { notice: 'Product head was successfully removed.' }
+        render json: { notice: 'Product Brand was successfully removed.' }
       end
 
       private
         # Use callbacks to share common setup or constraints between actions.
-        def set_pproduct_brand
-          @pproduct_brand = ProductBrand.find(params[:id])
+        def set_product_brand
+          @product_brand = ProductBrand.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
-        def pproduct_brand_params
-          params.require(:pproduct_brand).permit(:title, :image, :description, :status)
+        def product_brand_params
+          params.require(:product_brand).permit(:title, :image, :description, :status)
         end
 
         def render_success
           render json: {
             status: 'success',
-            data: @pproduct_brand
+            data: @product_brand
           }
         end
     end
