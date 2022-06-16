@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :cities
       resources :roles
       resources :users_roles
+      resources :product_sub_categories
     end
   end
 
