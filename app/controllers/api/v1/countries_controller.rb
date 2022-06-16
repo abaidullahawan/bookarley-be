@@ -15,7 +15,8 @@ module Api
         @pagy, @countries = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @countries
+          data: @countries,
+          pagination: @pagy
         }
       end
 

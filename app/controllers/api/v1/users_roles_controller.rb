@@ -15,7 +15,8 @@ module Api
         @pagy, @user_roles = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @user_roles
+          data: @user_roles,
+          pagination: @pagy
         }
       end
 
