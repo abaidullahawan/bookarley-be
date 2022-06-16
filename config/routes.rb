@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :roles
       resources :users_roles
       resources :product_sub_categories
+      resources :product_category_heads
     end
   end
 
