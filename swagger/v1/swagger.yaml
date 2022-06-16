@@ -874,6 +874,8 @@ paths:
                       type: text
                     status:
                       type: string
+                    link:
+                      type: string
 
   "/api/v1/product_categories/{id}":
     get:
@@ -953,6 +955,8 @@ paths:
                       type: text
                     status:
                       type: string
+                    link:
+                      type: string
     delete:
       summary: Delete Product Category
       tags:
@@ -985,7 +989,7 @@ paths:
           content: {}
           "/api/v1/product_categories/{id}":
 
-  #  Product Categories
+  #  Product Sub Categories
   "/api/v1/product_sub_categories":
     get:
       summary: Show All Product Sub Categories
@@ -1057,6 +1061,10 @@ paths:
                     description:
                       type: text
                     status:
+                      type: string
+                    product_category_head_id:
+                      type: integer
+                    link:
                       type: string
 
   "/api/v1/product_sub_categories/{id}":
@@ -1136,6 +1144,10 @@ paths:
                     description:
                       type: text
                     status:
+                      type: string
+                    product_category_head_id:
+                      type: integer
+                    link:
                       type: string
     delete:
       summary: Delete Product Sub Category
@@ -1242,6 +1254,10 @@ paths:
                       type: text
                     status:
                       type: string
+                    product_category_id:
+                      type: integer
+                    link:
+                      type: string
 
   "/api/v1/product_category_heads/{id}":
     get:
@@ -1320,6 +1336,10 @@ paths:
                     description:
                       type: text
                     status:
+                      type: string
+                    product_category_id:
+                      type: integer
+                    link:
                       type: string
     delete:
       summary: Delete Product Category Head

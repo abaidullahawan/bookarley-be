@@ -45,7 +45,8 @@ describe 'Product Categories Info API' do
                         title: { type: :string },
                         image: { type: :binary },
                         description: { type: :text },
-                        status: { type: :string }
+                        status: { type: :string },
+                        link: { type: :string }
                         }
                     }
                         }
@@ -107,7 +108,8 @@ describe 'Product Categories Info API' do
                       title: { type: :string },
                       image: { type: :binary },
                       description: { type: :text },
-                      status: { type: :string }
+                      status: { type: :string },
+                      link: { type: :string }
                         }
                     }
                         }
