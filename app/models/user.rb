@@ -12,9 +12,9 @@ class User < ActiveRecord::Base
          :omniauthable, :timeoutable, :omniauthable,
          :trackable
   include DeviseTokenAuth::Concerns::User
-  has_many :user_roles
+  has_many :users_role
   has_one :personal_detail, as: :bio
   has_one_attached :profile
   accepts_nested_attributes_for :personal_detail
-  accepts_nested_attributes_for :user_roles
+  accepts_nested_attributes_for :users_role
 end
