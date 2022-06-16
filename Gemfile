@@ -21,6 +21,10 @@ gem 'puma', '~> 5.0'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'coffee-rails', '~> 4.2'
+# racsack
+gem 'ransack'
+# pagy gem
+gem 'pagy'
 
 gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'

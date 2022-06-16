@@ -10,7 +10,9 @@ module Api
       # GET /countries
       # GET /countries.json
       def index
-        @countries = Country.all
+        no_of_record = params[:no_of_record] || 10
+        @q = Country.ransack(params[:q])
+        @pagy, @countries = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
           data: @countries
