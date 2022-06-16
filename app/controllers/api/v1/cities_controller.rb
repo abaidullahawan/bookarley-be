@@ -10,10 +10,13 @@ module Api
       # GET /cities
       # GET /cities.json
       def index
-        @cities = City.all
+        no_of_record = params[:no_of_record] || 10
+        @q = City.ransack(params[:q])
+        @pagy, @cities = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @cities
+          data: @cities,
+          pagination: @pagy
         }
       end
 

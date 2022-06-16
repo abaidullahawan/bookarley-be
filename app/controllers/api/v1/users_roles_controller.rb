@@ -10,10 +10,13 @@ module Api
       # GET /users_roles
       # GET /users_roles.json
       def index
-        @user_roles = UsersRole.all
+        no_of_record = params[:no_of_record] || 10
+        @q = UsersRole.ransack(params[:q])
+        @pagy, @user_roles = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @user_roles
+          data: @user_roles,
+          pagination: @pagy
         }
       end
 
