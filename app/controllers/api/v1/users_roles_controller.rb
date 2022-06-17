@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /users_roles/1
       # PATCH/PUT /users_roles/1.json
       def update
-        respond_to do |format|
-          if @users_role.update(users_roles_params)
-            format.html { redirect_to api_v1_users_role_path(@users_role),
-              notice: 'User Role was successfully updated.' }
-            format.json { render :show, status: :ok, location: @users_role }
-          else
-            format.html { render :edit }
-            format.json { render json: @users_role.errors, status: :unprocessable_entity }
-          end
+        if @users_role.update(users_roles_params)
+          render_success
+        else
+          render json: @users_role.errors
         end
       end
 

@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /cities/1
       # PATCH/PUT /cities/1.json
       def update
-        respond_to do |format|
-          if @city.update(city_params)
-            format.html { redirect_to api_v1_city_path(@city),
-              notice: 'City was successfully updated.' }
-            format.json { render :show, status: :ok, location: @city }
-          else
-            format.html { render :edit }
-            format.json { render json: @city.errors, status: :unprocessable_entity }
-          end
+        if @city.update(city_params)
+          render_success
+        else
+          render json: @city.errors
         end
       end
 

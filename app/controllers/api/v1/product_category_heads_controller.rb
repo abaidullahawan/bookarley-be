@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /product_category_heads/1
       # PATCH/PUT /product_category_heads/1.json
       def update
-        respond_to do |format|
-          if @product_category_head.update(product_category_head_params)
-            format.html { redirect_to api_v1_product_category_head_path(@product_category_head),
-              notice: 'Product category head was successfully updated.' }
-            format.json { render :show, status: :ok, location: @product_category_head }
-          else
-            format.html { render :edit }
-            format.json { render json: @product_category_head.errors, status: :unprocessable_entity }
-          end
+        if @product_category_head.update(product_category_head_params)
+          render_success
+        else
+          render json: @product_category_head.errors
         end
       end
 

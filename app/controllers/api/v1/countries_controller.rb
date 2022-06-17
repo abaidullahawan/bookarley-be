@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /countries/1
       # PATCH/PUT /countries/1.json
       def update
-        respond_to do |format|
-          if @country.update(country_params)
-            format.html { redirect_to api_v1_country_path(@country),
-              notice: 'Country was successfully updated.' }
-            format.json { render :show, status: :ok, location: @country }
-          else
-            format.html { render :edit }
-            format.json { render json: @country.errors, status: :unprocessable_entity }
-          end
+        if @country.update(country_params)
+          render_success
+        else
+          render json: @country.errors
         end
       end
 

@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /product_sub_categories/1
       # PATCH/PUT /product_sub_categories/1.json
       def update
-        respond_to do |format|
-          if @product_sub_category.update(product_sub_category_params)
-            format.html { redirect_to api_v1_product_sub_category_path(@product_sub_category),
-              notice: 'Product sub category was successfully updated.' }
-            format.json { render :show, status: :ok, location: @product_sub_category }
-          else
-            format.html { render :edit }
-            format.json { render json: @product_sub_category.errors, status: :unprocessable_entity }
-          end
+        if @product_sub_category.update(product_sub_category_params)
+          render_success
+        else
+          render json: @product_sub_category.errors
         end
       end
 
