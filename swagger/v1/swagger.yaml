@@ -1588,7 +1588,7 @@ paths:
       tags:
       - Products
       description: "Creates a New Products"
-      operationId: postProductBrandsCreation
+      operationId: postProductsCreation
       parameters:
       - name: access-token
         in: header
@@ -1618,7 +1618,7 @@ paths:
             schema:
               type: object
               properties:
-                product_brand:
+                product:
                   type: object
                   properties:
                     title:
@@ -1703,7 +1703,7 @@ paths:
             schema:
               type: object
               properties:
-                product_brand:
+                product:
                   type: object
                   properties:
                     title:
