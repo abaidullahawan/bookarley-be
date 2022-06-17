@@ -1556,6 +1556,201 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/products_brands/{id}":
+# Products
+  "/api/v1/products":
+    get:
+      summary: Show All Products
+      tags:
+      - Products
+      description: Info Related to All Products
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Products
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Products
+      tags:
+      - Products
+      description: "Creates a New Products"
+      operationId: postProductBrandsCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Created
+          content: {}
+        '404':
+          description: Product not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_brand:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: text
+                    status:
+                      type: string
+                    price:
+                      type: float
+                    location:
+                      type: string
+                    link:
+                      types: string
+                    extra_fields:
+                      types: json
+
+  "/api/v1/products/{id}":
+    get:
+      summary: Show Product
+      tags:
+      - Products
+      description: Show Product by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product
+      tags:
+      - Products
+      description: Update Product by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_brand:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    description:
+                      type: text
+                    status:
+                      type: string
+                    price:
+                      type: float
+                    location:
+                      type: string
+                    link:
+                      types: string
+                    extra_fields:
+                      types: json
+    delete:
+      summary: Delete Product
+      tags:
+      - Products
+      description: Delete Product by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/products/{id}":
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000
