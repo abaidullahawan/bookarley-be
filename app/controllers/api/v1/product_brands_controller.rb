@@ -53,15 +53,10 @@ module Api
       # PATCH/PUT /product_brands/1
       # PATCH/PUT /product_brands/1.json
       def update
-        respond_to do |format|
-          if @pproduct_brand.update(product_brand_params)
-            format.html { redirect_to api_v1_product_brand_path(@product_brand),
-              notice: 'Product Brand was successfully updated.' }
-            format.json { render :show, status: :ok, location: @product_brand }
-          else
-            format.html { render :edit }
-            format.json { render json: @product_brand.errors, status: :unprocessable_entity }
-          end
+        if @product_brand.update(product_brand_params)
+          render_success
+        else
+          render json: @product_brand.errors
         end
       end
 
