@@ -10,4 +10,11 @@ class Role < ApplicationRecord
             :allow_nil => true
 
   scopify
+
+  enum status: {
+    active: 'active',
+    passive: 'passive',
+    deleted: 'deleted'
+  }, _prefix: true
+
 end
