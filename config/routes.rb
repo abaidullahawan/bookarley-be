@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       resources :product_categories
       resources :product_brands
       resources :products
+      resources :languages
     end
   end
 
