@@ -4,18 +4,18 @@ module Api
   module V1
     # Brand api controller
     class ProductSubCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[index]
       before_action :set_product_sub_category, only: %i[show edit update destroy]
 
       # GET /product_sub_categories
       # GET /product_sub_categories.json
       def index
         no_of_record = params[:no_of_record] || 10
-        @q = ProductSubCategory.ransack(params[:q])
+        @q = ProductSubCategory.joins(:product_category_head).includes(:product_category_head).ransack(params[:q])
         @pagy, @product_sub_categories = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_sub_categories,
+          data: @product_sub_categories.as_json,
           pagination: @pagy
         }
       end
