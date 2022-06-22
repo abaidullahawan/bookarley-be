@@ -44,7 +44,6 @@ gem 'rubocop_runner', '~> 2.1', require: false
 
 gem "rolify"
 
-
 # Brakeman is a command-line tool that analyzes the source code of Ruby on Rails applications
 # to find potential security vulnerabilities.
 gem 'brakeman'
@@ -81,6 +80,10 @@ group :development do
   gem 'capistrano-rails', '~> 1.4'
   gem 'capistrano-passenger', '~> 0.2.0'
   gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
+end
+
+group :production do
+  gem 'bugsnag'
 end
 
 gem 'sidekiq'
