@@ -4,18 +4,18 @@ module Api
   module V1
     # Brand api controller
     class ProductCategoryHeadsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[index]
       before_action :set_product_category_head, only: %i[show edit update destroy]
 
       # GET /product_category_heads
       # GET /product_category_heads.json
       def index
         no_of_record = params[:no_of_record] || 10
-        @q = ProductCategoryHead.ransack(params[:q])
+        @q = ProductCategoryHead.joins(:product_category).includes(:product_category).ransack(params[:q])
         @pagy, @product_category_heads = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_category_heads,
+          data: @product_category_heads.as_json,
           pagination: @pagy
         }
       end
