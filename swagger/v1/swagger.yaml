@@ -1000,6 +1000,19 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/product_categories/{id}":
+  "/api/v1/product_categories/categories_list":
+    get:
+      summary: Show All Product Categories
+      tags:
+      - Product Categories
+      description: Info Related to All Product Categories associations
+      responses:
+        '200':
+          description: All Product Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 
   #  Product Sub Categories
   "/api/v1/product_sub_categories":
