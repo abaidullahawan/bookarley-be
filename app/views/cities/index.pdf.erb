@@ -1,0 +1,45 @@
+<style>
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-spacing: 2px;
+    border-color: grey;
+  }
+
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  .table td, .table th {
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+  }
+
+  th, td {
+      text-align: center;
+  }
+
+</style>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @cities.each_with_index do |city, index| %>
+      <tr>
+        <th><%= index + 1 %></th>
+        <td><%= city.name %></td>
+        <td><%= city.comments %></td>
+        <td><%= city.status %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>

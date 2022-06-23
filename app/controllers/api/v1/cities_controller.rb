@@ -6,17 +6,46 @@ module Api
     class CitiesController < ApplicationController
       before_action :authenticate_api_v1_user!, except: %i[index]
       before_action :set_city, only: %i[show edit update destroy]
+      require 'tempfile'
+      require 'csv'
 
       # GET /cities
       # GET /cities.json
       def index
-        no_of_record = params[:no_of_record] || 10
         @q = City.ransack(params[:q])
+        return export_csv_and_pdf if params[:format].present?
+
+        no_of_record = params[:no_of_record] || 10
         @pagy, @cities = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
           data: @cities,
           pagination: @pagy
+        }
+      end
+
+      def export_csv_and_pdf
+        @cities = @q.result
+        path = Rails.root.join('public/uploads')
+        if params[:format].eql? 'pdf'
+          file = render_to_string pdf: 'some_file_name', template: 'cities/index.pdf.erb', encoding: 'UTF-8'
+          @save_path = Rails.root.join(path, 'cities.pdf')
+          File.open(@save_path, 'wb') do |f|
+            f << file
+          end
+        else
+          @save_path = Rails.root.join(path, 'cities.csv')
+          CSV.open(@save_path, 'wb') do |csv|
+            headers = City.column_names
+            csv << headers
+            @cities.each do |city|
+              csv << city.as_json.values_at(*headers)
+            end
+          end
+        end
+        render json: {
+          status: 'success',
+          file_path: @save_path
         }
       end
 

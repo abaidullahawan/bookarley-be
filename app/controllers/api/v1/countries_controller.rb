@@ -6,17 +6,46 @@ module Api
     class CountriesController < ApplicationController
       before_action :authenticate_api_v1_user!
       before_action :set_country, only: %i[show edit update destroy]
+      require 'tempfile'
+      require 'csv'
 
       # GET /countries
       # GET /countries.json
       def index
-        no_of_record = params[:no_of_record] || 10
         @q = Country.ransack(params[:q])
+        return export_csv_and_pdf if params[:format].present?
+
+        no_of_record = params[:no_of_record] || 10
         @pagy, @countries = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
           data: @countries,
           pagination: @pagy
+        }
+      end
+
+      def export_csv_and_pdf
+        @countries = @q.result
+        path = Rails.root.join('public/uploads')
+        if params[:format].eql? 'pdf'
+          file = render_to_string pdf: 'some_file_name', template: 'countries/index.pdf.erb', encoding: 'UTF-8'
+          @save_path = Rails.root.join(path, 'countries.pdf')
+          File.open(@save_path, 'wb') do |f|
+            f << file
+          end
+        else
+          @save_path = Rails.root.join(path, 'countries.csv')
+          CSV.open(@save_path, 'wb') do |csv|
+            headers = Country.column_names
+            csv << headers
+            @countries.each do |country|
+              csv << country.as_json.values_at(*headers)
+            end
+          end
+        end
+        render json: {
+          status: 'success',
+          file_path: @save_path
         }
       end
 
