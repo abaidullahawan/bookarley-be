@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[index]
+      before_action :authenticate_api_v1_user!, except: %i[index categories_list]
       before_action :set_product_category, only: %i[show edit update destroy]
 
       # GET /product categories
@@ -66,6 +66,16 @@ module Api
         @product_category.destroy
 
         render json: { notice: 'Product Category was successfully removed.' }
+      end
+
+      def categories_list
+        @categories_list = ProductCategory.except(:id, :title, :image, :description, :status,
+          :created_at, :updated_at, :link).to_json(include: { product_category_heads: {
+            include: :product_sub_categories } })
+        render json: {
+          status: 'success',
+          data: JSON.parse(@categories_list)
+        }
       end
 
       private

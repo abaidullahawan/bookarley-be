@@ -23,10 +23,15 @@ Rails.application.routes.draw do
       resources :users_roles
       resources :product_sub_categories
       resources :product_category_heads
-      resources :product_categories
       resources :product_brands
       resources :products
       resources :languages
+
+      resources :product_categories do
+        collection do
+          get 'categories_list', to: 'product_categories#categories_list'
+        end
+      end
     end
   end
 
