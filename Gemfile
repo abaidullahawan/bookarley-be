@@ -26,9 +26,6 @@ gem 'ransack'
 # pagy gem
 gem 'pagy'
 
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
-
 gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
