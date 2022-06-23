@@ -9,7 +9,7 @@ paths:
     post:
       summary: Sign Up
       tags:
-      - User
+      - Profile
       description: Creates a User from provided data
       operationId: createNewUser
       parameters: []
@@ -30,13 +30,67 @@ paths:
                     type: string
                   password_confirmation:
                     type: string
+    put:
+      summary: Update Profile
+      tags:
+      - Profile
+      description: Update user profile
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  name:
+                    type: string
+                  nickname:
+                    type: string
+                  personal_detail_attributes:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        username:
+                          type: string
+                        dob:
+                          type: date
+                        county:
+                          type: string
+                        city:
+                          type: string
+                        gender:
+                          type: string
 
 # Sign_in
   "/api/v1/auth/sign_in":
     post:
       summary: Sign in
       tags:
-      - User
+      - Profile
       description: Sign-in a User from provided data. In response you will get access
         to the entire application.
       parameters: []
@@ -55,13 +109,39 @@ paths:
                   type: string
                 password:
                   type: string
-
   # App Users Spec
+  "/api/v1/app_users":
+    get:
+      summary: Show All Users
+      tags:
+      - User
+      description: Shows all of the existing users
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
   "/api/v1/app_users/{id}":
     get:
       summary: Show User Profile
       tags:
-      - Profile
+      - User
       description: Show user profile by giving its id
       parameters:
       - name: access-token
@@ -698,11 +778,9 @@ paths:
                 users_role:
                   type: object
                   properties:
-                    name:
+                    user_id:
                       type: string
-                    resource_type:
-                      type: string
-                    resource_id:
+                    role_id:
                       type: integer
 
   "/api/v1/users_roles/{id}":
@@ -775,11 +853,9 @@ paths:
                 users_role:
                   type: object
                   properties:
-                    name:
+                    user_id:
                       type: string
-                    resource_type:
-                      type: string
-                    resource_id:
+                    role_id:
                       type: integer
     delete:
       summary: Delete Users role
@@ -1014,197 +1090,6 @@ paths:
           description: invalid request
           content: {}
 
-  #  Product Sub Categories
-  "/api/v1/product_sub_categories":
-    get:
-      summary: Show All Product Sub Categories
-      tags:
-      - Product Sub Categories
-      description: Info Related to All Product Sub Categories
-      parameters:
-      - name: access-token
-        in: header
-        schema:
-          type: string
-      - name: client
-        in: header
-        schema:
-          type: string
-      - name: uid
-        in: header
-        schema:
-          type: string
-      responses:
-        '200':
-          description: All Product Sub Categories
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
-    post:
-      summary: Create Product Category
-      tags:
-      - Product Sub Categories
-      description: "Creates a New Product Sub Category"
-      operationId: postProductSubCategoryCreation
-      parameters:
-      - name: access-token
-        in: header
-        schema:
-          type: string
-      - name: client
-        in: header
-        schema:
-          type: string
-      - name: uid
-        in: header
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Product Sub Category Created
-          content: {}
-        '404':
-          description: Product Sub Category not created
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                product_sub_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: binary
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_head_id:
-                      type: integer
-                    link:
-                      type: string
-
-  "/api/v1/product_sub_categories/{id}":
-    get:
-      summary: Show Product Sub Category
-      tags:
-      - Product Sub Categories
-      description: Show Product Sub Category by giving its id
-      parameters:
-      - name: access-token
-        in: header
-        schema:
-          type: string
-      - name: client
-        in: header
-        schema:
-          type: string
-      - name: uid
-        in: header
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Success
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
-    put:
-      summary: Update a Product Category
-      tags:
-      - Product Sub Categories
-      description: Update Product Sub Category by giving its id
-      parameters:
-      - name: access-token
-        in: header
-        schema:
-          type: string
-      - name: client
-        in: header
-        schema:
-          type: string
-      - name: uid
-        in: header
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Success
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                product_sub_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: binary
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_head_id:
-                      type: integer
-                    link:
-                      type: string
-    delete:
-      summary: Delete Product Sub Category
-      tags:
-      - Product Sub Categories
-      description: Delete Product Sub Category by giving its id
-      parameters:
-      - name: access-token
-        in: header
-        schema:
-          type: string
-      - name: client
-        in: header
-        schema:
-          type: string
-      - name: uid
-        in: header
-        schema:
-          type: string
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-      responses:
-        '200':
-          description: Success
-          content: {}
-        '422':
-          description: invalid request
-          content: {}
-          "/api/v1/product_sub_categories/{id}":
 
   #  Product Category Heads
   "/api/v1/product_category_heads":
@@ -1397,6 +1282,199 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/product_category_heads/{id}":
+
+
+  #  Product Sub Categories
+  "/api/v1/product_sub_categories":
+    get:
+      summary: Show All Product Sub Categories
+      tags:
+      - Product Sub Categories
+      description: Info Related to All Product Sub Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Sub Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Product Category
+      tags:
+      - Product Sub Categories
+      description: "Creates a New Product Sub Category"
+      operationId: postProductSubCategoryCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Product Sub Category Created
+          content: {}
+        '404':
+          description: Product Sub Category not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_sub_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+                    product_category_head_id:
+                      type: integer
+                    link:
+                      type: string
+
+  "/api/v1/product_sub_categories/{id}":
+    get:
+      summary: Show Product Sub Category
+      tags:
+      - Product Sub Categories
+      description: Show Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Product Category
+      tags:
+      - Product Sub Categories
+      description: Update Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_sub_category:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                    image:
+                      type: binary
+                    description:
+                      type: text
+                    status:
+                      type: string
+                    product_category_head_id:
+                      type: integer
+                    link:
+                      type: string
+    delete:
+      summary: Delete Product Sub Category
+      tags:
+      - Product Sub Categories
+      description: Delete Product Sub Category by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/product_sub_categories/{id}":
 
 #  Product Brands
   "/api/v1/product_brands":

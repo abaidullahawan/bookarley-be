@@ -4,6 +4,18 @@ class Api::V1::AppUsersController < ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :set_app_user, only: %i[show]
 
+  def index
+    no_of_record = params[:no_of_record] || 10
+    @q = User.ransack(params[:q])
+    @pagy, @users = pagy(@q.result, items: no_of_record)
+    render json: {
+      status: 'success',
+      data: @users,
+      pagination: @pagy
+    }
+  end
+
+
   def show
     if @app_user
       render json: @app_user.to_json(include: [:personal_detail])

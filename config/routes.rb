@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         # token_validations:  'devise_token_auth/token_validations',
       # registrations:      'api/v1/devise/registrations'
       }
-      resources :app_users,  only: %i[show]
+      resources :app_users,  only: %i[show index]
       resources :brands
       resources :countries
       resources :cities
