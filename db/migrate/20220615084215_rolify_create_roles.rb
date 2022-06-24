@@ -15,7 +15,7 @@ class RolifyCreateRoles < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index(:roles, [ :title, :string :resource_type, :resource_id ])
+    add_index(:roles, [ :title, :status, :resource_type, :resource_id ])
     add_index(:users_roles, [ :user_id, :role_id ])
   end
 end
