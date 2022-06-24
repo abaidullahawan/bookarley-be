@@ -3,5 +3,5 @@ language = ["English", "Urdu", "Punjabi", "Sindhi", "Saraiki", "Pashto", "Baloch
 
 
   language.each do |l|
-    Language.create(name: l)
+    Language.create(title: l)
   end

@@ -234,7 +234,7 @@ paths:
                 country:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     comments:
                       type: text
@@ -311,7 +311,7 @@ paths:
                 country:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     comments:
                       type: text
@@ -414,7 +414,7 @@ paths:
                 city:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     comments:
                       type: text
@@ -491,7 +491,7 @@ paths:
                 city:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     comments:
                       type: text
@@ -594,7 +594,7 @@ paths:
                 role:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     resource_type:
                       type: string
@@ -673,7 +673,7 @@ paths:
                 role:
                   type: object
                   properties:
-                    name:
+                    title:
                       type: string
                     resource_type:
                       type: string
@@ -957,7 +957,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1038,7 +1038,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1159,7 +1159,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1242,7 +1242,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1352,7 +1352,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1435,7 +1435,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1544,7 +1544,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1623,7 +1623,7 @@ paths:
                     title:
                       type: string
                     image:
-                      type: binary
+                      type: json
                     description:
                       type: text
                     status:
@@ -1737,7 +1737,9 @@ paths:
                     link:
                       types: string
                     extra_fields:
-                      types: json
+                      type: json
+                    image:
+                      type: json
 
   "/api/v1/products/{id}":
     get:
@@ -1822,7 +1824,9 @@ paths:
                     link:
                       types: string
                     extra_fields:
-                      types: json
+                      type: json
+                    image:
+                      type: json
     delete:
       summary: Delete Product
       tags:

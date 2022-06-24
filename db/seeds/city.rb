@@ -27,6 +27,6 @@ city = [ "Islamabad", "Ahmed Nager", "Ahmadpur East", "Ali Khan", "Alipur", "Ari
   "Quetta", "Sherani", "Sibi", "Sohbatpur", "Washuk", "Zhob", "Ziarat" ]
 
     city.each do |c|
-      City.create(name: c)
+      City.create(title: c)
     end
 
