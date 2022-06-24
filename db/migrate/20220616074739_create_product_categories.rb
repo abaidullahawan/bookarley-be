@@ -6,6 +6,7 @@ class CreateProductCategories < ActiveRecord::Migration[6.1]
       t.text :description
       t.string :status
       t.string :icon
+      t.string :link
 
       t.timestamps
     end
