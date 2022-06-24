@@ -12,14 +12,14 @@ module Api
       # GET /product_sub_categories
       # GET /product_sub_categories.json
       def index
-        @q = ProductSubCategory.joins(:product_category_head).includes(:product_category_head).ransack(params[:q])
+        @q = ProductSubCategory.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @product_sub_categories = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_sub_categories.as_json,
+          data: @product_sub_categories,
           pagination: @pagy
         }
       end

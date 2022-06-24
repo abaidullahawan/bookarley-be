@@ -4,14 +4,14 @@ module Api
   module V1
     # Brand api controller
     class UsersRolesController < ApplicationController
-      #before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!
       before_action :set_user_role, only: %i[show edit update destroy]
 
       # GET /users_roles
       # GET /users_roles.json
       def index
         no_of_record = params[:no_of_record] || 10
-        @q = UsersRole.joins(:role).includes(:role).ransack(params[:q])
+        @q = UsersRole.ransack(params[:q])
         @pagy, @user_roles = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
