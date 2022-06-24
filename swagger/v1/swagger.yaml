@@ -356,6 +356,19 @@ paths:
       tags:
       - Cities
       description: Info Related to All Cities
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: All Cities
@@ -883,6 +896,19 @@ paths:
       tags:
       - Product Categories
       description: Info Related to All Product Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: All Product Categories
@@ -1072,6 +1098,19 @@ paths:
       tags:
       - Product Category Heads
       description: Info Related to All Product Category Heads
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: All Product Category Heads
@@ -1252,6 +1291,19 @@ paths:
       tags:
       - Product Sub Categories
       description: Info Related to All Product Sub Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
       responses:
         '200':
           description: All Product Sub Categories
