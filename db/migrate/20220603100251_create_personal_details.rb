@@ -8,6 +8,8 @@ class CreatePersonalDetails < ActiveRecord::Migration[6.1]
       t.string :country
       t.string :city
       t.string :gender
+      t.string :phone_number
+      t.string :language
       t.references :bio, polymorphic: :true
 
       t.timestamps
