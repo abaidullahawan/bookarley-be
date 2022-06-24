@@ -7,7 +7,7 @@ class CreatePersonalDetails < ActiveRecord::Migration[6.1]
       t.date :dob
       t.string :country
       t.string :city
-      t.integer :gender
+      t.string :gender
       t.references :bio, polymorphic: :true
 
       t.timestamps

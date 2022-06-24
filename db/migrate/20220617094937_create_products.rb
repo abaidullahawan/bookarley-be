@@ -8,6 +8,7 @@ class CreateProducts < ActiveRecord::Migration[6.1]
       t.string :status
       t.string :link
       t.string :location
+      t.json :images
 
       t.timestamps
     end
