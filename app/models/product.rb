@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
+  has_many_attached :active_images
+
   enum status: {
     active: 'active',
     passive: 'passive',

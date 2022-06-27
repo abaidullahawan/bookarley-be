@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       resources :products
       resources :languages
 
+      get 'get_image_url', to: 'products#get_image_url'
+
       resources :product_categories do
         collection do
           get 'categories_list', to: 'product_categories#categories_list'

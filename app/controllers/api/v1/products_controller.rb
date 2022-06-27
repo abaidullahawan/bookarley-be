@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[get_image_url]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -96,6 +96,14 @@ module Api
         render json: { notice: 'Product was successfully removed.' }
       end
 
+      def get_image_url
+        @image_url = url_for(params[:table_name].constantize.find(params[:id]).active_image)
+        render json: {
+          status: 'success',
+          data: @image_url
+        }
+      end
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product
@@ -104,8 +112,8 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_params
-          params.require(:product).permit(:title, :description, :status,
-                                          :price, :location, extra_fields: {})
+          params.permit(:title, :description, :status,
+                                          :price, :location, extra_fields: {}, active_images: [])
         end
 
         def render_success
