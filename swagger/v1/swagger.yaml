@@ -528,6 +528,19 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/cities/{id}":
+  "/api/v1/all_cities":
+    get:
+      summary: Show All cities
+      tags:
+      - Cities
+      description: Info Related to All Cities
+      responses:
+        '200':
+          description: All Cities
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 
   #  Role Module
   "/api/v1/roles":
