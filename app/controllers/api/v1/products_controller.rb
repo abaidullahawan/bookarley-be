@@ -8,6 +8,7 @@ module Api
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
+      include PdfCsvUrl
 
       # GET /products
       # GET /products.json
@@ -43,6 +44,7 @@ module Api
             end
           end
         end
+        get_url(@save_path)
         render json: {
           status: 'success',
           file_path: @save_path
