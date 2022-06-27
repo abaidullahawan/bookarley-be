@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       resources :products
       resources :languages
 
+      get 'all_cities', to: 'cities#all_cities'
+
       get 'get_image_url', to: 'products#get_image_url'
 
       resources :product_categories do

@@ -4,7 +4,7 @@ module Api
   module V1
     # City api controller
     class CitiesController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[all_cities]
       before_action :set_city, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -97,6 +97,14 @@ module Api
         @city.destroy
 
         render json: { notice: 'City was successfully removed.' }
+      end
+
+      def all_cities
+        @list_cities = City.all
+        render json: {
+          status: 'success',
+          data: @list_cities
+        }
       end
 
       private
