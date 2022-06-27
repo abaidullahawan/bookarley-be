@@ -99,11 +99,23 @@ module Api
       end
 
       def get_image_url
-        @image_url = url_for(params[:table_name].constantize.find(params[:id]).active_image)
-        render json: {
-          status: 'success',
-          data: @image_url
-        }
+        @product_images_url = []
+        if params[:table_name].eql? 'Product'
+          @product = params[:table_name].constantize.find(params[:id])
+          @product.active_images.each do |img|
+            @product_images_url << url_for(img)
+          end
+          render json: {
+            status: 'success',
+            image_urls: @product_images_url
+          }
+        else
+          @image_url = url_for(params[:table_name].constantize.find(params[:id]).active_image)
+          render json: {
+            status: 'success',
+            image_url: @image_url
+          }
+        end
       end
 
       private
