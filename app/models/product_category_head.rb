@@ -3,6 +3,7 @@
 class ProductCategoryHead < ApplicationRecord
   belongs_to :product_category
   has_many :product_sub_categories
+  has_one_attached :active_image
 
   enum status: {
     active: 'active',
