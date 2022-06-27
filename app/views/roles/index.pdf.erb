@@ -32,11 +32,11 @@
       </tr>
     </thead>
     <tbody>
-    <% @roles.each_with_index do |city, index| %>
+    <% @roles.each_with_index do |role, index| %>
       <tr>
         <th><%= index + 1 %></th>
-        <td><%= city.title %></td>
-        <td><%= city.status %></td>
+        <td><%= role.title %></td>
+        <td><%= role.status %></td>
       </tr>
     <% end %>
     </tbody>

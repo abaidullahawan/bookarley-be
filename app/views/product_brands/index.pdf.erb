@@ -33,12 +33,12 @@
       </tr>
     </thead>
     <tbody>
-    <% @product_brands.each_with_index do |city, index| %>
+    <% @product_brands.each_with_index do |product_brand, index| %>
       <tr>
         <th><%= index + 1 %></th>
-        <td><%= city.title %></td>
-        <td><%= city.description %></td>
-        <td><%= city.status %></td>
+        <td><%= product_brand.title %></td>
+        <td><%= product_brand.description %></td>
+        <td><%= product_brand.status %></td>
       </tr>
     <% end %>
     </tbody>
