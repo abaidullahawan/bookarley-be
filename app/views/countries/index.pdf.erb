@@ -33,12 +33,12 @@
       </tr>
     </thead>
     <tbody>
-    <% @countries.each_with_index do |city, index| %>
+    <% @countries.each_with_index do |country, index| %>
       <tr>
         <th><%= index + 1 %></th>
-        <td><%= city.title %></td>
-        <td><%= city.comments %></td>
-        <td><%= city.status %></td>
+        <td><%= country.title %></td>
+        <td><%= country.comments %></td>
+        <td><%= country.status %></td>
       </tr>
     <% end %>
     </tbody>

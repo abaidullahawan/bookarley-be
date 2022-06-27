@@ -33,12 +33,12 @@
       </tr>
     </thead>
     <tbody>
-    <% @product_sub_categories.each_with_index do |city, index| %>
+    <% @product_sub_categories.each_with_index do |product_sub_category, index| %>
       <tr>
         <th><%= index + 1 %></th>
-        <td><%= city.title %></td>
-        <td><%= city.description %></td>
-        <td><%= city.status %></td>
+        <td><%= product_sub_category.title %></td>
+        <td><%= product_sub_category.description %></td>
+        <td><%= product_sub_category.status %></td>
       </tr>
     <% end %>
     </tbody>
