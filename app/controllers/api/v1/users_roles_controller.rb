@@ -15,7 +15,7 @@ module Api
         @pagy, @user_roles = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @user_roles.as_json,
+          data: @user_roles.joins(:role).includes(:role).to_json(include: [:role]),
           pagination: @pagy
         }
       end
