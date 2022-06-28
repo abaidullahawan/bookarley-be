@@ -20,7 +20,8 @@ module Api
         @pagy, @product_sub_categories = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_sub_categories,
+          data: JSON.parse(@product_sub_categories.joins(:product_category_head).includes(
+            :product_category_head).to_json(include: [:product_category_head])),
           pagination: @pagy
         }
       end
