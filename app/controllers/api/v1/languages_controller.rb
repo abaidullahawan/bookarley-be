@@ -107,7 +107,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def language_params
-          params.require(:language).permit(:name, :description)
+          params.require(:language).permit(:title, :description, :status)
         end
 
         def render_success

@@ -107,7 +107,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def country_params
-          params.permit(:title, :comments, :active_image)
+          params.permit(:title, :comments, :status, :active_image)
         end
 
         def render_success
