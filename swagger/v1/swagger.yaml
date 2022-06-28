@@ -349,6 +349,59 @@ paths:
           content: {}
           "/api/v1/countries/{id}":
 
+  "/api/v1/countries.pdf":
+    get:
+      summary: pdf for countries
+      tags:
+      - Countries
+      description: Info Related to All Countries
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Countries
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/countries.csv":
+    get:
+      summary: CSV for Countries
+      tags:
+      - Countries
+      description: Info Related to All Countries
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Countries
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
   #  City Module
   "/api/v1/cities":
     get:
@@ -542,6 +595,59 @@ paths:
           description: invalid request
           content: {}
 
+  "/api/v1/cities.pdf":
+    get:
+      summary: pdf for cities
+      tags:
+      - Cities
+      description: pdf for All Cities
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Cities
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/cities.csv":
+    get:
+      summary: CSV for cities
+      tags:
+      - Cities
+      description: CSV for All Cities
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Cities
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
   #  Role Module
   "/api/v1/roles":
     get:
@@ -726,6 +832,58 @@ paths:
           content: {}
           "/api/v1/roles/{id}":
 
+  "/api/v1/roles.pdf":
+    get:
+      summary: pdf for roles
+      tags:
+      - Roles
+      description: pdf for All Roles
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Roles
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/roles.csv":
+    get:
+      summary: CSV for roles
+      tags:
+      - Roles
+      description: CSV for All Roles
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Roles
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
   #  Users Roles
   "/api/v1/users_roles":
     get:
@@ -1103,6 +1261,58 @@ paths:
           description: invalid request
           content: {}
 
+  "/api/v1/product_categories.pdf":
+    get:
+      summary: pdf for Product Categories
+      tags:
+      - Product Categories
+      description: pdf for All Product Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/product_categories.csv":
+    get:
+      summary: CSV for Product Categories
+      tags:
+      - Product Categories
+      description: CSV for All Product Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 
   #  Product Category Heads
   "/api/v1/product_category_heads":
@@ -1296,6 +1506,58 @@ paths:
           content: {}
           "/api/v1/product_category_heads/{id}":
 
+  "/api/v1/product_category_heads.pdf":
+    get:
+      summary: pdf for Product Category Heads
+      tags:
+      - Product Category Heads
+      description: pdf for All Product Category Heads
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Category Heads
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/product_category_heads.csv":
+    get:
+      summary: CSV for Product Category Heads
+      tags:
+      - Product Category Heads
+      description: CSV for All Product Category Heads
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Category Heads
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 
   #  Product Sub Categories
   "/api/v1/product_sub_categories":
@@ -1489,6 +1751,59 @@ paths:
           content: {}
           "/api/v1/product_sub_categories/{id}":
 
+  "/api/v1/product_sub_categories.pdf":
+    get:
+      summary: pdf for Product Sub Categories
+      tags:
+      - Product Sub Categories
+      description: pdf for All Product Sub Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Sub Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/product_sub_categories.csv":
+    get:
+      summary: CSV for Product Sub Categories
+      tags:
+      - Product Sub Categories
+      description: CSV for All Product Sub Categories
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Sub Categories
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
 #  Product Brands
   "/api/v1/product_brands":
     get:
@@ -1672,6 +1987,59 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/products_brands/{id}":
+
+  "/api/v1/product_brands.pdf":
+    get:
+      summary: pdf for Product Brands
+      tags:
+      - Product Brands
+      description: pdf for All Product brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Brands
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/product_brands.csv":
+    get:
+      summary: CSV for Product Brands
+      tags:
+      - Product Brands
+      description: CSV for All Product brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Product Brands
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 # Products
   "/api/v1/products":
     get:
@@ -1872,6 +2240,58 @@ paths:
           content: {}
           "/api/v1/products/{id}":
 
+  "/api/v1/products.pdf":
+    get:
+      summary: pdf for Products
+      tags:
+      - Products
+      description: pdf for All Products
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Products
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/products.csv":
+    get:
+      summary: CSV for Products
+      tags:
+      - Products
+      description: CSV for All Products
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Products
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
   # Language
   "/api/v1/languages":
     get:
@@ -2051,6 +2471,59 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/languages/{id}":
+
+  "/api/v1/languages.pdf":
+    get:
+      summary: pdf for languages
+      tags:
+      - Languages
+      description: pdf for All languages
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All languages
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/languages.csv":
+    get:
+      summary: CSV for languages
+      tags:
+      - Languages
+      description: CSV for All languages
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All languages
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000
