@@ -119,7 +119,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_category_params
-          params.permit(:title, :active_image, :description, :status, :link)
+          params.permit(:title, :active_image, :description, :status, :link, :icon)
         end
 
         def render_success
