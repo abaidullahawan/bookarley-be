@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[categories_list]
+      before_action :authenticate_api_v1_user!, except: %i[categories_list categories_brands]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -100,9 +100,8 @@ module Api
       end
 
       def categories_list
-        @categories_list = ProductCategory.except(:id, :title, :image, :description, :status,
-          :created_at, :updated_at, :link).to_json(include: { product_category_heads: {
-            include: :product_sub_categories } })
+        @categories_list = ProductCategory.eager_load(:product_brands, product_category_heads: [:product_sub_categories]).except(:id, :title, :image, :description, :status,
+          :created_at, :updated_at, :link).to_json(include: [:product_brands, product_category_heads: {include: :product_sub_categories } ])
         render json: {
           status: 'success',
           data: JSON.parse(@categories_list)
