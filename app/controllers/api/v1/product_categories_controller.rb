@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController
-      #before_action :authenticate_api_v1_user!, except: %i[categories_list categories_brands]
+      before_action :authenticate_api_v1_user!, except: %i[categories_list categories_brands]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -22,9 +22,9 @@ module Api
           status: 'success',
           data: @product_categories.map { |product_category|
             product_category.active_image.attached? ? product_category.as_json(
-              only: %i[id title description status icon]).merge(
+              only: %i[id title description status icon link image]).merge(
               active_image_path: url_for(product_category.active_image)) : product_category.as_json(
-                only: %i[id title description status icon])
+                only: %i[id title description status icon link image])
           },
           pagination: @pagy
         }
