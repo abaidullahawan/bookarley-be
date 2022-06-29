@@ -6,12 +6,14 @@ class Api::V1::AppUsersController < ApplicationController
 
   def index
     no_of_record = params[:no_of_record] || 10
-    @q = User.ransack(params[:q])
+    @q = User.includes(:profile_attachment).ransack(params[:q])
     @pagy, @users = pagy(@q.result, items: no_of_record)
     render json: {
       status: 'success',
-      data: @users,
-      pagination: @pagy
+      data: @users.map { |user|
+        user.profile.attached? ? user.as_json(only: %i[id name email username gender]).merge(
+          profile_path: url_for(user.profile)) : user.as_json(only: %i[id name email username])
+      },
     }
   end
 
