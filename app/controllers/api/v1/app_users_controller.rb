@@ -11,8 +11,8 @@ class Api::V1::AppUsersController < ApplicationController
     render json: {
       status: 'success',
       data: @users.map { |user|
-        user.profile.attached? ? user.as_json(only: %i[id name email username gender]).merge(
-          profile_path: url_for(user.profile)) : user.as_json(only: %i[id name email username])
+        user.profile.attached? ? user.as_json.merge(
+          profile_path: url_for(user.profile)) : user.as_json
       },
     }
   end
@@ -20,7 +20,13 @@ class Api::V1::AppUsersController < ApplicationController
 
   def show
     if @app_user
-      render json: @app_user.to_json(include: [:personal_detail])
+      render json: {
+        status: 'success',
+        data: @app_user.profile.attached? ? JSON.parse(@app_user.to_json(
+          include: [:personal_detail])).merge(profile_path: url_for(
+          @app_user.profile)) : JSON.parse(@app_user.to_json(
+            include: [:personal_detail]))
+      }
     else
       render json: @app_user.errors
     end
@@ -29,7 +35,7 @@ class Api::V1::AppUsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_user
-      @app_user = User.find(params[:id])
+      @app_user = User.includes(:profile_attachment).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -21,8 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @countries.map { |country|
-            country.active_image.attached? ? country.as_json(only: %i[id title comments status image]).merge(
-              active_image_path: url_for(country.active_image)) : country.as_json(only: %i[id title comments status image])
+            country.active_image.attached? ? country.as_json.merge(
+              active_image_path: url_for(country.active_image)) : country.as_json
           },
           pagination: @pagy
         }
@@ -58,7 +58,11 @@ module Api
       # GET /countries/1.json
       def show
         if @country
-          render_success
+          render json: {
+            status: 'success',
+            data: @country.active_image.attached? ? @country.as_json.merge(
+              active_image_path: url_for(@country.active_image)) : @country.as_json
+          }
         else
           render json: @country.errors
         end
@@ -105,7 +109,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_country
-          @country = Country.find(params[:id])
+          @country = Country.includes(:active_image_attachment).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

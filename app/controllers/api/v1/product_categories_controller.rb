@@ -21,10 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @product_categories.map { |product_category|
-            product_category.active_image.attached? ? product_category.as_json(
-              only: %i[id title description status icon link image]).merge(
-              active_image_path: url_for(product_category.active_image)) : product_category.as_json(
-                only: %i[id title description status icon link image])
+            product_category.active_image.attached? ? product_category.as_json.merge(
+              active_image_path: url_for(product_category.active_image)) : product_category.as_json
           },
           pagination: @pagy
         }
@@ -60,7 +58,11 @@ module Api
       # GET /product_categories/1.json
       def show
         if @product_category
-          render_success
+          render json: {
+            status: 'success',
+            data: @product_category.active_image.attached? ? @product_category.as_json.merge(
+              active_image_path: url_for(@product_category.active_image)) : @product_category.as_json
+          }
         else
           render json: @product_category.errors
         end
@@ -118,7 +120,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product_category
-          @product_category = ProductCategory.find(params[:id])
+          @product_category = ProductCategory.includes(:active_image_attachment).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
