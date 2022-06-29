@@ -20,11 +20,9 @@ module Api
         @pagy, @category_brands = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @category_brands.map { |category_brand|
-            category_brand.active_image.attached? ? category_brand.as_json(
-              only: %i[id title description status icon image product_category_id]).merge(
-              active_image_path: url_for(category_brand.active_image)) : category_brand.as_json(
-                only: %i[id title description status icon image product_category_id])
+          data: @category_brands.map { |brand|
+            brand.active_image.attached? ? JSON.parse(brand.to_json(include: [:product_category])).merge(
+              active_image_path: url_for(brand.active_image)) : JSON.parse(brand.to_json(include: [:product_category]))
           },
           pagination: @pagy
         }

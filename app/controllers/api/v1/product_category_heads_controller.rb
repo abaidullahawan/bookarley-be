@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductCategoryHeadsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      # before_action :authenticate_api_v1_user!
       before_action :set_product_category_head, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -13,15 +13,17 @@ module Api
       # GET /product_category_heads
       # GET /product_category_heads.json
       def index
-        @q = ProductCategoryHead.ransack(params[:q])
+        @q = ProductCategoryHead.includes(:active_image_attachment).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @product_category_heads = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: JSON.parse(@product_category_heads.joins(:product_category).includes(
-            :product_category).to_json(include: [:product_category])),
+          data: @product_category_heads.map { |pch|
+            pch.active_image.attached? ? JSON.parse(pch.to_json(include: [:product_category])).merge(
+              active_image_path: url_for(pch.active_image)) : JSON.parse(pch.to_json(include: [:product_category]))
+          },
           pagination: @pagy
         }
       end

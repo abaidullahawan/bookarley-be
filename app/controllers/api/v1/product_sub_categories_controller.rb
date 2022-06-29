@@ -13,15 +13,18 @@ module Api
       # GET /product_sub_categories
       # GET /product_sub_categories.json
       def index
-        @q = ProductSubCategory.ransack(params[:q])
+
+        @q = ProductSubCategory.includes(:active_image_attachment).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @product_sub_categories = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: JSON.parse(@product_sub_categories.joins(:product_category_head).includes(
-            :product_category_head).to_json(include: [:product_category_head])),
+          data: @product_sub_categories.map { |psc|
+            psc.active_image.attached? ? JSON.parse(psc.to_json(include: [:product_category_head])).merge(
+              active_image_path: url_for(psc.active_image)) : JSON.parse(psc.to_json(include: [:product_category_head]))
+          },
           pagination: @pagy
         }
       end
