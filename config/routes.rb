@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :users_roles
       resources :product_sub_categories
       resources :product_category_heads
-      resources :product_brands
+      resources :category_brands
       resources :products
       resources :languages
 
