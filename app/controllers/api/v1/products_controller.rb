@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_image_url]
+      # before_action :authenticate_api_v1_user!, except: %i[get_image_url]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -13,14 +13,19 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.ransack(params[:q])
+        @q = Product.includes(:active_images_attachments).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
-
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
+        @urls = []
         render json: {
           status: 'success',
-          data: @products,
+          data: @products.map { |product|
+            product.active_images.attached? ? product.as_json(
+              only: %i[id title price extra_fields description status link location icon]).merge(
+              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json(
+                only: %i[id title price extra_fields description status link location icon])
+          },
           pagination: @pagy
         }
       end
