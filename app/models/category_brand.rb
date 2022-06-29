@@ -2,5 +2,11 @@
 
 class CategoryBrand < ApplicationRecord
   belongs_to :product_category
-  belongs_to :product_brand
+  has_one_attached :active_image
+
+  enum status: {
+    active: 'active',
+    passive: 'passive',
+    deleted: 'deleted'
+  }, _prefix: true
 end

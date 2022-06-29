@@ -231,15 +231,12 @@ paths:
             schema:
               type: object
               properties:
-                country:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    comments:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                comments:
+                  type: text
+                status:
+                  type: string
 
   "/api/v1/countries/{id}":
     get:
@@ -308,15 +305,12 @@ paths:
             schema:
               type: object
               properties:
-                country:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    comments:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                comments:
+                  type: text
+                status:
+                  type: string
     delete:
       summary: Delete country
       tags:
@@ -464,15 +458,12 @@ paths:
             schema:
               type: object
               properties:
-                city:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    comments:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                comments:
+                  type: text
+                status:
+                  type: string
 
   "/api/v1/cities/{id}":
     get:
@@ -541,15 +532,12 @@ paths:
             schema:
               type: object
               properties:
-                city:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    comments:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                comments:
+                  type: text
+                status:
+                  type: string
     delete:
       summary: Delete city
       tags:
@@ -710,17 +698,14 @@ paths:
             schema:
               type: object
               properties:
-                role:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    resource_type:
-                      type: string
-                    resource_id:
-                      type: integer
-                    status:
-                      type: string
+                title:
+                  type: string
+                resource_type:
+                  type: string
+                resource_id:
+                  type: integer
+                status:
+                  type: string
 
   "/api/v1/roles/{id}":
     get:
@@ -789,17 +774,14 @@ paths:
             schema:
               type: object
               properties:
-                role:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    resource_type:
-                      type: string
-                    resource_id:
-                      type: integer
-                    status:
-                      type: string
+                title:
+                  type: string
+                resource_type:
+                  type: string
+                resource_id:
+                  type: integer
+                status:
+                  type: string
     delete:
       summary: Delete role
       tags:
@@ -946,13 +928,10 @@ paths:
             schema:
               type: object
               properties:
-                users_role:
-                  type: object
-                  properties:
-                    user_id:
-                      type: integer
-                    role_id:
-                      type: integer
+                user_id:
+                  type: integer
+                role_id:
+                  type: integer
 
   "/api/v1/users_roles/{id}":
     get:
@@ -1021,13 +1000,10 @@ paths:
             schema:
               type: object
               properties:
-                users_role:
-                  type: object
-                  properties:
-                    user_id:
-                      type: integer
-                    role_id:
-                      type: integer
+                user_id:
+                  type: integer
+                role_id:
+                  type: integer
     delete:
       summary: Delete Users role
       tags:
@@ -1122,19 +1098,16 @@ paths:
             schema:
               type: object
               properties:
-                product_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    link:
-                      type: string
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
 
   "/api/v1/product_categories/{id}":
     get:
@@ -1203,19 +1176,16 @@ paths:
             schema:
               type: object
               properties:
-                product_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    link:
-                      type: string
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
     delete:
       summary: Delete Product Category
       tags:
@@ -1376,21 +1346,18 @@ paths:
             schema:
               type: object
               properties:
-                product_category_head:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_id:
-                      type: integer
-                    link:
-                      type: string
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                product_category_id:
+                  type: integer
+                link:
+                  type: string
+                icon:
+                  type: string
 
   "/api/v1/product_category_heads/{id}":
     get:
@@ -1459,21 +1426,20 @@ paths:
             schema:
               type: object
               properties:
-                product_category_head:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_id:
-                      type: integer
-                    link:
-                      type: string
+                title:
+                  type: string
+                image:
+                  type: json
+                description:
+                  type: text
+                status:
+                  type: string
+                product_category_id:
+                  type: integer
+                link:
+                  type: string
+                icon:
+                  type: string
     delete:
       summary: Delete Product Category Head
       tags:
@@ -1621,21 +1587,20 @@ paths:
             schema:
               type: object
               properties:
-                product_sub_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_head_id:
-                      type: integer
-                    link:
-                      type: string
+                title:
+                  type: string
+                image:
+                  type: json
+                description:
+                  type: text
+                status:
+                  type: string
+                product_category_head_id:
+                  type: integer
+                link:
+                  type: string
+                icon:
+                  type: string
 
   "/api/v1/product_sub_categories/{id}":
     get:
@@ -1704,21 +1669,20 @@ paths:
             schema:
               type: object
               properties:
-                product_sub_category:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    product_category_head_id:
-                      type: integer
-                    link:
-                      type: string
+                title:
+                  type: string
+                image:
+                  type: json
+                description:
+                  type: text
+                status:
+                  type: string
+                product_category_head_id:
+                  type: integer
+                link:
+                  type: string
+                icon:
+                  type: string
     delete:
       summary: Delete Product Sub Category
       tags:
@@ -1804,13 +1768,13 @@ paths:
           description: invalid request
           content: {}
 
-#  Product Brands
-  "/api/v1/product_brands":
+#  Category Brands
+  "/api/v1/category_brands":
     get:
-      summary: Show All Product Brands
+      summary: Show All Category Brands
       tags:
-      - Product Brands
-      description: Info Related to All Product brands
+      - Category Brands
+      description: Info Related to All Category brands
       parameters:
       - name: access-token
         in: header
@@ -1826,17 +1790,17 @@ paths:
           type: string
       responses:
         '200':
-          description: All Product Brands
+          description: All Category Brands
           content: {}
         '422':
           description: invalid request
           content: {}
     post:
-      summary: Create Product Brands
+      summary: Create Category Brands
       tags:
-      - Product Brands
-      description: "Creates a New Product Brands"
-      operationId: postProductBrandsCreation
+      - Category Brands
+      description: "Creates a New Category Brands"
+      operationId: postCategoryBrandsCreation
       parameters:
       - name: access-token
         in: header
@@ -1852,10 +1816,10 @@ paths:
           type: string
       responses:
         '200':
-          description: Product Brand Created
+          description: Category Brand Created
           content: {}
         '404':
-          description: Product Brand not created
+          description: Category Brand not created
           content: {}
         '422':
           description: invalid request
@@ -1866,24 +1830,19 @@ paths:
             schema:
               type: object
               properties:
-                product_brand:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
 
-  "/api/v1/product_brands/{id}":
+  "/api/v1/category_brands/{id}":
     get:
-      summary: Show Product Brand
+      summary: Show Category Brand
       tags:
-      - Product Brands
-      description: Show Product Brand by giving its id
+      - Category Brands
+      description: Show Category Brand by giving its id
       parameters:
       - name: access-token
         in: header
@@ -1910,10 +1869,10 @@ paths:
           description: invalid request
           content: {}
     put:
-      summary: Update a Product Brand
+      summary: Update a Category Brand
       tags:
-      - Product Brands
-      description: Update Product Brand by giving its id
+      - Category Brands
+      description: Update Category Brand by giving its id
       parameters:
       - name: access-token
         in: header
@@ -1945,22 +1904,17 @@ paths:
             schema:
               type: object
               properties:
-                product_brand:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    image:
-                      type: json
-                    description:
-                      type: text
-                    status:
-                      type: string
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
     delete:
-      summary: Delete Product Brand
+      summary: Delete Category Brand
       tags:
-      - Product Brands
-      description: Delete Product Brand by giving its id
+      - Category Brands
+      description: Delete Category Brand by giving its id
       parameters:
       - name: access-token
         in: header
@@ -1986,14 +1940,14 @@ paths:
         '422':
           description: invalid request
           content: {}
-          "/api/v1/products_brands/{id}":
+          "/api/v1/category_brands/{id}":
 
-  "/api/v1/product_brands.pdf":
+  "/api/v1/category_brands.pdf":
     get:
-      summary: pdf for Product Brands
+      summary: pdf for Category Brands
       tags:
-      - Product Brands
-      description: pdf for All Product brands
+      - Category Brands
+      description: pdf for All Category brands
       parameters:
       - name: access-token
         in: header
@@ -2009,17 +1963,17 @@ paths:
           type: string
       responses:
         '200':
-          description: All Product Brands
+          description: All Category Brands
           content: {}
         '422':
           description: invalid request
           content: {}
-  "/api/v1/product_brands.csv":
+  "/api/v1/category_brands.csv":
     get:
-      summary: CSV for Product Brands
+      summary: CSV for Category Brands
       tags:
-      - Product Brands
-      description: CSV for All Product brands
+      - Category Brands
+      description: CSV for All Category brands
       parameters:
       - name: access-token
         in: header
@@ -2035,7 +1989,7 @@ paths:
           type: string
       responses:
         '200':
-          description: All Product Brands
+          description: All Category Brands
           content: {}
         '422':
           description: invalid request
@@ -2102,25 +2056,20 @@ paths:
             schema:
               type: object
               properties:
-                product:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    price:
-                      type: float
-                    location:
-                      type: string
-                    link:
-                      types: string
-                    extra_fields:
-                      type: json
-                    image:
-                      type: json
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                price:
+                  type: float
+                location:
+                  type: string
+                link:
+                  types: string
+                extra_fields:
+                  type: json
 
   "/api/v1/products/{id}":
     get:
@@ -2189,25 +2138,20 @@ paths:
             schema:
               type: object
               properties:
-                product:
-                  type: object
-                  properties:
-                    title:
-                      type: string
-                    description:
-                      type: text
-                    status:
-                      type: string
-                    price:
-                      type: float
-                    location:
-                      type: string
-                    link:
-                      types: string
-                    extra_fields:
-                      type: json
-                    image:
-                      type: json
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                price:
+                  type: float
+                location:
+                  type: string
+                link:
+                  types: string
+                extra_fields:
+                  type: json
     delete:
       summary: Delete Product
       tags:
@@ -2354,15 +2298,12 @@ paths:
             schema:
               type: object
               properties:
-                language:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: text
-                    status:
-                      type: string
+                name:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
 
   "/api/v1/languages/{id}":
     get:
@@ -2431,15 +2372,12 @@ paths:
             schema:
               type: object
               properties:
-                language:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: text
-                    status:
-                      type: string
+                name:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
     delete:
       summary: Delete language
       tags:
