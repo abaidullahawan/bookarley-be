@@ -21,10 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @products.map { |product|
-            product.active_images.attached? ? product.as_json(
-              only: %i[id title price extra_fields description status link location icon]).merge(
-              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json(
-                only: %i[id title price extra_fields description status link location icon])
+            product.active_images.attached? ? product.as_json.merge(
+              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json
           },
           pagination: @pagy
         }
@@ -60,7 +58,11 @@ module Api
       # GET /products/1.json
       def show
         if @product
-          render_success
+          render json: {
+            status: 'success',
+            data: @product.active_images.attached? ? @product.as_json.merge(
+              active_images_path: @product.active_images.map { |img| url_for(img) }) : @product.as_json
+          }
         else
           render json: @product.errors
         end

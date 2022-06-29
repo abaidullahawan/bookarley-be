@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductCategoryHeadsController < ApplicationController
-      # before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!
       before_action :set_product_category_head, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -58,7 +58,13 @@ module Api
       # GET /product_category_heads/1.json
       def show
         if @product_category_head
-          render_success
+          render json: {
+            status: 'success',
+            data: @product_category_head.active_image.attached? ? JSON.parse(
+              @product_category_head.to_json(include: [:product_category])).merge(
+              active_image_path: url_for(@product_category_head.active_image)) : JSON.parse(
+              @product_category_head.to_json(include: [:product_category]))
+          }
         else
           render json: @product_category_head.errors
         end
@@ -105,7 +111,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product_category_head
-          @product_category_head = ProductCategoryHead.find(params[:id])
+          @product_category_head = ProductCategoryHead.joins(:product_category).includes(:product_category).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

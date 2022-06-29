@@ -59,7 +59,13 @@ module Api
       # GET /product_sub_categories/1.json
       def show
         if @product_sub_category
-          render_success
+          render json: {
+            status: 'success',
+            data: @product_sub_category.active_image.attached? ? JSON.parse(@product_sub_category.to_json(
+              include: [:product_category_head])).merge(active_image_path: url_for(
+              @product_sub_category.active_image)) : JSON.parse(@product_sub_category.to_json(
+                include: [:product_category_head]))
+          }
         else
           render json: @product_sub_category.errors
         end
@@ -106,7 +112,8 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product_sub_category
-          @product_sub_category = ProductSubCategory.find(params[:id])
+          @product_sub_category = ProductSubCategory.joins(:product_category_head).includes(
+            :product_category_head).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

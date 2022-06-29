@@ -21,9 +21,9 @@ module Api
         render json: {
           status: 'success',
           data: @cities.map { |city|
-            city.active_image.attached? ? city.as_json(only: %i[id title comments status image]).merge(
-              active_image_path: url_for(city.active_image)) : city.as_json(only: %i[id title comments status image])
-          },
+            city.active_image.attached? ? city.as_json.merge(
+              active_image_path: url_for(city.active_image)) : city.as_json
+            },
           pagination: @pagy
         }
       end
@@ -58,7 +58,11 @@ module Api
       # GET /cities/1.json
       def show
         if @city
-          render_success
+          render json: {
+            status: 'success',
+            data: @city.active_image.attached? ? @city.as_json.merge(
+              active_image_path: url_for(@city.active_image)) : @city.as_json
+            }
         else
           render json: @city.errors
         end
@@ -113,7 +117,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_city
-          @city = City.find(params[:id])
+          @city = City.includes(:active_image_attachment).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
