@@ -13,7 +13,7 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.includes(:active_images_attachments).ransack(params[:q])
+        @q = Product.includes(:active_images_attachments, :cover_photo_attachment).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
@@ -21,8 +21,11 @@ module Api
         render json: {
           status: 'success',
           data: @products.map { |product|
-            product.active_images.attached? ? product.as_json.merge(
-              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json
+            (product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
+              active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
+                cover_photo_path: url_for(product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
+                  active_images_path: product.active_images.map { |img| url_for(img) }) : product.cover_photo.attached? ? product.as_json.merge(
+                    cover_photo_path: url_for(product.cover_photo)) : product.as_json
           },
           pagination: @pagy
         }
@@ -60,8 +63,11 @@ module Api
         if @product
           render json: {
             status: 'success',
-            data: @product.active_images.attached? ? @product.as_json.merge(
-              active_images_path: @product.active_images.map { |img| url_for(img) }) : @product.as_json
+            data: (@product.active_images.attached? && @product.cover_photo.attached?) ? @product.as_json.merge(
+              active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
+                cover_photo_path: url_for(@product.cover_photo)) : @product.active_images.attached? ? @product.as_json.merge(
+                  active_images_path: @product.active_images.map { |img| url_for(img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
+                    cover_photo_path: url_for(@product.cover_photo)) : @product.as_json
           }
         else
           render json: @product.errors
@@ -131,10 +137,12 @@ module Api
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
         render json: {
-          status: 'success',
           data: @products.map { |product|
-            product.active_images.attached? ? product.as_json.merge(
-              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json
+            (product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
+              active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
+                cover_photo_path: url_for(product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
+                  active_images_path: product.active_images.map { |img| url_for(img) }) : product.cover_photo.attached? ? product.as_json.merge(
+                    cover_photo_path: url_for(product.cover_photo)) : product.as_json
           },
           pagination: @pagy
         }
@@ -149,7 +157,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_params
-          params.permit(:title, :description, :status,
+          params.permit(:title, :description, :status, :cover_photo, :product_type,
                                           :price, :location, extra_fields: {}, active_images: [])
         end
 
