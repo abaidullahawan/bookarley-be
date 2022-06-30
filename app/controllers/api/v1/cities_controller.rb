@@ -123,7 +123,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def city_params
-          params.permit(:title, :comments, :status, :active_image)
+          params.permit(:title, :comments, :status, :active_image, :city_type)
         end
 
         def render_success

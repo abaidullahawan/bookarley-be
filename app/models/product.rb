@@ -2,6 +2,7 @@
 
 class Product < ApplicationRecord
   has_many_attached :active_images
+  has_one_attached :cover_photo
 
   enum status: {
     active: 'active',
