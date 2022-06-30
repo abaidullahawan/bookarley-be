@@ -28,17 +28,12 @@ Rails.application.routes.draw do
       resources :languages
       resources :brands
       resources :models
+      resources :product_categories
 
       get 'all_cities', to: 'cities#all_cities'
-
       get 'get_image_url', to: 'products#get_image_url'
       get 'get_products', to: 'products#get_products'
-
-      resources :product_categories do
-        collection do
-          get 'categories_list', to: 'product_categories#categories_list'
-        end
-      end
+      get 'categories_list', to: 'product_categories#categories_list'
     end
   end
 

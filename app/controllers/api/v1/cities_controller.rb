@@ -107,7 +107,8 @@ module Api
       end
 
       def all_cities
-        @list_cities = City.all
+        @q = City.ransack(city_type_eq: params[:city_type])
+        @list_cities = @q.result
         render json: {
           status: 'success',
           data: @list_cities
