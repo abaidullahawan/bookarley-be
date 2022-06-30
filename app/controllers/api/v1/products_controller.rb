@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_image_url]
+      before_action :authenticate_api_v1_user!, except: %i[get_image_url get_products]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -123,6 +123,17 @@ module Api
             image_url: @image_url
           }
         end
+      end
+
+      def get_products
+        @q = Product.ransack(product_type_eq: params[:product_type])
+        no_of_record = params[:no_of_record] || 10
+        @pagy, @products = pagy(@q.result, items: no_of_record)
+        render json: {
+          status: 'success',
+          data: @products
+        }
+
       end
 
       private

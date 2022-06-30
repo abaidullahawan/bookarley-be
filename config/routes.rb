@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get 'all_cities', to: 'cities#all_cities'
 
       get 'get_image_url', to: 'products#get_image_url'
+      get 'get_products', to: 'products#get_products'
 
       resources :product_categories do
         collection do

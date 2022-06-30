@@ -9,7 +9,7 @@ class Product < ApplicationRecord
     deleted: 'deleted'
   }, _prefix: true
 
-  enum status: {
+  enum product_type: {
     new: 'new',
     used: 'used',
     popular: 'popular',
