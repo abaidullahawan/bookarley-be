@@ -1,6 +1,5 @@
 class CreateBrands < ActiveRecord::Migration[6.1]
   def change
-    drop_table :brands
     create_table :brands do |t|
       t.string :title
       t.text :description
