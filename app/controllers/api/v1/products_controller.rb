@@ -127,7 +127,8 @@ module Api
 
       def get_products
         @q = Product.ransack(product_type_eq: params[:product_type])
-        @products = @q.result
+        no_of_record = params[:no_of_record] || 10
+        @pagy, @products = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
           data: @products
