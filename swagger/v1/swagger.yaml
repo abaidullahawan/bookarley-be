@@ -1836,6 +1836,12 @@ paths:
                   type: text
                 status:
                   type: string
+                link:
+                  type: string
+                icon:
+                  type: text
+                product_category_id:
+                  type: string
 
   "/api/v1/category_brands/{id}":
     get:
@@ -1909,6 +1915,12 @@ paths:
                 description:
                   type: text
                 status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: text
+                product_category_id:
                   type: string
     delete:
       summary: Delete Category Brand
@@ -2070,6 +2082,8 @@ paths:
                   types: string
                 extra_fields:
                   type: json
+                product_type:
+                  types: string
 
   "/api/v1/products/{id}":
     get:
@@ -2152,6 +2166,8 @@ paths:
                   types: string
                 extra_fields:
                   type: json
+                product_type:
+                  types: string
     delete:
       summary: Delete Product
       tags:
@@ -2458,6 +2474,476 @@ paths:
       responses:
         '200':
           description: All languages
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
+ # Brand
+  "/api/v1/brands":
+    get:
+      summary: Show All brands
+      tags:
+      - Brands
+      description: Info Related to All brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All languages
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create brand
+      tags:
+      - Brands
+      description: "Creates a New brand"
+      operationId: postbrandCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: brand Created
+          content: {}
+        '404':
+          description: brand not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+
+  "/api/v1/brands/{id}":
+    get:
+      summary: Show Brand
+      tags:
+      - Brands
+      description: Show Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a Brand
+      tags:
+      - Brands
+      description: Update Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+    delete:
+      summary: Delete brand
+      tags:
+      - Brands
+      description: Delete Brand by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/brands/{id}":
+
+  "/api/v1/brands.pdf":
+    get:
+      summary: pdf for brands
+      tags:
+      - Brands
+      description: pdf for All brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All brands
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/brands.csv":
+    get:
+      summary: CSV for brands
+      tags:
+      - Brands
+      description: CSV for All brands
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All brands
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
+  # Model
+  "/api/v1/models":
+    get:
+      summary: Show All models
+      tags:
+      - Models
+      description: Info Related to All models
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All models
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create model
+      tags:
+      - Models
+      description: "Creates a New model"
+      operationId: postmodelCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: model Created
+          content: {}
+        '404':
+          description: model not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+
+  "/api/v1/models/{id}":
+    get:
+      summary: Show model
+      tags:
+      - Models
+      description: Show model by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a model
+      tags:
+      - Models
+      description: Update model by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+    delete:
+      summary: Delete model
+      tags:
+      - Models
+      description: Delete model by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/models/{id}":
+
+  "/api/v1/models.pdf":
+    get:
+      summary: pdf for models
+      tags:
+      - Models
+      description: pdf for All models
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All models
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/models.csv":
+    get:
+      summary: CSV for models
+      tags:
+      - Models
+      description: CSV for All models
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All models
           content: {}
         '422':
           description: invalid request

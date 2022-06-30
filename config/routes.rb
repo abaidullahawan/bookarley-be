@@ -26,6 +26,8 @@ Rails.application.routes.draw do
       resources :category_brands
       resources :products
       resources :languages
+      resources :brands
+      resources :models
 
       get 'all_cities', to: 'cities#all_cities'
 
