@@ -126,12 +126,17 @@ module Api
       end
 
       def get_products
-        @q = Product.ransack(product_type_eq: params[:product_type])
+        @q = Product.includes(:active_images_attachments).ransack(product_type_eq: params[:product_type])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
+        @urls = []
         render json: {
           status: 'success',
-          data: @products
+          data: @products.map { |product|
+            product.active_images.attached? ? product.as_json.merge(
+              active_images_path: product.active_images.map { |img| url_for(img) }) : product.as_json
+          },
+          pagination: @pagy
         }
 
       end

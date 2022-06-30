@@ -1217,7 +1217,7 @@ paths:
           description: invalid request
           content: {}
           "/api/v1/product_categories/{id}":
-  "/api/v1/product_categories/categories_list":
+  "/api/v1/categories_list":
     get:
       summary: Show All Product Categories
       tags:
