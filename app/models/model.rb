@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Brand < ApplicationRecord
+class Model < ApplicationRecord
   has_one_attached :active_image
 
   enum status: {
