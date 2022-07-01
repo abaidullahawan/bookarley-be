@@ -29,6 +29,7 @@ Rails.application.routes.draw do
       resources :brands
       resources :models
       resources :product_categories
+      resources :budgets
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_image_url', to: 'products#get_image_url'
