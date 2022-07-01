@@ -2948,6 +2948,241 @@ paths:
         '422':
           description: invalid request
           content: {}
+
+  # Budget
+  "/api/v1/budgets":
+    get:
+      summary: Show All budgets
+      tags:
+      - Budgets
+      description: Info Related to All budgets
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All budgets
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create budget
+      tags:
+      - Budgets
+      description: "Creates a New budget"
+      operationId: postBudgetCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: budget Created
+          content: {}
+        '404':
+          description: budget not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+
+  "/api/v1/budgets/{id}":
+    get:
+      summary: Show budget
+      tags:
+      - Budgets
+      description: Show budget by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a model
+      tags:
+      - Budgets
+      description: Update budget by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                link:
+                  type: string
+                icon:
+                  type: string
+    delete:
+      summary: Delete budget
+      tags:
+      - Budgets
+      description: Delete budget by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/models/{id}":
+
+  "/api/v1/budgets.pdf":
+    get:
+      summary: pdf for budget
+      tags:
+      - Budgets
+      description: pdf for All budgets
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All budgets
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/budgets.csv":
+    get:
+      summary: CSV for budgets
+      tags:
+      - Budgets
+      description: CSV for All budgets
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All budgets
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 servers:
 - url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000

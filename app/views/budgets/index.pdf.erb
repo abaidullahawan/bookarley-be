@@ -1,0 +1,49 @@
+<style>
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-spacing: 2px;
+    border-color: grey;
+  }
+
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  .table td, .table th {
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+  }
+
+  th, td {
+      text-align: center;
+  }
+
+</style>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Link</th>
+        <th scope="col">Icon</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @budgets.each_with_index do |budget, index| %>
+      <tr>
+        <th><%= index + 1 %></th>
+        <td><%= budget.title %></td>
+        <td><%= budget.description %></td>
+        <td><%= budget.status %></td>
+        <td><%= budget.link %></td>
+        <td><%= budget.icon %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
