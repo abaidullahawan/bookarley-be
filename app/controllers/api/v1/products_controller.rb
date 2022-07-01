@@ -13,7 +13,7 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.includes(:active_images_attachments, :cover_photo_attachment).ransack(params[:q])
+        @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)

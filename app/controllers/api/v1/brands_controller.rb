@@ -13,7 +13,7 @@ module Api
       # GET /brands
       # GET /brands.json
       def index
-        @q = Brand.includes(:active_image_attachment).ransack(params[:q])
+        @q = Brand.includes(active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
