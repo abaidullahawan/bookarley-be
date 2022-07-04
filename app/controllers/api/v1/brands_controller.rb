@@ -13,7 +13,7 @@ module Api
       # GET /brands
       # GET /brands.json
       def index
-        @q = Brand.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = Brand.includes(:products, active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -21,9 +21,9 @@ module Api
         render json: {
           status: 'success',
           data: @brands.map { |brand|
-            brand.active_image.attached? ? brand.as_json.merge(
-              active_image_path: url_for(brand.active_image)) : brand.as_json
-            },
+            brand.active_image.attached? ? JSON.parse(brand.to_json(include: [:products])).merge(
+              active_image_path: url_for(brand.active_image)) : JSON.parse(brand.to_json(include: [:products]))
+          },
           pagination: @pagy
         }
       end
