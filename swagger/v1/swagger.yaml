@@ -2084,6 +2084,10 @@ paths:
                   type: json
                 product_type:
                   types: string
+                brand_id:
+                  type: integer
+                featured:
+                  type: boolean
 
   "/api/v1/products/{id}":
     get:
@@ -2168,6 +2172,10 @@ paths:
                   type: json
                 product_type:
                   types: string
+                brand_id:
+                  type: integer
+                featured:
+                  type: boolean
     delete:
       summary: Delete Product
       tags:
@@ -2786,6 +2794,8 @@ paths:
                   type: string
                 icon:
                   type: string
+                product_id:
+                  type: integer
 
   "/api/v1/models/{id}":
     get:
@@ -2864,6 +2874,8 @@ paths:
                   type: string
                 icon:
                   type: string
+                product_id:
+                  type: integer
     delete:
       summary: Delete model
       tags:

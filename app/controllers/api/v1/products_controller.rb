@@ -135,7 +135,8 @@ module Api
       end
 
       def get_products
-        @q = Product.includes(:active_images_attachments).ransack(product_type_eq: params[:product_type])
+        @q = Product.includes(:active_images_attachments).ransack(
+          product_type_eq: params[:product_type], featured_eq: params[:featured])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
