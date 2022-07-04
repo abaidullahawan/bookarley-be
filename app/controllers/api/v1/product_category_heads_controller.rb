@@ -13,7 +13,7 @@ module Api
       # GET /product_category_heads
       # GET /product_category_heads.json
       def index
-        @q = ProductCategoryHead.joins(:product_category).includes(:product_category, :active_image_attachment).ransack(params[:q])
+        @q = ProductCategoryHead.includes(:product_category, :active_image_attachment).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10

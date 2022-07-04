@@ -114,7 +114,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def model_params
-          params.permit(:title, :description, :status, :link, :icon, :active_image)
+          params.permit(:title, :description, :status, :link, :icon, :product_id, :active_image)
         end
 
         def render_success
