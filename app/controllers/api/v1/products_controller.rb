@@ -161,7 +161,7 @@ module Api
         # Only allow a list of trusted parameters through.
         def product_params
           params.permit(:title, :description, :status, :cover_photo, :product_type, :brand_id,
-                                          :price, :location, extra_fields: {}, active_images: [])
+                                          :price, :featured, :location, extra_fields: {}, active_images: [])
         end
 
         def render_success

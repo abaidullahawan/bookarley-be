@@ -16,7 +16,6 @@ class Product < ApplicationRecord
     new: 'new',
     used: 'used',
     popular: 'popular',
-    featured: 'featured',
     upcoming: 'upcoming',
     newly_launched: 'newly launched'
   }, _prefix: true
