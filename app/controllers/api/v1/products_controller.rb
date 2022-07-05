@@ -88,7 +88,6 @@ module Api
       # POST /product
       # POST /product.json
       def create
-        byebug
         @product = Product.new(product_params)
 
         if @product.save
