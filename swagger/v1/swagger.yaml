@@ -2088,6 +2088,8 @@ paths:
                   type: integer
                 featured:
                   type: boolean
+                city:
+                  types: string
 
   "/api/v1/products/{id}":
     get:
@@ -2176,6 +2178,8 @@ paths:
                   type: integer
                 featured:
                   type: boolean
+                city:
+                  types: string
     delete:
       summary: Delete Product
       tags:
