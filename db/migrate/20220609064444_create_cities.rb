@@ -4,7 +4,7 @@ class CreateCities < ActiveRecord::Migration[6.1]
       t.string :title
       t.text :comments
       t.string :status
-      t.json :image
+      t.string :city_type
 
       t.timestamps
     end
