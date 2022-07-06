@@ -162,7 +162,7 @@ module Api
         # Only allow a list of trusted parameters through.
         def product_params
           parameters_set = params.permit(:title, :description, :status, :cover_photo, :link, :product_type, :brand_id,
-                                          :price, :featured, :location, :extra_fields, active_images: [])
+                                          :price, :featured, :city, :location, :extra_fields, active_images: [])
           parameters_set[:extra_fields] = JSON.parse(parameters_set[:extra_fields])
           parameters_set
         end
