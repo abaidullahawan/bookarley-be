@@ -4,7 +4,7 @@ module Api
   module V1
     # Model api controller
     class ModelsController < ApplicationController
-      #before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!
       before_action :set_model, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
