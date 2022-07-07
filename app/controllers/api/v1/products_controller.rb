@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[products_range get_products]
+      #before_action :authenticate_api_v1_user!, except: %i[products_range get_products]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -25,9 +25,9 @@ module Api
             (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(product.to_json(
               include: [:brand])).merge(active_images_path: product.active_images.map {
                 |img| url_for(img) }).as_json.merge(cover_photo_path: url_for(
-                  product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
+                  product.cover_photo)) : product.active_images.attached? ? JSON(product.to_json(include: [:brand])).merge(
                   active_images_path: product.active_images.map {
-                    |img| url_for(img) }) : product.cover_photo.attached? ? product.as_json.merge(
+                    |img| url_for(img) }) : product.cover_photo.attached? ? JSON.parse(product.to_json(include: [:brand])).merge(
                     cover_photo_path: url_for(product.cover_photo)) : JSON.parse(product.to_json(include: [:brand]))
           },
           pagination: @pagy
