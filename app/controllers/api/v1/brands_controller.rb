@@ -21,9 +21,9 @@ module Api
         render json: {
           status: 'success',
           data: @brands.map { |brand|
-            brand.active_image.attached? ? JSON.parse(brand.to_json(include: [:products])).merge(
-              active_image_path: url_for(brand.active_image)) : JSON.parse(brand.to_json(include: [:products]))
-          },
+            brand.active_image.attached? ? brand.as_json.merge(
+              active_image_path: url_for(brand.active_image)) : brand.as_json
+            },
           pagination: @pagy
         }
       end

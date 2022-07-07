@@ -32,8 +32,9 @@ Rails.application.routes.draw do
       resources :budgets
 
       get 'all_cities', to: 'cities#all_cities'
-      get 'get_image_url', to: 'products#get_image_url'
       get 'get_products', to: 'products#get_products'
+      get 'products_range', to: 'products#products_range'
+
       get 'categories_list', to: 'product_categories#categories_list'
     end
   end

@@ -4,7 +4,7 @@ module Api
   module V1
     # Model api controller
     class ModelsController < ApplicationController
-      #before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!
       before_action :set_model, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -13,7 +13,7 @@ module Api
       # GET /models
       # GET /models.json
       def index
-        @q = Model.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = Model.includes(:product, active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -21,9 +21,9 @@ module Api
         render json: {
           status: 'success',
           data: @models.map { |model|
-            model.active_image.attached? ? model.as_json.merge(
-              active_image_path: url_for(model.active_image)) : model.as_json
-            },
+            model.active_image.attached? ? JSON.parse(model.to_json(include: [:product])).merge(
+              active_image_path: url_for(model.active_image)) : JSON.parse(model.to_json(include: [:product]))
+          },
           pagination: @pagy
         }
       end

@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_image_url get_products]
+      before_action :authenticate_api_v1_user!, except: %i[products_range get_products]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -13,7 +13,7 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.includes(:models, active_images_attachments: :blob,
+        @q = Product.includes(:brand, active_images_attachments: :blob,
           cover_photo_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
@@ -23,12 +23,12 @@ module Api
           status: 'success',
           data: @products.map { |product|
             (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(product.to_json(
-              include: [:models])).merge(active_images_path: product.active_images.map {
+              include: [:brand])).merge(active_images_path: product.active_images.map {
                 |img| url_for(img) }).as_json.merge(cover_photo_path: url_for(
                   product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
                   active_images_path: product.active_images.map {
                     |img| url_for(img) }) : product.cover_photo.attached? ? product.as_json.merge(
-                    cover_photo_path: url_for(product.cover_photo)) : JSON.parse(product.to_json(include: [:models]))
+                    cover_photo_path: url_for(product.cover_photo)) : JSON.parse(product.to_json(include: [:brand]))
           },
           pagination: @pagy
         }
@@ -114,29 +114,9 @@ module Api
         render json: { notice: 'Product was successfully removed.' }
       end
 
-      def get_image_url
-        @product_images_url = []
-        if params[:table_name].eql? 'Product'
-          @product = params[:table_name].constantize.find(params[:id])
-          @product.active_images.each do |img|
-            @product_images_url << url_for(img)
-          end
-          render json: {
-            status: 'success',
-            image_urls: @product_images_url
-          }
-        else
-          @image_url = url_for(params[:table_name].constantize.find(params[:id]).active_image)
-          render json: {
-            status: 'success',
-            image_url: @image_url
-          }
-        end
-      end
-
       def get_products
-        @q = Product.includes(:active_images_attachments).ransack(
-          product_type_eq: params[:product_type], featured_eq: params[:featured])
+        @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
+          product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city], price_lteq: params[:price])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
@@ -150,7 +130,15 @@ module Api
           },
           pagination: @pagy
         }
+      end
 
+      def products_range
+        from = params[:from]
+        to = params[:to]
+        @product = Product.where("price Between #{from} AND #{to}") if from.present? && to.present?
+        @product = Product.where("price <= ?", to) if to.present? && from.blank?
+        @product = Product.where("price >= ?", from) if from.present? && to.blank?
+        from.blank? && to.blank? ?  render_errors : render_success
       end
 
       private
@@ -163,7 +151,7 @@ module Api
         def product_params
           parameters_set = params.permit(:title, :description, :status, :cover_photo, :link, :product_type, :brand_id,
                                           :price, :featured, :city, :location, :extra_fields, active_images: [])
-          parameters_set[:extra_fields] = JSON.parse(parameters_set[:extra_fields])
+          parameters_set[:extra_fields] = JSON.parse(parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
           parameters_set
         end
 
@@ -171,6 +159,12 @@ module Api
           render json: {
             status: 'success',
             data: @product
+          }
+        end
+
+        def render_errors
+          render json: {
+            status: "error"
           }
         end
     end
