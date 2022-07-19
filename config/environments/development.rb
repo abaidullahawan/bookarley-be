@@ -30,9 +30,6 @@ Rails.application.configure do
 
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
   config.action_mailer.perform_caching = false
 
   # Print deprecation notices to the Rails logger.
@@ -57,4 +54,21 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: "http://localhost:4000" }
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                  25,
+  authentication:       'plain',
+  user_name:            'tractoronline0012@gmail.com',
+  password:             'yvmoiovmgcmozppr',
+  domain:               'gmail.com',
+ }
+
+ config.action_mailer.default_options = {
+  from: 'tractoronline0012@gmail.com'
+}
 end

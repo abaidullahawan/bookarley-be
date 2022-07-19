@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[products_range get_products]
+      before_action :authenticate_api_v1_user!, except: %i[get_products]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -116,7 +116,8 @@ module Api
 
       def get_products
         @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
-          product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city], price_lteq: params[:price])
+          product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city],
+          price_lt: params[:price_lt], price_gt: params[:price_gt])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
@@ -130,15 +131,6 @@ module Api
           },
           pagination: @pagy
         }
-      end
-
-      def products_range
-        from = params[:from]
-        to = params[:to]
-        @product = Product.where("price Between #{from} AND #{to}") if from.present? && to.present?
-        @product = Product.where("price <= ?", to) if to.present? && from.blank?
-        @product = Product.where("price >= ?", from) if from.present? && to.blank?
-        from.blank? && to.blank? ?  render_errors : render_success
       end
 
       private

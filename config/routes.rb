@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-        # confirmations:      'devise_token_auth/confirmations',
+         confirmations:      'api/v1/devise/confirmations',
         # passwords:          'devise_token_auth/passwords',
         # omniauth_callbacks: 'devise_token_auth/omniauth_callbacks',
         # sessions:           'devise_token_auth/sessions',
@@ -33,7 +33,6 @@ Rails.application.routes.draw do
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
-      get 'products_range', to: 'products#products_range'
 
       get 'categories_list', to: 'product_categories#categories_list'
     end
