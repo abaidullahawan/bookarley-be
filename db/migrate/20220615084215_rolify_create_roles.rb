@@ -1,7 +1,7 @@
 class RolifyCreateRoles < ActiveRecord::Migration[6.1]
   def change
     create_table(:roles) do |t|
-      t.string :title
+      t.string :name
       t.string :status
       t.references :resource, :polymorphic => true
 
@@ -15,7 +15,7 @@ class RolifyCreateRoles < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    add_index(:roles, [ :title, :resource_type, :resource_id ])
+    add_index(:roles, [ :name, :resource_type, :resource_id ])
     add_index(:users_roles, [ :user_id, :role_id ])
   end
 end
