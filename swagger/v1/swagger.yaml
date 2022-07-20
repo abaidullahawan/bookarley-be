@@ -684,10 +684,10 @@ paths:
           type: string
       responses:
         '200':
-          description: City Created
+          description: Role Created
           content: {}
         '404':
-          description: City not created
+          description: Role not created
           content: {}
         '422':
           description: invalid request
@@ -698,7 +698,7 @@ paths:
             schema:
               type: object
               properties:
-                title:
+                name:
                   type: string
                 resource_type:
                   type: string
@@ -774,7 +774,7 @@ paths:
             schema:
               type: object
               properties:
-                title:
+                name:
                   type: string
                 resource_type:
                   type: string

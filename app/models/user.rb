@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   rolify
   extend Devise::Models
   include DeviseTokenAuth::Concerns::User
+  after_create :add_default_role
+
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -17,4 +19,9 @@ class User < ActiveRecord::Base
   has_one_attached :profile
   accepts_nested_attributes_for :personal_detail
   accepts_nested_attributes_for :users_role
+
+
+  def add_default_role
+    add_role(:customer) if self.roles.blank?
+  end
 end

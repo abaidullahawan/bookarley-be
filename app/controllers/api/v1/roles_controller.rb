@@ -107,7 +107,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def role_params
-          params.require(:role).permit(:title, :resource_type, :resource_id, :status)
+          params.require(:role).permit(:name, :resource_type, :resource_id, :status)
         end
 
         def render_success
