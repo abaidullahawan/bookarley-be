@@ -46,7 +46,7 @@ describe 'Product Category Heads Info API' do
                         image: { type: :binary },
                         description: { type: :text },
                         status: { type: :string },
-                        product_category_id: { type: :integer},
+                        product_category_id: { type: :integer },
                         link: { type: :string }
                         }
                     }
@@ -110,7 +110,7 @@ describe 'Product Category Heads Info API' do
                       image: { type: :binary },
                       description: { type: :text },
                       status: { type: :string },
-                      product_category_id: { type: :integer},
+                      product_category_id: { type: :integer },
                       link: { type: :string }
                         }
                     }

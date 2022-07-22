@@ -32,7 +32,8 @@ module Api
         @countries = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'countries/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'countries/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'countries.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file

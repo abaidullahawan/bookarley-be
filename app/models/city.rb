@@ -17,5 +17,4 @@ class City < ApplicationRecord
   #   image_url = rails_blob_path(self.image_active, disposition: "attachment", only_path: true)
   #   update_columns(image: image_url)
   # end
-
 end

@@ -10,5 +10,4 @@ class ProductSubCategory < ApplicationRecord
     passive: 'passive',
     deleted: 'deleted'
   }, _prefix: true
-
 end

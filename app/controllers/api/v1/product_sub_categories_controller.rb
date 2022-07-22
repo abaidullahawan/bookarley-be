@@ -13,8 +13,8 @@ module Api
       # GET /product_sub_categories
       # GET /product_sub_categories.json
       def index
-
-        @q = ProductSubCategory.includes(:product_category_head, active_image_attachment: :blob).ransack(params[:q])
+        @q = ProductSubCategory.includes(:product_category_head,
+          active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -22,8 +22,9 @@ module Api
         render json: {
           status: 'success',
           data: @product_sub_categories.map { |psc|
-            psc.active_image.attached? ? JSON.parse(psc.to_json(include: [:product_category_head])).merge(
-              active_image_path: url_for(psc.active_image)) : JSON.parse(psc.to_json(include: [:product_category_head]))
+            psc.active_image.attached? ? JSON.parse(psc.to_json(
+              include: [:product_category_head])).merge(active_image_path: url_for(
+                psc.active_image)) : JSON.parse(psc.to_json(include: [:product_category_head]))
           },
           pagination: @pagy
         }
@@ -33,7 +34,8 @@ module Api
         @product_sub_categories = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'product_sub_categories/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'product_sub_categories/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'product_sub_categories.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file
@@ -61,10 +63,10 @@ module Api
         if @product_sub_category
           render json: {
             status: 'success',
-            data: @product_sub_category.active_image.attached? ? JSON.parse(@product_sub_category.to_json(
-              include: [:product_category_head])).merge(active_image_path: url_for(
-              @product_sub_category.active_image)) : JSON.parse(@product_sub_category.to_json(
-                include: [:product_category_head]))
+            data: @product_sub_category.active_image.attached? ? JSON.parse(
+              @product_sub_category.to_json(include: [:product_category_head])).merge(
+                active_image_path: url_for(@product_sub_category.active_image)) : JSON.parse(
+                  @product_sub_category.to_json(include: [:product_category_head]))
           }
         else
           render json: @product_sub_category.errors
