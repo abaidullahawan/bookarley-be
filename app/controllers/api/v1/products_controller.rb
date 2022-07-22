@@ -22,13 +22,15 @@ module Api
         render json: {
           status: 'success',
           data: @products.map { |product|
-            (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(product.to_json(
-              include: [:brand])).merge(active_images_path: product.active_images.map {
-                |img| url_for(img) }).as_json.merge(cover_photo_path: url_for(
-                  product.cover_photo)) : product.active_images.attached? ? JSON(product.to_json(include: [:brand])).merge(
-                  active_images_path: product.active_images.map {
-                    |img| url_for(img) }) : product.cover_photo.attached? ? JSON.parse(product.to_json(include: [:brand])).merge(
-                    cover_photo_path: url_for(product.cover_photo)) : JSON.parse(product.to_json(include: [:brand]))
+            (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(
+              product.to_json(include: [:brand])).merge(
+                active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
+                  cover_photo_path: url_for(product.cover_photo)) :
+                    product.active_images.attached? ? JSON(product.to_json(
+                      include: [:brand])).merge(active_images_path: product.active_images.map {
+                    |img| url_for(img) }) : product.cover_photo.attached? ? JSON.parse(
+                      product.to_json(include: [:brand])).merge(cover_photo_path: url_for(
+                        product.cover_photo)) : JSON.parse(product.to_json(include: [:brand]))
           },
           pagination: @pagy
         }
@@ -38,7 +40,8 @@ module Api
         @products = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'products/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'products/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'products.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file
@@ -66,10 +69,13 @@ module Api
         if @product
           render json: {
             status: 'success',
-            data: (@product.active_images.attached? && @product.cover_photo.attached?) ? @product.as_json.merge(
+            data: (@product.active_images.attached? &&
+              @product.cover_photo.attached?) ? @product.as_json.merge(
               active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
-                cover_photo_path: url_for(@product.cover_photo)) : @product.active_images.attached? ? @product.as_json.merge(
-                  active_images_path: @product.active_images.map { |img| url_for(img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
+                cover_photo_path: url_for(@product.cover_photo)) :
+                  @product.active_images.attached? ? @product.as_json.merge(
+                  active_images_path: @product.active_images.map { |img| url_for(
+                    img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
                     cover_photo_path: url_for(@product.cover_photo)) : @product.as_json
           }
         else
@@ -125,9 +131,11 @@ module Api
           data: @products.map { |product|
             (product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
               active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
-                cover_photo_path: url_for(product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
-                  active_images_path: product.active_images.map { |img| url_for(img) }) : product.cover_photo.attached? ? product.as_json.merge(
-                    cover_photo_path: url_for(product.cover_photo)) : product.as_json
+                cover_photo_path: url_for(
+                  product.cover_photo)) : product.active_images.attached? ? product.as_json.merge(
+                    active_images_path: product.active_images.map { |img| url_for(
+                      img) }) : product.cover_photo.attached? ? product.as_json.merge(
+                        cover_photo_path: url_for(product.cover_photo)) : product.as_json
           },
           pagination: @pagy
         }
@@ -141,9 +149,11 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_params
-          parameters_set = params.permit(:title, :description, :status, :cover_photo, :link, :product_type, :brand_id,
-                                          :price, :featured, :city, :location, :extra_fields, active_images: [])
-          parameters_set[:extra_fields] = JSON.parse(parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
+          parameters_set = params.permit(:title, :description, :status, :cover_photo,
+                                         :link, :product_type, :brand_id, :price, :featured,
+                                         :city, :location, :extra_fields, active_images: [])
+          parameters_set[:extra_fields] = JSON.parse(
+            parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
           parameters_set
         end
 
@@ -156,7 +166,7 @@ module Api
 
         def render_errors
           render json: {
-            status: "error"
+            status: 'error'
           }
         end
     end

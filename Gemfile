@@ -45,7 +45,7 @@ gem 'rubocop-rails', require: false
 gem 'rubocop-rails_config'
 gem 'rubocop_runner', '~> 2.1', require: false
 
-gem "rolify"
+gem 'rolify'
 
 # Brakeman is a command-line tool that analyzes the source code of Ruby on Rails applications
 # to find potential security vulnerabilities.
@@ -57,7 +57,7 @@ gem 'rswag-ui'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
- gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

@@ -32,7 +32,8 @@ module Api
         @product_categories = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'product_categories/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'product_categories/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'product_categories.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file
@@ -61,7 +62,8 @@ module Api
           render json: {
             status: 'success',
             data: @product_category.active_image.attached? ? @product_category.as_json.merge(
-              active_image_path: url_for(@product_category.active_image)) : @product_category.as_json
+              active_image_path: url_for(
+                @product_category.active_image)) : @product_category.as_json
           }
         else
           render json: @product_category.errors
@@ -108,9 +110,10 @@ module Api
 
       def categories_list
         @categories_list = ProductCategory.order(id: :asc).eager_load(:category_brands,
-              product_category_heads: [:product_sub_categories]).except(:id, :title,:image, :description, :status,
-          :created_at, :updated_at, :link).to_json(include: [:category_brands,
-          product_category_heads: {include: :product_sub_categories } ])
+              product_category_heads: [:product_sub_categories]).except(:id, :title, :image,
+                :description, :status, :created_at, :updated_at, :link).to_json(
+                  include: [:category_brands,
+                    product_category_heads: { include: :product_sub_categories } ])
         render json: {
           status: 'success',
           data: JSON.parse(@categories_list)

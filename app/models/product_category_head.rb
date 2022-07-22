@@ -2,7 +2,7 @@
 
 class ProductCategoryHead < ApplicationRecord
   belongs_to :product_category
-  has_many :product_sub_categories,  dependent: :destroy
+  has_many :product_sub_categories, dependent: :destroy
   has_one_attached :active_image
 
   enum status: {
@@ -10,6 +10,4 @@ class ProductCategoryHead < ApplicationRecord
     passive: 'passive',
     deleted: 'deleted'
   }, _prefix: true
-
 end
-

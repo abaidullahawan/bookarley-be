@@ -13,7 +13,8 @@ module Api
       # GET /category_brands
       # GET /category_brands.json
       def index
-        @q = CategoryBrand.includes(:product_category, active_image_attachment: :blob).ransack(params[:q])
+        @q = CategoryBrand.includes(:product_category,
+          active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -22,7 +23,8 @@ module Api
           status: 'success',
           data: @category_brands.map { |brand|
             brand.active_image.attached? ? JSON.parse(brand.to_json(include: [:product_category])).merge(
-              active_image_path: url_for(brand.active_image)) : JSON.parse(brand.to_json(include: [:product_category]))
+              active_image_path: url_for(brand.active_image)) : JSON.parse(brand.to_json(
+                include: [:product_category]))
           },
           pagination: @pagy
         }
@@ -32,7 +34,8 @@ module Api
         @category_brands = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'category_brands/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'category_brands/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'category_brands.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file
@@ -60,8 +63,10 @@ module Api
         if @category_brand
           render json: {
             status: 'success',
-            data: @category_brand.active_image.attached? ? JSON.parse(@category_brand.to_json(include: [:product_category])).merge(
-              active_image_path: url_for(@category_brand.active_image)) : JSON.parse(@category_brand.to_json(include: [:product_category]))
+            data: @category_brand.active_image.attached? ? JSON.parse(@category_brand.to_json(
+              include: [:product_category])).merge(active_image_path: url_for(
+                @category_brand.active_image)) : JSON.parse(@category_brand.to_json(
+                  include: [:product_category]))
           }
         else
           render json: @category_brand.errors
@@ -114,7 +119,8 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def category_brand_params
-          params.permit(:title, :image, :description, :icon, :product_category_id, :status, :active_image)
+          params.permit(:title, :image, :description, :icon, :product_category_id, :status,
+            :active_image)
         end
 
         def render_success

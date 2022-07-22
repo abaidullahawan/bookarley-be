@@ -21,8 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @brands.map { |brand|
-            brand.active_image.attached? ? brand.as_json.merge(
-              active_image_path: url_for(brand.active_image)) : brand.as_json
+              brand.active_image.attached? ? brand.as_json.merge(
+                active_image_path: url_for(brand.active_image)) : brand.as_json
             },
           pagination: @pagy
         }
@@ -32,7 +32,8 @@ module Api
         @brands = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'brands/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'brands/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'brands.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file

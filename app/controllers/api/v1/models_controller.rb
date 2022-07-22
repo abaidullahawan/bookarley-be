@@ -22,7 +22,8 @@ module Api
           status: 'success',
           data: @models.map { |model|
             model.active_image.attached? ? JSON.parse(model.to_json(include: [:product])).merge(
-              active_image_path: url_for(model.active_image)) : JSON.parse(model.to_json(include: [:product]))
+              active_image_path: url_for(model.active_image)) : JSON.parse(
+                model.to_json(include: [:product]))
           },
           pagination: @pagy
         }
@@ -32,7 +33,8 @@ module Api
         @models = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'models/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'models/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'models.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file

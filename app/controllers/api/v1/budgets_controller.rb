@@ -21,8 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @budgets.map { |budget|
-            budget.active_image.attached? ? budget.as_json.merge(
-              active_image_path: url_for(budget.active_image)) : budget.as_json
+              budget.active_image.attached? ? budget.as_json.merge(
+                active_image_path: url_for(budget.active_image)) : budget.as_json
             },
           pagination: @pagy
         }
@@ -32,7 +32,8 @@ module Api
         @budgets = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'budgets/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'budgets/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'budgets.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file

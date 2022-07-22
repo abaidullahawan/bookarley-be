@@ -21,8 +21,8 @@ module Api
         render json: {
           status: 'success',
           data: @cities.map { |city|
-            city.active_image.attached? ? city.as_json.merge(
-              active_image_path: url_for(city.active_image)) : city.as_json
+              city.active_image.attached? ? city.as_json.merge(
+                active_image_path: url_for(city.active_image)) : city.as_json
             },
           pagination: @pagy
         }
@@ -32,7 +32,8 @@ module Api
         @cities = @q.result
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
-          file = render_to_string pdf: 'some_file_name', template: 'cities/index.pdf.erb', encoding: 'UTF-8'
+          file = render_to_string pdf: 'some_file_name',
+            template: 'cities/index.pdf.erb', encoding: 'UTF-8'
           @save_path = Rails.root.join(path, 'cities.pdf')
           File.open(@save_path, 'wb') do |f|
             f << file
