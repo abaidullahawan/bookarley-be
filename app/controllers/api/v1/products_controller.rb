@@ -121,6 +121,10 @@ module Api
       end
 
       def get_products
+        params[:featured] = nil if params[:featured].eql? 'nil'
+        params[:price_lt] = nil if params[:price_lt].eql? 'nil'
+        params[:price_gt] = nil if params[:price_gt].eql? 'nil'
+        params[:city] = nil if params[:city].eql? 'nil'
         @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
           product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city],
           price_lt: params[:price_lt], price_gt: params[:price_gt])
