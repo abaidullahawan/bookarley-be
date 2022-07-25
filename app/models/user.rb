@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :users_role
   has_one :personal_detail, as: :bio
   has_one_attached :profile
+  has_many :products
   accepts_nested_attributes_for :personal_detail
   accepts_nested_attributes_for :users_role
 
