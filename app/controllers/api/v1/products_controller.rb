@@ -155,7 +155,7 @@ module Api
         def product_params
           parameters_set = params.permit(:title, :description, :status, :cover_photo,
                                          :link, :product_type, :brand_id, :price, :featured,
-                                         :city, :location, :extra_fields, active_images: [])
+                                         :city, :location, :user_id, :extra_fields, active_images: [])
           parameters_set[:extra_fields] = JSON.parse(
             parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
           parameters_set

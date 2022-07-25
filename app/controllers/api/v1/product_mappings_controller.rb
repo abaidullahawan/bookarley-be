@@ -111,7 +111,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_mapping_params
-          parameters_set = params.permit(:product_category, :extra_fields)
+          parameters_set = params.permit(:product_category_id, :extra_fields)
           parameters_set[:extra_fields] = JSON.parse(
             parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
           parameters_set
