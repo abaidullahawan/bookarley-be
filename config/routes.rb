@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
-
+      get 'get_product_mappings', to: 'product_categories#get_product_mappings'
       get 'categories_list', to: 'product_categories#categories_list'
     end
   end

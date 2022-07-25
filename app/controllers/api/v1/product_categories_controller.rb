@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[categories_list]
+      before_action :authenticate_api_v1_user!, except: %i[categories_list get_product_mappings]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -120,6 +120,17 @@ module Api
         }
       end
 
+
+      def get_product_mappings
+        @q = ProductCategory.ransack(is_option_eq: true)
+        @product_mappings = @q.result
+        render json: {
+          status: 'success',
+          data: @product_mappings
+        }
+      end
+
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product_category
@@ -128,7 +139,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_category_params
-          params.permit(:title, :active_image, :description, :status, :link, :icon)
+          params.permit(:title, :active_image, :description, :status, :link, :icon, :is_option)
         end
 
         def render_success
