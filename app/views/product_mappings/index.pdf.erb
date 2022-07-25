@@ -1,0 +1,43 @@
+<style>
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-spacing: 2px;
+    border-color: grey;
+  }
+
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+  }
+
+  .table td, .table th {
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
+  }
+
+  th, td {
+      text-align: center;
+  }
+
+</style>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product Category</th>
+        <th scope="col">Extra Fields</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @product_mappings.each_with_index do |product_mapping, index| %>
+      <tr>
+        <th><%= index + 1 %></th>
+        <td><%= product_mapping.product_category %></td>
+        <td><%= product_mapping.extra_fields %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
