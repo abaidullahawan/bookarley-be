@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Mappings api controller
     class ProductMappingsController < ApplicationController
-      #before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!
       before_action :set_product_mapping, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
