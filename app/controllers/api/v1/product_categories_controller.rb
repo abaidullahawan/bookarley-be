@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[categories_list get_product_mappings]
+      before_action :authenticate_api_v1_user!, except: %i[categories_list]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -13,7 +13,8 @@ module Api
       # GET /product categories
       # GET /product_categories.json
       def index
-        @q = ProductCategory.includes(active_image_attachment: :blob).ransack(params[:q])
+        params[:is_option] = nil if params[:featured].eql? 'nil'
+        @q = ProductCategory.includes(active_image_attachment: :blob).ransack(is_option_eq: params[:is_option])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -119,17 +120,6 @@ module Api
           data: JSON.parse(@categories_list)
         }
       end
-
-
-      def get_product_mappings
-        @q = ProductCategory.ransack(is_option_eq: true)
-        @product_mappings = @q.result
-        render json: {
-          status: 'success',
-          data: @product_mappings
-        }
-      end
-
 
       private
         # Use callbacks to share common setup or constraints between actions.
