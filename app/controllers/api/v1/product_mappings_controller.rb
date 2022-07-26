@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Mappings api controller
     class ProductMappingsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      #before_action :authenticate_api_v1_user!
       before_action :set_product_mapping, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -20,7 +20,8 @@ module Api
         @pagy, @product_mappings = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_mappings,
+          data:  JSON.parse(@product_mappings.includes(:product_category).to_json(
+            include: [:product_category])),
           pagination: @pagy
         }
       end
@@ -111,10 +112,8 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_mapping_params
-          parameters_set = params.permit(:product_category_id, :extra_fields)
-          parameters_set[:extra_fields] = JSON.parse(
-            parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
-          parameters_set
+          params.permit(:product_category_id, extra_fields: {})
+
         end
 
         def render_success
