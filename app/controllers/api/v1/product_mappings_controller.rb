@@ -20,7 +20,8 @@ module Api
         @pagy, @product_mappings = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_mappings,
+          data:  JSON.parse(@product_mappings.includes(:product_category).to_json(
+            include: [:product_category])),
           pagination: @pagy
         }
       end
