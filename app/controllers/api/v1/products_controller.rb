@@ -121,13 +121,17 @@ module Api
       end
 
       def get_products
+        params[:product_type] = nil if params[:product_type].eql? 'nil'
         params[:featured] = nil if params[:featured].eql? 'nil'
         params[:price_lt] = nil if params[:price_lt].eql? 'nil'
         params[:price_gt] = nil if params[:price_gt].eql? 'nil'
         params[:city] = nil if params[:city].eql? 'nil'
+        params[:brand_id] = nil if params[:brand_id].eql? 'nil'
+        params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
         @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
           product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city],
-          price_lt: params[:price_lt], price_gt: params[:price_gt])
+          price_lt: params[:price_lt], price_gt: params[:price_gt], brand_id_eq: params[:brand_id],
+          product_category_id_eq: params[:product_category_id])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
@@ -153,9 +157,10 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_params
-          parameters_set = params.permit(:title, :description, :status, :cover_photo,
-                                         :link, :product_type, :brand_id, :price, :featured,
-                                         :city, :location, :user_id, :extra_fields, active_images: [])
+          parameters_set = params.permit(:title, :description, :status, :cover_photo, :link,
+                                         :product_type, :brand_id, :price, :featured,
+                                         :product_category_id, :city, :location, :user_id,
+                                         :extra_fields, active_images: [])
           parameters_set[:extra_fields] = JSON.parse(
             parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
           parameters_set
