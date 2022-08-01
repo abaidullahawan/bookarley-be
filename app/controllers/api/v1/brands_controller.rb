@@ -108,10 +108,11 @@ module Api
       end
 
       def brand_with_products
-        @brand_with_products = Brand.includes(:products).to_json(include: [:products])
+        @brand_with_product = Brand.includes(:products).find(params[:id]).to_json(
+          include: [:products])
         render json: {
         status: 'success',
-        data: JSON.parse(@brand_with_products)
+        data: JSON.parse(@brand_with_product)
       }
       end
 
