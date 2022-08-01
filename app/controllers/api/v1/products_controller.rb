@@ -13,7 +13,7 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.includes(:brand, active_images_attachments: :blob,
+        @q = Product.includes(:brand, :product_category, active_images_attachments: :blob,
           cover_photo_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
@@ -23,14 +23,16 @@ module Api
           status: 'success',
           data: @products.map { |product|
             (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(
-              product.to_json(include: [:brand])).merge(
+              product.to_json(include: [:brand, :product_category])).merge(
                 active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
                   cover_photo_path: url_for(product.cover_photo)) :
                     product.active_images.attached? ? JSON(product.to_json(
-                      include: [:brand])).merge(active_images_path: product.active_images.map {
+                      include: [:brand, :product_category])).merge(
+                        active_images_path: product.active_images.map {
                     |img| url_for(img) }) : product.cover_photo.attached? ? JSON.parse(
-                      product.to_json(include: [:brand])).merge(cover_photo_path: url_for(
-                        product.cover_photo)) : JSON.parse(product.to_json(include: [:brand]))
+                      product.to_json(include: [:brand, :product_category])).merge(
+                        cover_photo_path: url_for(product.cover_photo)) : JSON.parse(
+                          product.to_json(include: [:brand, :product_category]))
           },
           pagination: @pagy
         }
@@ -126,12 +128,13 @@ module Api
         params[:price_lt] = nil if params[:price_lt].eql? 'nil'
         params[:price_gt] = nil if params[:price_gt].eql? 'nil'
         params[:city] = nil if params[:city].eql? 'nil'
+        params[:title] = nil if params[:title].eql? 'nil'
         params[:brand_id] = nil if params[:brand_id].eql? 'nil'
         params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
         @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
           product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city],
           price_lt: params[:price_lt], price_gt: params[:price_gt], brand_id_eq: params[:brand_id],
-          product_category_id_eq: params[:product_category_id])
+          product_category_id_eq: params[:product_category_id], title_cont: params[:title])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         @urls = []
