@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class BrandsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[brand_with_products]
       before_action :set_brand, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -105,6 +105,14 @@ module Api
         @brand.destroy
 
         render json: { notice: 'Brand was successfully removed.' }
+      end
+
+      def brand_with_products
+        @brand_with_products = Brand.includes(:products).to_json(include: [:products])
+        render json: {
+        status: 'success',
+        data: JSON.parse(@brand_with_products)
+      }
       end
 
       private
