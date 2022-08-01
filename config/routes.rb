@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
-      get 'brand_with_products', to: 'brands#brand_with_products'
+      get 'brand_with_products/:id', to: 'brands#brand_with_products'
       get 'categories_list', to: 'product_categories#categories_list'
     end
   end
