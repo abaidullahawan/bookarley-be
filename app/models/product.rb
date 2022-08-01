@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   has_one_attached :cover_photo
   belongs_to :brand
   belongs_to :user
+  belongs_to :product_category
   has_many :models, dependent: :destroy
 
   enum status: {
