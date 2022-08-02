@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_products]
+      before_action :authenticate_api_v1_user!, except: %i[get_products show]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
