@@ -109,14 +109,17 @@ module Api
       end
 
       def categories_list
-        @categories_list = ProductCategory.order(id: :asc).eager_load(:category_brands,
-              product_category_heads: [:product_sub_categories]).except(:id, :title, :image,
-                :description, :status, :created_at, :updated_at, :link).to_json(
-                  include: [:category_brands,
-                    product_category_heads: { include: :product_sub_categories } ])
+        @categories_list = ProductCategory.order(id: :asc).includes(:category_brands,
+          product_category_heads: [:product_sub_categories], active_image_attachment: :blob)
         render json: {
           status: 'success',
-          data: JSON.parse(@categories_list)
+          data: @categories_list.map { |cl|
+            cl.active_image.attached? ? JSON.parse(cl.to_json(
+              include: [:category_brands, product_category_heads: {
+                include: :product_sub_categories }])).merge(active_image_path: url_for(
+                cl.active_image)) : JSON.parse(cl.to_json(include: [:category_brands,
+                  product_category_heads: {include: :product_sub_categories}]))
+          }
         }
       end
 
