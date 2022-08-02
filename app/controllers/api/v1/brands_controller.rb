@@ -5,7 +5,7 @@ module Api
     # Brand api controller
     class BrandsController < ApplicationController
       before_action :authenticate_api_v1_user!, except: %i[brand_with_products]
-      before_action :set_brand, only: %i[show edit update destroy]
+      before_action :set_brand, only: %i[show edit update destroy brand_with_products]
       require 'tempfile'
       require 'csv'
       include PdfCsvUrl
@@ -108,18 +108,19 @@ module Api
       end
 
       def brand_with_products
-        @brand_with_product = Brand.includes(:products).find(params[:id]).to_json(
-          include: [:products])
         render json: {
-        status: 'success',
-        data: JSON.parse(@brand_with_product)
-      }
+          status: 'success',
+          data: @brand.active_image.attached? ? JSON.parse(@brand.to_json(
+              include: [:products])).merge(active_image_path: url_for(
+                @brand.active_image)) : JSON.parse(@brand.to_json(include: [:products]))
+        }
+      
       end
 
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_brand
-          @brand = Brand.includes(:active_image_attachment).find(params[:id])
+          @brand = Brand.includes(:products, active_image_attachment: :blob).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
