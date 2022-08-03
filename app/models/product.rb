@@ -15,8 +15,6 @@ class Product < ApplicationRecord
   }, _prefix: true
 
   enum product_type: {
-    new: 'new',
-    used: 'used',
     popular: 'popular',
     upcoming: 'upcoming',
     newly_launched: 'newly launched'

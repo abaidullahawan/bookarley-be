@@ -71,14 +71,16 @@ module Api
         if @product
           render json: {
             status: 'success',
-            data: (@product.active_images.attached? &&
-              @product.cover_photo.attached?) ? @product.as_json.merge(
-              active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
-                cover_photo_path: url_for(@product.cover_photo)) :
-                  @product.active_images.attached? ? @product.as_json.merge(
-                  active_images_path: @product.active_images.map { |img| url_for(
-                    img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
-                    cover_photo_path: url_for(@product.cover_photo)) : @product.as_json
+            data: (@product.active_images.attached? && @product.cover_photo.attached?) ? JSON.parse(
+              @product.to_json(include: [:user])).merge(
+                active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
+                  cover_photo_path: url_for(@product.cover_photo)) :
+                    product.active_images.attached? ? JSON(@product.to_json(
+                      include: [:user])).merge(active_images_path: @product.active_images.map {
+                    |img| url_for(img) }) : @product.cover_photo.attached? ? JSON.parse(
+                      product.to_json(include: [:user])).merge(
+                        cover_photo_path: url_for(@product.cover_photo)) : JSON.parse(
+                          @product.to_json(include: [:user]))
           }
         else
           render json: @product.errors
@@ -155,7 +157,8 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product
-          @product = Product.find(params[:id])
+          @product = Product.includes(:user, active_images_attachments: :blob,
+            cover_photo_attachment: :blob).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
