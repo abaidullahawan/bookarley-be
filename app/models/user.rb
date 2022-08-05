@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   after_create :add_default_role
 
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -24,4 +23,9 @@ class User < ActiveRecord::Base
   def add_default_role
     add_role(:customer) if self.roles.blank?
   end
+
+  def created_at
+    attributes['created_at'].strftime("%B %d, %Y")
+  end
+
 end
