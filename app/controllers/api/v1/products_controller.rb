@@ -75,13 +75,14 @@ module Api
               @product.to_json(include: [:user])).merge(
                 active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
                   cover_photo_path: url_for(@product.cover_photo)) :
-                    product.active_images.attached? ? JSON(@product.to_json(
+                    @product.active_images.attached? ? JSON(@product.to_json(
                       include: [:user])).merge(active_images_path: @product.active_images.map {
                     |img| url_for(img) }) : @product.cover_photo.attached? ? JSON.parse(
-                      product.to_json(include: [:user])).merge(
+                      @product.to_json(include: [:user])).merge(
                         cover_photo_path: url_for(@product.cover_photo)) : JSON.parse(
                           @product.to_json(include: [:user])),
-            profile: @product.user.profile.attached? ? url_for(@product.user.profile): "No profile image"
+            profile: @product.user.profile.attached? ? url_for(@product.user.profile) :
+              'No profile image'
           }
         else
           render json: @product.errors

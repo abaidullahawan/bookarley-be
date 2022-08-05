@@ -20,9 +20,9 @@ module Api
                                                         token.client,
                                                         redirect_header_options)
 
-              redirect_to_link = signed_in_resource.build_auth_url(redirect_url, redirect_headers)
+              signed_in_resource.build_auth_url(redirect_url, redirect_headers)
             else
-              redirect_to_link = DeviseTokenAuth::Url.generate(redirect_url, redirect_header_options)
+              DeviseTokenAuth::Url.generate(redirect_url, redirect_header_options)
             end
             redirect_path = 'http://localhost:3000/login/'
             redirect_path = 'https://tractoronline.com.pk/login/' if Rails.env.production?

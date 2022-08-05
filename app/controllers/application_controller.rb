@@ -21,12 +21,12 @@ class ApplicationController < ActionController::Base
     def configure_sign_in_params
       devise_parameter_sanitizer.permit(:sign_in, keys:
         [:email, :password]
-        )
+      )
     end
 
     def configure_sign_up_params
       devise_parameter_sanitizer.permit(:sign_up, keys:
         [:email, :password, :password_confirmation, :name]
-        )
+      )
     end
 end
