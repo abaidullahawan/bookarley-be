@@ -109,8 +109,11 @@ module Api
       end
 
       def categories_list
-        @categories_list = ProductCategory.order(id: :asc).includes(:category_brands,
-          product_category_heads: [:product_sub_categories], active_image_attachment: :blob)
+        params[:is_option] = nil if params[:is_option].eql? 'nil'
+        @q = ProductCategory.order(id: :asc).includes(:category_brands,
+          product_category_heads: [:product_sub_categories],
+          active_image_attachment: :blob).ransack(is_option_eq: params[:is_option])
+        @categories_list = @q.result
         render json: {
           status: 'success',
           data: @categories_list.map { |cl|
