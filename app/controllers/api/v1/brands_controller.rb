@@ -114,7 +114,6 @@ module Api
               include: [:products])).merge(active_image_path: url_for(
                 @brand.active_image)) : JSON.parse(@brand.to_json(include: [:products]))
         }
-      
       end
 
       private
