@@ -14,6 +14,7 @@ class Api::V1::AppUsersController < ApplicationController
         user.profile.attached? ? user.as_json.merge(
           profile_path: url_for(user.profile)) : user.as_json
       },
+      pagination: @pagy
     }
   end
 
@@ -23,9 +24,9 @@ class Api::V1::AppUsersController < ApplicationController
       render json: {
         status: 'success',
         data: @app_user.profile.attached? ? JSON.parse(@app_user.to_json(
-          include: [:personal_detail])).merge(profile_path: url_for(
+          include: [:personal_detail, :products])).merge(profile_path: url_for(
           @app_user.profile)) : JSON.parse(@app_user.to_json(
-            include: [:personal_detail]))
+            include: [:personal_detail, :products]))
       }
     else
       render json: @app_user.errors
@@ -35,7 +36,7 @@ class Api::V1::AppUsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_user
-      @app_user = User.includes(:profile_attachment).find(params[:id])
+      @app_user = User.includes(:products, profile_attachment: :blob).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

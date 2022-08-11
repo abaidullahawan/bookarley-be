@@ -1108,6 +1108,26 @@ paths:
                   type: string
                 icon:
                   type: string
+                price:
+                  type: float
+                extra_fields:
+                  type: json
+                location:
+                  type: string
+                city:
+                  type: string
+                featured:
+                  type: boolean
+                product_type:
+                  type: string
+                brand_id:
+                  type: integer
+                user_id:
+                  type: integer
+                product_category_id:
+                  type: integer
+                phone_no:
+                  type: string
 
   "/api/v1/product_categories/{id}":
     get:
@@ -1185,6 +1205,26 @@ paths:
                 link:
                   type: string
                 icon:
+                  type: string
+                price:
+                  type: float
+                extra_fields:
+                  type: json
+                location:
+                  type: string
+                city:
+                  type: string
+                featured:
+                  type: boolean
+                product_type:
+                  type: string
+                brand_id:
+                  type: integer
+                user_id:
+                  type: integer
+                product_category_id:
+                  type: integer
+                phone_no:
                   type: string
     delete:
       summary: Delete Product Category
@@ -2523,7 +2563,7 @@ paths:
       tags:
       - Brands
       description: "Creates a New brand"
-      operationId: postbrandCreation
+      operationId: postBrandCreation
       parameters:
       - name: access-token
         in: header
@@ -2758,7 +2798,7 @@ paths:
       tags:
       - Models
       description: "Creates a New model"
-      operationId: postmodelCreation
+      operationId: postModelCreation
       parameters:
       - name: access-token
         in: header
@@ -3199,6 +3239,229 @@ paths:
         '422':
           description: invalid request
           content: {}
+    # Product Mapping
+  "/api/v1/product_mapping":
+    get:
+      summary: Show All mappings
+      tags:
+      - Product Mappings
+      description: Info Related to All mappings
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All mappings
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Mapping
+      tags:
+      - Product Mappings
+      description: "Creates a New Product Mapping"
+      operationId: postMappingCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: model Created
+          content: {}
+        '404':
+          description: model not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                extra_fields:
+                  type: json
+                product_category_id:
+                  type: integer
+
+  "/api/v1/product_mappings/{id}":
+    get:
+      summary: Show mapping
+      tags:
+      - Product Mappings
+      description: Show mapping by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    put:
+      summary: Update a mapping
+      tags:
+      - Product Mappings
+      description: Update mapping by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                extra_fields:
+                  type: string
+                product_category_id:
+                  type: integer
+    delete:
+      summary: Delete mapping
+      tags:
+      - Product Mappings
+      description: Delete mapping by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/product_mappings/{id}":
+
+  "/api/v1/product_mappings.pdf":
+    get:
+      summary: pdf for mapping
+      tags:
+      - Product Mappings
+      description: pdf for All mapping
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All mappings
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+  "/api/v1/product_mappings.csv":
+    get:
+      summary: CSV for mapping
+      tags:
+      - Product Mappings
+      description: CSV for All mapping
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All mapping
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
 servers:
-- url: https://portal.tractoronline.com.pk/
 - url: http://localhost:4000
+- url: https://portal.tractoronline.com.pk/
