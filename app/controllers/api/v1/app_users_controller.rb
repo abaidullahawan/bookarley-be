@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::AppUsersController < ApplicationController
-  #before_action :authenticate_api_v1_user!
+  before_action :authenticate_api_v1_user!
   before_action :set_app_user, only: %i[show]
 
   def index
@@ -36,7 +36,7 @@ class Api::V1::AppUsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_app_user
-      @app_user = User.includes(:products ,profile_attachment: :blob,).find(params[:id])
+      @app_user = User.includes(:products, profile_attachment: :blob).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
