@@ -25,4 +25,8 @@ class Product < ApplicationRecord
       parent.table[:extra_fields], Arel::Nodes.build_quoted(' ')
     )
   end
+
+  def updated_at
+    TimeDifference.between(Time.zone.now, attributes['updated_at']).humanize
+  end
 end
