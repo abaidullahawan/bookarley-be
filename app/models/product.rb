@@ -28,9 +28,9 @@ class Product < ApplicationRecord
     )
   end
 
-  def updated_at
-    TimeDifference.between(Time.zone.now, attributes['updated_at']).humanize
-  end
+  # def updated_at
+  #   TimeDifference.between(Time.zone.now, attributes['updated_at']).humanize
+  # end
 
   def as_json
     super.merge('favourite' => favourite_ads.where(user_id: Current.user&.id).present?)
