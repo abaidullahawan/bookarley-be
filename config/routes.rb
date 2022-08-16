@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-         confirmations:      'api/v1/devise/confirmations',
+        confirmations:      'api/v1/devise/confirmations',
         # passwords:          'devise_token_auth/passwords',
         # omniauth_callbacks: 'devise_token_auth/omniauth_callbacks',
-        # sessions:           'devise_token_auth/sessions',
+         sessions:           'api/v1/devise/sessions'
         # token_validations:  'devise_token_auth/token_validations',
-      # registrations:      'api/v1/devise/registrations'
+        # registrations:      'api/v1/devise/registrations'
       }
       resources :app_users,  only: %i[show index]
       resources :brands
@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
+      get 'favourite_ads', to: 'products#favourite_ads'
       get 'brand_with_products/:id', to: 'brands#brand_with_products'
       get 'categories_list', to: 'product_categories#categories_list'
     end
