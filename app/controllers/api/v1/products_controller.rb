@@ -156,6 +156,22 @@ module Api
         }
       end
 
+      def favourite_ads
+        if params[:user_id].present? && params[:product_id].present? && params[:remove].present?
+          @product =  FavouriteAd.find_by(user_id: params[:user_id], product_id: params[:product_id])
+          @product.destroy
+          render json: { notice: 'Product was successfully removed.' }
+        else
+          @product = FavouriteAd.find_or_create_by(user_id: params[:user_id],
+            product_id: params[:product_id])
+          if @product.save
+            render_success
+          else
+            render json: @product.errors
+          end
+        end
+      end
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product
