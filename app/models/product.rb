@@ -33,6 +33,7 @@ class Product < ApplicationRecord
   # end
 
   def as_json
-    super.merge('favourite' => favourite_ads.where(user_id: Current.user&.id).present?)
+    user = super.merge(user: user, brand: brand, product_category: product_category)
+    user.merge('favourite' => favourite_ads.where(user_id: Current.user&.id).present?)
   end
 end

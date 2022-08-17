@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_products show]
+      #before_action :authenticate_api_v1_user!, except: %i[get_products show]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -22,17 +22,16 @@ module Api
         render json: {
           status: 'success',
           data: @products.map { |product|
-            (product.active_images.attached? && product.cover_photo.attached?) ? JSON.parse(
-              product.to_json(include: [:brand, :product_category])).merge(
+            (product.active_images.attached? && product.cover_photo.attached?) ?
+              product.as_json.merge(
                 active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(
                   cover_photo_path: url_for(product.cover_photo)) :
-                    product.active_images.attached? ? JSON(product.to_json(
-                      include: [:brand, :product_category])).merge(
+                    product.active_images.attached? ? product.as_json.merge(
                         active_images_path: product.active_images.map {
-                    |img| url_for(img) }) : product.cover_photo.attached? ? JSON.parse(
-                      product.to_json(include: [:brand, :product_category])).merge(
-                        cover_photo_path: url_for(product.cover_photo)) : JSON.parse(
-                          product.to_json(include: [:brand, :product_category]))
+                    |img| url_for(img) }) : product.cover_photo.attached? ?
+                      product.as_json.merge(
+                        cover_photo_path: url_for(product.cover_photo)) :
+                          product.as_json
           },
           pagination: @pagy
         }
@@ -71,16 +70,13 @@ module Api
         if @product
           render json: {
             status: 'success',
-            data: (@product.active_images.attached? && @product.cover_photo.attached?) ? JSON.parse(
-              @product.to_json(include: [:user])).merge(
+            data: (@product.active_images.attached? && @product.cover_photo.attached?) ?
+              @product.as_json.merge(
                 active_images_path: @product.active_images.map { |img| url_for(img) }).as_json.merge(
-                  cover_photo_path: url_for(@product.cover_photo)) :
-                    @product.active_images.attached? ? JSON(@product.to_json(
-                      include: [:user])).merge(active_images_path: @product.active_images.map {
-                    |img| url_for(img) }) : @product.cover_photo.attached? ? JSON.parse(
-                      @product.to_json(include: [:user])).merge(
-                        cover_photo_path: url_for(@product.cover_photo)) : JSON.parse(
-                          @product.to_json(include: [:user])),
+                  cover_photo_path: url_for(@product.cover_photo)) : @product.active_images.attached? ?
+                    @product.as_json.merge(active_images_path: @product.active_images.map {
+                    |img| url_for(img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
+                        cover_photo_path: url_for(@product.cover_photo)) : @product.as_json,
             profile: @product.user.profile.attached? ? url_for(@product.user.profile) :
               'No profile image'
           }
@@ -193,7 +189,6 @@ module Api
         def render_success
           render json: {
             status: 'success',
-            data: @product
           }
         end
 
