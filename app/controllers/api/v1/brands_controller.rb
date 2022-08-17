@@ -21,9 +21,11 @@ module Api
         render json: {
           status: 'success',
           data: @brands.map { |brand|
-              brand.active_image.attached? ? brand.as_json.merge(
-                active_image_path: url_for(brand.active_image)) : brand.as_json
-            },
+            brand.active_image.attached? ? JSON.parse(brand.to_json(
+              include: [:product_categories])).merge(
+                active_image_path: url_for(brand.active_image)) : JSON.parse(
+                  brand.to_json(include: [:product_categories]))
+          },
           pagination: @pagy
         }
       end
@@ -81,8 +83,11 @@ module Api
       # POST /brand.json
       def create
         @brand = Brand.new(brand_params)
-
         if @brand.save
+          if params[:product_category_id].present?
+            params[:product_category_id].map { |p| BrandCategory.find_or_create_by(
+              product_category_id: p, brand_id: @brand.id)}
+          end
           render_success
         else
           render json: @brand.errors
