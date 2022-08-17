@@ -78,9 +78,7 @@ module Api
                     |img| url_for(img) }) : @product.cover_photo.attached? ? @product.as_json.merge(
                         cover_photo_path: url_for(@product.cover_photo)) : @product.as_json,
             profile: @product.user.profile.attached? ? url_for(@product.user.profile) :
-              'No profile image',
-            member_since: @product.user.created_at
-
+              'No profile image'
           }
         else
           render json: @product.errors
