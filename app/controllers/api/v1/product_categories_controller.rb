@@ -13,16 +13,17 @@ module Api
       # GET /product categories
       # GET /product_categories.json
       def index
-        @q = ProductCategory.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = ProductCategory.includes(:brands, active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @product_categories = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @product_categories.map { |product_category|
-            product_category.active_image.attached? ? product_category.as_json.merge(
-              active_image_path: url_for(product_category.active_image)) : product_category.as_json
+          data: @product_categories.map { |pc|
+            pc.active_image.attached? ? JSON.parse(pc.to_json(include: [:brands])).merge(
+              active_image_path: url_for(pc.active_image)) : JSON.parse(
+                pc.to_json(include: [:brands]))
           },
           pagination: @pagy
         }
@@ -84,6 +85,10 @@ module Api
         @product_category = ProductCategory.new(product_category_params)
 
         if @product_category.save
+          if params[:brand_id].present?
+            params[:brand_id].map { |b| BrandCategory.find_or_create_by(
+              brand_id: b, product_category_id: @product_category.id)}
+          end
           render_success
         else
           render json: @product_category.errors
