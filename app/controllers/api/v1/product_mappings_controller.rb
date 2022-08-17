@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Mappings api controller
     class ProductMappingsController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      before_action :authenticate_api_v1_user!, except: %i[get_mappings]
       before_action :set_product_mapping, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -102,6 +102,19 @@ module Api
         @product_mapping.destroy
 
         render json: { notice: 'Product mapping was successfully removed.' }
+      end
+
+      def get_mappings
+        params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
+        @q = ProductMapping.ransack(
+          product_category_id_eq: params[:product_category_id])
+        no_of_record = params[:no_of_record] || 10
+        @pagy, @product_mapping = pagy(@q.result, items: no_of_record)
+        @urls = []
+        render json: {
+          status: 'success',
+          data: @product_mapping
+        }
       end
 
       private
