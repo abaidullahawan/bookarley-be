@@ -85,10 +85,7 @@ module Api
         @product_category = ProductCategory.new(product_category_params)
 
         if @product_category.save
-          if params[:brand_id].present?
-            params[:brand_id].map { |b| BrandCategory.find_or_create_by(
-              brand_id: b, product_category_id: @product_category.id)}
-          end
+          create_brand_category
           render_success
         else
           render json: @product_category.errors
@@ -99,6 +96,7 @@ module Api
       # PATCH/PUT /product_categories/1.json
       def update
         if @product_category.update(product_category_params)
+          update_brand_category
           render_success
         else
           render json: @product_category.errors
@@ -147,6 +145,22 @@ module Api
             status: 'success',
             data: @product_category
           }
+        end
+        def create_brand_category
+          if params[:brand_id].present?
+            temp = params[:brand_id].split(',')
+            temp.map { |temp| BrandCategory.find_or_create_by(
+              brand_id: temp, product_category_id: @product_category.id)}
+          end
+        end
+
+        def update_brand_category
+          if params[:brand_id].present?
+            BrandCategory.where(product_category_id: @product_category.id).destroy_all
+            temp = params[:brand_id].split(',')
+            temp.map { |temp| BrandCategory.find_or_create_by(
+              brand_id: temp, product_category_id: @product_category.id)}
+          end
         end
     end
   end
