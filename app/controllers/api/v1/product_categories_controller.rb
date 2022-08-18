@@ -113,7 +113,7 @@ module Api
 
       def categories_list
         params[:is_option] = nil if params[:is_option].eql? 'nil'
-        @q = ProductCategory.order(id: :asc).includes(:category_brands,
+        @q = ProductCategory.order(id: :asc).includes(:brands,
           product_category_heads: [:product_sub_categories],
           active_image_attachment: :blob).ransack(is_option_eq: params[:is_option])
         @categories_list = @q.result
@@ -121,9 +121,9 @@ module Api
           status: 'success',
           data: @categories_list.map { |cl|
             cl.active_image.attached? ? JSON.parse(cl.to_json(
-              include: [:category_brands, product_category_heads: {
+              include: [:brands, product_category_heads: {
                 include: :product_sub_categories }])).merge(active_image_path: url_for(
-                cl.active_image)) : JSON.parse(cl.to_json(include: [:category_brands,
+                cl.active_image)) : JSON.parse(cl.to_json(include: [:brands,
                   product_category_heads: { include: :product_sub_categories }]))
           }
         }
