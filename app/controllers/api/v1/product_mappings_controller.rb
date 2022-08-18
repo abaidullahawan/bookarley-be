@@ -105,16 +105,17 @@ module Api
       end
 
       def get_mappings
-        params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
-        @q = ProductMapping.ransack(
-          product_category_id_eq: params[:product_category_id])
-        no_of_record = params[:no_of_record] || 10
-        @pagy, @product_mapping = pagy(@q.result, items: no_of_record)
-        @urls = []
-        render json: {
-          status: 'success',
-          data: @product_mapping
-        }
+        if params[:product_category_id].present?
+          pc = ProductCategory.includes(:brands, :product_mapping).find(params[:product_category_id])
+          brands = pc.brands
+          product_mapping = pc.product_mapping
+          render json: {
+            status: 'success',
+            product_category: pc,
+            product_mapping: product_mapping,
+            brand: brands
+            }
+        end
       end
 
       private
