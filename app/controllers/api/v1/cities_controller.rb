@@ -20,10 +20,7 @@ module Api
         @pagy, @cities = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @cities.map { |city|
-              city.active_image.attached? ? city.as_json.merge(
-                active_image_path: url_for(city.active_image)) : city.as_json
-            },
+          data: @cities,
           pagination: @pagy
         }
       end
@@ -61,8 +58,7 @@ module Api
         if @city
           render json: {
             status: 'success',
-            data: @city.active_image.attached? ? @city.as_json.merge(
-              active_image_path: url_for(@city.active_image)) : @city.as_json
+            data: @city
             }
         else
           render json: @city.errors
