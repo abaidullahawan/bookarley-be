@@ -13,7 +13,7 @@ module Api
       # GET /countries
       # GET /countries.json
       def index
-        @q = Country.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = Country.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -106,7 +106,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_country
-          @country = Country.includes(:active_image_attachment).find(params[:id])
+          @country = Country.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

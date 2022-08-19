@@ -106,7 +106,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_budget
-          @budget = Budget.includes(:active_image_attachment).find(params[:id])
+          @budget = Budget.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
