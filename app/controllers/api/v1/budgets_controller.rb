@@ -13,17 +13,14 @@ module Api
       # GET /budgets
       # GET /budgets.json
       def index
-        @q = Budget.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = Budget.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @budgets = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @budgets.map { |budget|
-              budget.active_image.attached? ? budget.as_json.merge(
-                active_image_path: url_for(budget.active_image)) : budget.as_json
-            },
+          data: @budgets,
           pagination: @pagy
         }
       end
@@ -61,9 +58,8 @@ module Api
         if @budget
           render json: {
             status: 'success',
-            data: @budget.active_image.attached? ? @budget.as_json.merge(
-              active_image_path: url_for(@budget.active_image)) : @budget.as_json
-            }
+            data: @budget
+          }
         else
           render json: @budget.errors
         end
@@ -110,7 +106,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_budget
-          @budget = Budget.includes(:active_image_attachment).find(params[:id])
+          @budget = Budget.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

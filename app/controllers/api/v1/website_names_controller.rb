@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::WebsiteNamesController < ApplicationController
-
   def index
     @website_names = WebsiteName.all
     render json: {
@@ -9,5 +8,4 @@ class Api::V1::WebsiteNamesController < ApplicationController
       data: @website_names
     }
   end
-
 end

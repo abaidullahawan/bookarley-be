@@ -13,17 +13,14 @@ module Api
       # GET /countries
       # GET /countries.json
       def index
-        @q = Country.includes(active_image_attachment: :blob).ransack(params[:q])
+        @q = Country.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @countries = pagy(@q.result, items: no_of_record)
         render json: {
           status: 'success',
-          data: @countries.map { |country|
-            country.active_image.attached? ? country.as_json.merge(
-              active_image_path: url_for(country.active_image)) : country.as_json
-          },
+          data: @countries,
           pagination: @pagy
         }
       end
@@ -61,8 +58,7 @@ module Api
         if @country
           render json: {
             status: 'success',
-            data: @country.active_image.attached? ? @country.as_json.merge(
-              active_image_path: url_for(@country.active_image)) : @country.as_json
+            data: @country
           }
         else
           render json: @country.errors
@@ -110,7 +106,7 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_country
-          @country = Country.includes(:active_image_attachment).find(params[:id])
+          @country = Country.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
