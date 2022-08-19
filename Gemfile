@@ -60,6 +60,9 @@ gem 'rswag-ui'
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
 
+# TimeDifference is the missing Ruby method to calculate difference between two given time.
+gem 'time_difference'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
