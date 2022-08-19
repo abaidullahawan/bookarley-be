@@ -18,7 +18,6 @@ module Api
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
-        @urls = []
         render json: {
           status: 'success',
           data: @products.map { |product|
@@ -131,13 +130,13 @@ module Api
         params[:title] = nil if params[:title].eql? 'nil'
         params[:brand_id] = nil if params[:brand_id].eql? 'nil'
         params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
-        @q = Product.includes(active_images_attachments: :blob, cover_photo_attachment: :blob).ransack(
-          product_type_eq: params[:product_type], featured_eq: params[:featured], city_eq: params[:city],
-          price_lt: params[:price_lt], price_gt: params[:price_gt], brand_id_eq: params[:brand_id],
+        @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
+          cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
+          featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
+          price_gt: params[:price_gt], brand_id_eq: params[:brand_id],
           product_category_id_eq: params[:product_category_id], title_cont: params[:title])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
-        @urls = []
         render json: {
           data: @products.map { |product|
             (product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
