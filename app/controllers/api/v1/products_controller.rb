@@ -153,15 +153,15 @@ module Api
 
       def favourite_ads
         if params[:user_id].present? && params[:product_id].present?
-          favourite_ad =  FavouriteAd.find_by(user_id: params[:user_id], product_id: params[:product_id])
+          favourite_ad = FavouriteAd.find_by(user_id: params[:user_id], product_id: params[:product_id])
           if favourite_ad.present?
             favourite_ad.destroy
-            render json: { notice: 'Product was successfully removed.' }
+            render json: { notice: 'Ad removed from Favourite Ads.' }
           else
             favourite_ad = FavouriteAd.find_or_create_by(user_id: params[:user_id],
               product_id: params[:product_id])
             if favourite_ad.save
-              render_success
+              render json: { notice: 'Ad added to Favourite Ads.' }
             else
               render json: favourite_ad.errors
             end
