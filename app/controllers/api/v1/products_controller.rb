@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_products show]
+      #before_action :authenticate_api_v1_user!, except: %i[get_products show]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -133,7 +133,7 @@ module Api
         @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
           cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
-          price_gt: params[:price_gt], brand_id_eq: params[:brand_id],
+          price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: 'active',
           product_category_id_eq: params[:product_category_id], title_cont: params[:title])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
@@ -152,17 +152,19 @@ module Api
       end
 
       def favourite_ads
-        if params[:user_id].present? && params[:product_id].present? && params[:remove].present?
-          @product =  FavouriteAd.find_by(user_id: params[:user_id], product_id: params[:product_id])
-          @product.destroy
-          render json: { notice: 'Product was successfully removed.' }
-        else
-          @product = FavouriteAd.find_or_create_by(user_id: params[:user_id],
-            product_id: params[:product_id])
-          if @product.save
-            render_success
+        if params[:user_id].present? && params[:product_id].present?
+          favourite_ad =  FavouriteAd.find_by(user_id: params[:user_id], product_id: params[:product_id])
+          if favourite_ad.present?
+            favourite_ad.destroy
+            render json: { notice: 'Product was successfully removed.' }
           else
-            render json: @product.errors
+            favourite_ad = FavouriteAd.find_or_create_by(user_id: params[:user_id],
+              product_id: params[:product_id])
+            if favourite_ad.save
+              render_success
+            else
+              render json: favourite_ad.errors
+            end
           end
         end
       end
