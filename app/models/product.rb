@@ -9,6 +9,7 @@ class Product < ApplicationRecord
   has_many :models, dependent: :destroy
   has_many :favourite_ads
   has_many :favourite_users, through: :favourite_ads, source: 'user'
+  scope :with_favourite_products, -> { where("favourite_ads.user_id = ?", Current.user.id) }
 
   enum status: {
     active: 'active',
@@ -32,8 +33,11 @@ class Product < ApplicationRecord
     TimeDifference.between(Time.zone.now, attributes['updated_at']).humanize
   end
 
-  def as_json
+  def as_json(data = {})
+    return super if data.present?
+
     favourite = super.merge('favourite' => favourite_ads.where(user_id: Current.user&.id).present?)
     favourite.merge(user: user, brand: brand, product_category: product_category)
   end
+
 end
