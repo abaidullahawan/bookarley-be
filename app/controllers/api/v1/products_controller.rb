@@ -109,8 +109,9 @@ module Api
         @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
           cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
-          price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: 'active',
-          product_category_id_eq: params[:product_category_id], title_cont: params[:title])
+          price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: params[:status],
+          product_category_id_eq: params[:product_category_id], title_cont: params[:title],
+          user_id_eq: params[:user_id])
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(@q.result, items: no_of_record)
         render json: {
@@ -184,7 +185,9 @@ module Api
           params[:city] = nil if params[:city].eql? 'nil'
           params[:title] = nil if params[:title].eql? 'nil'
           params[:brand_id] = nil if params[:brand_id].eql? 'nil'
+          params[:status] = nil if params[:status].eql? 'nil'
           params[:product_category_id] = nil if params[:product_category_id].eql? 'nil'
+          params[:user_id] = nil if params[:user_id].eql? 'nil'
         end
     end
   end

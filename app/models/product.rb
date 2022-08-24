@@ -13,8 +13,7 @@ class Product < ApplicationRecord
 
   enum status: {
     active: 'active',
-    passive: 'passive',
-    deleted: 'deleted'
+    inactive: 'in-active'
   }, _prefix: true
 
   enum product_type: {
