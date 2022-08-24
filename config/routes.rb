@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       post 'favourite_ads', to: 'products#favourite_ads'
       get 'brand_with_products/:id', to: 'brands#brand_with_products'
       get 'categories_list', to: 'product_categories#categories_list'
+      get 'favourite_products', to: 'products#favourite_products'
     end
   end
 
