@@ -9,6 +9,7 @@ class Product < ApplicationRecord
   has_many :models, dependent: :destroy
   has_many :favourite_ads
   has_many :favourite_users, through: :favourite_ads, source: 'user'
+  has_many :reported_ads
   scope :with_favourite_products, -> { where("favourite_ads.user_id = ?", Current.user.id) }
 
   enum status: {

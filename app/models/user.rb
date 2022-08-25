@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :favourite_ads
   has_many :favourite_products, through: :favourite_ads, source: 'product'
+  has_many :reported_ads
   accepts_nested_attributes_for :personal_detail
   accepts_nested_attributes_for :users_role
 

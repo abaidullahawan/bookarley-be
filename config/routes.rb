@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       get 'brand_with_products/:id', to: 'brands#brand_with_products'
       get 'categories_list', to: 'product_categories#categories_list'
       get 'favourite_products', to: 'products#favourite_products'
+      post 'reported_ads', to: 'products#reported_ads'
     end
   end
 
