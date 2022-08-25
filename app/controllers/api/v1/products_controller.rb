@@ -113,9 +113,9 @@ module Api
           product_category_id_eq: params[:product_category_id], title_cont: params[:title],
           user_id_eq: params[:user_id])
         no_of_record = params[:no_of_record] || 10
-        @pagy, @products = pagy(@q.result, items: no_of_record)
+        @pagy, @data = pagy(@q.result, items: no_of_record)
         render json: {
-          data: active_images_for_products(@products),
+          data: favourite_products_for_user(@data),
           pagination: @pagy
         }
       end
@@ -139,11 +139,11 @@ module Api
       end
 
       def favourite_products
-        @data = Product.joins(:favourite_ads).includes(active_images_attachments: :blob,
+        @products = Product.joins(:favourite_ads).includes(:brand, :product_category, active_images_attachments: :blob,
           cover_photo_attachment: :blob).with_favourite_products
           render json: {
             status: 'success',
-            data: favourite_products_for_user(@data)
+            data: active_images_for_products(@products)
           }
       end
 
