@@ -147,6 +147,18 @@ module Api
           }
       end
 
+      def reported_ads
+        report_ad = ReportedAd.find_by(user_id: current_api_v1_user.id,
+          product_id: params[:product_id])
+        if report_ad.present?
+          render json: { notice: 'You have already reported this ad' }
+        else
+          ReportedAd.create(reason: params[:reason], user_id: current_api_v1_user.id,
+            product_id: params[:product_id])
+          render json: { notice: 'Ad was successfullt reported.' }
+        end
+      end
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product
