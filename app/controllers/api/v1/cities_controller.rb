@@ -105,7 +105,7 @@ module Api
 
       def all_cities
         @q = City.ransack(city_type_eq: params[:city_type])
-        @list_cities = @q.result
+        @list_cities = @q.result.order('cities.title': :asc)
         render json: {
           status: 'success',
           data: @list_cities
