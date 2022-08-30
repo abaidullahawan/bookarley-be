@@ -13,4 +13,9 @@ class ProductCategory < ApplicationRecord
     passive: 'passive',
     deleted: 'deleted'
   }, _prefix: true
+  after_create :set_link
+
+  def set_link
+    update_column(:link, link + id.to_s) unless link.blank?
+  end
 end
