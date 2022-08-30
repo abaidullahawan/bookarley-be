@@ -17,7 +17,7 @@ module Api
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
-        @pagy, @models = pagy(@q.result, items: no_of_record)
+        @pagy, @models = pagy(@q.result.order('models.updated_at': :desc), items: no_of_record)
         render json: {
           status: 'success',
           data: @models.map { |model|
