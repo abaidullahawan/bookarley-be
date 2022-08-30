@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      #before_action :authenticate_api_v1_user!, except: %i[get_products show]
+      before_action :authenticate_api_v1_user!, except: %i[get_products show]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -158,14 +158,6 @@ module Api
             product_id: params[:product_id])
           render json: { notice: 'Ad was successfully reported.' }
         end
-      end
-
-      def reported_products
-        a = Product.joins(:reported_ads).includes(:user, :reported_ads)
-        render json: {
-          status: 'success',
-          data: a
-        }
       end
 
       private
