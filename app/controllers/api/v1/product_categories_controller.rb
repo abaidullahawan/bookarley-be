@@ -114,7 +114,7 @@ module Api
 
       def categories_list
         params[:is_option] = nil if params[:is_option].eql? 'nil'
-        @q = ProductCategory.order(id: :asc).includes(:brands,
+        @q = ProductCategory.order(position: :asc).includes(:brands,
           product_category_heads: [:product_sub_categories],
           active_image_attachment: :blob).ransack(is_option_eq: params[:is_option])
         @categories_list = @q.result
