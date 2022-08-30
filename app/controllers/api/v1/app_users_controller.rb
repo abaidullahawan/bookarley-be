@@ -7,7 +7,7 @@ class Api::V1::AppUsersController < ApplicationController
   def index
     no_of_record = params[:no_of_record] || 10
     @q = User.includes(profile_attachment: :blob).ransack(params[:q])
-    @pagy, @users = pagy(@q.result, items: no_of_record)
+    @pagy, @users = pagy(@q.result.order('users.updated_at': :desc), items: no_of_record)
     render json: {
       status: 'success',
       data: @users.map { |user|

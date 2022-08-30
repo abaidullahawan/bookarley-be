@@ -17,7 +17,8 @@ module Api
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
-        @pagy, @product_mappings = pagy(@q.result, items: no_of_record)
+        @pagy, @product_mappings = pagy(@q.result.order('product_mappings.updated_at': :desc),
+         items: no_of_record)
         render json: {
           status: 'success',
           data:  JSON.parse(@product_mappings.includes(:product_category).to_json(

@@ -12,7 +12,7 @@ module Api
       def index
         no_of_record = params[:no_of_record] || 10
         @q = UsersRole.ransack(params[:q])
-        @pagy, @user_roles = pagy(@q.result, items: no_of_record)
+        @pagy, @user_roles = pagy(@q.result.order('users_roles.updated_at': :desc), items: no_of_record)
         render json: {
           status: 'success',
           data: JSON.parse(@user_roles.joins(:role, :user).includes(
