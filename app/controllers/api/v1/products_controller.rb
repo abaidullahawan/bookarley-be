@@ -90,6 +90,7 @@ module Api
       # PATCH/PUT /products/1
       # PATCH/PUT /products/1.json
       def update
+        @product.active_images_attachments.destroy_all unless params[:active_images].blank?
         if @product.update(product_params)
           render_success
         else
@@ -155,7 +156,7 @@ module Api
         else
           ReportedAd.create(reason: params[:reason], user_id: current_api_v1_user.id,
             product_id: params[:product_id])
-          render json: { notice: 'Ad was successfullt reported.' }
+          render json: { notice: 'Ad was successfully reported.' }
         end
       end
 
