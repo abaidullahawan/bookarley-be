@@ -11,8 +11,9 @@ class Api::V1::AppUsersController < ApplicationController
     render json: {
       status: 'success',
       data: @users.map { |user|
-        user.profile.attached? ? user.as_json.merge(
-          profile_path: url_for(user.profile)) : user.as_json
+        user.profile.attached? ? JSON.parse(user.to_json(include: [:personal_detail, :roles])).merge(
+          profile_path: url_for(user.profile)) : JSON.parse(user.to_json(
+            include: [:personal_detail, :roles]))
       },
       pagination: @pagy
     }
