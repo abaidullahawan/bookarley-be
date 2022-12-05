@@ -379,6 +379,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   jquery-rails
   listen (~> 3.3)
+  mini_magick
   omniauth-facebook
   omniauth-github
   omniauth-google-oauth2
@@ -413,4 +414,4 @@ RUBY VERSION
    ruby 3.0.0p0
 
 BUNDLED WITH
-   2.3.6
+   2.3.15
