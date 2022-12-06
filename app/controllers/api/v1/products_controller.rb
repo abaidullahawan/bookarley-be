@@ -27,7 +27,7 @@ module Api
       end
 
       def export_csv_and_pdf
-        @products = @q.result
+        @products = @q.result.order('products.id': :desc)
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
           file = render_to_string pdf: 'some_file_name',
