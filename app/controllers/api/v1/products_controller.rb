@@ -22,12 +22,14 @@ module Api
         render json: {
           status: 'success',
           data: active_images_for_products(@products),
-          pagination: @pagy
+          pagination: @pagy,
+					count: @products.count
         }
       end
 
       def export_csv_and_pdf
         @products = @q.result.order('products.id': :desc)
+				puts '------------>'+@products.count.to_s
         path = Rails.root.join('public/uploads')
         if params[:format].eql? 'pdf'
           file = render_to_string pdf: 'some_file_name',
