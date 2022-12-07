@@ -122,9 +122,9 @@ module Api
           status: 'success',
           data: @categories_list.map { |cl|
             cl.active_image.attached? ? JSON.parse(cl.to_json(
-              include: [:brands, product_category_heads: {
+              include: [:products,:brands, product_category_heads: {
                 include: :product_sub_categories }])).merge(active_image_path: url_for(
-                cl.active_image)) : JSON.parse(cl.to_json(include: [:brands,
+                cl.active_image)) : JSON.parse(cl.to_json(include: [:products,:brands,
                   product_category_heads: { include: :product_sub_categories }]))
           }
         }
