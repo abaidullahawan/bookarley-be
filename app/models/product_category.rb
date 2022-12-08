@@ -16,6 +16,6 @@ class ProductCategory < ApplicationRecord
   after_create :set_link
 
   def set_link
-    update_column(:link, link + id.to_s) unless link.blank?
+    update_column(:link, '/products?category=' + id.to_s)
   end
 end
