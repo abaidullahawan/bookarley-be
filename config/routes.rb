@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
+      get 'get_products_for_landing_page', to: 'products#get_products_for_landing_page'
       get 'get_mappings', to: 'product_mappings#get_mappings'
       post 'favourite_ads', to: 'products#favourite_ads'
       get 'brand_with_products/:id', to: 'brands#brand_with_products'

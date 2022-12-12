@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_products show]
+      before_action :authenticate_api_v1_user!, except: %i[get_products show get_products_for_landing_page]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -121,6 +121,37 @@ module Api
           pagination: @pagy
         }
       end
+
+			def get_products_for_landing_page
+				product_limit=10
+				featured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': true).order('products.updated_at DESC')
+				unfeatured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': false).order('products.updated_at DESC')
+				products=[]
+				ProductCategory.all.each do |cate|
+					tempFeatured = featured_products.where(product_category_id: cate.id)
+					tempUnfeature = unfeatured_products.where(product_category_id: cate.id)
+					if tempFeatured.count >= product_limit
+						products.push(tempFeatured.limit(product_limit))
+					elsif tempFeatured.count < product_limit 
+						products.push(tempFeatured + tempUnfeature.limit(product_limit - tempFeatured.count))
+					end
+				end
+				render json: {
+          data:  products.flatten.map { |product|
+						(product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
+							active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(active_images_thumbnail:
+								product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)}).merge(
+								cover_photo_path: url_for(
+									product.cover_photo)).merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed)) :
+									product.active_images.attached? ? product.as_json.merge(
+										active_images_path: product.active_images.map { |img| url_for(
+											img) }).merge(active_images_thumbnail:
+												product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)}) : product.cover_photo.attached? ? product.as_json.merge(
+												cover_photo_path: url_for(product.cover_photo)).merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed)) :
+												product.as_json
+					}
+				}
+			end
 
       def favourite_ads
         if params[:user_id].present? && params[:product_id].present?
