@@ -124,7 +124,8 @@ module Api
             cl.active_image.attached? ? JSON.parse(cl.to_json(
               include: [:products,:brands, product_category_heads: {
                 include: :product_sub_categories }])).merge(active_image_path: url_for(
-                cl.active_image)) : JSON.parse(cl.to_json(include: [:products,:brands,
+                cl.active_image)).merge(active_image_thumbnail:
+									url_for(cl.active_image.variant(resize_to_limit: [200, 200]).processed)) : JSON.parse(cl.to_json(include: [:products,:brands,
                   product_category_heads: { include: :product_sub_categories }]))
           }
         }
