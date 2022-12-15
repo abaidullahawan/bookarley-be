@@ -13,16 +13,24 @@ module Api
       # GET /products
       # GET /products.json
       def index
-        @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
-          cover_photo_attachment: :blob).ransack(params[:q])
+				check_null_values
+				if params[:featured]==nil
+					# for getting the products that have requested to be featured. means there featured feild value should be nil
+					result = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
+					cover_photo_attachment: :blob).where(featured:nil)
+				else
+					@q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
+						cover_photo_attachment: :blob).ransack(params[:q])
+					result = @q.result 
+				end
         return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
-        @pagy, @products = pagy(@q.result.order('products.updated_at': :desc),
+        @pagy, @products = pagy(result.order('products.updated_at': :desc),
           items: no_of_record)
         render json: {
           status: 'success',
           data: active_images_for_products(@products),
-          pagination: @pagy
+          pagination: @pagy,
         }
       end
 
@@ -91,6 +99,7 @@ module Api
       # PATCH/PUT /products/1
       # PATCH/PUT /products/1.json
       def update
+				check_null_values
         @product.active_images_attachments.destroy_all unless params[:active_images].blank?
         if @product.update(product_params)
           render_success
@@ -201,7 +210,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_params
-          parameters_set = params.permit(:title, :description, :status, :cover_photo, :link,
+          parameters_set = params.permit(:id,:title, :description, :status, :cover_photo, :link,
                                          :product_type, :brand_id, :price, :featured,
                                          :product_category_id, :city, :location, :user_id, :phone_no,
                                          :extra_fields, active_images: [])
