@@ -24,6 +24,7 @@ module Api
 					result = @q.result 
 				end
         return export_csv_and_pdf if params[:format].present?
+				req_prods = Product.where(featured: nil).count
         no_of_record = params[:no_of_record] || 10
         @pagy, @products = pagy(result.order('products.updated_at': :desc),
           items: no_of_record)
@@ -31,6 +32,7 @@ module Api
           status: 'success',
           data: active_images_for_products(@products),
           pagination: @pagy,
+					req_prods: req_prods
         }
       end
 
@@ -121,7 +123,7 @@ module Api
           cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
           price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: params[:status],
-          product_category_id_eq: params[:product_category_id], title_cont: params[:title],
+          product_category_id_eq: params[:product_category_id], title_or_brand_title_or_user_title_cont: params[:title],
           user_id_eq: params[:user_id])
         no_of_record = params[:no_of_record] || 10
         @pagy, @data = pagy(@q.result, items: no_of_record)
