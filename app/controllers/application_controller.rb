@@ -21,17 +21,18 @@ class ApplicationController < ActionController::Base
 
     def configure_sign_in_params
       devise_parameter_sanitizer.permit(:sign_in, keys:
-        [:email, :password]
+        [:email, :password,:phone]
       )
     end
 
     def configure_sign_up_params
       devise_parameter_sanitizer.permit(:sign_up, keys:
-        [:email, :password, :password_confirmation, :name]
+        [:email, :password, :password_confirmation, :name,:phone]
       )
     end
 
     def set_current_user
+			return if controller_name.eql?('registrations')
       return unless current_api_v1_user.present?
       Current.user = current_api_v1_user
     end
