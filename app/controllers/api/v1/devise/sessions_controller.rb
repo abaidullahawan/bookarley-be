@@ -14,7 +14,12 @@ module Api
 
         def create
           # Check
-          field = (resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
+					byebug
+          field = if resource_params.keys.include?('phone')
+						:phone
+					else
+						(resource_params.keys.map(&:to_sym) & resource_class.authentication_keys).first
+					end
 
           @resource = nil
           if field
