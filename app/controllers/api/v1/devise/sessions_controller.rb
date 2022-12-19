@@ -14,7 +14,6 @@ module Api
 
         def create
           # Check
-					byebug
           field = if resource_params.keys.include?('phone')
 						:phone
 					else
