@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       get 'categories_list', to: 'product_categories#categories_list'
       get 'favourite_products', to: 'products#favourite_products'
       post 'reported_ads', to: 'products#reported_ads'
+      get 'search_products_by_title', to: 'products#search_products_by_title'
     end
   end
 

@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class ProductsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[get_products show get_products_for_landing_page]
+      before_action :authenticate_api_v1_user!, except: %i[get_products show get_products_for_landing_page search_products_by_title]
       before_action :set_product, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -123,7 +123,7 @@ module Api
           cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
           price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: params[:status],
-          product_category_id_eq: params[:product_category_id], title_or_brand_title_or_user_title_cont: params[:title],
+          product_category_id_eq: params[:product_category_id], title_cont: params[:title],
           user_id_eq: params[:user_id])
         no_of_record = params[:no_of_record] || 10
         @pagy, @data = pagy(@q.result, items: no_of_record)
@@ -202,6 +202,15 @@ module Api
           render json: { notice: 'Ad was successfully reported.' }
         end
       end
+
+			def search_products_by_title
+				@searched_product_by_sku = Product.ransack('title_cont': params[:search_value].downcase.to_s)
+																					.result.limit(20).pluck( :title)
+					render json: {
+						status: 'success',
+						data: @searched_product_by_sku
+					}
+			end
 
       private
         # Use callbacks to share common setup or constraints between actions.
