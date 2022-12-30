@@ -89,6 +89,8 @@ module Api
       # POST /product
       # POST /product.json
       def create
+        custom_brand_create
+        byebug
         @product = Product.new(product_params)
 
         if @product.save
@@ -103,6 +105,7 @@ module Api
       def update
 				check_null_values
         @product.active_images_attachments.destroy_all unless params[:active_images].blank?
+        custom_brand_create
         if @product.update(product_params)
           render_success
         else
@@ -219,9 +222,16 @@ module Api
             cover_photo_attachment: :blob).find(params[:id])
         end
 
+        def custom_brand_create
+          if params[:custom_brand].present?
+            brand = Brand.create(title: params[:custom_brand], is_listed: false)
+            params[:brand_id] = brand.id
+          end
+        end
+
         # Only allow a list of trusted parameters through.
         def product_params
-          parameters_set = params.permit(:id,:title, :description, :status, :cover_photo, :link,
+          parameters_set = params.permit(:title, :description, :status, :cover_photo, :link,
                                          :product_type, :brand_id, :price, :featured,
                                          :product_category_id, :city, :location, :user_id, :phone_no,
                                          :extra_fields, active_images: [])
