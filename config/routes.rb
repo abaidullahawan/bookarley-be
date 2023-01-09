@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         confirmations:      'api/v1/devise/confirmations',
         # passwords:          'devise_token_auth/passwords',
         # omniauth_callbacks: 'devise_token_auth/omniauth_callbacks',
-        # sessions:           'api/v1/devise/sessions',
+        sessions:           'api/v1/devise/sessions',
         # token_validations:  'devise_token_auth/token_validations',
         # registrations:      'api/v1/devise/registrations'
       }
