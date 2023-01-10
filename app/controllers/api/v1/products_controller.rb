@@ -90,7 +90,6 @@ module Api
       # POST /product.json
       def create
         custom_brand_create
-        byebug
         @product = Product.new(product_params)
 
         if @product.save
