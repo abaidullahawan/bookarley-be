@@ -14,6 +14,7 @@ module Api
       # GET /products.json
       def index
 				check_null_values
+				# if featured is true or false.All products will be returned in response. and from that response we can check the the value of featured
 				if params[:featured]==nil
 					# for getting the products that have requested to be featured. means there featured feild value should be nil
 					result = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
@@ -49,7 +50,7 @@ module Api
         else
           @save_path = Rails.root.join(path, 'products.csv')
           CSV.open(@save_path, 'wb') do |csv|
-            headers = Product.column_names
+            headers = Product.column_names.excluding('updated_at', 'created_at')
             csv << headers
             @products.each do |product|
               csv << product.as_json.values_at(*headers)
@@ -62,6 +63,25 @@ module Api
           file_path: @save_path
         }
       end
+			def import_data_form_csv
+				csv_text = File.read(params[:file]).force_encoding('ISO-8859-1').encode('utf-8', replace: nil)
+				csv = CSV.parse(csv_text, headers: true)
+				csv.each do |row|
+					if row["id"].present?
+						@product = Product.find_by(id: row['id'])
+						@product.update(row) if @product.present?
+					else
+						@product = Product.create(row)
+						no_cover = URI.open(Rails.root.join('app/assets/images/no_image_available.jpg'))
+						@product.cover_photo.attach(io: no_cover, filename: 'no_image_available.jpeg', content_type: 'image/jpeg')
+						no_image = URI.open(Rails.root.join('app/assets/images/no_image_available.jpg'))
+						@product.active_images.attach(io: no_image, filename: 'no_image_available.jpg', content_type: 'image/jpg')
+					end
+				end
+				render json: {
+					status: 'success'}
+			end
+
 
       # GET /products/1
       # GET /products/1.json
@@ -89,7 +109,8 @@ module Api
       # POST /product
       # POST /product.json
       def create
-        custom_brand_create
+        
+				
         @product = Product.new(product_params)
 
         if @product.save
