@@ -64,22 +64,57 @@ module Api
         }
       end
 			def import_data_form_csv
+				is_admin=current_api_v1_user.roles.all.pluck(:name).include?('admin')
+				current_user_id=current_api_v1_user.id
 				csv_text = File.read(params[:file]).force_encoding('ISO-8859-1').encode('utf-8', replace: nil)
 				csv = CSV.parse(csv_text, headers: true)
-				csv.each do |row|
-					if row["id"].present?
-						@product = Product.find_by(id: row['id'])
-						@product.update(row) if @product.present?
-					else
-						@product = Product.create(row)
-						no_cover = URI.open(Rails.root.join('app/assets/images/no_image_available.jpg'))
-						@product.cover_photo.attach(io: no_cover, filename: 'no_image_available.jpeg', content_type: 'image/jpeg')
-						no_image = URI.open(Rails.root.join('app/assets/images/no_image_available.jpg'))
-						@product.active_images.attach(io: no_image, filename: 'no_image_available.jpg', content_type: 'image/jpg')
+				products_not_found=[]
+				issues={}
+				if check_allowed_headers(csv,issues)
+					csv.each do |row|
+						if row["id"].present?
+							@product = Product.find_by(id: row['id'])
+							if @product.present?
+								if is_admin
+									@product.update(row)
+								elsif current_user_id == @product.user_id
+									@product.update(row)
+								else
+									# this product is not created by the user that is requesting it to be update so i will say product not fond
+									products_not_found.push(row['id'])
+								end
+							else
+								products_not_found.push(row['id'])
+							end
+						end
 					end
+					issues.merge!(prducts_not_updated:products_not_found)
+					render json: {
+						status: 'success',
+						data: issues
+					}
+				else
+					render json: {
+						status: 'error',
+						data: issues
+					}
 				end
-				render json: {
-					status: 'success'}
+			end
+
+			def check_allowed_headers(csv,issues)
+				if csv.headers.include?(nil)
+					issues.merge!(message:'Empty columns are not allowed')
+					return false
+				else
+					allowed_headers=["description", "id", "location", "phone_no", "price", "title"]
+					if  (csv.headers.sort - allowed_headers).empty?
+						return true
+					else
+					issues.merge!(message:"These columns not allowed #{csv.headers.sort - allowed_headers}")
+						return false
+					end
+				end 
+
 			end
 
 
@@ -143,11 +178,13 @@ module Api
       def get_products
         check_null_values
         @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
-          cover_photo_attachment: :blob).ransack(product_type_eq: params[:product_type],
+          cover_photo_attachment: :blob).order(updated_at: :desc).ransack(product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
           price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: params[:status],
           product_category_id_eq: params[:product_category_id], title_cont: params[:title],
           user_id_eq: params[:user_id])
+
+				return export_csv_and_pdf if params[:format].present?
         no_of_record = params[:no_of_record] || 10
         @pagy, @data = pagy(@q.result, items: no_of_record)
         render json: {
