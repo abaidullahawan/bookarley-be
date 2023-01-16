@@ -144,10 +144,8 @@ module Api
       # POST /product
       # POST /product.json
       def create
-        
-				
+				custom_brand_create
         @product = Product.new(product_params)
-
         if @product.save
           render_success
         else
