@@ -176,7 +176,7 @@ module Api
       def get_products
         check_null_values
         @q = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob,
-          cover_photo_attachment: :blob).order(updated_at: :desc).ransack(product_type_eq: params[:product_type],
+          cover_photo_attachment: :blob).order(updated_at: :desc).ransack(title_or_status_or_description_or_city_or_location_cont:params[:search_string],product_type_eq: params[:product_type],
           featured_eq: params[:featured], city_eq: params[:city], price_lt: params[:price_lt],
           price_gt: params[:price_gt], brand_id_eq: params[:brand_id], status_eq: params[:status],
           product_category_id_eq: params[:product_category_id], title_cont: params[:title],
@@ -288,7 +288,7 @@ module Api
         def product_params
           parameters_set = params.permit(:title, :description, :status, :cover_photo, :link,
                                          :product_type, :brand_id, :price, :featured,
-                                         :product_category_id, :city, :location, :user_id, :phone_no,:price_currency,
+                                         :product_category_id, :city, :location, :user_id, :phone_no,:price_currency,:call_for_price,
                                          :extra_fields, active_images: [])
           parameters_set[:extra_fields] = JSON.parse(
             parameters_set[:extra_fields]) if parameters_set[:extra_fields].present?
