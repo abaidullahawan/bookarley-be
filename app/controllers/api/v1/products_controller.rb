@@ -106,7 +106,7 @@ module Api
 					issues.merge!(message:'Empty columns are not allowed')
 					return false
 				else
-					allowed_headers=["description", "id", "location", "phone_no", "price", "title"]
+					allowed_headers=["description", "id", "location", "phone_no", "price", "title","call_for_price"]
 					if  (csv.headers.sort - allowed_headers).empty?
 						return true
 					else
