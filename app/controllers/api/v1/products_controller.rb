@@ -53,7 +53,6 @@ module Api
             headers = Product.column_names.excluding('updated_at', 'created_at')
             csv << headers
             @products.each do |product|
-						if product
               csv << product.as_json.values_at(*headers)
             end
           end
