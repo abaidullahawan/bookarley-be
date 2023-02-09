@@ -15,7 +15,7 @@ Rails.application.routes.draw do
         # token_validations:  'devise_token_auth/token_validations',
         # registrations:      'api/v1/devise/registrations'
       }
-      resources :app_users,  only: %i[show index]
+      resources :app_users,  only: %i[show index update]
       resources :brands
       resources :countries
       resources :cities
@@ -44,6 +44,9 @@ Rails.application.routes.draw do
       post 'reported_ads', to: 'products#reported_ads'
       get 'search_products_by_title', to: 'products#search_products_by_title'
       post 'import_data_form_csv', to: 'products#import_data_form_csv'
+      get 'get_verification_requested_users', to: 'app_users#get_verification_requested_users'
+
+			
     end
   end
 
