@@ -193,8 +193,8 @@ module Api
 
 			def get_products_for_landing_page
 				product_limit=10
-				featured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': true).order('products.updated_at DESC')
-				unfeatured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': false).order('products.updated_at DESC')
+				featured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': true).order('random()')
+				unfeatured_products = Product.includes(:user, :brand, :product_category, active_images_attachments: :blob, cover_photo_attachment: :blob).where('products.featured': false).order('random()')
 				products=[]
 				ProductCategory.all.each do |cate|
 					tempFeatured = featured_products.where(product_category_id: cate.id)
