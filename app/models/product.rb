@@ -3,6 +3,8 @@
 class Product < ApplicationRecord
   has_many_attached :active_images
   has_one_attached :cover_photo
+	# when the rent category is selected
+  has_one_attached :driver_photo
   belongs_to :brand
   belongs_to :user
   belongs_to :product_category
