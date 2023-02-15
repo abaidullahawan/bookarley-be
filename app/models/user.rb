@@ -40,4 +40,8 @@ class User < ActiveRecord::Base
     end
   end
 
+	def created_at
+    attributes['created_at'].strftime('%B %d, %Y')
+	end
+
 end
