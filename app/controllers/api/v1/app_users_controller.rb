@@ -35,6 +35,20 @@ class Api::V1::AppUsersController < ApplicationController
       pagination: @pagy
     }
   end
+	def get_verified_users
+    no_of_record = params[:no_of_record] || 10
+    @q = User.includes(profile_attachment: :blob).where(varified_user: true).ransack(params[:q])
+    @pagy, @users = pagy(@q.result.order('users.updated_at': :desc), items: no_of_record)
+    render json: {
+      status: 'success',
+      data: @users.map { |user|
+        user.profile.attached? ? JSON.parse(user.to_json(include: [:personal_detail, :roles])).merge(
+          profile_path: url_for(user.profile)) : JSON.parse(user.to_json(
+            include: [:personal_detail, :roles]))
+      },
+      pagination: @pagy
+    }
+  end
 
 	def update
 		if(params[:accountVerified]=='nil')
