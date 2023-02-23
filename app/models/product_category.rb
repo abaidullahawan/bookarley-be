@@ -18,4 +18,9 @@ class ProductCategory < ApplicationRecord
   def set_link
     update_column(:link, '/products?category=' + id.to_s)
   end
+
+	def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "icon", "id", "is_option", "link", "position", "status", "title", "updated_at"]
+  end
+
 end
