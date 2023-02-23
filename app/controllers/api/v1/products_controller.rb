@@ -208,17 +208,23 @@ module Api
 				end
 				render json: {
           data:  products.flatten.map { |product|
-						(product.active_images.attached? && product.cover_photo.attached?) ? product.as_json.merge(
-							active_images_path: product.active_images.map { |img| url_for(img) }).as_json.merge(active_images_thumbnail:
-								product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)}).merge(
-								cover_photo_path: url_for(
-									product.cover_photo)).merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed)) :
-									product.active_images.attached? ? product.as_json.merge(
-										active_images_path: product.active_images.map { |img| url_for(
-											img) }).merge(active_images_thumbnail:
-												product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)}) : product.cover_photo.attached? ? product.as_json.merge(
-												cover_photo_path: url_for(product.cover_photo)).merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed)) :
-												product.as_json
+						(product.active_images.attached? && product.cover_photo.attached?) ? 
+						product.as_json
+						.merge(active_images_path: product.active_images.map { |img| url_for(img) }).as_json
+						.merge(active_images_thumbnail:product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)})
+						.merge(cover_photo_path: url_for(product.cover_photo))
+						.merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed))
+						 :
+						product.active_images.attached? ? product.as_json
+						.merge(active_images_path: product.active_images.map { |img| url_for(img) })
+						.merge(active_images_thumbnail:product.active_images.map { |img| url_for(img.variant(resize_to_limit: [200, 200]).processed)})
+						 : 
+						product.cover_photo.attached? ?
+						 product.as_json
+						 .merge(cover_photo_path: url_for(product.cover_photo))
+						 .merge(cover_photo_thumbnail: url_for(product.cover_photo.variant(resize_to_limit: [200, 200]).processed)) 
+						 :
+						product.as_json
 					}
 				}
 			end
