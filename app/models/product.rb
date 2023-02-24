@@ -41,5 +41,8 @@ class Product < ApplicationRecord
 
     favourite.merge('favourite' => favourite_ads.where(user_id: Current.user&.id).present?)
   end
+	def self.ransackable_attributes(auth_object = nil)
+    ["brand_id", "call_for_price", "city", "created_at", "description", "extra_fields", "featured", "id", "link", "location", "phone_no", "price", "price_currency", "product_category_id", "product_type", "status", "title", "updated_at", "user_id"]
+  end
 
 end
