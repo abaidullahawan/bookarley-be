@@ -45,4 +45,8 @@ class Product < ApplicationRecord
     ["brand_id", "call_for_price", "city", "created_at", "description", "extra_fields", "featured", "id", "link", "location", "phone_no", "price", "price_currency", "product_category_id", "product_type", "status", "title", "updated_at", "user_id"]
   end
 
+	def self.ransackable_associations(auth_object = nil)
+    ["active_images_attachments", "active_images_blobs", "brand", "cover_photo_attachment", "cover_photo_blob", "driver_photo_attachment", "driver_photo_blob", "favourite_ads", "favourite_users", "models", "product_category", "reported_ads", "user"]
+  end
+
 end
