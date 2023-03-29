@@ -270,8 +270,8 @@ module Api
       end
 
 			def search_products_by_title
-				@searched_product_by_sku = Product.ransack('title_or_brand_title_cont': params[:search_value].downcase.to_s)
-																					.result.limit(20).pluck( :title)
+				@searched_product_by_sku = Product.includes(:brand).ransack('title_or_brand_title_cont': params[:search_value].downcase.to_s)
+																					.result.limit(20)
 					render json: {
 						status: 'success',
 						data: @searched_product_by_sku
