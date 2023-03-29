@@ -11,4 +11,8 @@ class Brand < ApplicationRecord
     passive: 'passive',
     deleted: 'deleted'
   }, _prefix: true
+
+	def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "description", "icon", "id", "is_listed", "link", "status", "title", "updated_at"]
+  end
 end

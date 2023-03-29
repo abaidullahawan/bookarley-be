@@ -157,6 +157,7 @@ module Api
       # PATCH/PUT /products/1
       # PATCH/PUT /products/1.json
       def update
+				# byebug
 				check_null_values
         @product.active_images_attachments.destroy_all unless params[:active_images].blank?
         custom_brand_create
@@ -269,7 +270,7 @@ module Api
       end
 
 			def search_products_by_title
-				@searched_product_by_sku = Product.ransack('title_cont': params[:search_value].downcase.to_s)
+				@searched_product_by_sku = Product.ransack('title_or_brand_title_cont': params[:search_value].downcase.to_s)
 																					.result.limit(20).pluck( :title)
 					render json: {
 						status: 'success',
