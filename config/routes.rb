@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       post 'import_data_form_csv', to: 'products#import_data_form_csv'
       get 'get_verification_requested_users', to: 'app_users#get_verification_requested_users'
       get 'get_verified_users', to: 'app_users#get_verified_users'
+      get 'get_system_notifications', to: 'products#getSystemNotifications'
 
 			
     end

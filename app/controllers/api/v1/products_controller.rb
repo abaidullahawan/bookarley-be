@@ -278,6 +278,18 @@ module Api
 					}
 			end
 
+			def getSystemNotifications
+				temp1=Product.where(featured: nil).count
+				temp2=Product.all.count
+				temp3=Product.where(featured: true).count
+				temp4=Product.where(featured: false).count
+
+				render json: {
+					status: 'success',
+					data: {featured_ads:temp3,featured_requested:temp1,total_ads:temp2,unfeatured_ads:temp4}
+				}
+			end
+
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product
