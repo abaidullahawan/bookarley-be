@@ -1,13 +1,13 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.0"
 
-set :application, "tractoronline"
-set :repo_url, "git@github.com:abaidullahawan/tractoronline.git"
+set :application, "bookarley"
+set :repo_url, "git@github.com:abaidullahawan/bookarley-be.git"
 
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
-set :branch, 'production'
+set :branch, 'main'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
