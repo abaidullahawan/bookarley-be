@@ -57,8 +57,9 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
+	config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: "http://localhost:4000" }
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :sendmail
 
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
@@ -70,6 +71,6 @@ Rails.application.configure do
  }
 
  config.action_mailer.default_options = {
-  from: 'tractoronline0012@gmail.com'
+  from: 'info@bookarley.com'
 }
 end

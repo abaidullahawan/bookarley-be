@@ -25,7 +25,7 @@ module Api
               DeviseTokenAuth::Url.generate(redirect_url, redirect_header_options)
             end
             redirect_path = 'http://localhost:3000/login/'
-            redirect_path = 'https://tractoronline.com.pk/login/' if Rails.env.production?
+            redirect_path = 'https://bookarley.com/login/' if Rails.env.production?
             redirect_to redirect_path
           else
             raise ActionController::RoutingError, 'Not Found'

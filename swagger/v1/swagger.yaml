@@ -3226,4 +3226,4 @@ paths:
 
 servers:
 - url: http://localhost:4000
-- url: https://portal.tractoronline.com.pk/
+- url: https://portal.bookarley.com/

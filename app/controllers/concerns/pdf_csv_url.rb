@@ -6,7 +6,7 @@ module PdfCsvUrl
 
   def get_url(save_path)
     @url = 'http://localhost:4000/uploads/'
-    @url = 'https://portal.tractoronline.com.pk/uploads/' if Rails.env.production?
+    @url = 'https://portal.bookarley.com/uploads/' if Rails.env.production?
     @save_path = @url + save_path.to_s.split('/').last
   end
 end

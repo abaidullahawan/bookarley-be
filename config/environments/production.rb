@@ -97,19 +97,19 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_url_options = { host: "https://portal.tractoronline.com.pk" }
+  config.action_mailer.default_url_options = { host: "https://portal.bookarley.com" }
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                  25,
   authentication:       'plain',
-  user_name:            'tractoronline0012@gmail.com',
+  user_name:            'info@bookarley.com',
   password:             'yvmoiovmgcmozppr',
   domain:               'gmail.com',
  }
 
  config.action_mailer.default_options = {
-  from: 'tractoronline0012@gmail.com'
+  from: 'info@bookarley.com'
 }
 end
