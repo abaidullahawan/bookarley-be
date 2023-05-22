@@ -50,7 +50,7 @@ Rails.application.configure do
   config.assets.quiet = true
 
   # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  config.action_view.raise_on_missing_translations = true
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
@@ -59,17 +59,30 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 	config.action_mailer.perform_caching = false
   config.action_mailer.default_url_options = { host: "http://localhost:4000" }
-  config.action_mailer.delivery_method = :sendmail
 
-  config.action_mailer.smtp_settings = {
-  address:              'smtp.gmail.com',
-  port:                  25,
-  authentication:       'plain',
-  user_name:            'tractoronline0012@gmail.com',
-  password:             'yvmoiovmgcmozppr',
-  domain:               'gmail.com',
- }
+#   config.action_mailer.smtp_settings = {
+#   address:              'smtpout.secureserver.net',
+#   port:                  465,
+#   authentication:       'login',
+# 	ssl:									true,
+#   tls: 									true,
+#   user_name:            'info@bookarley.com',
+#   password:             'Qamar04090409',
+#   domain:               'bookarley.com',
+# 	enable_starttls_auto: true
 
+#  }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  address: 'smtpout.secureserver.net',
+  port: 465,
+  domain: 'bookarley.com',
+  user_name: 'info@bookarley.com',
+  password: 'Qamar04090409',
+  authentication: :login,
+  enable_starttls_auto: true,
+  ssl: true
+}
  config.action_mailer.default_options = {
   from: 'info@bookarley.com'
 }

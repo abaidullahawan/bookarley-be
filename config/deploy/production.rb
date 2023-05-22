@@ -63,4 +63,14 @@ server '137.184.143.168', user: 'deploy', roles: %w[app db web]
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  address: 'smtpout.secureserver.net',
+  port: 465,
+  domain: 'bookarley.com',
+  user_name: 'info@bookarley.com',
+  password: 'Qamar04090409',
+  authentication: :login,
+  enable_starttls_auto: true,
+  ssl: true
+}
