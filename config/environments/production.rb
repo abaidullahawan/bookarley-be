@@ -98,17 +98,18 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: "https://portal.bookarley.com" }
-  config.action_mailer.delivery_method = :smtp
-
-  config.action_mailer.smtp_settings = {
-  address:              'smtp.gmail.com',
-  port:                  25,
-  authentication:       'plain',
-  user_name:            'info@bookarley.com',
-  password:             'yvmoiovmgcmozppr',
-  domain:               'gmail.com',
- }
-
+	config.action_mailer.delivery_method = :smtp
+	config.action_mailer.smtp_settings = {
+		address: 'smtpout.secureserver.net',
+		port: 465,
+		domain: 'bookarley.com',
+		user_name: 'info@bookarley.com',
+		password: 'Qamar04090409',
+		authentication: :login,
+		enable_starttls_auto: true,
+		ssl: true
+	}
+	
  config.action_mailer.default_options = {
   from: 'info@bookarley.com'
 }
