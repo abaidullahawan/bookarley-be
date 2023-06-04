@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :favourite_ads
   has_many :favourite_products, through: :favourite_ads, source: 'product'
   has_many :reported_ads
+  has_many :stores
   accepts_nested_attributes_for :personal_detail
   accepts_nested_attributes_for :users_role
   validates :phone, uniqueness: true, if: -> { phone.present? }
@@ -36,7 +37,7 @@ class User < ActiveRecord::Base
 
   def email_required?
     if self.phone.present?
-      self.email = "#{Time.now.strftime('%m%d%Y%H%M%p')}tractoronline@demo.co"
+      self.email = "#{Time.now.strftime('%m%d%Y%H%M%p')}Bookarley@demo.co"
     end
   end
 

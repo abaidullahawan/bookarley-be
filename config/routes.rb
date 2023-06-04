@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resources :budgets
       resources :product_mappings
       resources :website_names,  only: %i[index]
+      resources :stores
 
 
       get 'all_cities', to: 'cities#all_cities'

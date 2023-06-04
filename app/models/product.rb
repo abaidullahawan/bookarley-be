@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   has_one_attached :driver_photo
   belongs_to :brand
   belongs_to :user
+  belongs_to :store, optional: true
   belongs_to :product_category
   has_many :models, dependent: :destroy
   has_many :favourite_ads
