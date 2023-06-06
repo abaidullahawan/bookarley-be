@@ -17,7 +17,7 @@ module Api
         @pagy, @stores = pagy(@q.result.order('stores.title': :asc), items: no_of_record)
         render json: {
           status: 'success',
-          data: @stores,
+          data: JSON.parse(@stores.to_json(include: :products)),
           pagination: @pagy
         }
       end
