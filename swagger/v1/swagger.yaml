@@ -3224,6 +3224,302 @@ paths:
           description: invalid request
           content: {}
 
+  # Store APIs
+  "/api/v1/stores":
+    get:
+      summary: Show All Stores
+      tags:
+      - Stores
+      description: Info Related to All Stores
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Stores
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+    post:
+      summary: Create Store
+      tags:
+      - Stores
+      description: "Creates a New Store"
+      operationId: postStoreCreation
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Store Created
+          content: {}
+        '404':
+          description: Store not created
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                user_id:
+                  type: integer
+
+  "/api/v1/stores/{id}":
+    get:
+      summary: Show Store
+      tags:
+      - Stores
+      description: Info Related to a Store
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Show Store
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+
+    put:
+      summary: Update Store
+      tags:
+      - Stores
+      description: "updates an existing Store"
+      operationId: updateStore
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Store updated
+          content: {}
+        '404':
+          description: Store not updated
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: text
+                status:
+                  type: string
+                user_id:
+                  type: integer
+
+    delete:
+      summary: Delete Store
+      tags:
+      - Stores
+      description: Delete Store by giving its id
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+          "/api/v1/stores/{id}":
+
+    "/api/v1/add_store_products/{id}"
+    post:
+      summary: Add Products in Store
+      tags:
+      - Stores
+      description: "Add Products in Store"
+      operationId: addStoreProducts
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: header
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Products are added in store successfully
+          content: {}
+        '404':
+          description: Products are not added in store
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_ids:
+                  type: string
+
+    "/api/v1/remove_store_products/{id}"
+    post:
+      summary: Add Products in Store
+      tags:
+      - Stores
+      description: "Remove Products from Store"
+      operationId: removeStoreProducts
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      - name: id
+        in: header
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Products are removed from store successfully
+          content: {}
+        '404':
+          description: Products are not removed from store
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_ids:
+                  type: string
+
+  "/api/v1/get_products_without_store":
+    get:
+      summary: Show All Products without Store
+      tags:
+      - Stores
+      description: Info Related to All Products that are not placed in any Store
+      parameters:
+      - name: access-token
+        in: header
+        schema:
+          type: string
+      - name: client
+        in: header
+        schema:
+          type: string
+      - name: uid
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: All Products
+          content: {}
+        '422':
+          description: invalid request
+          content: {}
 servers:
 - url: http://localhost:4000
 - url: https://portal.bookarley.com/
