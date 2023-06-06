@@ -4,7 +4,7 @@ module Api
   module V1
     class StoresController < ApplicationController
       before_action :authenticate_api_v1_user!, except: %i[all_stores]
-      before_action :set_store, only: %i[show edit update destroy]
+      before_action :set_store, only: %i[show edit update destroy add_store_products]
       require 'tempfile'
       require 'csv'
       include PdfCsvUrl
@@ -51,10 +51,7 @@ module Api
 
       def show
         if @store
-          render json: {
-            status: 'success',
-            data: @store
-            }
+          render json: { status: 'success', data: JSON.parse(@store.to_json(include: :products)) }
         else
           render json: @store.errors
         end
@@ -87,7 +84,28 @@ module Api
       def destroy
         @store.destroy
 
-        render json: { notice: 'Store was successfully removed.' }
+        render json: { status: 'success', notice: 'Store was successfully removed.' }
+      end
+
+      def add_store_products
+        product_ids = params['product_ids'].delete('[').delete(']').split(',')
+        unmapped_products = Product.where(
+          id: product_ids, store_id: nil, user_id: current_api_v1_user&.id
+        )
+        unmapped_products.update_all(store_id: @store.id)
+        render json: { status: 'success', notice: 'Products was successfully added into store.' }
+      end
+
+      def remove_store_products
+        product_ids = params['product_ids'].delete('[').delete(']').split(',')
+        unmapped_products = Product.where(id: product_ids)
+        unmapped_products.update_all(store_id: nil)
+        render json: { status: 'success', notice: 'Products was successfully removed from store.' }
+      end
+
+      def products_without_store
+        @products = Product.where(store_id: nil, user_id: current_api_v1_user&.id)
+        render json: { status: 'success', data: @products }
       end
 
       def all_stores

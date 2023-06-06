@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       resources :website_names,  only: %i[index]
       resources :stores
 
+      post 'add_store_products/:id', to: 'stores#add_store_products'
+      post 'remove_store_products/:id', to: 'stores#remove_store_products'
+      get 'get_products_without_store', to: 'stores#products_without_store'
+
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
