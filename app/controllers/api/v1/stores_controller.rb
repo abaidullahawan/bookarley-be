@@ -15,11 +15,6 @@ module Api
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @stores = pagy(@q.result.order('stores.title': :asc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: JSON.parse(@stores.to_json(include: :products)),
-          pagination: @pagy
-        }
       end
 
       # def export_csv_and_pdf
@@ -51,7 +46,7 @@ module Api
 
       def show
         if @store
-          render json: { status: 'success', data: JSON.parse(@store.to_json(include: :products)) }
+          render :show
         else
           render json: @store.errors
         end
@@ -129,10 +124,7 @@ module Api
         end
 
         def render_success
-          render json: {
-            status: 'success',
-            data: @store
-          }
+          render :show
         end
     end
   end
