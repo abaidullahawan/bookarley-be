@@ -10,8 +10,6 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /brands
-      # GET /brands.json
       def index
         @q = Brand.includes(:product_categories, :products,
           active_image_attachment: :blob).where(is_listed: true).ransack(params[:q])
@@ -58,30 +56,20 @@ module Api
         }
       end
 
-      # GET /brands/1
-      # GET /brands/1.json
       def show
         if @brand
-          render json: {
-            status: 'success',
-            data: @brand.active_image.attached? ? @brand.as_json.merge(
-              active_image_path: url_for(@brand.active_image)) : @brand.as_json
-            }
+          render :show
         else
           render json: @brand.errors
         end
       end
 
-      # GET /brands/new
       def new
         @brand = Brand.new
       end
 
-      # GET /brands/1/edit
       def edit; end
 
-      # POST /brand
-      # POST /brand.json
       def create
         @brand = Brand.new(brand_params)
         if @brand.save
@@ -92,8 +80,6 @@ module Api
         end
       end
 
-      # PATCH/PUT /brands/1
-      # PATCH/PUT /brands/1.json
       def update
         if @brand.update(brand_params)
           update_brand_category
@@ -103,8 +89,6 @@ module Api
         end
       end
 
-      # DELETE /brands/1
-      # DELETE /brands/1.json
       def destroy
         @brand.destroy
 

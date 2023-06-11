@@ -10,19 +10,12 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /languages
-      # GET /languages.json
       def index
         @q = Language.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @languages = pagy(@q.result.order('languages.updated_at': :desc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: @languages,
-          pagination: @pagy
-        }
       end
 
       def export_csv_and_pdf
@@ -52,41 +45,33 @@ module Api
         }
       end
 
-      # GET /languages/1
-      # GET /languages/1.json
       def show
         if @language
-          render_success
+          render :show
         else
           render json: @language.errors
         end
       end
 
-      # GET /languages/new
       def new
         @city = Language.new
       end
 
-      # GET /languages/1/edit
       def edit; end
 
-      # POST /language
-      # POST /language.json
       def create
         @language = Language.new(language_params)
 
         if @language.save
-          render_success
+          render :show
         else
           render json: @language.errors
         end
       end
 
-      # PATCH/PUT /languages/1
-      # PATCH/PUT /languages/1.json
       def update
         if @language.update(language_params)
-          render_success
+          render :show
         else
           render json: @language.errors
         end
@@ -109,13 +94,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def language_params
           params.require(:language).permit(:title, :description, :status)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @language
-          }
         end
     end
   end

@@ -10,19 +10,12 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /roles
-      # GET /roles.json
       def index
         @q = Role.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @roles = pagy(@q.result.order('roles.updated_at': :desc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: @roles,
-          pagination: @pagy
-        }
       end
 
       def export_csv_and_pdf
@@ -52,48 +45,38 @@ module Api
         }
       end
 
-      # GET /roles/1
-      # GET /roles/1.json
       def show
         if @role
-          render_success
+          render :show
         else
           render json: @role.errors
         end
       end
 
-      # GET /roles/new
       def new
         @role = Role.new
       end
 
-      # GET /roles/1/edit
       def edit; end
 
-      # POST /role
-      # POST /role.json
       def create
         @role = Role.new(role_params)
 
         if @role.save
-          render_success
+          render :show
         else
           render json: @role.errors
         end
       end
 
-      # PATCH/PUT /roles/1
-      # PATCH/PUT /roles/1.json
       def update
         if @role.update(role_params)
-          render_success
+          render :show
         else
           render json: @role.errors
         end
       end
 
-      # DELETE /roles/1
-      # DELETE /roles/1.json
       def destroy
         @role.destroy
 
@@ -109,13 +92,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def role_params
           params.require(:role).permit(:name, :resource_type, :resource_id, :status)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @role
-          }
         end
     end
   end
