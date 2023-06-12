@@ -1,22 +1,13 @@
-# Stores Index JSON
+# frozen_string_literal: true
 
-json.id product.id
-json.title product.title
-json.price product.price
-json.extra_fields product.extra_fields
-json.description product.description
-json.status product.status
-json.link product.link
-json.location product.location
-json.city product.city
-json.featured product.featured
-json.product_type product.product_type
-json.created_at product.created_at
-json.updated_at product.updated_at
-json.brand_id product.brand_id
-json.user_id product.user_id
-json.product_category_id product.product_category_id
-json.phone_no product.phone_no
-json.price_currency product.price_currency
-json.call_for_price product.call_for_price
-json.store_id product.store_id
+# Brand Partial JSON
+json.id brand.id
+json.title brand.title
+json.description brand.description
+json.status brand.status
+json.link brand.link
+json.icon brand.icon
+json.created_at brand.created_at
+json.updated_at brand.updated_at
+json.is_listed brand.is_listed
+json.active_image_path brand.active_image.present? ? url_for(brand.active_image.variant(resize_to_limit: [400, 400]).processed) : nil

@@ -10,19 +10,12 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /countries
-      # GET /countries.json
       def index
         @q = Country.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @countries = pagy(@q.result.order('countries.updated_at': :desc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: @countries,
-          pagination: @pagy
-        }
       end
 
       def export_csv_and_pdf
@@ -52,51 +45,38 @@ module Api
         }
       end
 
-      # GET /countries/1
-      # GET /countries/1.json
       def show
         if @country
-          render json: {
-            status: 'success',
-            data: @country
-          }
+          render :show
         else
           render json: @country.errors
         end
       end
 
-      # GET /countries/new
       def new
         @country = Country.new
       end
 
-      # GET /countries/1/edit
       def edit; end
 
-      # POST /country
-      # POST /country.json
       def create
         @country = Country.new(country_params)
 
         if @country.save
-          render_success
+          render :show
         else
           render json: @country.errors
         end
       end
 
-      # PATCH/PUT /countries/1
-      # PATCH/PUT /countries/1.json
       def update
         if @country.update(country_params)
-          render_success
+          render :show
         else
           render json: @country.errors
         end
       end
 
-      # DELETE /countries/1
-      # DELETE /countries/1.json
       def destroy
         @country.destroy
 
@@ -112,13 +92,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def country_params
           params.permit(:title, :comments, :status, :active_image)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @country
-          }
         end
     end
   end

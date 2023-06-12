@@ -10,19 +10,12 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /budgets
-      # GET /budgets.json
       def index
         @q = Budget.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @budgets = pagy(@q.result.order('budgets.updated_at': :desc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: @budgets,
-          pagination: @pagy
-        }
       end
 
       def export_csv_and_pdf
@@ -52,51 +45,37 @@ module Api
         }
       end
 
-      # GET /budgets/1
-      # GET /budgets/1.json
       def show
         if @budget
-          render json: {
-            status: 'success',
-            data: @budget
-          }
+          render :show
         else
           render json: @budget.errors
         end
       end
 
-      # GET /budgets/new
       def new
         @budget = Budget.new
       end
 
-      # GET /budgets/1/edit
       def edit; end
 
-      # POST /budget
-      # POST /budget.json
       def create
         @budget = Budget.new(budget_params)
-
         if @budget.save
-          render_success
+          render :show
         else
           render json: @budget.errors
         end
       end
 
-      # PATCH/PUT /budgets/1
-      # PATCH/PUT /budgets/1.json
       def update
         if @budget.update(budget_params)
-          render_success
+          render :show
         else
           render json: @budget.errors
         end
       end
 
-      # DELETE /budgets/1
-      # DELETE /budgets/1.json
       def destroy
         @budget.destroy
 
@@ -112,13 +91,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def budget_params
           params.permit(:title, :description, :status, :link, :icon, :active_image)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @budget
-          }
         end
     end
   end

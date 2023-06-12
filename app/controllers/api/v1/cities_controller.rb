@@ -10,19 +10,12 @@ module Api
       require 'csv'
       include PdfCsvUrl
 
-      # GET /cities
-      # GET /cities.json
       def index
         @q = City.ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
         @pagy, @cities = pagy(@q.result.order('cities.title': :asc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: @cities,
-          pagination: @pagy
-        }
       end
 
       def export_csv_and_pdf
@@ -52,51 +45,38 @@ module Api
         }
       end
 
-      # GET /cities/1
-      # GET /cities/1.json
       def show
         if @city
-          render json: {
-            status: 'success',
-            data: @city
-            }
+          render :show
         else
           render json: @city.errors
         end
       end
 
-      # GET /cities/new
       def new
         @city = City.new
       end
 
-      # GET /cities/1/edit
       def edit; end
 
-      # POST /city
-      # POST /city.json
       def create
         @city = City.new(city_params)
 
         if @city.save
-          render_success
+          render :show
         else
           render json: @city.errors
         end
       end
 
-      # PATCH/PUT /cities/1
-      # PATCH/PUT /cities/1.json
       def update
         if @city.update(city_params)
-          render_success
+          render :show
         else
           render json: @city.errors
         end
       end
 
-      # DELETE /cities/1
-      # DELETE /cities/1.json
       def destroy
         @city.destroy
 
@@ -121,13 +101,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def city_params
           params.permit(:title, :comments, :status, :active_image, :city_type)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @city
-          }
         end
     end
   end

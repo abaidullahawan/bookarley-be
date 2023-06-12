@@ -15,7 +15,7 @@ class City < ApplicationRecord
 	def self.ransackable_attributes(auth_object = nil)
     ["city_type", "comments", "created_at", "id", "status", "title", "updated_at"]
   end
-	
+
   private
   # def set_image
   #   image_url = rails_blob_path(self.image_active, disposition: "attachment", only_path: true)

@@ -11,58 +11,42 @@ module Api
       # GET /users_roles.json
       def index
         no_of_record = params[:no_of_record] || 10
-        @q = UsersRole.ransack(params[:q])
+        @q = UsersRole.joins(:role, :user).includes(:role, user: :personal_detail).ransack(params[:q])
         @pagy, @user_roles = pagy(@q.result.order('users_roles.updated_at': :desc), items: no_of_record)
-        render json: {
-          status: 'success',
-          data: JSON.parse(@user_roles.joins(:role, :user).includes(
-            :role, :user).to_json(include: [:role, :user])),
-          pagination: @pagy
-        }
       end
 
-      # GET /users_roles/1
-      # GET /users_roles/1.json
       def show
         if @users_role
-          render_success
+          render :show
         else
           render json: @users_role.errors
         end
       end
 
-      # GET /users_roles/new
       def new
         @users_role = UsersRole.new
       end
 
-      # GET /users_roles/1/edit
       def edit; end
 
-      # POST /users_role
-      # POST /users_role.json
       def create
         @users_role = UsersRole.new(users_roles_params)
 
         if @users_role.save
-          render_success
+          render :show
         else
           render json: @users_role.errors
         end
       end
 
-      # PATCH/PUT /users_roles/1
-      # PATCH/PUT /users_roles/1.json
       def update
         if @users_role.update(users_roles_params)
-          render_success
+          render :show
         else
           render json: @users_role.errors
         end
       end
 
-      # DELETE /users_roles/1
-      # DELETE /users_roles/1.json
       def destroy
         @users_role.destroy
 
@@ -78,13 +62,6 @@ module Api
         # Only allow a list of trusted parameters through.
         def users_roles_params
           params.permit(:user_id, :role_id)
-        end
-
-        def render_success
-          render json: {
-            status: 'success',
-            data: @users_role
-          }
         end
     end
   end

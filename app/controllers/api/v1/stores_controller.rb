@@ -10,7 +10,7 @@ module Api
       include PdfCsvUrl
 
       def index
-        @q = Store.ransack(params[:q])
+        @q = Store.includes(products: :brand).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
         no_of_record = params[:no_of_record] || 10
@@ -101,6 +101,15 @@ module Api
       def products_without_store
         @products = Product.where(store_id: nil, user_id: current_api_v1_user&.id)
         render json: { status: 'success', data: @products }
+      end
+
+      def bulk_update
+        stores = Store.where(id: params[:ids].to_s.split(','))
+        if stores.update(store_params)
+          render json: { status: 'success', notice: 'Stores was successfully updated.' }
+        else
+          render json: { status: 'error', message: 'Something went wrong!' }
+        end
       end
 
       def all_stores

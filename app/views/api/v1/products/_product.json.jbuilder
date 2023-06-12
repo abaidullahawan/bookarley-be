@@ -1,5 +1,6 @@
-# Stores Index JSON
+# frozen_string_literal: true
 
+# Product Partial JSON
 json.id product.id
 json.title product.title
 json.price product.price
