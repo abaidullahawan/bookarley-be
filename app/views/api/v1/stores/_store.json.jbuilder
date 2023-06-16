@@ -2,6 +2,7 @@
 
 # Store Partial JSON
 json.id store.id
+json.title store.title
 json.description store.description
 json.status store.status
 json.created_at store.created_at
