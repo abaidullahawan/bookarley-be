@@ -20,6 +20,14 @@ module Products
     product.as_json.merge(attach_images(product))
   end
 
+  def active_images_of_products_for_landing_page(products_array)
+    products_array.map do |products|
+      products.map do |product|
+        product.as_json.merge(attach_images(product))
+      end
+    end
+  end
+
   def attach_images(product)
     images = {}
 
