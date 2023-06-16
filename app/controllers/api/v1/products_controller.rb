@@ -179,7 +179,7 @@ module Api
           end
         end
 
-        render json: { data: active_images_for_products(products) }
+        render json: { data: active_images_of_products_for_landing_page(products) }
       end
 
       def favourite_ads
