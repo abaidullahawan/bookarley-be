@@ -15,4 +15,9 @@ json.updated_at user.updated_at
 json.varified_user user.varified_user
 json.personal_detail user.personal_detail
 json.roles user.roles
-json.profile_path user.profile.present? ? url_for(user.profile) : nil
+profileImageUrl = user.profile.present? ? url_for(user.profile) : ''
+if profileImageUrl.present?
+  urlStartPoint, urlEndPoint = [profileImageUrl.index('/rails/'), profileImageUrl.length]
+  profileImageUrl = request.base_url + profileImageUrl[urlStartPoint..urlEndPoint]
+end
+json.profile_path profileImageUrl
