@@ -51,6 +51,6 @@ class Api::V1::AppUsersController < ApplicationController
     def app_user_params
       params.require(:user).permit(:name, :id, :email, :password, :password_confirmation,
         personal_detail_attributes: [:id, :first_name, :last_name, :gender, :username,
-        :dob, :country, :city])
+        :dob, :country, :city, :address])
     end
 end

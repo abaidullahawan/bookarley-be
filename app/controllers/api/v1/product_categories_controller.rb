@@ -3,8 +3,8 @@
 module Api
   module V1
     # Product Catories api controller
-    class ProductCategoriesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[categories_list]
+    class ProductCategoriesController < ApplicationController    
+      # before_action :authenticate_api_v1_user!, except: %i[categories_list]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
