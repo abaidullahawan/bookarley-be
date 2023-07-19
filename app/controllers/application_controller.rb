@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
         :account_update, keys: [
         :name,:varified_user, :nickname, :profile, personal_detail_attributes: [
           :id, :first_name, :last_name, :gender, :dob, :country, :city,
-          :username, :phone_number, :language ]
+          :username, :phone_number, :language, :address ]
         ]
       )
     end
