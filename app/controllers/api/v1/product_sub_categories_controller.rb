@@ -13,7 +13,7 @@ module Api
       # GET /product_sub_categories
       # GET /product_sub_categories.json
       def index
-        @q = ProductSubCategory.includes(:product_category_head,
+        @q = ProductSubCategory.includes(:product_category,
           active_image_attachment: :blob).ransack(params[:q])
         return export_csv_and_pdf if params[:format].present?
 
@@ -24,8 +24,8 @@ module Api
           status: 'success',
           data: @product_sub_categories.map { |psc|
             psc.active_image.attached? ? JSON.parse(psc.to_json(
-              include: [:product_category_head])).merge(active_image_path: url_for(
-                psc.active_image)) : JSON.parse(psc.to_json(include: [:product_category_head]))
+              include: [:product_category])).merge(active_image_path: url_for(
+                psc.active_image)) : JSON.parse(psc.to_json(include: [:product_category]))
           },
           pagination: @pagy
         }
@@ -65,9 +65,9 @@ module Api
           render json: {
             status: 'success',
             data: @product_sub_category.active_image.attached? ? JSON.parse(
-              @product_sub_category.to_json(include: [:product_category_head])).merge(
+              @product_sub_category.to_json(include: [:product_category])).merge(
                 active_image_path: url_for(@product_sub_category.active_image)) : JSON.parse(
-                  @product_sub_category.to_json(include: [:product_category_head]))
+                  @product_sub_category.to_json(include: [:product_category]))
           }
         else
           render json: @product_sub_category.errors
@@ -115,14 +115,14 @@ module Api
       private
         # Use callbacks to share common setup or constraints between actions.
         def set_product_sub_category
-          @product_sub_category = ProductSubCategory.joins(:product_category_head).includes(
-            :product_category_head).find(params[:id])
+          @product_sub_category = ProductSubCategory.joins(:product_category).includes(
+            :product_category).find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
         def product_sub_category_params
           params.permit(:title, :active_image, :description, :status,
-                                                       :product_category_head_id, :link, :icon)
+                                                       :product_category_id, :link, :icon)
         end
 
         def render_success
