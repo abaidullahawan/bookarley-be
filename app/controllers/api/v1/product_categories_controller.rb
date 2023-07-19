@@ -4,7 +4,7 @@ module Api
   module V1
     # Product Catories api controller
     class ProductCategoriesController < ApplicationController    
-      # before_action :authenticate_api_v1_user!, except: %i[categories_list]
+      before_action :authenticate_api_v1_user!, except: %i[categories_list]
       before_action :set_product_category, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -84,7 +84,6 @@ module Api
       # POST /product_category.json
       def create
         @product_category = ProductCategory.new(product_category_params)
-
         if @product_category.save
           create_brand_category
           render_success
@@ -114,19 +113,16 @@ module Api
 
       def categories_list
         params[:is_option] = nil if params[:is_option].eql? 'nil'
-        @q = ProductCategory.order(position: :asc).includes(:brands,
-          product_category_heads: [:product_sub_categories],
+        @q = ProductCategory.order(position: :asc).includes(:brands, :product_sub_categories,
           active_image_attachment: :blob).ransack(is_option_eq: params[:is_option])
         @categories_list = @q.result
         render json: {
           status: 'success',
           data: @categories_list.map { |cl|
             cl.active_image.attached? ? JSON.parse(cl.to_json(
-              include: [:products,:brands, product_category_heads: {
-                include: :product_sub_categories }])).merge(active_image_path: url_for(
+              include: [:products, :brands, :product_sub_categories ])).merge(active_image_path: url_for(
                 cl.active_image)).merge(active_image_thumbnail:
-									url_for(cl.active_image.variant(resize_to_limit: [200, 200]).processed)) : JSON.parse(cl.to_json(include: [:products,:brands,
-                  product_category_heads: { include: :product_sub_categories }]))
+									url_for(cl.active_image.variant(resize_to_limit: [200, 200]).processed)) : JSON.parse(cl.to_json(include: [:products,:brands, :product_sub_categories ]))
           }
         }
       end

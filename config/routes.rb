@@ -16,7 +16,6 @@ Rails.application.routes.draw do
         # registrations:      'api/v1/devise/registrations'
       }
       resources :app_users,  only: %i[show index update]
-      resources :brands
       resources :countries
       resources :cities
       resources :roles
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
       resources :product_mappings
       resources :website_names,  only: %i[index]
       resources :stores
+      resources :priority_sliders
 
       post 'add_store_products/:id', to: 'stores#add_store_products'
       post 'remove_store_products/:id', to: 'stores#remove_store_products'
@@ -56,6 +56,7 @@ Rails.application.routes.draw do
 			
     end
   end
+  # resources :categories
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
