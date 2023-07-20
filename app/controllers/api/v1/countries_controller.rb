@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class CountriesController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      # before_action :authenticate_api_v1_user!, except: %i[index destroy]
       before_action :set_country, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -63,7 +63,7 @@ module Api
         @country = Country.new(country_params)
 
         if @country.save
-          render :show
+          render json: @country
         else
           render json: @country.errors
         end
@@ -91,7 +91,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def country_params
-          params.permit(:title, :comments, :status, :active_image)
+          params.permit(:title, :comments, :status, :active_image, :country)
         end
     end
   end

@@ -4,7 +4,7 @@ module Api
   module V1
     # Brand api controller
     class BrandsController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[brand_with_products index]
+      before_action :authenticate_api_v1_user!, except: %i[brand_with_products index destroy]
       before_action :set_brand, only: %i[show edit update destroy brand_with_products]
       require 'tempfile'
       require 'csv'
@@ -112,7 +112,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def brand_params
-          params.permit(:title, :description, :status, :link, :icon, :active_image)
+          params.permit(:title, :description, :status, :link, :icon, :active_image, :is_listed)
         end
 
         def render_success
