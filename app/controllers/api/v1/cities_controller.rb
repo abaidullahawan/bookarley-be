@@ -4,7 +4,7 @@ module Api
   module V1
     # City api controller
     class CitiesController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[all_cities]
+      # before_action :authenticate_api_v1_user!, except: %i[all_cities destroy]
       before_action :set_city, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -63,7 +63,7 @@ module Api
         @city = City.new(city_params)
 
         if @city.save
-          render :show
+          render json: @city
         else
           render json: @city.errors
         end

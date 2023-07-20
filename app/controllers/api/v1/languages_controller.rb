@@ -4,7 +4,7 @@ module Api
   module V1
     # Language api controller
     class LanguagesController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      # before_action :authenticate_api_v1_user!, except: %i[index destroy]
       before_action :set_language, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -47,7 +47,7 @@ module Api
 
       def show
         if @language
-          render :show
+          render json: @language
         else
           render json: @language.errors
         end

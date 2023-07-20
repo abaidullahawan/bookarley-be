@@ -2,7 +2,7 @@ module Api
   module V1
     # Priority Sliders API controller
     class PrioritySlidersController < ApplicationController
-      before_action :authenticate_api_v1_user!, except: %i[index]
+      before_action :authenticate_api_v1_user!, except: %i[index destroy]
       before_action :set_priority_slider, only: %i[show edit update destroy]
 
       # GET /priority_sliders
