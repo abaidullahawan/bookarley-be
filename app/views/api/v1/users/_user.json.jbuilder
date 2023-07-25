@@ -21,3 +21,4 @@ if profileImageUrl.present?
   profileImageUrl = request.base_url + profileImageUrl[urlStartPoint..urlEndPoint]
 end
 json.profile_path profileImageUrl
+json.store user.stores
