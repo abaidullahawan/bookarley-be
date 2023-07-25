@@ -96,7 +96,6 @@ module Api
       # PATCH/PUT /product_categories/1.json
       def update
         if @product_category.update(product_category_params)
-          update_brand_category
           render_success
         else
           render json: @product_category.errors
@@ -135,7 +134,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def product_category_params
-          params.permit(:title, :active_image, :description, :status, :link, :icon, :is_option, :position)
+          params.permit(:id, :title, :active_image, :description, :status, :link, :icon, :is_option, :position)
         end
 
         def render_success
