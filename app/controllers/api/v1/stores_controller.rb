@@ -129,7 +129,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def store_params
-          params.permit(:title, :description, :status, :user_id, :profile_image, :cover_image)
+          params.permit(:title, :description, :address, :user_id, :status, :profile_image, :cover_image)
         end
 
         def render_success
