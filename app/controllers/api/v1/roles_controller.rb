@@ -4,7 +4,7 @@ module Api
   module V1
     # Role api controller
     class RolesController < ApplicationController
-      before_action :authenticate_api_v1_user!
+      # before_action :authenticate_api_v1_user!
       before_action :set_role, only: %i[show edit update destroy]
       require 'tempfile'
       require 'csv'
@@ -63,7 +63,7 @@ module Api
         @role = Role.new(role_params)
 
         if @role.save
-          render :show
+          render json: @role
         else
           render json: @role.errors
         end
@@ -71,7 +71,7 @@ module Api
 
       def update
         if @role.update(role_params)
-          render :show
+          render json: @role
         else
           render json: @role.errors
         end
@@ -91,7 +91,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def role_params
-          params.require(:role).permit(:name, :resource_type, :resource_id, :status)
+          params.permit(:name, :resource_type, :resource_id, :status)
         end
     end
   end

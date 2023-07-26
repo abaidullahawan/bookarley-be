@@ -71,7 +71,7 @@ module Api
 
       def update
         if @city.update(city_params)
-          render :show
+          render json: @city
         else
           render json: @city.errors
         end
@@ -100,7 +100,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def city_params
-          params.permit(:title, :comments, :status, :active_image, :city_type)
+          params.require(:city).permit(:id, :title, :comments, :status, :active_image, :city_type, :created_at, :updated_at)
         end
     end
   end

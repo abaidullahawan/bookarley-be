@@ -82,7 +82,7 @@ module Api
 
       def update
         if @brand.update(brand_params)
-          update_brand_category
+          # update_brand_category
           render_success
         else
           render json: @brand.errors

@@ -21,12 +21,17 @@ Rails.application.routes.draw do
       resources :roles
       resources :users_roles
       resources :product_sub_categories
+      
       resources :product_category_heads
       resources :products
       resources :languages
       resources :brands
       resources :models
-      resources :product_categories
+      resources :product_categories do
+        member do
+          get :find_product_sub_categories
+        end
+      end
       resources :budgets
       resources :product_mappings
       resources :website_names,  only: %i[index]

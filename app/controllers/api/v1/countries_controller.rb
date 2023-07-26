@@ -71,7 +71,7 @@ module Api
 
       def update
         if @country.update(country_params)
-          render :show
+          render json: @country
         else
           render json: @country.errors
         end
@@ -91,7 +91,7 @@ module Api
 
         # Only allow a list of trusted parameters through.
         def country_params
-          params.permit(:title, :comments, :status, :active_image, :country)
+          params.permit(:id, :title, :comments, :status, :active_image, :country, :created_at, :updated_at)
         end
     end
   end

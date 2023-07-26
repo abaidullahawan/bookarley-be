@@ -30,6 +30,15 @@ module Api
         }
       end
 
+      def find_product_sub_categories
+        @product_category = ProductCategory.find(params[:id])
+        @product_sub_categories = @product_category.product_sub_categories
+        render json: {
+          status: 'success',
+          data: @product_sub_categories.map { |sc| sc.as_json(only: [:id, :title]) }
+        }
+      end
+
       def export_csv_and_pdf
         @product_categories = @q.result
         path = Rails.root.join('public/uploads')
@@ -83,6 +92,7 @@ module Api
       # POST /product_category
       # POST /product_category.json
       def create
+        
         @product_category = ProductCategory.new(product_category_params)
         if @product_category.save
           create_brand_category

@@ -2,6 +2,7 @@
 
 class ProductSubCategory < ApplicationRecord
   belongs_to :product_category
+  has_many :products, dependent: :destroy
   has_one_attached :active_image
 
   enum status: {
