@@ -63,7 +63,7 @@ module Api
         @language = Language.new(language_params)
 
         if @language.save
-          render :show
+          render json: @language
         else
           render json: @language.errors
         end
@@ -71,7 +71,7 @@ module Api
 
       def update
         if @language.update(language_params)
-          render :show
+          render json: @language
         else
           render json: @language.errors
         end
