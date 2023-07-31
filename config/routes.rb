@@ -41,7 +41,9 @@ Rails.application.routes.draw do
       post 'add_store_products/:id', to: 'stores#add_store_products'
       post 'remove_store_products/:id', to: 'stores#remove_store_products'
       get 'get_products_without_store', to: 'stores#products_without_store'
-
+      get 'parent_product_sub_categories', to: 'product_sub_categories#parent_product_sub_categories'
+      get 'get_subcategories/:product_category_id', to: 'product_sub_categories#get_subcategories'
+      get 'view_more/:id', to:'product_categories#view_more'
 
       get 'all_cities', to: 'cities#all_cities'
       get 'get_products', to: 'products#get_products'
