@@ -22,11 +22,28 @@ module Api
         render json: {
           status: 'success',
           data: @product_categories.map { |pc|
+            products_with_image = pc.products.map { |product|
+              product_hash = product.as_json(only: [:id, :title, :description, :price])
+              product_hash['active_image_path'] = url_for(product.active_image) if product.active_image.attached?
+              product_hash
+            }
             pc.active_image.attached? ? JSON.parse(pc.to_json(include: [:brands])).merge(
-              active_image_path: url_for(pc.active_image)) : JSON.parse(
-                pc.to_json(include: [:brands]))
+              active_image_path: url_for(pc.active_image),
+              products: products_with_image
+            ) : JSON.parse(pc.to_json(include: [:brands])).merge(
+              products: products_with_image
+            )
           },
           pagination: @pagy
+        }
+      end
+
+      def view_more
+        @product_category = ProductCategory.find(params[:id])
+        @products = @product_category.products
+        render json: {
+          status: 'success',
+          data: @products
         }
       end
 
