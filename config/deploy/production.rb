@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-server '137.184.143.168', user: 'deploy', roles: %w[app db web]
+server '167.71.242.162', user: 'deploy', roles: %w[app db web]
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
