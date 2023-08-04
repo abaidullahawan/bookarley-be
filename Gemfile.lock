@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/solidusio-contrib/solidus_multi_domain.git
-  revision: e7a8ff5940181ce3b6696990dddce5edd0f860d2
+  remote: https://github.com/abaidullahawan/solidus_multi_domain.git
+  revision: 631e93de4e39b3042b5fee9259b6c3bd92513b2c
   specs:
     solidus_multi_domain (2.0.0.alpha)
       deface (~> 1.0)

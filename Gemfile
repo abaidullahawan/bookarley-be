@@ -79,7 +79,7 @@ gem "canonical-rails"
 gem "solidus_support"
 gem "truncate_html"
 gem "view_component", "~> 3.0"
-gem 'solidus_multi_domain', github: 'solidusio-contrib/solidus_multi_domain'
+gem 'solidus_multi_domain', github: 'abaidullahawan/solidus_multi_domain'
 
 group :test do
   gem "capybara-screenshot", "~> 1.0"
