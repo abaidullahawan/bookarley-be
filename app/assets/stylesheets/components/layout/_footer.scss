@@ -1,0 +1,20 @@
+.footer {
+  background: #1E396B;
+  color: white;
+  font-size: $font-size-small;
+  margin-top: 4rem;
+  padding: 4rem 2rem;
+  text-align: center;
+
+  a {
+    &:hover {
+      color: lighten($color-copy, 30%);
+    }
+  }
+  a{
+    font-weight: 600;
+    color: white;
+  }
+}
+
+
