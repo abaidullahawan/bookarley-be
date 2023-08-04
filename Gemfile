@@ -97,6 +97,10 @@ group :development, :test do
   gem "rubocop-performance", "~> 1.5"
   gem "rubocop-rails", "~> 2.3"
   gem "rubocop-rspec", "~> 2.0"
+  gem 'capistrano', '~> 3.11'
+  gem 'capistrano-rails', '~> 1.4'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 end
 
 gem "solidus_stripe", "~> 5.a"
