@@ -71,9 +71,9 @@ group :test do
   gem "webdrivers"
 end
 
-gem "solidus", "~> 4.1"
+gem "solidus", github: 'abaidullahawan/solidus', branch: 'main'
 
-gem "solidus_auth_devise", "~> 2.5"
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise' , branch: 'master'
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
