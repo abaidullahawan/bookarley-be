@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   mount Sidekiq::Web => '/sidekiq'
 
+  root 'home#index'
+  resources :dashboard
+  resources :product_categories
+  resources :product_sub_categories
+
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {

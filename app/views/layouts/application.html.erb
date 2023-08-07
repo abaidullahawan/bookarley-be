@@ -6,9 +6,26 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- In the <head> section -->
+    <%= stylesheet_link_tag 'custom', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'dashboard', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'new_style', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
   </head>
 
   <body>
+    <% if !request.path.start_with?(dashboard_index_path)%>
+      <%= render partial: "layouts/shared/navbar" %>
+    <% end %>
     <%= yield %>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <%= javascript_include_tag 'custom', 'data-turbolinks-track': 'reload' %>
+
   </body>
 </html>

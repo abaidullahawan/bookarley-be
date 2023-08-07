@@ -1,0 +1,142 @@
+<div class="wrapper">
+	<nav id="sidebar" class="sidebar js-sidebar">
+		<div class="sidebar-content js-simplebar">
+			<a class="sidebar-brand" href="index.html">
+				<span class="align-middle">Bookarley</span>
+			</a>
+			<nav>
+				<div class="nav flex-column nav-pills" id="nav-tab" role="tablist">
+					<a class="nav-link text-white active" id="categories_tab" data-bs-toggle="pill" href="#categories" role="tab" aria-controls="categories" aria-selected="true">Categories</a>
+					<a class="nav-link text-white" id="sub-categories_tab" data-bs-toggle="pill" href="#sub_categories" role="tab" aria-controls="sub_categories" aria-selected="false">Sub Categories</a>
+					<a class="nav-link text-white" id="nav-profile-tab" data-bs-toggle="pill" href="#nav-product" role="tab" aria-controls="nav-product" aria-selected="false">Products</a>
+				</div>
+			</nav>
+		</div>
+	</nav>
+	<div class="main">
+		<nav class="navbar navbar-expand navbar-light navbar-bg sticky-top">
+			<a class="sidebar-toggle js-sidebar-toggle">
+				<i class="hamburger align-self-center"></i>
+			</a>
+
+			<div class="navbar-collapse collapse">
+				<ul class="navbar-nav navbar-align">
+					<li class="nav-item dropdown">
+						<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+							<i class="align-middle" data-feather="settings"></i>
+						</a>
+
+						<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+							<img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-end">
+							<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Profile</a>
+							<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="index.html"><i class="align-middle me-1" data-feather="settings"></i> Settings & Privacy</a>
+							<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Help Center</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Log out</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="tab-content p-3 border bg-light scrollable-content" id="nav-tabContent">
+			<div class="tab-pane fade active show" id="categories" role="tabpanel" aria-labelledby="categories_tab">
+				<%= render partial: "dashboard/categories" %>
+			</div>
+      <div class="tab-pane fade" id="sub_categories" role="tabpanel" aria-labelledby="sub_categories_tab">
+				<%= render partial: "dashboard/sub_categories" %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+  const initializeSidebarCollapse = () => {
+    const sidebarElement = document.getElementsByClassName("js-sidebar")[0];
+    const sidebarToggleElement = document.getElementsByClassName("js-sidebar-toggle")[0];
+
+    if(sidebarElement && sidebarToggleElement) {
+      sidebarToggleElement.addEventListener("click", () => {
+        sidebarElement.classList.toggle("collapsed");
+
+        sidebarElement.addEventListener("transitionend", () => {
+          window.dispatchEvent(new Event("resize"));
+        });
+      });
+    }
+  }
+
+  // Wait until page is loaded
+  document.addEventListener("DOMContentLoaded", () => initialize());
+
+    window.addEventListener('DOMContentLoaded', event => {
+
+      // Toggle the side navigation
+      const sidebarToggle = document.body.querySelector('#sidebarToggle');
+      if (sidebarToggle) {
+          // Uncomment Below to persist sidebar toggle between refreshes
+          // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+          //     document.body.classList.toggle('sb-sidenav-toggled');
+          // }
+          sidebarToggle.addEventListener('click', event => {
+              event.preventDefault();
+              document.body.classList.toggle('sb-sidenav-toggled');
+              localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+          });
+      }
+  });
+
+  const initialize = () => {
+    initializeSidebarCollapse();
+  }
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all the tab links
+    const tabLinks = document.querySelectorAll('#nav-tab .nav-link');
+
+    // Add a click event listener to each tab link
+    tabLinks.forEach(function(tabLink) {
+      tabLink.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        const tabId = this.getAttribute('href'); // Get the target tab ID
+
+        // Update the URL without triggering a page reload
+        history.pushState({}, '', tabId);
+
+        // Update the active tab based on the clicked tab
+        setActiveTab(tabId);
+      });
+    });
+
+    // Set the active tab when the page loads
+    const currentTab = window.location.hash;
+    if (currentTab) {
+      setActiveTab(currentTab);
+    }
+  });
+
+  function setActiveTab(tabId) {
+    // Remove the 'active' class from all tab links and add it to the clicked tab
+    const tabLinks = document.querySelectorAll('#nav-tab .nav-link');
+    tabLinks.forEach(function(link) {
+      link.classList.remove('active');
+    });
+    document.querySelector(`[href="${tabId}"]`).classList.add('active');
+
+    // Hide all tab panes and display the corresponding one for the clicked tab
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    tabPanes.forEach(function(tabPane) {
+      tabPane.classList.remove('active', 'show');
+    });
+    document.querySelector(tabId).classList.add('active', 'show');
+  }
+</script>
+
+
+

@@ -1,0 +1,22 @@
+.table-responsive .table thead tr th {
+  color: var(--bs-gray-300) !important;
+}
+
+/* Add styles to make the navbar sticky */
+.navbar.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+/* Add styles to make the tab content scrollable */
+.scrollable-content {
+  overflow-y: auto;
+  max-height: calc(100vh - 56px);
+  /* Adjust this value based on your layout and content */
+}
+
+/* Hide the scrollbar */
+.scrollable-content::-webkit-scrollbar {
+  width: 0;
+}

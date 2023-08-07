@@ -1,0 +1,234 @@
+<div id="carouselExample" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <% @active_sliders.each_with_index do |item, index| %>
+      <div class="carousel-item <%= 'active' if index == 0 %>">
+        <% if item.active_image.attached? %>
+          <%= image_tag rails_blob_path(item.active_image), class: "carousel-image", alt: "image" %>
+        <% end %>
+        <div class="carousel-caption">
+          <% if item.url.present? %>
+            <a href="<%= item.url %>" class="btn btn-primary px-4">Book Now</a>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center mt-5"> <button class="btn btn-dark sub-ctg-button">POPULAR CATEGORIES</button> </div>
+  <div class="row mt-2 g-4">
+    <% @product_sub_categories.each do |product_sub_category|%>
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="card cat-card p-1">
+          <div class="d-flex justify-content-between align-items-center p-2">
+            <div class="flex-column lh-1 imagename"> <span><%= product_sub_category.title %></span> </div>
+            <div>
+              <% if product_sub_category.active_image.persisted? %>
+                <%= image_tag(product_sub_category.active_image, width: 100, height: 100) %>
+              <% end %>  
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>  
+  </div>
+</div>
+
+<section class="bg-white py-3">
+  <div class="container my-5">
+    <% @product_categories.each do |category| %>
+      <% if category.products.present? %>
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <h2 class="sm-text-3xl text-xl font-weight-bold text-dark leading-none">
+              <% if category.active_image.persisted? %>
+                  <%= image_tag(category.active_image, width: 40, height: 40, alt:"image") %>
+              <% end %>
+              <%= category.title %>
+            </h2>
+          </div>
+          <div class="col-md-6"><button class="btn btn-primary" style="float: right">View More</button></div>
+        </div>
+        <div class="row">
+          <% category.products.each do |product| %>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="card my-2 shadow-0 p-2">
+                <a href="#" class="img-wrap">
+                  <div class="mask" style="height: 50px;">
+                    <div class="d-flex justify-content-start align-items-start h-100 m-2">
+                      <h6><span class="badge bg-success pt-2"><%= product.status %></span></h6>
+                    </div>
+                  </div>
+                  <% if product.active_image.persisted? %>
+                    <%= image_tag(product.active_image, class:"card-img-top", style:"aspect-ratio: 1 / 1")%>
+                  <% end %>
+                </a>
+                <div class="card-body p-0 pt-3">
+                  <a href="#!" class="btn btn-light border px-2 pt-2 float-end icon-hover"><i class="fas fa-heart fa-lg px-1 text-secondary"></i></a>
+                  <h5 class="card-title">Rs. <%= product.price %></h5>
+                  <p class="card-text mb-0"><%= product.title %></p>
+                  <p class="text-muted">
+                    <%= product.description %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+
+<section class="bg-white py-5">
+  <div class="d-flex justify-content-center">
+    <%= image_tag asset_path('bookarley-logo.png'), width: 200 %>
+  </div>
+</section>
+
+
+
+<footer class="text-center text-lg-start text-dark" style="background-color: lightgray">
+  <div class="container p-4 pb-0">
+    <section class="">
+      <div class="row">
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">
+            Bookarley
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer
+            content. Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="w-100 clearfix d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
+          <p>
+            <a class="text-dark">MDBootstrap</a>
+          </p>
+          <p>
+            <a class="text-dark">MDWordPress</a>
+          </p>
+          <p>
+            <a class="text-dark">BrandFlow</a>
+          </p>
+          <p>
+            <a class="text-dark">Bootstrap Angular</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <hr class="w-100 clearfix d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">
+            Useful links
+          </h6>
+          <p>
+            <a class="text-dark">Your Account</a>
+          </p>
+          <p>
+            <a class="text-dark">Become an Affiliate</a>
+          </p>
+          <p>
+            <a class="text-dark">Shipping Rates</a>
+          </p>
+          <p>
+            <a class="text-dark">Help</a>
+          </p>
+        </div>
+
+        <!-- Grid column -->
+        <hr class="w-100 clearfix d-md-none" />
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+
+    <hr class="my-3">
+
+    <!-- Section: Copyright -->
+    <section class="p-3 pt-0">
+      <div class="row d-flex align-items-center">
+        <!-- Grid column -->
+        <div class="col-md-7 col-lg-8 text-center text-md-start">
+          <!-- Copyright -->
+          <div class="p-3">
+            © 2023 Bookarley All rights reserved
+            <a class="text-dark" href="https://mdbootstrap.com/"
+                >bookarley.com</a
+              >
+          </div>
+          <!-- Copyright -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end">
+          <!-- Facebook -->
+          <a
+              class="btn btn-outline-light btn-floating m-1"
+              class="text-dark"
+              role="button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+
+          <!-- Twitter -->
+          <a
+              class="btn btn-outline-light btn-floating m-1"
+              class="text-dark"
+              role="button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+
+          <!-- Google -->
+          <a
+              class="btn btn-outline-light btn-floating m-1"
+              class="text-dark"
+              role="button"
+              ><i class="fab fa-google"></i
+            ></a>
+
+          <!-- Instagram -->
+          <a
+              class="btn btn-outline-light btn-floating m-1"
+              class="text-dark"
+              role="button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+        </div>
+        <!-- Grid column -->
+      </div>
+    </section>
+    <!-- Section: Copyright -->
+  </div>
+  <!-- Grid container -->
+</footer>

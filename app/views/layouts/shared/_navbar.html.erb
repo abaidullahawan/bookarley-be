@@ -1,0 +1,91 @@
+<style>
+.dropdown-toggle::after {
+   display: none;
+}
+
+
+</style>
+<nav class="navbar navbar-expand-sm navbar-light bg-white py-0 px-5 fixed-top" style="z-index: 100;">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand"><%= image_tag asset_path('bookarley-logo.png'), width: 60 %></a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <form class="d-flex mx-auto">
+                <div class="input-group">                    
+                    <input type="text" class="form-control" placeholder="Search">
+                    <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+                </div>
+            </form>
+            <div class="navbar-nav">
+                <div class="btn-group">
+                  <div class="dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                    <%= image_tag asset_path('bookarley-logo.png'), class:"circle-image" %>
+                  </div>
+                  <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+                    <li><a class="dropdown-item" href="#">Menu item</a></li>
+                    <li><a class="dropdown-item" href="#">Menu item</a></li>
+                    <li><a class="dropdown-item" href="#">Menu item</a></li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2" style="z-index: 99; margin-top: 55px; background: #1e396b;">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Example Dropdown -->
+            <div class="dropdown">
+                <!-- Dropdown Toggle Button -->
+                <button class="btn btn-light text-dark dropdown-toggle all-cat-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    All Categories <i class="fas fa-chevron-down"></i> <!-- Font Awesome Down Arrow Icon -->
+                </button>
+                
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu dropdown-menu-width" aria-labelledby="dropdownMenuButton">
+                    <% @product_categories.each do |category| %>
+                        <a class="dropdown-item" href="#">
+                            <% if category.active_image.persisted? %>
+                                <%= image_tag(category.active_image, class:"ctg-image", alt:"image") %>
+                            <% end %>
+                            <%= category.title %>
+                        </a>
+                    <% end %>    
+                </div>
+            </div>
+
+            <div class="navbar-nav" style="margin-left: 20px;">
+                <% @product_categories.each_with_index do |category, index| %>
+                    <% if index < 3 %>
+                        <a href="#" class="nav-item nav-link nav-gap active" style="font-size: 1em; font-weight: 600;"><%= category.title %></a>
+                    <% end %>
+                <% end %>
+                <% if @product_categories.size > 3 %>
+                    <div class="dropdown">
+                        <!-- Dropdown Toggle Button -->
+                        <div class="more-dropdown text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            More <i class="fas fa-chevron-down"></i> 
+                        </div>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <% @product_categories.each_with_index do |category, index| %>
+                                <% if index >= 3 %>
+                                    <a class="dropdown-item" href="#">
+                                        <% if category.active_image.persisted? %>
+                                            <%= image_tag(category.active_image, class:"ctg-image", alt:"image") %>
+                                        <% end %>
+                                        <%= category.title %>
+                                    </a>
+                                <% end %>    
+                            <% end %>    
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</nav>

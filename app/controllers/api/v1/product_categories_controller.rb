@@ -132,6 +132,7 @@ module Api
       # DELETE /product_categories/1
       # DELETE /product_categories/1.json
       def destroy
+        byebug
         @product_category.destroy
 
         render json: { notice: 'Product Category was successfully removed.' }
