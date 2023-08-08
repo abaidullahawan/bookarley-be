@@ -1,23 +1,129 @@
-<div class="top-bar" data-controller="top-bar">
-  <figure class="logo">
-<%= link_to root_path do %>
-  <%= image_tag("bookarley-logo.png", alt: "Logo") %>
-<% end %>
-  </figure>
+<style>
+  .custom-dropdown {
+    position: relative;
+    display: inline-block;
+  }
 
-  <div class="top-bar__search">
-    <%= render 'shared/search/search_bar', taxons: taxons, taxon: taxon %>
-  </div>
+  .dropdown-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 250px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    font-size: 1.5em;
+  }
 
-  <% if spree_current_user %>
-    <%= link_to I18n.t('my_account'), account_path, class: 'auth-link' %>
-  <% else %>
-    <%= link_to I18n.t('spree.login'), login_path, class: 'auth-link' %>
-  <% end %>
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
 
-  <div class="cart-link" id="link-to-cart" data-top-bar-target="cartLink">
-    <noscript>
-      <%= link_to t('spree.cart'), cart_path %>
-    </noscript>
-  </div>
-</div>
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .show-dropdown {
+    display: block;
+  }
+
+  .dropdown-menu-width {
+    width: -webkit-fill-available !important;
+  }
+</style>
+
+<nav class="navbar navbar-expand-sm navbar-light bg-white py-3 px-5 fixed-top" style="z-index: 100;">
+    <div class="container-fluid">
+        <%= link_to root_path do %>
+          <a href="#" class="navbar-brand"><%= image_tag("bookarley-logo.png", alt: "Logo", width: 60) %></a>
+        <% end %>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+
+            <div class="navbar-nav">
+                <% if spree_current_user %>
+                  <%= link_to I18n.t('my_account'), account_path, class: 'auth-link text-dark' %>
+                <% else %>
+                  <%= link_to I18n.t('spree.login'), login_path, class: 'auth-link text-dark' %>
+                <% end %>
+
+                <div class="cart-link" id="link-to-cart" data-top-bar-target="cartLink">
+                  <noscript>
+                    <%= link_to t('spree.cart'), cart_path %>
+                  </noscript>
+                </div>     
+                           
+            </div>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-sm py-2 px-5 fixed-top second-navbar">
+    <div class="container-fluid pt-3 pb-2">
+      <% categories = taxonomies.first %>
+      <nav class="categories mr-auto">
+        <div class="custom-dropdown">
+          <button class="dropdown-button" onclick="toggleCustomDropdown()"><span style="margin-right: 75px;">All Categories</span><i class="fa fa-angle-down"></i></button>
+          <div id="customDropdownContent" class="dropdown-content dropdown-menu-width">
+              <% cache [I18n.locale, categories, taxon] do %>
+                  <%= render(TaxonsTreeComponent.new(
+                    root_taxon: categories.root,
+                    current_taxon: taxon,
+                    max_level: 1,
+                    base_class: 'ctg_dropdown')) if categories %>
+                </li>  
+              <% end %>
+          </div>
+        </div>
+      </nav>
+
+      <nav class="categories">
+        <% cache [I18n.locale, categories, taxon] do %>
+          <%= render(TaxonsTreeComponent.new(
+            root_taxon: categories.root,
+            current_taxon: taxon,
+            max_level: 1,
+            base_class: 'categories')) if categories %>
+        <% end %>
+      </nav>
+
+      <nav class="categories ml-auto">
+        <button class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</button>
+      </nav>
+    </div>
+</nav>
+
+<script>
+  function toggleCustomDropdown() {
+    var dropdownContent = document.getElementById("customDropdownContent");
+    dropdownContent.classList.toggle("show-dropdown");
+  }
+
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropdown-button')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show-dropdown')) {
+          openDropdown.classList.remove('show-dropdown');
+        }
+      }
+    }
+  }
+</script>
