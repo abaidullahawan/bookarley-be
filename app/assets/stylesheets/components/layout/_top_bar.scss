@@ -42,3 +42,37 @@
     order: 3;
   }
 }
+
+.product-search-btn{
+  background: darkblue !important;
+  width: 100px;
+  border-radius: 0px !important;
+}
+
+.second-navbar{
+  z-index: 100;
+  margin-top: 72px !important;
+  background: #1e396b !important;
+  
+}
+
+.categories__list{
+  margin-bottom: 0 !important;
+}
+
+.categories__list li a{
+  color: white !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+}
+
+.social-size a{
+  text-decoration: none !important;
+}
+
+.seller-btn{
+  background-color: #f29f37 !important;
+  color: #1e396b !important;
+  border-radius: 30px !important;
+  font-weight: 500 !important;
+}

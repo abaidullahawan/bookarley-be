@@ -1,27 +1,97 @@
-<footer class="footer">
-  <p>
-    <%= t 'powered_by' %> <%= link_to 'Bookarley', 'http://bookarley.com/' %>
-  </p>
-
-  <%
-    available_locales = current_store.available_locales.map do |locale|
-      [
-        I18n.t('spree.i18n.this_file_language',
-        locale: locale,
-        default: locale.to_s,
-        fallback: false), locale
-      ]
-    end.sort
-  %>
-
-  <% if available_locales.many? %>
-    <div class="locale-selector">
-      <%= form_tag select_locale_path do %>
-        <div class="locale-selector__select-input select-input">
-          <%= label_tag :switch_to_locale, "#{t('spree.i18n.language')}:" %>
-          <%= select_tag(:switch_to_locale, options_for_select(available_locales, I18n.locale)) %>
-        </div>
-      <% end %>
+<footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
+  <section class="d-flex justify-content-between p-4 text-white" style="background-color: #1e396b; font-size: 1.5em;">
+    <div class="me-5">
+      <span>Get connected with us on social networks:</span>
     </div>
-  <% end %>
+
+    <div class="social-size">
+      <a href="" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="text-white me-4">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="container text-center text-md-start mt-5 py-5">
+      <div class="row mt-3">
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <%= image_tag("bookarley-logo.png", alt: "Logo", width: 100) %>
+          <p class="mt-3 text-secondary" style="font-size: 1.3em">
+            Experience retail reimagined. Elevate your shopping journey through our intuitive ecommerce destination.          
+          </p>
+        </div>
+
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase fw-bold">Feature</h6>
+          <hr
+              class="mb-4 mt-0 d-inline-block mx-auto"
+              style="width: 60px; background-color: #7c4dff; height: 2px"
+              />
+          <p>
+            <a href="#!" class="text-dark">About Us</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">Terms Condition</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">Best Products</a>
+          </p>
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <h6 class="text-uppercase fw-bold">General Links</h6>
+          <hr
+              class="mb-4 mt-0 d-inline-block mx-auto"
+              style="width: 60px; background-color: #7c4dff; height: 2px"
+              />
+          <p>
+            <a href="#!" class="text-dark">Flash Sale</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">FAQ</a>
+          </p>
+          <p>
+            <a href="#!" class="text-dark">Support</a>
+          </p>
+        </div>
+
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <h6 class="text-uppercase fw-bold">Contact</h6>
+          <hr
+              class="mb-4 mt-0 d-inline-block mx-auto"
+              style="width: 60px; background-color: #7c4dff; height: 2px"
+              />
+          <p><i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-envelope mr-3"></i> info@bookarley.com</p>
+          <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div
+        class="text-center p-3"
+        style="background-color: rgba(0, 0, 0, 0.2)"
+        >
+    © 2023 Copyright: Bookarley All rights reserved
+    <a class="text-dark" href="https://mdbootstrap.com/"
+        >bookarley.com</a
+      >
+  </div>
 </footer>
+

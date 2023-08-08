@@ -1,16 +1,35 @@
-<section class="hero">
-  <div class="hero__container">
-    <div class="hero__message">
-      <h1 class="hero-title">
-        The only eCommerce platform you’ll ever need.
-      </h1>
+<div class="mt-5">
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <li data-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-bs-slide-to="1"></li>
+      <li data-target="#myCarousel" data-bs-slide-to="2"></li>
+      <li data-target="#myCarousel" data-bs-slide-to="3"></li>
+    </ul>
 
-      <p class="subtitle">
-        Build, customize and scale your store with no limits or license fees.
-        Solidus is the free, open-source eCommerce framework for
-        digitally-native brands, fast-growing online businesses and pragmatic
-        developers.
-      </p>
+    <!-- Slides -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= image_tag("banner-1.jpg", alt:"Image 1", class:"d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("banner-2.jpg", alt:"Image 2", class:"d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("banner-3.jpg", alt:"Image 3", class:"d-block w-100") %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag("banner-4.jpg", alt:"Image 4", class:"d-block w-100") %>
+      </div>
     </div>
+
+    <!-- Left and right controls -->
+    <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
   </div>
-</section>
+</div>
