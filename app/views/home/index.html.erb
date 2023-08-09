@@ -1,7 +1,44 @@
 <%= render 'hero' %>
 
-<article>
-  <% cache(cache_key_for_products) do %>
-    <%= render 'products/products', products: @products %>
+<div class="container mb-5 mt-5">
+  <% Spree::Taxonomy.all.each do |taxonomy| %>
+    <% products_present = false %>
+    <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
+      <% if taxon.products.any? %>
+        <% products_present = true %>
+        <% break %>
+      <% end %>
+    <% end %>
+    
+    <% if products_present %>
+      <div class="row mb-3"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2></div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" style="margin-bottom: 80px;">
+        <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
+          <% taxon.products.each do |product| %>
+            <div class="col">
+              <div class="card shadow-sm">
+                <%= link_to product_path(product), itemprop: 'url' do %>
+                  <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
+                <% end %>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title"><%= product.display_price.to_html %></h5>
+                  <p class="card-text"><%= product.name %></p>
+                  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
+                    <a href="#!" class="btn btn-primary shadow-0 me-1">Add to cart</a>
+                    <a href="#!" class="btn btn-light border icon-hover px-2 pt-2"><i class="fas fa-heart fa-lg text-secondary px-1"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
-</article>
+</div>
+
+<div class="container d-flex justify-content-center mb-5">
+  <%= image_tag("bookarley-logo.png", alt: "Logo", width: 120) %>
+</div>
+
+
