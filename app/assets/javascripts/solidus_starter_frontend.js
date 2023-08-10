@@ -11,3 +11,4 @@
 //= require checkout
 //= require product
 //= require product_selection_component
+//= require bootstrap

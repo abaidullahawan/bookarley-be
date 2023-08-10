@@ -1,3 +1,113 @@
+<style>
+  .product-card {
+      position: relative;
+      box-shadow: 0 2px 5px #333;
+      margin: 50px auto;
+      background: #09255b;
+  }
+
+  .badge {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 700;
+      background: #6e6e6e;
+      color: #bcfd4c;
+      padding: 3px 10px;
+  }
+
+  .product-tumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      padding: 50px;
+      background: white;
+  }
+
+  .product-tumb img {
+      max-width: 100%;
+      max-height: 100%;
+  }
+
+  .product-details {
+      padding: 30px;
+  }
+
+  .product-catagory {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #9daaf2;
+      margin-bottom: 18px;
+  }
+
+  .product-details h4 a {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+  }
+
+  .product-details h4 a:hover {
+      color: #F52544;
+  }
+
+  .product-details p {
+      font-size: 15px;
+      line-height: 22px;
+      margin-bottom: 18px;
+      color: white;
+  }
+
+  .product-bottom-details {
+      overflow: hidden;
+      border-top: 1px solid #99ddff;
+      padding-top: 20px;
+  }
+
+  .product-bottom-details div {
+      float: left;
+      width: 50%;
+  }
+
+  .product-price {
+      font-size: 18px;
+      color: white;
+      font-weight: 600;
+  }
+
+  .product-price small {
+      font-size: 80%;
+      font-weight: 400;
+      text-decoration: line-through;
+      display: inline-block;
+      margin-right: 5px;
+  }
+
+  .product-links {
+      text-align: right;
+  }
+
+  .product-links a {
+      display: inline-block;
+      margin-left: 5px;
+      color: #f29f37 !important;
+      transition: 0.3s;
+      font-size: 17px;
+  }
+
+  .product-links a:hover {
+      color: #F52544;
+  }
+
+</style>
 <%= render 'hero' %>
 
 <div class="container mb-5 mt-5">
@@ -16,16 +126,20 @@
         <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
           <% taxon.products.each do |product| %>
             <div class="col">
-              <div class="card shadow-sm">
-                <%= link_to product_path(product), itemprop: 'url' do %>
-                  <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
-                <% end %>
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title"><%= product.display_price.to_html %></h5>
-                  <p class="card-text"><%= product.name %></p>
-                  <div class="card-footer d-flex align-items-end pt-3 px-0 pb-0 mt-auto">
-                    <a href="#!" class="btn btn-primary shadow-0 me-1">Add to cart</a>
-                    <a href="#!" class="btn btn-light border icon-hover px-2 pt-2"><i class="fas fa-heart fa-lg text-secondary px-1"></i></a>
+              <div class="product-card">
+                <div class="product-tumb">
+                  <%= link_to product_path(product), itemprop: 'url' do %>
+                    <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
+                  <% end %>
+                </div>
+                <div class="product-details">
+                  <h4><a href="<%product_path(product)%>"><%= product.name %></a></h4>
+                  <div class="product-bottom-details">
+                      <div class="product-price"><%= product.display_price.to_html %></div>
+                      <div class="product-links">
+                          <a href="#"><i class="fa fa-heart"></i></a>
+                          <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                      </div>
                   </div>
                 </div>
               </div>
