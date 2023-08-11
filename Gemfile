@@ -33,6 +33,10 @@ gem "redis", "~> 4.0"
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
+# aws gem 
+gem 'aws-sdk-s3', require: false
+
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -72,15 +76,15 @@ group :test do
 end
 gem "stringio", "3.0.7"
 
-gem "solidus", github: 'abaidullahawan/solidus', tag: 'v0.0.1'
+gem "solidus", github: 'abaidullahawan/solidus', tag: 'v0.0.2'
 
-gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', branch: 'master'
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise'
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
 gem "truncate_html"
 gem "view_component", "~> 3.0"
-gem 'solidus_multi_domain', github: 'abaidullahawan/solidus_multi_domain'
+gem 'solidus_multi_domain', github: 'abaidullahawan/solidus_multi_domain', tag: 'v0.0.1'
 
 group :test do
   gem "capybara-screenshot", "~> 1.0"
