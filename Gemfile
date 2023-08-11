@@ -70,10 +70,11 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+gem "stringio", "3.0.7"
 
-gem "solidus", github: 'abaidullahawan/solidus', branch: 'main'
+gem "solidus", github: 'abaidullahawan/solidus', tag: 'v0.0.1'
 
-gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise' , branch: 'master'
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', branch: 'master'
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
