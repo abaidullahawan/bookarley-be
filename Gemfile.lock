@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/abaidullahawan/solidus.git
-  revision: 0bbb65b11b9c5193edba615fd55bce4814a855a1
-  tag: v0.0.3
+  revision: 66a2f6566ce4e4cf511129f868f545723b38b32d
+  tag: v0.0.5
   specs:
     solidus (4.2.0.dev)
       solidus_api (= 4.2.0.dev)
@@ -333,6 +333,8 @@ GEM
       net-protocol
     net-ssh (7.2.0)
     nio4r (2.5.9)
+    nokogiri (1.15.3-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.3-x86_64-linux)
       racc (~> 1.4)
     omnes (0.2.2)
@@ -527,6 +529,7 @@ GEM
     zeitwerk (2.6.11)
 
 PLATFORMS
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
