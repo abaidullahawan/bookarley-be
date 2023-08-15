@@ -11,6 +11,7 @@ class ImageComponent < ViewComponent::Base
   end
 
   def call
+    ActiveStorage::Current.host = request.host_with_port
     if image
       image_tag image.url(size), default_options.merge(options)
     else
