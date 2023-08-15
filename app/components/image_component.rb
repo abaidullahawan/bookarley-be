@@ -21,6 +21,6 @@ class ImageComponent < ViewComponent::Base
   private
 
   def default_options
-    { alt: image.alt, class: classes }
+    { alt: 'image', class: classes }
   end
 end
