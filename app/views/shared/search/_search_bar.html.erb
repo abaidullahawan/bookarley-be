@@ -1,7 +1,24 @@
+<style>
+.search_bar_width {
+  width: 300px !important;
+transition: width 0.8s ease-in-out;
+font-size: 14px;
+}
+.search_bar_width:focus {
+  width: 500px !important;
+}
+
+.form-control:focus {
+    border-color: none !important;
+    outline: 0;
+    box-shadow: none !important;
+}
+</style>
+
 <%= form_tag autocomplete_results_path, method: :get, class: "search-bar mx-auto", "data-turbo": true, "data-turbo-stream": true, "data-controller": "search", "data-search-current-class": "autocomplete-results__item--current", "data-search-target": "form" do %>
 
   <div class="input-group">
-    <%= search_field_tag :keywords, params[:keywords], placeholder: "Search Products", class: "form-control search-bar__input px-5", autocomplete: "off", "data-action": "input->search#fetchResults keydown.down->search#nextResult keydown.up->search#previousResult keydown.enter->search#openResult:prevent:stop keydown.esc->search#reset:prevent:stop click@window->search#focusOut", "data-search-target": "keywords" %>
+    <%= search_field_tag :keywords, params[:keywords], placeholder: "Search Products", class: "form-control search-bar__input search_bar_width px-5", autocomplete: "off", "data-action": "input->search#fetchResults keydown.down->search#nextResult keydown.up->search#previousResult keydown.enter->search#openResult:prevent:stop keydown.esc->search#reset:prevent:stop click@window->search#focusOut", "data-search-target": "keywords" %>
 
     <div class="input-group-append">
       <%= button_tag class: "btn btn-lg text-light search-bar__button py-4 product-search-btn", title: 'Search' do %>
