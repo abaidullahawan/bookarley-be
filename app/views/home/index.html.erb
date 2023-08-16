@@ -1,13 +1,9 @@
 <style>
   .product-card {
       position: relative;
-      box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
+      box-shadow: 0 2px 5px #333;
       margin: 50px auto;
-      background: #e6e6e6;
-      border: 0.5px solid #e2e1e1;
-  }
-  .product-card:hover {
-    transform: scale(1.05) !important;
+      background: #09255b;
   }
 
   .badge {
@@ -26,15 +22,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 200px;
+      height: 300px;
       padding: 50px;
       background: white;
-  }
-
-  .product-tumb a{
-      display: flex;
-      align-items: center;
-      justify-content: center;
   }
 
   .product-tumb img {
@@ -51,13 +41,8 @@
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      color: darkblue;
+      color: #9daaf2;
       margin-bottom: 18px;
-  }
-
-  .product-details h4 {
-    text-align: center;
-    color: black;
   }
 
   .product-details h4 a {
@@ -65,9 +50,9 @@
       display: block;
       margin-bottom: 18px;
       text-transform: uppercase;
+      color: white;
       text-decoration: none;
       transition: 0.3s;
-      color: #433f3f;
   }
 
   .product-details h4 a:hover {
@@ -94,7 +79,7 @@
 
   .product-price {
       font-size: 18px;
-      color: #433f3f;
+      color: white;
       font-weight: 600;
   }
 
@@ -124,9 +109,6 @@
 
 </style>
 <%= render 'hero' %>
-
-
-
 
 <div class="container mb-5 mt-5">
   <% Spree::Taxonomy.all.each do |taxonomy| %>

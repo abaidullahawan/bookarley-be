@@ -64,8 +64,8 @@
   }
 
   .taxonomy-link:hover{
-    background: #eceef2;
-    border-left: 8px solid #f29f37;
+    background: #ECEEF2;
+    border-left: 8px solid #F29F37;
   }
 
   /* The container <div> - needed to position the dropdown content */
@@ -144,13 +144,16 @@
     width: 600px; /* Adjust width as needed */
   }
   .taxonomy-dropdown-content a {
-    color: #1e396b;
+    color: black;
 }
 
   /* Show dropdown content on hover */
   .taxonomy-dropdown:hover .taxonomy-dropdown-content {
     display: block;
-    border-bottom: 10px solid #f29f37;
+    border-bottom: 10px solid #F29F37;
+  }
+.taxonomy-name:hover{
+    border-bottom: 2px solid #F29F37;
   }
   /* Style parent taxon */
   .parent-taxon {
@@ -160,7 +163,7 @@
   }
   
  .taxonomy-dropdown-all .child-taxons a {
-    padding: 2.5px 16px;
+    padding: 8px 16px;
 }
   /* Style child taxons */
   .child-taxons-name {
@@ -192,9 +195,6 @@
   /* Show dropdown content on hover */
   .dropdown-wrapper:hover .taxonomy-dropdown-all {
     display: block;
-  }
-  .taxonomy-name:hover{
-    border-bottom: 2px solid #f29f37;
   }
 
 </style>
@@ -269,7 +269,7 @@
                                   <% parent_permalink = parent_taxon&.permalink%>
                                     <div class="col-md-5">
                                     <%= link_to "/t/#{parent_permalink}" do %>
-                                      <span style="font-weight: 500; font-size: 1.2em; color: #1e396b;"><%= parent_taxon.name %></span>
+                                      <span style="font-weight: 500; font-size: 1.2em;"><%= parent_taxon.name %></span>
                                       <%end%>
                                       <div class="child-taxons">
                                         <% parent_taxon.children.each do |child_taxon| %>
