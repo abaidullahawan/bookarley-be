@@ -163,7 +163,7 @@
   }
   
  .taxonomy-dropdown-all .child-taxons a {
-    padding: 8px 16px;
+    padding: 0px 16px;
 }
   /* Style child taxons */
   .child-taxons-name {
@@ -189,13 +189,18 @@
     z-index: 1;
     margin-left: 100%;
     margin-top: -15%;
-    width: 800px; /* Adjust width as needed */
+    width: 600px; /* Adjust width as needed */
   }
 
   /* Show dropdown content on hover */
   .dropdown-wrapper:hover .taxonomy-dropdown-all {
     display: block;
+    border-bottom: 10px solid #F29F37;
   }
+
+.parent-taxon .taxon_name a{
+  padding: 0px 16px;
+}
 
 </style>
 
@@ -263,32 +268,32 @@
                         <% if parent_taxons.any? %>
                         <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 5px;">
                             <div class="parent-taxon row">
-                              <div class="col-lg-8">
-                                <div class="row">
-                                  <% taxonomy.root.children.each do |parent_taxon| %>
-                                  <% parent_permalink = parent_taxon&.permalink%>
-                                    <div class="col-md-5">
-                                    <%= link_to "/t/#{parent_permalink}" do %>
-                                      <span style="font-weight: 500; font-size: 1.2em;"><%= parent_taxon.name %></span>
-                                      <%end%>
-                                      <div class="child-taxons">
-                                        <% parent_taxon.children.each do |child_taxon| %>
-                                        <% child_permalink = child_taxon&.permalink%>
-                                        <%= link_to "/t/#{child_permalink}" do %>
-                                          <span class="" style="font-size: 1.1em; color: gray;"><%= child_taxon.name %></span>
-                                         <% end %>
-                                         <% end %>
-                                      </div>
-                                    </div>
+                        <div class="col-lg-8">
+                          <div class="row">
+                            <% taxonomy.root.children.each do |parent_taxon| %>
+                              <div class="col-md-5 taxon_name">
+                              <% parent_permalink = parent_taxon&.permalink%>
+                              <%= link_to "/t/#{parent_permalink}" do %>
+                                <%= parent_taxon.name %>
+                                <%end%>
+                                <div class="child-taxons">
+                                  <% parent_taxon.children.each do |child_taxon| %>
+                                  <%child_permalink = child_taxon&.permalink%>
+                                  <%= link_to "/t/#{child_permalink}" do %>
+                                    <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                                    <%end%>
                                   <% end %>
                                 </div>
                               </div>
-                              <div class="col-lg-4 d-flex justify-content-center align-items-center">  
-                                <% if taxonomy.icon.attached? %>
-                                  <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
-                                <% end %>
-                              </div>
-                            </div>
+                            <% end %>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 d-flex justify-content-center align-items-center">  
+                          <% if taxonomy.icon.attached? %>
+                            <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
+                          <% end %>
+                        </div>  
+                      </div>
                         </div>
                       <% end %>
                       </div>
