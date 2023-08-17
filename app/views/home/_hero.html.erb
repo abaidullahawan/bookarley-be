@@ -1,3 +1,149 @@
+<style>
+  /* Style for the carousel control icons */
+.carousel-control-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-control-icon i {
+  font-size: 1.5rem;
+}
+
+
+/* Style for the icon color */
+.carousel-control-icon i {
+  color: white; /* Change the icon color as needed */
+}
+
+:root {
+  --visible-slides: 5;
+}
+
+
+.slider {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.slider-ul {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding-left: 60px;
+  padding-right: 60px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform: translateX(calc(-100% / var(--visible-slides)));
+}
+
+.slider-li {
+  position: relative;
+  width: calc(105% / var(--visible-slides));
+  height: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background: white;
+}
+
+.slider-nav .prev,
+.slider-nav .next {
+  position: absolute;
+  background: #858484;
+  height: 40px;
+  width: 40px;
+  top: 35%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-nav .prev {
+  left: 0px;
+}
+
+.slider-nav .next {
+  right: 0px;
+}
+
+.transition {
+  transition: transform 0.5s ease;
+}
+
+.left {
+  transform: translateX(-100%);
+}
+
+.right {
+  transform: translateX(100%);
+}
+
+/*--------------------------------------------------------------
+# Values
+--------------------------------------------------------------*/
+.values .box {
+  padding: 30px;
+  box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
+  text-align: center;
+  transition: 0.3s;
+  height: 100%;
+  border: 0.5px solid #e2e1e1;
+  border-radius: 10px;
+}
+
+
+.values .box h3 {
+  font-size: 22px;
+  color: #012970;
+  font-weight: 700;
+  margin-bottom: 18px;
+  margin-top: 35px;
+}
+
+.values .box:hover {
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+}
+
+
+.section-header {
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.section-header h2 {
+  font-size: 13px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin: 0;
+  color: #f29f37;
+  text-transform: uppercase;
+}
+
+.section-header p {
+  margin: 10px 0 0 0;
+  padding: 0;
+  font-size: 24px;
+  line-height: 42px;
+  font-weight: 700;
+  color: #012970;
+}
+
+@media (max-width: 768px) {
+  .section-header p {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+</style>
+
 <div class="mt-5">
   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <!-- Indicators -->
@@ -33,3 +179,130 @@
     </a>
   </div>
 </div>
+
+<div class="container py-5">
+	<div>
+		<div class="slider">
+			<ul class="slider-ul">
+				<% Spree::Taxonomy.all.each do |taxonomy| %>
+					<% taxonomy.root.children.each do |parent_taxon| %>
+						<% parent_taxon.children.each do |child_taxon| %>
+				      <li class="slider-li d-grid">
+                <div class="d-flex justify-content-center">
+                  <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", class: "card-img-top", style:"width: 45%;")) %>
+                </div>
+                <div class="d-flex justify-content-center" style="font-size: 1.5em;font-weight: 500;">  
+                  <%= child_taxon.name %>
+                </div>  
+              </li>
+				    <% end %>
+				  <% end %>
+				<% end %>
+			</ul>
+      <div class="slider-nav">
+        <div class="prev d-flex justify-content-center align-items-center"><i class="fa fa-angle-left fa-2x text-light"></i></div>
+        <div class="next d-flex justify-content-center align-items-center"><i class="fa fa-angle-right fa-2x text-light"></i></div>
+      </div>
+		</div>
+	</div>
+</div>
+<hr style="color: #b5b1b1;">
+
+<section id="values" class="values" style="margin-top: 80px">
+  <div class="container" data-aos="fade-up">
+    <header class="section-header">
+      <h2>Bookarley Features</h2>
+      <p>Book Venues and Vendors, Effortlessly.</p>
+    </header>
+
+    <div class="row">
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="box">
+          <%= image_tag("search.png", alt: "Logo", width: 100) %>
+          <h3>Browse Categories</h3>
+          <p>Check out the best suited Venues & Vendors, compare photos, special offers and function packages.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
+        <div class="box">
+          <%= image_tag("quote.png", alt: "Logo", width: 145) %>
+          <h3>Request Quotes</h3>
+          <p>Get custom quotes of your short-listed Venues at the click of GET FREE QUOTES button.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
+        <div class="box">
+          <%= image_tag("book.png", alt: "Logo", width: 100) %>
+          <h3>Book a Venue</h3>
+          <p>Quam rem vitae est autem molestias explicabo debitis sint. Vero aliquid quidem commodi.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+	$(document).ready(function () {
+		function resetPos() {
+			$('.slider ul li').removeClass('transition');
+			$('.slider ul li').removeClass('left right');
+		}
+
+		function prev() {
+			var slider = $('.slider');
+			var sliderLength = slider.find('ul li').length;
+			$('.slider ul li').each(function () {
+				var curPos = parseInt($(this).css('order'));
+				if (curPos < sliderLength) {
+					$(this).css('order', curPos + 1);
+				}
+				else {
+					curPos = 1;
+					$(this).css('order', curPos);
+				}
+			});
+		}
+
+		function next() {
+			var slider = $('.slider');
+			var sliderLength = slider.find('ul li').length;
+			$('.slider ul li').each(function () {
+				var curPos = parseInt($(this).css('order'));
+				if (curPos > 1) {
+					$(this).css('order', curPos - 1);
+				}
+				else {
+					curPos = sliderLength;
+					$(this).css('order', curPos);
+				}
+			});
+		}
+
+		$('.prev').on('click', function () {
+			$('.slider ul li').addClass('transition right');
+			setTimeout(function () {
+				prev();
+				resetPos();
+			}, 500);
+		});
+
+		$('.next').on('click', function () {
+			$('.slider ul li').addClass('transition left');
+			setTimeout(function () {
+				next();
+				resetPos();
+			}, 500);
+		});
+
+		function init() {
+			$('.slider ul li').each(function (index) {
+				$(this).css('order', index + 1);
+			});
+		}
+
+		init();
+	});
+</script>
