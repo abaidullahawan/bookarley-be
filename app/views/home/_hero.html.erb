@@ -29,12 +29,29 @@
   overflow: hidden;
 }
 
+.vendor-slider {
+  height: 237px !important;
+}
+
+
 .slider-ul {
   position: relative;
   list-style: none;
   margin: 0;
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 70px;
+  padding-right: 70px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform: translateX(calc(-100% / var(--visible-slides)));
+}
+
+.vendor-ul {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding-left: 198px;
+  padding-right: 42px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -43,7 +60,20 @@
 
 .slider-li {
   position: relative;
-  width: calc(105% / var(--visible-slides));
+  width: calc(92% / var(--visible-slides));
+  height: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background: white;
+}
+
+.vendor-li {
+  margin-left: 5%;
+  position: relative;
+  width: calc(188% / var(--visible-slides));
   height: 100%;
   color: black;
   display: flex;
@@ -56,10 +86,10 @@
 .slider-nav .prev,
 .slider-nav .next {
   position: absolute;
-  background: #858484;
-  height: 40px;
-  width: 40px;
-  top: 35%;
+  background: #1e396b;
+  height: 32px;
+  width: 32px;
+  top: 52%;
   transform: translateY(-50%);
   border-radius: 50%;
   cursor: pointer;
@@ -114,7 +144,7 @@
 
 .section-header {
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: -2px;
 }
 
 .section-header h2 {
@@ -141,6 +171,132 @@
     line-height: 32px;
   }
 }
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #37517e;
+}
+
+.section-title h2::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #1e396b;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+  font-size: 1.4em;
+  color: #635b5b;
+}
+.vendors-container{
+  margin-top: 10%;
+}
+
+.feature-text{
+  font-size: 1.3em;
+  width: 13%;
+  padding: 9px;
+  background: #1e396b;
+  color: #f29f37;
+  font-weight: 400;
+  border-radius: 32px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/*--------------------------------------------------------------
+# About Us
+--------------------------------------------------------------*/
+
+#about{
+  background: #f7f7f7;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  margin-top: 80px;
+}
+
+.about .content h3 {
+  font-weight: 600;
+  font-size: 26px;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding-left: 28px;
+  position: relative;
+}
+
+.about .content ul li+li {
+  margin-top: 10px;
+}
+
+.about .content ul i {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  font-size: 20px;
+  color: #47b2e4;
+  line-height: 1;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+.about .content .btn-learn-more {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 4px;
+  transition: 0.3s;
+  line-height: 1;
+  color: #47b2e4;
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+  margin-top: 6px;
+  border: 2px solid #47b2e4;
+}
+
+.about .content .btn-learn-more:hover {
+  background: #47b2e4;
+  color: #fff;
+  text-decoration: none;
+}
+
+
 
 </style>
 
@@ -180,12 +336,43 @@
   </div>
 </div>
 
+<div class="container" style="margin-top: 2%; margin-bottom: 2%;">
+	<div>
+		<div class="slider">
+			<ul class="slider-ul">
+				<% Spree::Taxonomy.all.each do |taxonomy| %>
+					<% taxonomy.root.children.each do |parent_taxon| %>
+						<% parent_taxon.children.each do |child_taxon| %>
+				      <li class="slider-li d-grid">
+                  <% if child_taxon&.icon&.attached? %>
+                    <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", style: "width: 110px;")) %>
+                  <% end %>
+                  <div class="d-flex justify-content-center" style="font-size: 1.3em;font-weight: 500;">  
+                    <%= child_taxon&.name %>
+                  </div>
+              </li>
+				    <% end %>
+				  <% end %>
+				<% end %>
+			</ul>
+      <div class="slider-nav">
+        <div class="prev d-flex justify-content-center align-items-center"><i class="fa fa-arrow-left fa-2x text-light"></i></div>
+        <div class="next d-flex justify-content-center align-items-center"><i class="fa fa-arrow-right fa-2x text-light"></i></div>
+      </div>
+		</div>
+	</div>
+</div>
+<hr style="color: #b5b1b1;">
 
 <section id="values" class="values" style="margin-top: 80px">
   <div class="container" data-aos="fade-up">
+    <div class="d-flex justify-content-center">
+      <h2 class="feature-text">Bookarley Features</h2>
+    </div>  
     <header class="section-header">
-      <h2>Bookarley Features</h2>
-      <p>Book Venues and Vendors, Effortlessly.</p>
+      <div class="section-title">
+        <h2>Book Venues and Vendors Effortlessly</h2>
+      </div>
     </header>
 
     <div class="row">
@@ -217,65 +404,66 @@
 </section>
 
 
+
 <script>
-	$(document).ready(function () {
-		function resetPos() {
-			$('.slider ul li').removeClass('transition');
-			$('.slider ul li').removeClass('left right');
-		}
+  $(document).ready(function () {
+    function resetPos(slider) {
+      slider.find('ul li').removeClass('transition');
+      slider.find('ul li').removeClass('left right');
+    }
 
-		function prev() {
-			var slider = $('.slider');
-			var sliderLength = slider.find('ul li').length;
-			$('.slider ul li').each(function () {
-				var curPos = parseInt($(this).css('order'));
-				if (curPos < sliderLength) {
-					$(this).css('order', curPos + 1);
-				}
-				else {
-					curPos = 1;
-					$(this).css('order', curPos);
-				}
-			});
-		}
+    function prev(slider) {
+      var sliderLength = slider.find('ul li').length;
+      slider.find('ul li').each(function () {
+        var curPos = parseInt($(this).css('order'));
+        if (curPos < sliderLength) {
+          $(this).css('order', curPos + 1);
+        } else {
+          curPos = 1;
+          $(this).css('order', curPos);
+        }
+      });
+    }
 
-		function next() {
-			var slider = $('.slider');
-			var sliderLength = slider.find('ul li').length;
-			$('.slider ul li').each(function () {
-				var curPos = parseInt($(this).css('order'));
-				if (curPos > 1) {
-					$(this).css('order', curPos - 1);
-				}
-				else {
-					curPos = sliderLength;
-					$(this).css('order', curPos);
-				}
-			});
-		}
+    function next(slider) {
+      var sliderLength = slider.find('ul li').length;
+      slider.find('ul li').each(function () {
+        var curPos = parseInt($(this).css('order'));
+        if (curPos > 1) {
+          $(this).css('order', curPos - 1);
+        } else {
+          curPos = sliderLength;
+          $(this).css('order', curPos);
+        }
+      });
+    }
 
-		$('.prev').on('click', function () {
-			$('.slider ul li').addClass('transition right');
-			setTimeout(function () {
-				prev();
-				resetPos();
-			}, 500);
-		});
+    $('.prev').on('click', function () {
+      var slider = $(this).closest('.slider');
+      slider.find('ul li').addClass('transition right');
+      setTimeout(function () {
+        prev(slider);
+        resetPos(slider);
+      }, 500);
+    });
 
-		$('.next').on('click', function () {
-			$('.slider ul li').addClass('transition left');
-			setTimeout(function () {
-				next();
-				resetPos();
-			}, 500);
-		});
+    $('.next').on('click', function () {
+      var slider = $(this).closest('.slider');
+      slider.find('ul li').addClass('transition left');
+      setTimeout(function () {
+        next(slider);
+        resetPos(slider);
+      }, 500);
+    });
 
-		function init() {
-			$('.slider ul li').each(function (index) {
-				$(this).css('order', index + 1);
-			});
-		}
+    function init(slider) {
+      slider.find('ul li').each(function (index) {
+        $(this).css('order', index + 1);
+      });
+    }
 
-		init();
-	});
+    $('.slider').each(function () {
+      init($(this));
+    });
+  });
 </script>
