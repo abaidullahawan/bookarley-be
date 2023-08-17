@@ -1,9 +1,13 @@
 <style>
   .product-card {
       position: relative;
-      box-shadow: 0 2px 5px #333;
+      box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
       margin: 50px auto;
-      background: #09255b;
+      background: #e6e6e6;
+      border: 0.5px solid #e2e1e1;
+  }
+  .product-card:hover {
+    transform: scale(1.05) !important;
   }
 
   .badge {
@@ -22,9 +26,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 300px;
+      height: 200px;
       padding: 50px;
       background: white;
+  }
+
+  .product-tumb a{
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
 
   .product-tumb img {
@@ -41,8 +51,13 @@
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      color: #9daaf2;
+      color: darkblue;
       margin-bottom: 18px;
+  }
+
+  .product-details h4 {
+    text-align: center;
+    color: black;
   }
 
   .product-details h4 a {
@@ -50,9 +65,9 @@
       display: block;
       margin-bottom: 18px;
       text-transform: uppercase;
-      color: white;
       text-decoration: none;
       transition: 0.3s;
+      color: #433f3f;
   }
 
   .product-details h4 a:hover {
@@ -79,7 +94,7 @@
 
   .product-price {
       font-size: 18px;
-      color: white;
+      color: #433f3f;
       font-weight: 600;
   }
 
@@ -109,6 +124,7 @@
 
 </style>
 <%= render 'hero' %>
+
 
 <div class="container mb-5 mt-5">
   <% Spree::Taxonomy.all.each do |taxonomy| %>
@@ -154,5 +170,3 @@
 <div class="container d-flex justify-content-center mb-5">
   <%= image_tag("bookarley-logo.png", alt: "Logo", width: 120) %>
 </div>
-
-
