@@ -1,4 +1,43 @@
-<article class="auth-container" id="forgot-password">
+<style>
+.auth-main-container {
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: 8em 2em;
+    justify-content: space-between;
+}
+.text-input input {
+    background: #1e396b26;
+    border-bottom: 5px solid #1e396b !important;
+    outline: none !important;
+}
+.button-primary{
+  background-color: #1e396b;
+}
+.form_bottom_text{
+  font-size: 15px;
+  text-align: center;
+}
+
+@media  screen and (max-width: 1023px){
+  .auth-main-container {
+    width: 100% !important;
+}
+}
+.form_col{
+  padding-right: 20px
+}
+.image_col{
+  padding-left: 20px
+}
+</style>
+
+
+<article class="auth-main-container row" id="forgot-password">
+<div class="col-lg-6 col-sm pb-5 form_col">
+
   <h1><%= I18n.t('spree.forgot_password') %></h1>
 
   <%= form_for Spree::User.new, as: :spree_user, url: reset_password_path, html: { class: "auth-form" } do |f| %>
@@ -16,7 +55,12 @@
         name: :commit
       ) %>
     </div>
-
+<div class="form_bottom_text">
     <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.create_a_new_account"), signup_path %>
+    </div>
   <% end %>
+  </div>
+  <div class= "col-lg-6 image_col" >
+<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block w-100") %>
+  </div>
 </article>

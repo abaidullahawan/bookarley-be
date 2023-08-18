@@ -1,3 +1,35 @@
+<style>
+.auth-main-container {
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: 8em 2em;
+    justify-content: space-between;
+}
+.account-summary h2{
+  font-size: 30px;
+}
+
+.account-summary p{
+  font-size: 20px;
+}
+.button-primary{
+  background-color: #1e396b;
+}
+
+@media  screen and (max-width: 1023px){
+  .auth-main-container {
+    width: 100% !important;
+}
+}
+
+</style>
+
+
+<article class="auth-main-container row">
+<div class="col-lg-6 form_col">
 <div class="account-summary">
   <div class="account-summary__profile">
     <h2><%= I18n.t('spree.email') %></h2>
@@ -49,3 +81,5 @@
     <%= button_tag(t("spree.logout"), class: 'button-primary') %>
   <% end %>
 </div>
+</div>
+</article>
