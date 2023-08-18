@@ -10,6 +10,7 @@
     border: 0.5px solid lightgray;
     border-radius: 50%;
     object-fit: cover;
+    z-index: 1;
   }
   .all-cat-dropdown{
     margin-bottom: -5px;
@@ -202,6 +203,145 @@
   padding: 0px 16px;
 }
 
+
+.social_login .social_box {
+	display: block;
+	clear: both;
+	padding: 10px;
+	margin-bottom: 10px;
+	background: #F4F4F2;
+	overflow: hidden;
+}
+
+.social_login .icon {
+	display: block;
+	width: 36px;
+	padding: 5px 10px;
+	margin-right: 10px;
+	float: left;
+	color: #FFF;
+	font-size: 16px;
+	text-align: center;
+}
+
+.social_login .fb .icon {
+	background: #3B5998;
+}
+
+.social_login .google .icon {
+	background: #DD4B39;
+}
+
+.social_login .icon_title {
+	display: block;
+	padding: 5px 0;
+	float: left;
+	font-weight: bold;
+	font-size: 14px;
+	color: #777;
+}
+
+.social_login .social_box:hover {
+	background: #E4E4E2;
+}
+
+.centeredText {
+	text-align: center;
+	margin: 20px 0;
+	clear: both;
+	overflow: hidden;
+	text-transform: uppercase;
+  font-size: 1.1em;
+  color: dimgray;
+}
+
+.action_btns {
+	clear: both;
+	overflow: hidden;
+  padding-bottom: 12px;
+}
+
+.action_btns a {
+	display: block;
+  font-size: 1.2em;
+  text-decoration: none;
+  color: darkslategrey;
+  text-align: center;
+}
+
+a.btn_red {
+	color: #FFF;
+}
+
+.one_half {
+	width: 50%;
+	display: block;
+	float: left;
+  background: #f4f4f2;
+}
+
+.one_half.last {
+	width: 45%;
+	margin-left: 5%;
+}
+
+.modal{
+  --bs-modal-width: 350px !important;
+}
+.login-text-style{
+  font-size: 15px; 
+  font-weight: 500; 
+  padding: 2px;
+  color: #1e396b;
+}
+
+.register-profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.register-profile-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9;
+}
+
+.register-profile-button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.register-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 50px;
+    right: 0;
+    width: 200px;
+    padding-top: 20px;
+}
+
+.register-dropdown-content a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.register-dropdown-content a:hover {
+    background-color: #ddd;
+    border-left: 8px solid #F29F37;
+    
+}
+.profile-icons{
+  margin-right: 3px;
+}
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-white py-3 px-5 fixed-top" style="z-index: 100;">
@@ -215,33 +355,42 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
           <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
           <div class="navbar-nav">
-            <div class="custom-dropdown">
-              <div class="btn-group">
-                  <%= image_tag('bookarley-logo.png', class: "circle-image", id: "dropdown-button") %>
-              </div>
-              <div class="dropdown-content-unique px-3">
-                <div class="profile-dropdown">
-                  <% if spree_current_user %>
-                    <%= link_to I18n.t('my_account'), account_path, class: 'auth-link text-dark my-3', style:"font-size: 1.1em;" %>
-                    <%= link_to "Admin Dashboard", "admin/orders", class: 'auth-link text-dark mb-3', style: "font-size: 1.1em;" %>
-                    <%= link_to I18n.t('spree.logout'), destroy_spree_user_session_path, method: :delete, class: 'auth-link text-dark mb-3', style: "font-size: 1.1em;" %>
-                  <% else %>
-                    <%= link_to I18n.t('spree.login'), login_path, class: 'auth-link text-dark my-3', style:"font-size: 1.1em;" %>
-                    <%= link_to "Signup", signup_path, class: 'auth-link text-dark', style:"font-size: 1.1em;" %>
-                  <% end %>
-
-                  <div class="cart-link" id="link-to-cart" data-top-bar-target="cartLink">
-                    <noscript>
-                      <%= link_to t('spree.cart'), cart_path %>
-                    </noscript>
-                  </div>
-                </div>  
-              </div>
+          <% if spree_current_user %>
+            <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
+                <%= image_tag('bookarley-logo.png', class: "circle-image") %>
+                <div>
+                  <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+                </div>
             </div>
+            
+            <div class="register-profile-dropdown">
+                <div class="register-dropdown-content shadow" id="registerDropdownContent">
+                  <div class="d-flex justify-content-center">
+                    <div><%= image_tag('bookarley-logo.png', class: "circle-image") %></div>
+                  </div>
+                  <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
+                    <div><%= spree_current_user.email %></div>
+                  </div>
+                  <hr style="color: #b5b1b1;">
+                  <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
+                  <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                  <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
+                </div>
+            </div>
+          <% else %>
+            <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <%= image_tag('bookarley-logo.png', class: "circle-image") %>
+                <div>
+                  <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+                </div>
+            </div>
+          <% end %>  
           </div>
       </div>
   </div>
+  
 </nav>
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2" style="z-index: 2; margin-top: 73px; background: #1e396b;">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -267,33 +416,33 @@
                         <% parent_taxons = taxonomy.root.children %>
                         <% if parent_taxons.any? %>
                         <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 5px;">
-                            <div class="parent-taxon row">
-                        <div class="col-lg-8">
-                          <div class="row">
-                            <% taxonomy.root.children.each do |parent_taxon| %>
-                              <div class="col-md-5 taxon_name">
-                              <% parent_permalink = parent_taxon&.permalink%>
-                              <%= link_to "/t/#{parent_permalink}" do %>
-                                <%= parent_taxon.name %>
-                                <%end%>
-                                <div class="child-taxons">
-                                  <% parent_taxon.children.each do |child_taxon| %>
-                                  <%child_permalink = child_taxon&.permalink%>
-                                  <%= link_to "/t/#{child_permalink}" do %>
-                                    <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                          <div class="parent-taxon row">
+                            <div class="col-lg-8">
+                              <div class="row">
+                                <% taxonomy.root.children.each do |parent_taxon| %>
+                                  <div class="col-md-5 taxon_name">
+                                  <% parent_permalink = parent_taxon&.permalink%>
+                                    <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
+                                      <%= parent_taxon.name %>
                                     <%end%>
-                                  <% end %>
-                                </div>
+                                    <div class="child-taxons">
+                                      <% parent_taxon.children.each do |child_taxon| %>
+                                      <%child_permalink = child_taxon&.permalink%>
+                                      <%= link_to "/t/#{child_permalink}" do %>
+                                        <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                                        <%end%>
+                                      <% end %>
+                                    </div>
+                                  </div>
+                                <% end %>
                               </div>
-                            <% end %>
+                            </div>
+                            <div class="col-lg-4 d-flex justify-content-center align-items-center">  
+                              <% if taxonomy.icon.attached? %>
+                                <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
+                              <% end %>
+                            </div>  
                           </div>
-                        </div>
-                        <div class="col-lg-4 d-flex justify-content-center align-items-center">  
-                          <% if taxonomy.icon.attached? %>
-                            <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
-                          <% end %>
-                        </div>  
-                      </div>
                         </div>
                       <% end %>
                       </div>
@@ -317,8 +466,8 @@
                             <% taxonomy.root.children.each do |parent_taxon| %>
                               <div class="col-md-5">
                               <% parent_permalink = parent_taxon&.permalink%>
-                              <%= link_to "/t/#{parent_permalink}" do %>
-                                <%= parent_taxon.name %>
+                                <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
+                                  <%= parent_taxon.name %>
                                 <%end%>
                                 <div class="child-taxons">
                                   <% parent_taxon.children.each do |child_taxon| %>
@@ -350,6 +499,46 @@
     </div>
 </nav>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #f29f37;">
+        <h5 class="modal-title login-text-style" id="exampleModalLabel">LOGIN</h5>
+        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center py-3">
+          <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80) %>
+        </div>
+        <div class="social_login">
+            <div class="">
+                <a href="#" type="button" class="social_box fb">
+                    <span class="icon"><i class="fab fa-facebook"></i></span>
+                    <span class="icon_title">Connect with Facebook</span>
+                </a>
+
+                <a href="#" type="button" class="social_box google">
+                    <span class="icon"><i class="fab fa-google-plus"></i></span>
+                    <span class="icon_title">Connect with Google</span>
+                </a>
+            </div>
+
+            <div class="centeredText">
+                <span>OR USE YOUR EMAIL ADDRESS</span>
+            </div>
+
+            <div class="action_btns">
+                <div class="one_half py-2"><%= link_to I18n.t('spree.login'), login_path, class:"py-2" %></div>
+                <div class="one_half last py-2"><%= link_to "Sign up", signup_path, class:"py-2" %></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
   function ctgDropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -368,4 +557,22 @@
       }
     }
   }
+
+  
+
+</script>
+
+<script>
+$(document).ready(function() {
+    $("#profile-section").click(function() {
+        $(".register-dropdown-content").toggle();
+    });
+
+    $(document).click(function(event) {
+        if (!$(event.target).closest(".btn-group, .register-dropdown-content").length) {
+            $(".register-dropdown-content").hide();
+        }
+    });
+});
+
 </script>

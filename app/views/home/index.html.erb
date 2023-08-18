@@ -22,24 +22,28 @@
       padding: 3px 10px;
   }
 
-  .product-tumb {
+    .product-tumb {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 200px;
-      padding: 50px;
+      padding: 0; 
       background: white;
+      overflow: hidden;
   }
 
   .product-tumb a{
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 100%; 
+      height: 100%; 
   }
 
   .product-tumb img {
-      max-width: 100%;
-      max-height: 100%;
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
   }
 
   .product-details {
@@ -127,6 +131,7 @@
 
 
 <div class="container mb-5 mt-5">
+  <% displayed_products = Set.new %>
   <% Spree::Taxonomy.all.each do |taxonomy| %>
     <% products_present = false %>
     <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
@@ -137,35 +142,39 @@
     <% end %>
     
     <% if products_present %>
-      <div class="row mb-3"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2></div>
+      <div class="row mb-2"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2></div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" style="margin-bottom: 80px;">
         <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
           <% taxon.products.each do |product| %>
-            <div class="col">
-              <div class="product-card">
-                <div class="product-tumb">
-                  <%= link_to product_path(product), itemprop: 'url' do %>
-                    <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
-                  <% end %>
-                </div>
-                <div class="product-details">
-                  <h4><a href="<%product_path(product)%>"><%= product.name %></a></h4>
-                  <div class="product-bottom-details">
+            <% unless displayed_products.include?(product.id) %>
+              <% displayed_products.add(product.id) %>
+              <div class="col">
+                <div class="product-card">
+                  <div class="product-tumb">
+                    <%= link_to product_path(product), itemprop: 'url' do %>
+                      <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
+                    <% end %>
+                  </div>
+                  <div class="product-details">
+                    <h4><a href="<%product_path(product)%>"><%= product.name %></a></h4>
+                    <div class="product-bottom-details">
                       <div class="product-price"><%= product.display_price.to_html %></div>
                       <div class="product-links">
-                          <a href="#"><i class="fa fa-heart"></i></a>
-                          <a href="#"><i class="fa fa-shopping-cart"></i></a>
+                        <a href="#"><i class="fa fa-heart"></i></a>
+                        <a href="#"><i class="fa fa-shopping-cart"></i></a>
                       </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         <% end %>
       </div>
     <% end %>
   <% end %>
 </div>
+
 
 <div class="container d-flex justify-content-center mb-5">
   <%= image_tag("bookarley-logo.png", alt: "Logo", width: 120) %>
