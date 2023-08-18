@@ -1,3 +1,12 @@
+<style>
+.errorExplanation p, li {
+    color: red;
+    font-size: 12px;
+}
+</style>
+
+
+
 <% if target && target.errors.any? %>
   <div id="errorExplanation" class="errorExplanation" data-hook>
     <h2><%= t('spree.errors_prohibited_this_record_from_being_saved', count: target.errors.count) %>:</h2>

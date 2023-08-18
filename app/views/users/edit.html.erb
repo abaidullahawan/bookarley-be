@@ -1,4 +1,42 @@
-<article class="auth-container" id="edit-account">
+
+<style>
+.auth-main-container {
+    width: 65%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    padding: 8em 2em;
+    justify-content: space-between;
+}
+.text-input input {
+    background: #1e396b26;
+    border-bottom: 5px solid #1e396b !important;
+    outline: none !important;
+}
+.button-primary{
+  background-color: #1e396b;
+}
+.form_bottom_text{
+  font-size: 15px;
+  text-align: center;
+}
+
+@media  screen and (max-width: 1023px){
+  .auth-main-container {
+    width: 100% !important;
+}
+}
+.form_col{
+  padding-right: 20px
+}
+.image_col{
+  padding-left: 20px
+}
+</style>
+
+<article class="auth-main-container row" id="edit-account">
+<div class="col-lg-6 col-sm pb-5 form_col">
   <h1><%= I18n.t('spree.editing_user') %></h1>
 
   <%= render 'shared/error_messages', target: @user %>
@@ -29,4 +67,10 @@
       <%= f.button t("spree.update"), name: :commit, class: 'button-primary button-primary--full-width' %>
     </div>
   <% end %>
+  </div>
+
+<div class= "col-lg-6 image_col" >
+<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block w-100") %>
+  </div>
+
 </article>
