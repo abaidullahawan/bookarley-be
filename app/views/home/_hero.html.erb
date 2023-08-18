@@ -70,6 +70,8 @@
   background: white;
 }
 
+/* Existing CSS */
+
 .vendor-li {
   margin-left: 5%;
   position: relative;
@@ -81,7 +83,36 @@
   align-items: center;
   flex-shrink: 0;
   background: white;
+  display: flex !important;
+  flex-direction: column; /* Update to column layout */
+  justify-content: flex-start; /* Align items to start in column layout */
 }
+
+/* Updated styles */
+
+.vendor-li .image-section {
+  width: 100%;
+  height:75%; /* Divide the li into two equal parts vertically */
+  overflow: hidden;
+}
+
+.vendor-li .image-section img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.vendor-li .text-section {
+  width: 100%;
+  height: 25%; /* Divide the li into two equal parts vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+
 
 .slider-nav .prev,
 .slider-nav .next {
@@ -235,7 +266,7 @@
 --------------------------------------------------------------*/
 
 #about{
-  background: #f7f7f7;
+  background: #f3f5fa;
   padding-top: 60px;
   padding-bottom: 60px;
   margin-top: 80px;
@@ -283,17 +314,24 @@
   border-radius: 4px;
   transition: 0.3s;
   line-height: 1;
-  color: #47b2e4;
+  color: #1e396b;
   -webkit-animation-delay: 0.8s;
   animation-delay: 0.8s;
   margin-top: 6px;
-  border: 2px solid #47b2e4;
+  border: 2px solid #1e396b;
+  text-decoration: none;
+  border-radius: 30px !important;
 }
 
 .about .content .btn-learn-more:hover {
-  background: #47b2e4;
+  background: #1e396b;
   color: #fff;
   text-decoration: none;
+}
+
+.box p{
+  font-size: 1.2em;
+  color: slategray;
 }
 
 
@@ -395,13 +433,95 @@
       <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
         <div class="box">
           <%= image_tag("book.png", alt: "Logo", width: 100) %>
-          <h3>Book a Venue</h3>
-          <p>Quam rem vitae est autem molestias explicabo debitis sint. Vero aliquid quidem commodi.</p>
+          <h3>Book your Choice</h3>
+          <p>Unlock Inspiring Spaces: Your Event, Your Unique Venue, Your Way to Make Every Moment Special.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+  <div class="container" data-aos="fade-up">
+    <div class="row content">
+      <div class="col-lg-6">
+        <div class="d-flex justify-content-center align-items-center">
+          <%= image_tag("venue-back.png", alt: "Logo", style:"width: 100%;") %>
+        </div>
+      </div>
+      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center">
+        <div>
+          <h1 class="mb-4" style="color: #1e396b; font-weight: 550; font-size: 30px;">Events & Wedding Venues across Pakistan</h1>
+          <p style="    
+            font-size: 1.6em;
+            color: darkslategray;"
+          >
+            Exploring Remarkable Venues. Discover Your Perfect Space. Start Your Adventure!
+          </p>
+          <a href="t/venues" class="btn-learn-more mt-4">Explore All Venues</a>
+        </div>  
+      </div>
+    </div>
+  </div>
+</section><!-- End About Us Section -->
+
+<div class="container vendors-container">
+  <div class="section-title">
+    <h2>Vendors by Categories</h2>
+    <p>Elevate your celebrations with our premium event rental services. From fairy-tale weddings to milestone birthdays, we curate an ambiance that transforms moments into unforgettable memories, reflecting your unique style and charm.</p>
+  </div>
+  <div>
+    <div class="slider vendor-slider">
+      <ul class="vendor-ul">
+        <% Spree::Taxonomy.where(name: "Vendors").each do |taxonomy| %>
+          <% taxonomy.root.children.each do |parent_taxon| %>
+            <li class="vendor-li card shadow-sm d-grid">
+              <div class="image-section">
+                <% if parent_taxon&.icon&.attached? %>
+                  <%= render(ImageComponent.new(image: parent_taxon.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                <% end %>
+              </div>
+              <div class="text-section">
+                <%= parent_taxon.name %>
+              </div>  
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <div class="slider-nav">
+        <div class="prev d-flex justify-content-center align-items-center"><i class="fa fa-arrow-left fa-2x text-light"></i></div>
+        <div class="next d-flex justify-content-center align-items-center"><i class="fa fa-arrow-right fa-2x text-light"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+  <div class="container" data-aos="fade-up">
+    <div class="row content">
+      <div class="col-lg-6">
+        <div class="d-flex justify-content-center align-items-center">
+          <%= image_tag("invite-img.png", alt: "Logo", style:"width: 100%;") %>
+        </div>
+      </div>
+      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center">
+        <div>
+          <h1 class="mb-4" style="color: #1e396b; font-weight: 550; font-size: 30px;">Design Your Digital Invitations</h1>
+          <p style="    
+            font-size: 1.6em;
+            color: darkslategray;"
+          >
+            Bring Together Your Dear Ones to Mark Important Life Events!
+          </p>
+          <a href="#" class="btn-learn-more mt-4">Start Your Journey</a>
+        </div>  
+      </div>
+    </div>
+  </div>
+</section><!-- End About Us Section -->
 
 
 
