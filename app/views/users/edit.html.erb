@@ -10,9 +10,10 @@
     justify-content: space-between;
 }
 .text-input input {
-    background: #1e396b26;
-    border-bottom: 5px solid #1e396b !important;
+    background: transparent;
+    border-bottom: 2px solid #1e396b !important;
     outline: none !important;
+    border: none;
 }
 .button-primary{
   background-color: #1e396b;
@@ -27,17 +28,44 @@
     width: 100% !important;
 }
 }
-.form_col{
-  padding-right: 20px
+@media  screen and (max-width: 767px){
+  .form_col {
+    padding: 50px 20px !important;
 }
-.image_col{
-  padding-left: 20px
+ .image_col img {
+     padding-left: 0px !important;
+     margin-top: 30px;
+}
+}
+.image_col img {
+    padding-left: 50px;
+    width: 100%;
+}
+.form_col{
+  padding: 60px 30px;
+}
+.form_logo img{
+  height: auto;
+  width: 70px;
+  line-height: 100px; 
+}
+.form_title{
+  text-align: center;
+  padding-bottom: 30px;
+  text-transform: capitalize;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 600;
+  color: #37517e;
 }
 </style>
 
 <article class="auth-main-container row" id="edit-account">
-<div class="col-lg-6 col-sm pb-5 form_col">
-  <h1><%= I18n.t('spree.editing_user') %></h1>
+<div class="col-lg-6 form_col shadow">
+<div class="form_logo text-center pb-4">
+<%= image_tag("bookarley-logo.png", alt:"logo") %>
+</div>
+  <h1 class="form_title"><%= I18n.t('spree.editing_user') %></h1>
 
   <%= render 'shared/error_messages', target: @user %>
 
@@ -70,7 +98,7 @@
   </div>
 
 <div class= "col-lg-6 image_col" >
-<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block w-100") %>
+<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
   </div>
 
 </article>
