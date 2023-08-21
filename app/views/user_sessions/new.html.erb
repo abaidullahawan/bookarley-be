@@ -9,9 +9,10 @@
     justify-content: space-between;
 }
 .text-input input {
-    background: #1e396b26;
-    border-bottom: 5px solid #1e396b !important;
+    background: transparent;
+    border-bottom: 2px solid #1e396b !important;
     outline: none !important;
+    border: none;
 }
 .button-primary{
   background-color: #1e396b;
@@ -26,20 +27,57 @@
     width: 100% !important;
 }
 }
+@media  screen and (max-width: 767px){
+  .form_col {
+    padding: 50px 20px !important;
+}
+ .image_col img {
+     padding-left: 0px !important;
+     margin-top: 30px;
+}
+}
 .form_col{
-  padding-right: 20px
+  padding: 60px 30px;
 }
-.image_col{
-  padding-left: 20px
+.image_col img {
+    padding-left: 50px;
+    width: 100%;
 }
+
+.form_title{
+  text-align: center;
+  padding-bottom: 30px;
+  text-transform: capitalize;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 600;
+  color: #37517e;
+}
+.form_logo img{
+  height: auto;
+  width: 70px;
+  line-height: 100px;
+  
+}
+input#spree_user_remember_me {
+    height: 17px;
+    width: 17px;
+}
+.select_box label{
+font-size: 12px;
+}
+
 </style>
 
 
 <% @body_id = 'login' %>
 
 <article class="auth-main-container row" id="existing-customer">
-<div class="col-lg-6 col-sm pb-5 form_col">
-  <h1><%= I18n.t('spree.login_as_existing') %></h1>
+<div class="col-lg-6 form_col shadow">
+<div class="form_logo text-center pb-4">
+<%= image_tag("bookarley-logo.png", alt:"logo") %>
+</div>
+  <h1 class="form_title">Login Form</h1>
 
   <%= form_for Spree::User.new, as: :spree_user, url: create_new_session_path, html: { class: "auth-form" } do |f| %>
     <div class="auth-form__input-wrapper">
@@ -56,7 +94,7 @@
       </div>
     </div>
 
-    <div class="auth-form__input-wrapper">
+    <div class="auth-form__input-wrapper select_box">
       <%= f.check_box :remember_me, tabindex: 3 %>
       <%= f.label :remember_me, I18n.t("spree.remember_me") %>
     </div>
@@ -75,7 +113,7 @@
   </div>
 
 <div class= "col-lg-6 image_col" >
-<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block w-100") %>
+<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
   </div>
 
 </article>
