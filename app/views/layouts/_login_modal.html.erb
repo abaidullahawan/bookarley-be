@@ -1,0 +1,130 @@
+<style>
+  .social_login .social_box {
+    display: block;
+    clear: both;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #F4F4F2;
+    overflow: hidden;
+  }
+
+  .social_login .icon {
+    display: block;
+    width: 36px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    float: left;
+    color: #FFF;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .social_login .fb .icon {
+    background: #3B5998;
+  }
+
+  .social_login .google .icon {
+    background: #DD4B39;
+  }
+
+  .social_login .icon_title {
+    display: block;
+    padding: 5px 0;
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+    color: #777;
+  }
+
+  .social_login .social_box:hover {
+    background: #E4E4E2;
+  }
+
+  .centeredText {
+    text-align: center;
+    margin: 20px 0;
+    clear: both;
+    overflow: hidden;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    color: dimgray;
+  }
+
+  .action_btns {
+    clear: both;
+    overflow: hidden;
+    padding-bottom: 12px;
+  }
+
+  .action_btns a {
+    display: block;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: darkslategrey;
+    text-align: center;
+  }
+
+  a.btn_red {
+    color: #FFF;
+  }
+
+  .one_half {
+    width: 50%;
+    display: block;
+    float: left;
+    background: #f4f4f2;
+  }
+
+  .one_half.last {
+    width: 45%;
+    margin-left: 5%;
+  }
+
+  .login-modal{
+    --bs-modal-width: 350px !important;
+  }
+  .login-text-style{
+    font-size: 15px; 
+    font-weight: 500; 
+    padding: 2px;
+    color: #1e396b;
+  }
+</style>
+
+<div class="modal login-modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #f29f37;">
+        <h5 class="modal-title login-text-style" id="exampleModalLabel">LOGIN</h5>
+        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center py-3">
+          <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80) %>
+        </div>
+        <div class="social_login">
+            <div class="">
+                <a href="#" type="button" class="social_box fb">
+                    <span class="icon"><i class="fab fa-facebook"></i></span>
+                    <span class="icon_title">Connect with Facebook</span>
+                </a>
+
+                <a href="#" type="button" class="social_box google">
+                    <span class="icon"><i class="fab fa-google-plus"></i></span>
+                    <span class="icon_title">Connect with Google</span>
+                </a>
+            </div>
+
+            <div class="centeredText">
+                <span>OR USE YOUR EMAIL ADDRESS</span>
+            </div>
+
+            <div class="action_btns">
+                <div class="one_half py-2"><%= link_to I18n.t('spree.login'), login_path, class:"py-2" %></div>
+                <div class="one_half last py-2"><%= link_to "Sign up", signup_path, class:"py-2" %></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

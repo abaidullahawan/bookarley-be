@@ -1,0 +1,264 @@
+<style>
+  .dropdown-menu-width {
+    width: 91%;
+    margin-left: 20px;
+  }
+
+  .circle-image {
+    width: 40px;
+    height: 40px;
+    border: 0.5px solid lightgray;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1;
+  }
+  
+  .all-cat-dropdown{
+    margin-bottom: -5px;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 20px;
+    background: white;
+    width: 300px;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    font-weight: bold;
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .all-ctg-text{
+    float: left;
+    color: black;
+    font-weight: 500;
+    margin-left: 25px;
+    font-size: 1.3rem;
+  }
+
+  .ctg-list-text{
+    color: black;
+    font-weight: 500;
+    margin-left: 25px;
+    font-size: 1.35rem;
+  }
+
+  .all-ctg-icon{
+    float: right;
+    color: black;
+    margin-top: 6px;
+    margin-right: 11px;
+  }
+
+  .navbar-nav .nav-gap {
+    margin-right: 5px;
+  }
+
+  .dropbtn {
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .taxonomy-link:hover{
+    background: #ECEEF2;
+    border-left: 8px solid #F29F37;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 1.2em;
+  }
+
+  .show {display:block;}
+
+  .custom-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content-unique {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0px;
+    top: 38px;
+    cursor: pointer;
+  }
+  
+  .custom-dropdown:hover .dropdown-content-unique {
+    display: block;
+  }
+
+  .taxonomy-dropdown-hover {
+    position: relative;
+    display: inline-block;
+  }
+
+  .more-submenu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 5px; 
+    width: 125px;   
+  }
+
+  .more-submenu a {
+    text-decoration: none;
+  }
+
+  .taxonomy-dropdown-hover:hover .more-submenu {
+    display: block;
+  }
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top mobile-nav-hidden py-2" style="z-index: 2; margin-top: 73px; background: #1e396b;">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Example Dropdown -->
+            <div class="dropdown">
+                <!-- Dropdown Toggle Button -->
+                <button class="btn btn-light text-dark dropdown-toggle all-cat-dropdown dropbtn" onclick="ctgDropDown()">
+                    <span class="all-ctg-text" onclick="ctgDropDown()">All Categories</span><i class="fas fa-chevron-down all-ctg-icon"></i>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="dropdown-menu dropdown-content dropdown-menu-width" style="border: none;" id="myDropdown">
+                    <% Spree::Taxonomy.all.each do |taxonomy| %>
+                      <div class="dropdown-wrapper">
+                        <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                        <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link" do %>
+                          <% if taxonomy.icon.attached? %>
+                            <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 20px;")) %>
+                          <% end %>
+                          <span style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></span>
+                          <span style="float: right;"><i class="fas fa-angle-right" style="color: #3f3b3b;"></i></span>
+                        <%end%>
+                        
+                        <% parent_taxons = taxonomy.root.children %>
+                        <% if parent_taxons.any? %>
+                          <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 5px;">
+                            <div class="parent-taxon row">
+                              <div class="col-lg-8">
+                                <div class="row">
+                                  <% taxonomy.root.children.each do |parent_taxon| %>
+                                    <div class="col-md-5 taxon_name">
+                                    <% parent_permalink = parent_taxon&.permalink%>
+                                      <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
+                                        <%= parent_taxon.name %>
+                                      <%end%>
+                                      <div class="child-taxons">
+                                        <% parent_taxon.children.each do |child_taxon| %>
+                                        <%child_permalink = child_taxon&.permalink%>
+                                        <%= link_to "/t/#{child_permalink}" do %>
+                                          <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                                          <%end%>
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                                </div>
+                              </div>
+                              <div class="col-lg-4 d-flex justify-content-center align-items-center">  
+                                <% if taxonomy.icon.attached? %>
+                                  <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                                <% end %>
+                              </div>  
+                            </div>
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                </div>
+            </div>
+
+            <div class="navbar-nav" style="margin-left: 7px;">
+              <% Spree::Taxonomy.all.each_with_index do |taxonomy, index| %>
+                <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                <% if index < 3 %>
+                  <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
+                    <%= link_to "/t/#{taxonomy_permalink}" do %>
+                      <span class="taxonomy-name"><%= taxonomy.name %></span>
+                    <%end%>
+                    <% parent_taxons = taxonomy.root.children %>
+                    <% if parent_taxons.any? %>
+                      <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2" style="border-radius: 2px;">
+                        <div class="parent-taxon row">
+                          <div class="col-lg-8">
+                            <div class="row">
+                              <% taxonomy.root.children.each do |parent_taxon| %>
+                                <div class="col-md-5">
+                                <% parent_permalink = parent_taxon&.permalink%>
+                                  <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
+                                    <%= parent_taxon.name %>
+                                  <%end%>
+                                  <div class="child-taxons">
+                                    <% parent_taxon.children.each do |child_taxon| %>
+                                      <%child_permalink = child_taxon&.permalink%>
+                                      <%= link_to "/t/#{child_permalink}" do %>
+                                        <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                                      <%end%>
+                                    <% end %>
+                                  </div>
+                                </div>
+                              <% end %>
+                            </div>
+                          </div>
+                          <div class="col-lg-4 d-flex justify-content-center align-items-center">  
+                            <% if taxonomy.icon.attached? %>
+                              <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                            <% end %>
+                          </div>  
+                        </div>
+                      </div>
+                    <% end %>  
+                  </div>
+                <% end %>
+              <% end %>
+                <div class="nav-item nav-link nav-gap ctg-list-text text-white taxonomy-dropdown-hover">
+                  <span class="taxonomy-name">More <i class="fas fa-angle-down"></i></span>
+                  <div class="more-submenu">
+                    <div class="dropdown-wrapper">
+                      <% Spree::Taxonomy.all.drop(3).each do |taxonomy| %>
+                        <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                        <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link py-3" do %>
+                          <div class="py-2" style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></div>
+                        <%end%>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-nav" style="margin-right: 26px">
+          <a href="/admin/stores" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
+        </div>
+    </div>
+</nav>
+
