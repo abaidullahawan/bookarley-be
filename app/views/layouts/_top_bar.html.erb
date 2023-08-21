@@ -12,6 +12,7 @@
     object-fit: cover;
     z-index: 1;
   }
+  
   .all-cat-dropdown{
     margin-bottom: -5px;
     margin-top: 5px;
@@ -57,7 +58,6 @@
     margin-right: 5px;
   }
 
-  /* Dropdown Button */
   .dropbtn {
     padding: 16px;
     border: none;
@@ -69,13 +69,11 @@
     border-left: 8px solid #F29F37;
   }
 
-  /* The container <div> - needed to position the dropdown content */
   .dropdown {
     position: relative;
     display: inline-block;
   }
 
-  /* Dropdown Content (Hidden by Default) */
   .dropdown-content {
     display: none;
     position: absolute;
@@ -84,7 +82,6 @@
     z-index: 1;
   }
 
-  /* Links inside the dropdown */
   .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -122,7 +119,6 @@
     font-size: 1em;
   }
 
-  /* Dropdown container */
   .taxonomy-dropdown {
     position: relative;
     display: inline-block;
@@ -131,32 +127,33 @@
  .taxonomy-dropdown a {
     text-decoration: none;
     color: white;
-}
+  }
+
   .taxonomy-name{
     cursor: pointer;
   }
-  /* Dropdown content */
+
   .taxonomy-dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-    width: 600px; /* Adjust width as needed */
+    width: 600px;
   }
   .taxonomy-dropdown-content a {
     color: black;
-}
+  }
 
-  /* Show dropdown content on hover */
   .taxonomy-dropdown:hover .taxonomy-dropdown-content {
     display: block;
     border-bottom: 10px solid #F29F37;
   }
-.taxonomy-name:hover{
+
+  .taxonomy-name:hover{
     border-bottom: 2px solid #F29F37;
   }
-  /* Style parent taxon */
+  
   .parent-taxon {
     padding: 10px;
     color: #1e396b;
@@ -165,8 +162,8 @@
   
  .taxonomy-dropdown-all .child-taxons a {
     padding: 0px 16px;
-}
-  /* Style child taxons */
+  }
+
   .child-taxons-name {
     color: #4f4d4d;
     font-weight: 300;
@@ -190,131 +187,38 @@
     z-index: 1;
     margin-left: 100%;
     margin-top: -15%;
-    width: 600px; /* Adjust width as needed */
+    width: 600px; 
   }
 
-  /* Show dropdown content on hover */
   .dropdown-wrapper:hover .taxonomy-dropdown-all {
     display: block;
     border-bottom: 10px solid #F29F37;
   }
 
-.parent-taxon .taxon_name a{
-  padding: 0px 16px;
-}
+  .parent-taxon .taxon_name a{
+    padding: 0px 16px;
+  }
 
-
-.social_login .social_box {
-	display: block;
-	clear: both;
-	padding: 10px;
-	margin-bottom: 10px;
-	background: #F4F4F2;
-	overflow: hidden;
-}
-
-.social_login .icon {
-	display: block;
-	width: 36px;
-	padding: 5px 10px;
-	margin-right: 10px;
-	float: left;
-	color: #FFF;
-	font-size: 16px;
-	text-align: center;
-}
-
-.social_login .fb .icon {
-	background: #3B5998;
-}
-
-.social_login .google .icon {
-	background: #DD4B39;
-}
-
-.social_login .icon_title {
-	display: block;
-	padding: 5px 0;
-	float: left;
-	font-weight: bold;
-	font-size: 14px;
-	color: #777;
-}
-
-.social_login .social_box:hover {
-	background: #E4E4E2;
-}
-
-.centeredText {
-	text-align: center;
-	margin: 20px 0;
-	clear: both;
-	overflow: hidden;
-	text-transform: uppercase;
-  font-size: 1.1em;
-  color: dimgray;
-}
-
-.action_btns {
-	clear: both;
-	overflow: hidden;
-  padding-bottom: 12px;
-}
-
-.action_btns a {
-	display: block;
-  font-size: 1.2em;
-  text-decoration: none;
-  color: darkslategrey;
-  text-align: center;
-}
-
-a.btn_red {
-	color: #FFF;
-}
-
-.one_half {
-	width: 50%;
-	display: block;
-	float: left;
-  background: #f4f4f2;
-}
-
-.one_half.last {
-	width: 45%;
-	margin-left: 5%;
-}
-
-.modal{
-  --bs-modal-width: 350px !important;
-}
-.login-text-style{
-  font-size: 15px; 
-  font-weight: 500; 
-  padding: 2px;
-  color: #1e396b;
-}
-
-.register-profile-dropdown {
+  .register-profile-dropdown {
     position: relative;
     display: inline-block;
-}
+  }
 
-.register-profile-button {
+  .register-profile-button {
     display: flex;
     align-items: center;
     cursor: pointer;
     z-index: 9;
-}
+  }
 
-.register-profile-button img {
+  .register-profile-button img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-}
+  }
 
-.register-dropdown-content {
+  .register-dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -324,27 +228,120 @@ a.btn_red {
     right: 0;
     width: 200px;
     padding-top: 20px;
-}
+  }
 
-.register-dropdown-content a {
+  .register-dropdown-content a {
     display: block;
     padding: 10px 20px;
     text-decoration: none;
     color: #333;
     transition: background-color 0.3s;
-}
+  }
 
-.register-dropdown-content a:hover {
+  .register-dropdown-content a:hover {
     background-color: #ddd;
     border-left: 8px solid #F29F37;
-    
-}
-.profile-icons{
-  margin-right: 3px;
-}
+      
+  }
+
+  .register-profile-dropdown-mobile {
+    position: relative;
+    display: inline-block;
+  }
+
+  .register-profile-button-mobile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9;
+  }
+
+  .register-profile-button-mobile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .register-dropdown-content-mobile {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 46px;
+    right: 0;
+    width: 200px;
+    padding-top: 20px;
+  }
+
+  @media(max-width: 574px){
+    .register-dropdown-content-mobile{
+      top: 16px !important;
+    }
+  }
+
+  .register-dropdown-content-mobile a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+  }
+
+  .register-dropdown-content-mobile a:hover {
+    background-color: #ddd;
+    border-left: 8px solid #F29F37;
+      
+  }
+
+  .profile-icons{
+    margin-right: 3px;
+  }
+
+  @media(min-width: 992px){
+    .mobile-nav-visible{
+      display: none;
+    }
+  }
+
+  @media(width: 992px){
+    .mobile-nav-visible{
+      display: block;
+    }
+  }
+
+  @media(max-width: 992px){
+    .mobile-nav-hidden{
+      display: none;
+    }
+  }
+
+  .mobile-sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    left: -250px;
+    background-color: #f8f9fa;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 9;
+    margin-top: 70px;
+
+  }
+
+  .mobile-sidebar.active {
+    left: 0;
+  }
+
+  .no-scroll {
+      overflow: hidden;
+  }
+
+
 </style>
 
-<nav class="navbar navbar-expand-sm navbar-light bg-white py-3 px-5 fixed-top" style="z-index: 100;">
+<nav class="navbar navbar-expand-sm navbar-light bg-white py-3 px-5 fixed-top mobile-nav-hidden" style="z-index: 100;">
   <div class="container-fluid">
       <%= link_to root_path do %>
         <a href="/" class="navbar-brand"><%= image_tag("bookarley-logo.png", alt: "Logo", width: 60) %></a>
@@ -357,7 +354,7 @@ a.btn_red {
           <div class="navbar-nav">
           <% if spree_current_user %>
             <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
-                <%= image_tag('bookarley-logo.png', class: "circle-image") %>
+                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
                 <div>
                   <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
                 </div>
@@ -366,7 +363,7 @@ a.btn_red {
             <div class="register-profile-dropdown">
                 <div class="register-dropdown-content shadow" id="registerDropdownContent">
                   <div class="d-flex justify-content-center">
-                    <div><%= image_tag('bookarley-logo.png', class: "circle-image") %></div>
+                    <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
                   </div>
                   <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
                     <div><%= spree_current_user.email %></div>
@@ -379,7 +376,7 @@ a.btn_red {
             </div>
           <% else %>
             <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <%= image_tag('bookarley-logo.png', class: "circle-image") %>
+                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
                 <div>
                   <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
                 </div>
@@ -388,156 +385,73 @@ a.btn_red {
           </div>
       </div>
   </div>
-  
 </nav>
 
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2" style="z-index: 2; margin-top: 73px; background: #1e396b;">
+<nav class="navbar navbar-expand-sm navbar-light bg-white py-3 fixed-top mobile-nav-visible" style="z-index: 100;">
     <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <!-- Example Dropdown -->
-            <div class="dropdown">
-                <!-- Dropdown Toggle Button -->
-                <button class="btn btn-light text-dark dropdown-toggle all-cat-dropdown dropbtn" onclick="ctgDropDown()">
-                    <span class="all-ctg-text" onclick="ctgDropDown()">All Categories</span><i class="fas fa-chevron-down all-ctg-icon"></i>
-                </button>
-
-                <!-- Dropdown Menu -->
-                <div class="dropdown-menu dropdown-content dropdown-menu-width" style="border: none;" id="myDropdown">
-                    <% Spree::Taxonomy.all.each do |taxonomy| %>
-                      <div class="dropdown-wrapper">
-                       <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-                        <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link" do %>
-                          <% if taxonomy.icon.attached? %>
-                            <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 20px;")) %>
-                          <% end %>
-                          <span style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></span>
-                        <%end%>
-                        
-                        <% parent_taxons = taxonomy.root.children %>
-                        <% if parent_taxons.any? %>
-                        <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 5px;">
-                          <div class="parent-taxon row">
-                            <div class="col-lg-8">
-                              <div class="row">
-                                <% taxonomy.root.children.each do |parent_taxon| %>
-                                  <div class="col-md-5 taxon_name">
-                                  <% parent_permalink = parent_taxon&.permalink%>
-                                    <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
-                                      <%= parent_taxon.name %>
-                                    <%end%>
-                                    <div class="child-taxons">
-                                      <% parent_taxon.children.each do |child_taxon| %>
-                                      <%child_permalink = child_taxon&.permalink%>
-                                      <%= link_to "/t/#{child_permalink}" do %>
-                                        <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
-                                        <%end%>
-                                      <% end %>
-                                    </div>
-                                  </div>
-                                <% end %>
-                              </div>
-                            </div>
-                            <div class="col-lg-4 d-flex justify-content-center align-items-center">  
-                              <% if taxonomy.icon.attached? %>
-                                <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
-                              <% end %>
-                            </div>  
-                          </div>
-                        </div>
-                      <% end %>
-                      </div>
-                    <% end %>
+      <div class="navbar-nav mr-auto">
+        <button class="btn btn-link" id="sidebarToggle">
+            <svg width="50" height="18" viewBox="0 0 50 30" xmlns="http://www.w3.org/2000/svg">
+              <rect width="28" height="5" rx="4" fill="#203b6d"/> 
+              <rect y="10" width="38" height="5" rx="4" fill="#203b6d"/>
+              <rect y="20" width="50" height="5" rx="4" fill="#203b6d"/>
+            </svg>
+        </button>
+      </div>
+      <div class="navbar-nav mx-auto">
+        <%= link_to root_path, style:"margin-left: 20px !important;" do %>
+          <div class="navbar-brand"><%= image_tag("bookarley-logo.png", alt: "Logo", width: 60) %></div>
+        <% end %>
+      </div>
+      <div class="navbar-nav ml-auto">
+        <% if spree_current_user %>
+          <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section-mobile">
+              <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+              <div>
+                <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+              </div>
+          </div>
+          
+          <div class="register-profile-dropdown-mobile">
+              <div class="register-dropdown-content-mobile shadow" id="registerDropdownContent">
+                <div class="d-flex justify-content-center">
+                  <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
                 </div>
-            </div>
-
-            <div class="navbar-nav" style="margin-left: 7px;">
-              <% Spree::Taxonomy.all.each do |taxonomy| %>
-                <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
-                <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-                        <%= link_to "/t/#{taxonomy_permalink}" do %>
-                  <span class="taxonomy-name"><%= taxonomy.name %></span>
-                  <%end%>
-                  <% parent_taxons = taxonomy.root.children %>
-                  <% if parent_taxons.any? %>
-                    <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2" style="border-radius: 2px;">
-                      <div class="parent-taxon row">
-                        <div class="col-lg-8">
-                          <div class="row">
-                            <% taxonomy.root.children.each do |parent_taxon| %>
-                              <div class="col-md-5">
-                              <% parent_permalink = parent_taxon&.permalink%>
-                                <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
-                                  <%= parent_taxon.name %>
-                                <%end%>
-                                <div class="child-taxons">
-                                  <% parent_taxon.children.each do |child_taxon| %>
-                                  <%child_permalink = child_taxon&.permalink%>
-                                  <%= link_to "/t/#{child_permalink}" do %>
-                                    <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
-                                    <%end%>
-                                  <% end %>
-                                </div>
-                              </div>
-                            <% end %>
-                          </div>
-                        </div>
-                        <div class="col-lg-4 d-flex justify-content-center align-items-center">  
-                          <% if taxonomy.icon.attached? %>
-                            <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 120px;")) %>
-                          <% end %>
-                        </div>  
-                      </div>
-                    </div>
-                  <% end %>  
+                <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
+                  <div><%= spree_current_user.email %></div>
                 </div>
-              <% end %>
-            </div>
-        </div>
-        <div class="navbar-nav" style="margin-right: 26px">
-          <button class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</button>
-        </div>
-    </div>
+                <hr style="color: #b5b1b1;">
+                <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
+                <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                <%= link_to raw('<i class="fas fa-store profile-icons"></i> Become a Seller'), "admin/stores", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
+              </div>
+          </div>
+        <% else %>
+          <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+              <div>
+                <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+              </div>
+          </div>
+        <% end %>  
+      </div>
+    </div>  
+  </div>
 </nav>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header" style="background: #f29f37;">
-        <h5 class="modal-title login-text-style" id="exampleModalLabel">LOGIN</h5>
-        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex justify-content-center py-3">
-          <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80) %>
-        </div>
-        <div class="social_login">
-            <div class="">
-                <a href="#" type="button" class="social_box fb">
-                    <span class="icon"><i class="fab fa-facebook"></i></span>
-                    <span class="icon_title">Connect with Facebook</span>
-                </a>
+<%= render 'layouts/ctg_top_bar' %>
 
-                <a href="#" type="button" class="social_box google">
-                    <span class="icon"><i class="fab fa-google-plus"></i></span>
-                    <span class="icon_title">Connect with Google</span>
-                </a>
-            </div>
+<%= render 'layouts/login_modal' %>
 
-            <div class="centeredText">
-                <span>OR USE YOUR EMAIL ADDRESS</span>
-            </div>
-
-            <div class="action_btns">
-                <div class="one_half py-2"><%= link_to I18n.t('spree.login'), login_path, class:"py-2" %></div>
-                <div class="one_half last py-2"><%= link_to "Sign up", signup_path, class:"py-2" %></div>
-            </div>
-        </div>
-      </div>
+<div class="mobile-sidebar" id="mobile-sidebar">
+    <div class="d-flex justify-content-center">
+      <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80, class:"mt-5") %>
     </div>
-  </div>
+    <div class="p-3">
+      <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+    </div>
 </div>
-
-
 
 <script>
   function ctgDropDown() {
@@ -558,21 +472,35 @@ a.btn_red {
     }
   }
 
-  
+  $(document).ready(function() {
+      $("#profile-section-mobile").click(function() {
+          $(".register-dropdown-content-mobile").toggle();
+      });
 
-</script>
+      $("#profile-section").click(function() {
+          $(".register-dropdown-content").toggle();
+      });
 
-<script>
-$(document).ready(function() {
-    $("#profile-section").click(function() {
-        $(".register-dropdown-content").toggle();
-    });
+      $(document).click(function(event) {
+          if (!$(event.target).closest(".btn-group, .register-dropdown-content").length) {
+              $(".register-dropdown-content").hide();
+          }
 
-    $(document).click(function(event) {
-        if (!$(event.target).closest(".btn-group, .register-dropdown-content").length) {
-            $(".register-dropdown-content").hide();
-        }
-    });
-});
+          if (!$(event.target).closest(".btn-group, .register-dropdown-content-mobile").length) {
+              $(".register-dropdown-content-mobile").hide();
+          }
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebar = document.getElementById("mobile-sidebar");
+    const body = document.body;
+
+      sidebarToggle.addEventListener("click", function() {
+        sidebar.classList.toggle("active");
+        body.classList.toggle("no-scroll"); // Add or remove "no-scroll" class
+      });
+  });
 
 </script>
