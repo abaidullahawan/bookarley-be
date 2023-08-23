@@ -198,10 +198,10 @@
                 </div>
             </div>
 
-            <div class="navbar-nav" style="margin-left: 7px;">
+           <div class="navbar-nav" style="margin-left: 7px;">
               <% Spree::Taxonomy.all.each_with_index do |taxonomy, index| %>
                 <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-                <% if index < 3 %>
+                <% if index < 5 %>
                   <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
                     <%= link_to "/t/#{taxonomy_permalink}" do %>
                       <span class="taxonomy-name"><%= taxonomy.name %></span>
@@ -215,7 +215,7 @@
                               <% taxonomy.root.children.each do |parent_taxon| %>
                                 <div class="col-md-5">
                                 <% parent_permalink = parent_taxon&.permalink%>
-                                  <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
+                                  <%= link_to "/t/#{parent_permalink}", style:"color: #1E396B;" do %>
                                     <%= parent_taxon.name %>
                                   <%end%>
                                   <div class="child-taxons">
@@ -230,30 +230,33 @@
                               <% end %>
                             </div>
                           </div>
-                          <div class="col-lg-4 d-flex justify-content-center align-items-center">  
+                          <div class="col-lg-4 d-flex justify-content-center align-items-center">
                             <% if taxonomy.icon.attached? %>
                               <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
                             <% end %>
-                          </div>  
+                          </div>
                         </div>
                       </div>
-                    <% end %>  
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>
-                <div class="nav-item nav-link nav-gap ctg-list-text text-white taxonomy-dropdown-hover">
+              <div class="nav-item nav-link nav-gap ctg-list-text text-white taxonomy-dropdown-hover">
+                <% taxonomies = Spree::Taxonomy.all %>
+                <% if taxonomies.size > 5 %>
                   <span class="taxonomy-name">More <i class="fas fa-angle-down"></i></span>
                   <div class="more-submenu">
                     <div class="dropdown-wrapper">
-                      <% Spree::Taxonomy.all.drop(3).each do |taxonomy| %>
-                        <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                      <% taxonomies.drop(5).each do |taxonomy| %>
+                        <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink %>
                         <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link py-3" do %>
-                          <div class="py-2" style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></div>
-                        <%end%>
+                          <div class="py-2" style="margin-left: 8px; color: #3F3B3B;"><%= taxonomy.name %></div>
+                        <% end %>
                       <% end %>
                     </div>
                   </div>
-                </div>
+                <% end %>
+              </div>
             </div>
         </div>
         <div class="navbar-nav" style="margin-right: 26px">
