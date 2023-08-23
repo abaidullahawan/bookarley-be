@@ -529,14 +529,16 @@
 <%= render 'layouts/login_modal' %>
 
 <div class="mobile-sidebar" id="mobile-sidebar">
-  <div class="d-flex">
-    <div class="d-flex justify-content-right sidebar-user mb-5">
-      <%= image_tag("user_profile_icon.png", alt: "Logo", width: 40) %>
-    </div>
-    <div class="d-flex justify-content-center align-items-center" style="font-size: 1.5em; padding: 15px; color: white; font-weight: 400;">
-      <div><%= spree_current_user.email %></div>
-    </div>
-  </div>  
+  <% if spree_current_user %>
+    <div class="d-flex">
+      <div class="d-flex justify-content-right sidebar-user mb-5">
+        <%= image_tag("user_profile_icon.png", alt: "Logo", width: 40) %>
+      </div>
+      <div class="d-flex justify-content-center align-items-center" style="font-size: 1.5em; padding: 15px; color: white; font-weight: 400;">
+        <div><%= spree_current_user.email %></div>
+      </div>
+    </div>  
+  <% end %>
   <div class="mx-3">
     <div class="sidebar-content">
       <% Spree::Taxonomy.all.each do |taxonomy| %>
