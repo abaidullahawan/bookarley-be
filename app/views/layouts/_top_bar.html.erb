@@ -318,11 +318,11 @@
   }
 
   .mobile-sidebar {
-    width: 250px;
+    width: 280px;
     height: 100%;
     position: fixed;
-    left: -250px;
-    background-color: #f8f9fa;
+    left: -280px;
+    background: linear-gradient(to bottom, #1c396b 30%, white 30%);
     transition: left 0.3s ease-in-out;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     z-index: 9;
@@ -335,8 +335,92 @@
   }
 
   .no-scroll {
-      overflow: hidden;
+    overflow: hidden;
   }
+.sidebar-content {
+  max-height: calc(80vh - 70px);
+  overflow-y: auto;
+  border-radius: 10px;
+}
+
+
+/* Taxonomy Dropdown styles */
+.taxonomy-dropdown-toggle {
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  align-items: center;
+  color: #232020;
+  font-weight: 400;
+  font-size: 1.01em;
+}
+
+.taxonomy-dropdown-toggle i {
+  transition: transform 0.3s;
+}
+
+.parent-taxon-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.parent-taxon-list {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+/* Parent Taxon styles */
+.parent-taxon-item {
+  list-style: none;
+  border-left: 5px solid orange;
+  color: #232020;
+  font-weight: 400;
+  font-size: 1.01em;
+
+}
+
+.child-taxon-item {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.child-taxon-item a{
+  text-decoration: none;
+  color: #232020;
+  font-weight: 400;
+  font-size: 1.01em;
+}
+
+.child-taxon-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  padding-left: 10px;
+}
+
+.child-taxon-list {
+  margin-top: 5px;
+}
+
+/* Show dropdowns when toggled */
+.show {
+  max-height: 1000px;
+}
+.sidebar-user{
+  width: 60px;
+  height: 54px;
+  padding: 10px;
+  background: #f6f6f6;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-radius: 50%;
+
+}
 
 
 </style>
@@ -422,8 +506,8 @@
                 </div>
                 <hr style="color: #b5b1b1;">
                 <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
-                <%= link_to raw('<i class="fas fa-store profile-icons"></i> Become a Seller'), "admin/stores", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "/admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                <%= link_to raw('<i class="fas fa-store profile-icons"></i> Become a Seller'), "/admin/stores", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
                 <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
               </div>
           </div>
@@ -445,14 +529,70 @@
 <%= render 'layouts/login_modal' %>
 
 <div class="mobile-sidebar" id="mobile-sidebar">
-    <div class="d-flex justify-content-center">
-      <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80, class:"mt-5") %>
+  <div class="d-flex">
+    <div class="d-flex justify-content-right sidebar-user mb-5">
+      <%= image_tag("user_profile_icon.png", alt: "Logo", width: 40) %>
     </div>
-    <div class="p-3">
-      <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+    <div class="d-flex justify-content-center align-items-center" style="font-size: 1.5em; padding: 15px; color: white; font-weight: 400;">
+      <div><%= spree_current_user.email %></div>
     </div>
+  </div>  
+  <div class="mx-3">
+    <div class="sidebar-content">
+      <% Spree::Taxonomy.all.each do |taxonomy| %>
+        <div class="taxonomy-item">
+          <button class="taxonomy-dropdown-toggle" onclick="toggleTaxonomy(this)">
+            <% if taxonomy.icon.attached? %>
+              <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 20px; margin-right: 6px;")) %>
+            <% end %>
+            <span><%= taxonomy.name %></span>
+            <span style="float: right;"><i class="fas fa-chevron-right"></i></span>
+          </button>
+          
+          <div class="parent-taxon-dropdown">
+            <% parent_taxons = taxonomy.root.children %>
+            <% if parent_taxons.any? %>
+              <ul class="parent-taxon-list">
+                <% parent_taxons.each do |parent_taxon| %>
+                  <li class="parent-taxon-item">
+                    <button class="taxonomy-dropdown-toggle" onclick="toggleTaxonomy(this)">
+                      <span><%= parent_taxon.name %></span>
+                      <span style="float: right;"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <div class="child-taxon-dropdown">
+                      <% child_taxons = parent_taxon.children %>
+                      <% if child_taxons.any? %>
+                        <ul class="child-taxon-list">
+                          <% child_taxons.each do |child_taxon| %>
+                            <li class="child-taxon-item">
+                              <%= link_to "/t/#{child_taxon.permalink}" do %>
+                                <%= child_taxon.name %>
+                              <% end %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      <% end %>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
 
+<script>
+  function toggleTaxonomy(button) {
+    const parentTaxonDropdown = button.nextElementSibling;
+    parentTaxonDropdown.classList.toggle("show");
+    const icon = button.querySelector("i");
+    icon.classList.toggle("fa-chevron-right");
+    icon.classList.toggle("fa-chevron-down");
+  }
+</script>
 <script>
   function ctgDropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -499,7 +639,7 @@
 
       sidebarToggle.addEventListener("click", function() {
         sidebar.classList.toggle("active");
-        body.classList.toggle("no-scroll"); // Add or remove "no-scroll" class
+        body.classList.toggle("no-scroll");
       });
   });
 

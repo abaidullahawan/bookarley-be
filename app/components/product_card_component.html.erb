@@ -1,24 +1,73 @@
-<li class="product-card card shadow w-100 my-2">
-  <article>
-    <section class="product-card_image position-relative">
-      <%= link_to product_path(product), itemprop: 'url' do %>
-        <%= render(ImageComponent.new(image: main_image, size: :small, itemprop: "image", class: "card-img-top")) %>
-      <% end %>
-      <a href="#!" class="btn btn-light border icon-hover px-2 pt-2 m-2 position-absolute top-0 end-0"><i class="fas fa-heart fa-lg text-secondary px-1"></i></a>
-    </section>
-    <header class="product-card_header card-body d-flex flex-column">
-      <h5 class="card-title">
-        <%= link_to truncate(product.name, length: 50), product_path(product), class: 'info text-dark', itemprop: "name", style:"text-decoration: none;", title: product.name %>
-      </h5>
-    </header>
-    <section class="product-card_price card-footer align-items-end p-3 mt-auto" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-      <% if display_price %>
-        <div class="price selling" itemprop="price" content="<%= display_price.to_d %>">
-          <%= display_price.to_html %>
+<style>
+  .dot {
+    height: 7px;
+    width: 7px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    background-color: darkblue;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .bg-image{
+    height: 25vh;
+  }
+  .bg-image a img{
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<div>
+  <div class="card" style="border-radius: 15px;">
+    <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+      data-mdb-ripple-color="light">
+        <%= link_to product_path(product), itemprop: 'url' do %>
+          <%= render(ImageComponent.new(image: main_image, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"img-fluid", alt:"Laptop")) %>
+        <% end %>
+      <a href="#!">
+        <div class="mask"></div>
+      </a>
+    </div>
+    <div class="card-body pb-0">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h5><%= product.name  %></h5>
+          <div class="d-flex flex-row">
+            <div class="dot"></div>
+            <div class="mt-1 mb-1 spec-1">
+              <% product.stores.each do |store| %>
+                <%= store.name %>
+              <% end %>
+            </div>
+          </div>
         </div>
-        <div itemprop="priceCurrency" content="<%= display_price.currency %>"></div>
-      <% end %>
-      <a href="#!" class="btn btn-primary shadow-none mr-1 mt-3 px-5"><i class="fas fa-shopping-cart text-light px-2"></i>Add to cart</a>
-    </section>
-  </article>
-</li>
+      </div>
+    </div>
+    <hr class="my-0" />
+    <div class="card-body pb-0">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <h5 class="large text-muted">$ <%= product.price %></h5>
+      </div>
+    </div>
+    <hr class="my-0" />
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+        <svg class="h-6 w-6 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height: 20px; width: 20px;">
+            <path d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z"></path>
+        </svg>
+        <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+          View
+        <% end %>  
+      </div>
+    </div>
+  </div>
+</div>
+      

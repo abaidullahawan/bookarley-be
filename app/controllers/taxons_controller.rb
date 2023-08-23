@@ -8,8 +8,11 @@ class TaxonsController < StoreController
   respond_to :html
 
   def show
-    @searcher = build_searcher(params.merge(taxon: @taxon.id, include_images: true))
-    @products = @searcher.retrieve_products
+    @products = @taxon.products.includes(:variants_including_master, :taxons)
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   private
