@@ -39,7 +39,7 @@ class TaxonsTreeComponent < ViewComponent::Base
         css_class = 'current' if current_taxon&.self_and_ancestors&.include?(taxon)
 
         content_tag :li, class: css_class do
-          link_to(taxon.name, helpers.taxon_seo_url(taxon)) +
+          checkbox_and_link(taxon) +
             tree(root_taxon: taxon, base_class: nil, max_level: max_level - 1)
         end
       end
@@ -47,4 +47,13 @@ class TaxonsTreeComponent < ViewComponent::Base
       safe_join(taxons, "\n")
     end
   end
+
+  def checkbox_and_link(taxon)
+    checkbox = check_box_tag("taxon_ids[]", taxon.id, current_taxon&.self_and_ancestors&.include?(taxon))
+    link = link_to(taxon.name, helpers.taxon_seo_url(taxon))
+
+    safe_join([checkbox, link], " ")
+  end
+
+
 end

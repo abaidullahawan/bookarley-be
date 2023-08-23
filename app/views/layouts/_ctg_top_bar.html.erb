@@ -250,7 +250,7 @@
                       <% taxonomies.drop(5).each do |taxonomy| %>
                         <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink %>
                         <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link py-3" do %>
-                          <div class="py-2" style="margin-left: 8px; color: #3F3B3B;"><%= taxonomy.name %></div>
+                          <div class="py-2" style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></div>
                         <% end %>
                       <% end %>
                     </div>

@@ -24,10 +24,16 @@
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-turbo="false">
     <%= render 'layouts/header', taxons: @taxons, taxon: @taxon %>
     <%= flash_messages %>
-    <%= render BreadcrumbsComponent.new(@taxon) %>
-    <main>
-      <%= yield %>
-    </main>
+    <%# <%= render BreadcrumbsComponent.new(@taxon) %>
+    <% if request.path.start_with?('/t') || request.path.start_with?('/products') %>
+      <main style="background: #eef0f2;">
+        <%= yield %>
+      </main>
+    <% else %>
+      <main>
+        <%= yield %>
+      </main>
+    <% end %>
     <%= render 'layouts/footer' %>
   </body>
 </html>
