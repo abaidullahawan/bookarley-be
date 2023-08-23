@@ -378,41 +378,18 @@
 
 
 /* unique venue card style  */
-
 .Unique-Venues-container{
   margin-top: 5%;
-}
-.Unique-Venues-container ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left: 0;
-    list-style: none;
-    flex-wrap: wrap;
-}
-.card img{
-  height: 200px !important;
-}
-
-.Unique-Venues-container .card{
-  width: 300px;
-}
-
-.Unique-Venues-container .card a {
-    color: black;
-    text-decoration: none;
+  margin-bottom: 5%;
 }
 
  .image-container {
     overflow: hidden;
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 70%; /* Maintain aspect ratio */
   }
 
   .image-container img {
-    width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
@@ -423,13 +400,78 @@
   }
 
 @media screen and (max-width: 767px){
-  .Unique-Venues-container .card{
-  width: auto;
+ .image-container img {
+    width: 100%;
 }
- .image-container {
-    padding-bottom: 45%; /* Maintain aspect ratio */
+
+.vendor-li {
+    width: calc(427% / var(--visible-slides));
+}
+}
+@media screen and (max-width: 575px){
+.unique-vanue-card {
+      margin: 0px 15px;
   }
+
+  .vender-cards .col-lg-4 {
+padding: 0px 20px;
+  }
+  .static-text-card{
+    padding: 20px 20px 0px 20px;
+  }
+  .section-title {
+    padding-left: 20px;
+    padding-right: 20px;
 }
+}
+
+@media (max-width: 499px){
+
+.vendor-ul {
+    padding-left: 80px !important;
+    padding-right: 80px !important;
+}
+.vendor-slider {
+    margin: 0px 20px 0px 0px;
+}
+}
+
+  .unique-vanue-card {
+      position: relative;
+      box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
+      border: 0.5px solid #e2e1e1;
+      height: 100%;
+  }
+  .unique-vanue-card a{
+    text-decoration: none;
+  }
+
+  .unique-vanue-tumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0; 
+      background: white;
+      overflow: hidden;
+  }
+
+  .unique-vanue-des {
+      padding: 20px;
+      background-color: white;
+  }
+
+    .unique-vanue-des h4 {
+    text-align: center;
+    color: black;
+    padding-bottom: 10px;
+  }
+  .unique-vanue-des p {
+      font-size: 15px;
+      line-height: 22px;
+      color: black;
+  }
+
+
 </style>
 
 <div class="mt-5">
@@ -507,14 +549,14 @@
       </div>
     </header>
 
-    <div class="row">
+    <div class="row vender-cards">
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <div class="box">
           <%= image_tag("search.png", alt: "Logo", width: 100) %>
           <h3>Browse Categories</h3>
           <p>Check out the best suited Venues & Vendors, compare photos, special offers and function packages.</p>
         </div>
-      </div>
+      </div >
 
       <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
         <div class="box">
@@ -522,7 +564,7 @@
           <h3>Request Quotes</h3>
           <p>Get custom quotes of your short-listed Venues at the click of GET FREE QUOTES button.</p>
         </div>
-      </div>
+      </div >
 
       <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
         <div class="box">
@@ -544,7 +586,7 @@
           <%= image_tag("venue-back.png", alt: "Logo", style:"width: 100%;") %>
         </div>
       </div>
-      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center">
+      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center static-text-card">
         <div>
           <h1 class="mb-4" style="color: #1e396b; font-weight: 550; font-size: 30px;">Events & Wedding Venues across Pakistan</h1>
           <p style="    
@@ -601,7 +643,7 @@
           <%= image_tag("invite-img.png", alt: "Logo", style:"width: 100%;") %>
         </div>
       </div>
-      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center">
+      <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center static-text-card">
         <div>
           <h1 class="mb-4" style="color: #1e396b; font-weight: 550; font-size: 30px;">Design Your Digital Invitations</h1>
           <p style="    
@@ -626,32 +668,42 @@
     making it a reflection of the significance and magic of the day.</p>
   </div>
   <%# card box  %>
-  <ul>
- <% Spree::Taxonomy.where(name: "Venues").each do |taxonomy| %>
-  <% taxonomy.root.children.where(name: "Unique Venues").each do |parent_taxon| %>
-    <ul>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" style="margin-bottom: 80px;">
+  <% Spree::Taxonomy.where(name: "Venues").each do |taxonomy| %>
+    <% taxonomy.root.children.where(name: "Unique Venues").each do |parent_taxon| %>
       <% parent_taxon.children.each do |child_taxon| %>
-        <li class="card m-2 shadow">
-         <%child_permalink = child_taxon&.permalink%>
-      <%= link_to "/t/#{child_permalink}" do %>
-          <div>
-            <% if child_taxon&.icon&.attached? %>
-               <div class="image-container">
-          <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image")) %>
-        </div>
-            <% end %>
-            <div class="card-body">
-              <h4 class="d-flex justify-content-center pb-3 " style="font-size: 1.9em; font-weight: 500;"><%= child_taxon.name %></h4>
-              <p class="d-flex justify-content-center text-center" style="font-size: 1.3em; font-weight: 400;"><%= child_taxon.description %></p>
+        <div class="col">
+
+          <div class="unique-vanue-card">
+           <% child_permalink = child_taxon&.permalink %>
+              <%= link_to "/t/#{child_permalink}" do %>
+            <div class="unique-vanue-tumb">
+            
+              <% if child_taxon&.icon&.attached? %>
+              <div class="image-container">
+                <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image")) %>
+                </div>
+              <% end %>
             </div>
+            <div class="unique-vanue-des">
+              <h4 class="d-flex justify-content-center " style="font-size: 1.9em; font-weight: 500;">
+                <%= child_taxon.name %>
+              </h4>
+              <div class="unique-v-bottom-details">
+                <p class="d-flex justify-content-center text-center" style="font-size: 1.3em; font-weight: 400;">
+                  <%= child_taxon.description %>
+                </p>
+              </div>
+            </div>
+<%end%>
+
           </div>
-        <%end%>
-        </li>
+        </div>
       <% end %>
-       <% end %>
-<% end %>
-    </ul>
-</ul>
+    <% end %>
+  <% end %>
+</div>
+
 </div>
 <%# unique vaneus section end  %>
 
