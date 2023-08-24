@@ -454,7 +454,7 @@
                   </div>
                   <hr style="color: #b5b1b1;">
                   <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                  <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
+                  <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
                   <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
                 </div>
             </div>
@@ -497,19 +497,19 @@
           </div>
           
           <div class="register-profile-dropdown-mobile">
-              <div class="register-dropdown-content-mobile shadow" id="registerDropdownContent">
-                <div class="d-flex justify-content-center">
-                  <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
-                </div>
-                <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
-                  <div><%= spree_current_user.email %></div>
-                </div>
-                <hr style="color: #b5b1b1;">
-                <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                <%= link_to raw('<i class="fas fa-cogs profile-icons"></i> Admin Dashboard'), "/admin/orders", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
-                <%= link_to raw('<i class="fas fa-store profile-icons"></i> Become a Seller'), "/admin/stores", class: 'text-dark mb-3', style: "font-size: 1.1em;" %>
-                <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
+            <div class="register-dropdown-content-mobile shadow" id="registerDropdownContent">
+              <div class="d-flex justify-content-center">
+                <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
               </div>
+              <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
+                <div><%= spree_current_user.email %></div>
+              </div>
+              <hr style="color: #b5b1b1;">
+              <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
+              <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+              <a href="/admin/stores" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-store profile-icons"></i> Become a Seller </a>
+              <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
+            </div>
           </div>
         <% else %>
           <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
