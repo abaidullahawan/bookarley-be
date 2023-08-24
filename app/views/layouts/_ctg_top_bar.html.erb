@@ -201,7 +201,7 @@
            <div class="navbar-nav" style="margin-left: 7px;">
               <% Spree::Taxonomy.all.each_with_index do |taxonomy, index| %>
                 <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-                <% if index < 5 %>
+                <% if index < 4 %>
                   <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
                     <%= link_to "/t/#{taxonomy_permalink}" do %>
                       <span class="taxonomy-name"><%= taxonomy.name %></span>
@@ -243,11 +243,11 @@
               <% end %>
               <div class="nav-item nav-link nav-gap ctg-list-text text-white taxonomy-dropdown-hover">
                 <% taxonomies = Spree::Taxonomy.all %>
-                <% if taxonomies.size > 5 %>
+                <% if taxonomies.size >= 4 %>
                   <span class="taxonomy-name">More <i class="fas fa-angle-down"></i></span>
                   <div class="more-submenu">
                     <div class="dropdown-wrapper">
-                      <% taxonomies.drop(5).each do |taxonomy| %>
+                      <% taxonomies.drop(4).each do |taxonomy| %>
                         <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink %>
                         <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link py-3" do %>
                           <div class="py-2" style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></div>

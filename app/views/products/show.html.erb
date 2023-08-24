@@ -1,24 +1,55 @@
+<style>
+ .product-padding{
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: 45px;
+  padding-right: 45px;
+ }
+
+ .shadow-start {
+    box-shadow: 15px 0 0px -15px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
+  }
+
+</style>
+
 <% @body_id = 'product-details' %>
-
 <% cache [I18n.locale, current_pricing_options, @product] do %>
-  <article class="product-page" itemscope itemtype="http://schema.org/Product">
-    <div class="product-page-row">
-      <div class="product-page__images">
-        <%= render 'product_image', product: @product %>
-        <%= render 'product_thumbnails', product: @product %>
-      </div>
+    <div class="row shadow m-0" style="padding: 45px;">
+      <aside class="col-lg-6 bg-white shadow-start product-padding d-flex justify-content-center align-items-center" style="margin-bottom: 0px; border-left: 15px solid orange;">
+        <div class="row w-100">
+          <div class="col-md-3">
+            <%= render 'product_thumbnails', product: @product %>
+          </div>
+          <div class="col-md-9">
+            <%= render 'product_image', product: @product %>
+          </div>
+        </div>
+      </aside>
+      <main class="col-lg-6 bg-white shadow-start product-padding d-flex justify-content-center">
+        <div class="ps-lg-3">
+          <%= render 'product_header', product: @product %>
 
-      <div class="product-page__info">
-        <%= render 'product_header', product: @product %>
-        <%= render 'product_promotions', product: @product %>
-        <%= render 'cart_line_items/form', product: @product %>
-        <%= render 'product_taxons', product: @product %>
-      </div>
-    </div>
+          <div class="row mt-4 mb-4">
+            <dt class="col-3 mb-2 h4">Stores:</dt>
+            <dd class="col-9">
+              <% @product.stores.each do |store| %>
+                <span class="px-3 py-2 text-dark mr-3 p" style="background: #e0dfdf; border-radius: 10px;"><%= store.name %></span>
+              <% end %>
+            </dd>
 
-    <div class="product-page-row">
-      <%= render 'product_info', product: @product %>
-      <%= render 'product_properties', product_properties: @product_properties %>
+            <dt class="col-3 pt-5">Created at</dt>
+            <dd class="col-9 pt-5"><%= @product.created_at %></dd>
+
+            <dt class="col-3 pt-3">Updated at</dt>
+            <dd class="col-9 pt-3"><%= @product.updated_at %></dd>
+
+          </div>
+
+          <hr />
+
+          <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-heart fa-lg"></i> Add to Favourites </a>
+          <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-phone fa-lg"></i> Call Now </a>
+        </div>
+      </main>
     </div>
-  </article>
 <% end %>

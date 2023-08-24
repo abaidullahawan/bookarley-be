@@ -1,7 +1,8 @@
-<picture class="product-image">
+<picture class="product-image w-100">
   <%= render(ImageComponent.new(
     image: product.gallery.images.first,
     size: :product,
+    class: "w-100",
     itemprop: "image",
     data: { js: 'product-main-image' }
   )) %>

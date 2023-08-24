@@ -1,10 +1,16 @@
+<style>
+  .product-thumbnails__all img{
+    width: 100%;
+  }
+</style>
+
 <ul class="product-thumbnails">
   <% product.gallery.images.each do |image| %>
     <% next if image.viewable_id != product.master.id %>
 
     <%= content_tag(
       :li,
-      class: 'product-thumbnails__all',
+      class: 'product-thumbnails__all w-100 card p-2 mb-3',
       data: { js: 'product-thumbnail', js_id: image.viewable_id }
     ) do %>
       <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
