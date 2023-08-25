@@ -25,9 +25,13 @@
     border-radius: 5px;
   }
   .side-margin{
-    margin-right: 15px;
+    margin: 0px 15px;
   }
-
+@media screen and (max-width: 899px){
+  .side-margin{
+    margin-bottom: 30px;
+  }
+}
 
 
 </style>
@@ -63,7 +67,8 @@
     <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
     <%= render 'shared/search/filters', taxon: @taxon %>
   </aside>
-  <section style="min-width: 88rem;">
+  <section>
     <%= render 'products/products_grid', products: @products, taxon: @taxon %>
-  </section>
+  </section> 
 </div>
+
