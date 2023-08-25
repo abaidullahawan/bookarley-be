@@ -9,7 +9,30 @@
  .shadow-start {
     box-shadow: 15px 0 0px -15px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
   }
+.similar_product_img{
+  width: 100%;
+  height: 200px;
+}
 
+.products.title {
+    padding-bottom: 0px !important;
+    padding-left: 50px !important;
+    position: relative;
+}
+
+.products.similar_products {
+    padding-top: 4rem !important;
+}
+
+.products.title h2::before {
+    content: "";
+    position: absolute;
+    height: 5px;
+    width: 100px;
+    background: orange;
+    top: auto;
+    bottom: -5px;
+}
 </style>
 
 <% @body_id = 'product-details' %>
@@ -53,3 +76,66 @@
       </main>
     </div>
 <% end %>
+
+<div class="products title">
+<h2>Similar Products</h2>
+</div>
+<div class="products similar_products">
+
+  <% @similar_products = @product.taxons.where(parent_id: nil).first %>
+  <div class="products-grid">
+  <% @similar_products.products.each do |similar_product| %>
+<div class="card" style="border-radius: 15px;">
+    <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+      data-mdb-ripple-color="light">
+      
+        <%= link_to product_path(similar_product), itemprop: 'url' do %>
+           <%= render(ImageComponent.new(image: similar_product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"Laptop")) %>
+        <% end %>
+      <a href="#!">
+        <div class="mask"></div>
+      </a>
+    </div>
+    <div class="card-body pb-0">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h5><%= similar_product.name  %></h5>
+          <div class="d-flex flex-row">
+            <div class="dot"></div>
+            <div class="mt-1 mb-1 spec-1">
+              <% similar_product.stores.each do |store| %>
+                <%= store.name %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-0" />
+    <div class="card-body pb-0">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+        <h5 class="large text-muted">$ <%= similar_product.price %></h5>
+      </div>
+    </div>
+    <hr class="my-0" />
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+        <svg class="h-6 w-6 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height: 20px; width: 20px;">
+            <path d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z"></path>
+        </svg>
+        <%= link_to product_path(similar_product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+          View
+        <% end %>  
+      </div>
+    </div>
+  </div> 
+  <% end%>
+  </div>
+  </div>

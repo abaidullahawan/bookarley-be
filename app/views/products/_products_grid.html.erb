@@ -13,6 +13,22 @@
     color: white;
     font-weight: bold;
   }
+
+.empty-product{
+  padding-left: 150px;
+}
+.empty-product img{
+  width: 320px;
+}
+@media screen and (max-width: 599px){
+  .empty-product{
+  padding-left: 0px;
+}
+.empty-product img{
+  width: 150px;
+}
+}
+
 </style>
 
 <div class="products-grid">
@@ -27,12 +43,12 @@
       <% end %>
     <% end %>
   <% else %>  
-    <div class="d-flex justify-content-center mb-5" style="margin-left: 275px;">
-      <%= image_tag("noproduct.png", alt: "Logo", width: 320, style:"margin-top: 70px; ") %>
+    <div class="d-flex justify-content-center mb-5 empty-product">
+      <%= image_tag("noproduct.png", alt: "Logo", style:"margin-top: 70px; ") %>
     </div>
   <% end %>
 </div>
 
-<div class="mt-5" style="padding-left: 3rem;">
+<div class="mt-5 px-5">
   <div class="paginate-text">Showing Total <span class="paginate-value"><%= products.size %></span> Items</div>
 </div>
