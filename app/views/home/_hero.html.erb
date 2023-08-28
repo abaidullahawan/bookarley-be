@@ -641,7 +641,7 @@ padding: 0px 20px;
     <div class="row content">
       <div class="col-lg-6">
         <div class="d-flex justify-content-center align-items-center">
-          <%= image_tag("invite-img.png", alt: "Logo", style:"width: 100%;") %>
+          <%= image_tag("invite_img.png", alt: "Logo", style:"width: 80%;") %>
         </div>
       </div>
       <div class="col-lg-6 pt-4 pt-lg-0 d-flex justify-content-center align-items-center static-text-card">
@@ -653,7 +653,9 @@ padding: 0px 20px;
           >
             Bring Together Your Dear Ones to Mark Important Life Events!
           </p>
-          <a href="#" class="btn-learn-more mt-4">Start Your Journey</a>
+          <%= link_to invitation_cards_path, class:"btn-learn-more mt-4" do %>
+            Start Your Journey
+          <% end %>  
         </div>  
       </div>
     </div>

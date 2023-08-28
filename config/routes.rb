@@ -2,6 +2,14 @@ Rails.application.routes.draw do
   mount SolidusStripe::Engine, at: '/solidus_stripe'
   root to: 'home#index'
 
+  resources :invitation_cards do
+    member do
+      get 'add_text'
+      post 'save_image'
+      post 'save_template' # Add this line for saving the template
+    end
+  end
+
   devise_for(:user, {
     class_name: 'Spree::User',
     singular: :spree_user,

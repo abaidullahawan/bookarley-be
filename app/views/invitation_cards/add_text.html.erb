@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Text to Image</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <canvas id="fabric-canvas" width="400" height="400"></canvas>
+        <button id="add-text-btn">Add Text Box</button>
+        <select id="font-select">
+          <option value="Arial">Arial</option>
+          <option value="Helvetica">Helvetica</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <!-- Add more font options as needed -->
+        </select>
+        <input type="color" id="color-picker">
+        <button id="bold-btn">Bold</button>
+        <button id="italic-btn">Italic</button>
+        <button id="save-image-btn">Save Image</button>
+        <a id="download-link" style="display: none;">Download Image</a>
+        <button id="save-template-btn">Save Template</button>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var canvas = new fabric.Canvas("fabric-canvas");
+
+      var originalImageURL = "<%= root_url + url_for(@invitation_card.image) %>"; // Use the actual URL of the image
+      var templateData = <%= @invitation_card.canvas_data.to_json.html_safe %>;
+      
+      fabric.Image.fromURL(originalImageURL, function (img) {
+        if (templateData) {
+          canvas.loadFromJSON(templateData, function () {
+            canvas.renderAll();
+            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+              scaleX: canvas.width / img.width,
+              scaleY: canvas.height / img.height
+            });
+          });
+        } else {
+          canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+            scaleX: canvas.width / img.width,
+            scaleY: canvas.height / img.height
+          });
+        }
+      });
+
+      // Retrieve font list from the system
+      var fontList = ['Arial', 'Helvetica', 'Times New Roman']; // Add more fonts
+
+      var fontSelect = document.getElementById("font-select");
+      fontList.forEach(function(font) {
+        var option = document.createElement("option");
+        option.value = font;
+        option.text = font;
+        fontSelect.add(option);
+      });
+
+      document.getElementById("add-text-btn").addEventListener("click", function () {
+        var text = new fabric.Textbox("Enter text here", {
+          left: 50,
+          top: 50,
+          width: 150,
+          fontSize: 20,
+          fontFamily: "Arial",
+          fill: "black"
+        });
+
+        canvas.add(text);
+      });
+
+      document.getElementById("font-select").addEventListener("change", function () {
+        var selectedFont = this.value;
+        var activeObject = canvas.getActiveObject();
+
+        if (activeObject && activeObject.type === "textbox") {
+          activeObject.set("fontFamily", selectedFont);
+          canvas.renderAll();
+        }
+      });
+
+      document.getElementById("color-picker").addEventListener("input", function () {
+        var selectedColor = this.value;
+        var activeObject = canvas.getActiveObject();
+
+        if (activeObject && activeObject.type === "textbox") {
+          activeObject.set("fill", selectedColor);
+          canvas.renderAll();
+        }
+      });
+
+      document.getElementById("bold-btn").addEventListener("click", function () {
+        var activeObject = canvas.getActiveObject();
+
+        if (activeObject && activeObject.type === "textbox") {
+          var fontWeight = activeObject.fontWeight === "bold" ? "normal" : "bold";
+          activeObject.set("fontWeight", fontWeight);
+          canvas.renderAll();
+        }
+      });
+
+      document.getElementById("italic-btn").addEventListener("click", function () {
+        var activeObject = canvas.getActiveObject();
+
+        if (activeObject && activeObject.type === "textbox") {
+          var fontStyle = activeObject.fontStyle === "italic" ? "normal" : "italic";
+          activeObject.set("fontStyle", fontStyle);
+          canvas.renderAll();
+        }
+      });
+
+      // Listen to selection event to update options
+      canvas.on("selection:created", function (e) {
+        var activeObject = e.target;
+        if (activeObject && activeObject.type === "textbox") {
+          document.getElementById("font-select").value = activeObject.fontFamily;
+          document.getElementById("color-picker").value = activeObject.fill;
+        }
+      });
+
+      document.getElementById("save-image-btn").addEventListener("click", function () {
+        var imageDataURL = canvas.toDataURL({
+          format: "png",
+          quality: 1
+        });
+
+        // Update the download link with the data URL
+        var downloadLink = document.getElementById("download-link");
+        downloadLink.href = imageDataURL;
+        downloadLink.download = "edited_image.png";
+        downloadLink.style.display = "block";
+
+        console.log(imageDataURL); // For demonstration purposes
+      });
+
+
+      document.getElementById("save-template-btn").addEventListener("click", function () {
+        var canvasData = JSON.stringify(canvas.toJSON());
+
+        fetch('/invitation_cards/<%= @invitation_card.id %>/save_template', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<%= form_authenticity_token %>'
+          },
+          body: JSON.stringify({ canvas_data: canvasData })
+        })
+        .then(response => {
+          // Handle the response as needed
+          console.log('Template saved successfully');
+        })
+        .catch(error => {
+          console.error('Error saving template:', error);
+        });
+      });
+      
+    });
+  </script>
+</body>
+</html>
