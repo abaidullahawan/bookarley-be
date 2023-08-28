@@ -9,7 +9,14 @@
   .product-card:hover {
     transform: scale(1.05) !important;
   }
+.product_listing{
+  height: 100%;
+}
 
+.product_listing .product-img {
+    width: 100%;
+    height: 200px;
+}
   .badge {
       position: absolute;
       left: 0;
@@ -125,48 +132,133 @@
   .product-links a:hover {
       color: #F52544;
   }
+/* view more button styling  */
+.title-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.view_more_btn{
+      display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100px;
+    align-items: center;
+
+}
+a.taxonomy-links {
+    text-decoration: none;
+    color: black;
+}
+
+.card.product_listing:hover {
+    transform: scale(1.03);
+}
+.product_row{
+  margin-bottom: 60px;
+}
+
+@media screen and (max-width: 767px){
+  .product_listing .product-img {
+    width: 100%;
+    height: 150px;
+}
+.product_row{
+  margin-bottom: 40px;
+}
+}
 
 </style>
 <%= render 'hero' %>
 
 
-<div class="container mb-5 mt-5">
-  <% displayed_products = Set.new %>
-  <% Spree::Taxonomy.all.each do |taxonomy| %>
-    <% products_present = false %>
-    <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
-      <% if taxon.products.any? %>
-        <% products_present = true %>
-        <% break %>
+<div class="container mb-5 mt-5 px-4">
+    <% displayed_products = Set.new %>
+    <% Spree::Taxonomy.all.each do |taxonomy| %>
+      <% products_present = false %>
+      <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
+        <% if taxon.products.any? %>
+          <% products_present = true %>
+          <% break %>
+        <% end %>
       <% end %>
-    <% end %>
-    
-    <% if products_present %>
-      <div class="row mb-2"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2></div>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4" style="margin-bottom: 80px;">
+      
+      <% if products_present %>
+      <div class="title-row mb-4"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2> 
+          <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
+        <% if taxon.products.count > 4 %>   
+          <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+          <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-links" do %>
+              <h4 class="view_more_btn">
+                View More
+                  <i class="fa fa-arrow-right"></i>
+              </h4>
+          <%end%>
+          <%end%>
+          <%end%>
+      </div>
+        <div class="row product_row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <% displayed_count = 0 %>
         <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
           <% taxon.products.each do |product| %>
             <% unless displayed_products.include?(product.id) %>
               <% displayed_products.add(product.id) %>
-              <div class="col">
-                <div class="product-card">
-                  <div class="product-tumb">
-                    <%= link_to product_path(product), itemprop: 'url' do %>
-                      <%= render(ImageComponent.new(image: product.images.first, size: :small, itemprop: "image", class: "card-img-top")) %>
-                    <% end %>
-                  </div>
-                  <div class="product-details">
-                    <h4><a href="<%product_path(product)%>"><%= product.name %></a></h4>
-                    <div class="product-bottom-details">
-                      <div class="product-price"><%= product.display_price.to_html %></div>
-                      <div class="product-links">
-                        <a href="#"><i class="fa fa-heart"></i></a>
-                        <a href="#"><i class="fa fa-shopping-cart"></i></a>
+              <% displayed_count += 1 %>
+              <% if displayed_count <= 4 %>
+                <div class="col">
+                  <div class="card product_listing" style="border-radius: 15px;">
+                    <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+                      data-mdb-ripple-color="light">
+                        <%= link_to product_path(product), itemprop: 'url' do %>
+                          <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"product-img", alt:"product-listing")) %>
+                        <% end %>
+                      <a href="#!">
+                        <div class="mask"></div>
+                      </a>
+                    </div>
+                    <div class="card-body pb-0">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          <h5><%= product.name  %></h5>
+                          <div class="d-flex flex-row">
+                            <div class="dot"></div>
+                            <div class="mt-1 mb-1 spec-1">
+                              <% product.stores.each do |store| %>
+                                <%= store.name %>
+                              <% end %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body pb-0">
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                          <i class="fas fa-star"></i>
+                        </div>
+                        <h5 class="large text-muted">$ <%= product.price %></h5>
+                      </div>
+                    </div>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+                        <svg class="h-6 w-6 text-white fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="height: 20px; width: 20px;">
+                            <path d="M12.76 3.76a6 6 0 0 1 8.48 8.48l-8.53 8.54a1 1 0 0 1-1.42 0l-8.53-8.54a6 6 0 0 1 8.48-8.48l.76.75.76-.75zm7.07 7.07a4 4 0 1 0-5.66-5.66l-1.46 1.47a1 1 0 0 1-1.42 0L9.83 5.17a4 4 0 1 0-5.66 5.66L12 18.66l7.83-7.83z"></path>
+                        </svg>
+                        <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+                          View
+                        <% end %>  
                       </div>
                     </div>
                   </div>
-                </div>
               </div>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>

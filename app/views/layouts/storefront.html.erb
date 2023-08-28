@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="<%= I18n.locale %>">
   <head>
+  <style>
+  
+  .flash-container div {
+    text-align: left;
+    position: relative;
+}
+span.close-flash {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: baseline;
+    color: white;
+    font-weight: 500 !important;
+    font-size: 20px;
+}
+.display_none{
+  display: none;
+}
+
+  </style>
     <meta charset="utf-8">
     <title><%= title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +43,10 @@
   </head>
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-turbo="false">
     <%= render 'layouts/header', taxons: @taxons, taxon: @taxon %>
-    <%= flash_messages %>
+   <div class="flash-container">
+  <%= flash_messages %>
+  <span class="close-flash" onclick="closeFlashMessage(this)"><i class="fa fa-times"></i></span>
+</div>
     <%# <%= render BreadcrumbsComponent.new(@taxon) %>
     <% if request.path.start_with?('/t') || request.path.start_with?('/products') %>
       <main style="background: #f3f2f0;">
@@ -36,4 +59,13 @@
     <% end %>
     <%= render 'layouts/footer' %>
   </body>
+
+
+<script>
+function closeFlashMessage(button) {
+  const flashMessage = button.closest('.flash-container');
+  flashMessage.remove();
+}
+</script>
+
 </html>
