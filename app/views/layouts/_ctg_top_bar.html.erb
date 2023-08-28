@@ -203,11 +203,18 @@
            <div class="navbar-nav" style="margin-left: 7px;">
               <% Spree::Taxonomy.all.each_with_index do |taxonomy, index| %>
                 <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                <% invitation_permalink = invitation_cards_path %>
                 <% if index < 4 %>
                   <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
-                    <%= link_to "/t/#{taxonomy_permalink}" do %>
-                      <span class="taxonomy-name"><%= taxonomy.name %></span>
-                    <%end%>
+                    <% if taxonomy.name.downcase.include?('e-invitations') %>
+                      <%= link_to invitation_permalink do %>
+                        <span class="taxonomy-name"><%= taxonomy.name %></span>
+                      <%end%>
+                    <% else %>
+                      <%= link_to "/t/#{taxonomy_permalink}" do %>
+                        <span class="taxonomy-name"><%= taxonomy.name %></span>
+                      <%end%>
+                    <% end %>  
                     <% parent_taxons = taxonomy.root.children %>
                     <% if parent_taxons.any? %>
                       <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2" style="border-radius: 2px;">
