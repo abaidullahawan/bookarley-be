@@ -556,8 +556,8 @@
           </button>
           
           <div class="parent-taxon-dropdown">
-            <% parent_taxons = taxonomy.root.children %>
-            <% if parent_taxons.any? %>
+            <% parent_taxons = taxonomy&.root&.children %>
+            <% if parent_taxons&.any? %>
               <ul class="parent-taxon-list">
                 <% parent_taxons.each do |parent_taxon| %>
                   <li class="parent-taxon-item">

@@ -516,8 +516,8 @@ padding: 0px 20px;
 		<div class="slider">
 			<ul class="slider-ul">
 				<% Spree::Taxonomy.all.each do |taxonomy| %>
-					<% taxonomy.root.children.each do |parent_taxon| %>
-						<% parent_taxon.children.each do |child_taxon| %>
+					<% taxonomy&.root&.children&.each do |parent_taxon| %>
+						<% parent_taxon&.children&.each do |child_taxon| %>
 				      <li class="slider-li d-grid">
                   <% if child_taxon&.icon&.attached? %>
                     <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", style: "width: 110px;")) %>
@@ -679,27 +679,26 @@ padding: 0px 20px;
 
           <div class="unique-vanue-card">
            <% child_permalink = child_taxon&.permalink %>
-              <%= link_to "/t/#{child_permalink}" do %>
-            <div class="unique-vanue-tumb">
-            
-              <% if child_taxon&.icon&.attached? %>
-              <div class="image-container">
-                <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image")) %>
-                </div>
-              <% end %>
-            </div>
-            <div class="unique-vanue-des">
-              <h4 class="d-flex justify-content-center " style="font-size: 1.9em; font-weight: 500;">
-                <%= child_taxon.name %>
-              </h4>
-              <div class="unique-v-bottom-details">
-                <p class="d-flex justify-content-center text-center" style="font-size: 1.3em; font-weight: 400;">
-                  <%= child_taxon.description %>
-                </p>
+            <%= link_to "/t/#{child_permalink}" do %>
+              <div class="unique-vanue-tumb">
+              
+                <% if child_taxon&.icon&.attached? %>
+                <div class="image-container">
+                  <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image")) %>
+                  </div>
+                <% end %>
               </div>
-            </div>
-<%end%>
-
+              <div class="unique-vanue-des">
+                <h4 class="d-flex justify-content-center " style="font-size: 1.9em; font-weight: 500;">
+                  <%= child_taxon.name %>
+                </h4>
+                <div class="unique-v-bottom-details">
+                  <p class="d-flex justify-content-center text-center" style="font-size: 1.3em; font-weight: 400;">
+                    <%= child_taxon.description %>
+                  </p>
+                </div>
+              </div>
+            <%end%>
           </div>
         </div>
       <% end %>

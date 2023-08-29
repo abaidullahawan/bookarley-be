@@ -177,8 +177,8 @@ a.taxonomy-links {
     <% displayed_products = Set.new %>
     <% Spree::Taxonomy.all.each do |taxonomy| %>
       <% products_present = false %>
-      <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
-        <% if taxon.products.any? %>
+      <% taxonomy&.root&.taxonomy&.taxons&.each do |taxon| %>
+        <% if taxon&.products&.any? %>
           <% products_present = true %>
           <% break %>
         <% end %>
@@ -200,8 +200,8 @@ a.taxonomy-links {
       </div>
         <div class="row product_row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
         <% displayed_count = 0 %>
-        <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
-          <% taxon.products.each do |product| %>
+        <% taxonomy&.root&.taxonomy&.taxons&.each do |taxon| %>
+          <% taxon&.products&.each do |product| %>
             <% unless displayed_products.include?(product.id) %>
               <% displayed_products.add(product.id) %>
               <% displayed_count += 1 %>
