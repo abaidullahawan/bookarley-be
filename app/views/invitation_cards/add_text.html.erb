@@ -1,166 +1,306 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Add Text to Image</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <canvas id="fabric-canvas" width="400" height="400"></canvas>
-        <button id="add-text-btn">Add Text Box</button>
-        <select id="font-select">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+<style>
+  .card-margin{
+    margin-top: 6.5%;
+    margin-bottom: 10%;
+    padding: 10px;
+  }
+  .button-border{
+    border: none; 
+    background: none; 
+    margin-right: 10px;
+  }
+  .slider-label{
+    font-size: 1.2em;
+    margin-right: 6.5px;
+    margin-top: 6.5px;
+  }
+
+  .download-btn{
+    border-radius:3px;
+    text-decoration:none;
+    font-family:sans-serif;
+    font-size:18px;
+    padding: 2px 20px;
+    background-color:#00ad25;
+    color:#fff;
+    transition-delay:.2s;
+    transition:.3s;
+    font-variant-caps:all-small-caps;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .download-btn:hover{
+    background-color:#009420;
+    box-shadow:4px 3px 11px 0 #005a13;
+  }
+
+  .save-btn{
+    border-radius:3px;
+    text-decoration:none;
+    font-family:sans-serif;
+    font-size:18px;
+    padding: 2px 20px;
+    background-color: white;
+    color: black;
+    transition-delay:.2s;
+    transition:.3s;
+    font-variant-caps:all-small-caps;
+    cursor: pointer;
+    margin-right: 10px;
+    border: 1px solid lightgray;
+  }
+  .save-btn:hover{
+    background-color: darkblue;
+    color: white;
+  }
+
+  .invite-title{
+    font-family: 'Tangerine', serif;
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: 3px;
+    color: purple;
+  }
+
+
+</style>
+
+
+<nav class="navbar navbar-light bg-white shadow py-4" style="position: fixed; z-index: 1; width: 100%;">
+  <div class="container-fluid">
+    <a class="navbar-brand h1 invite-title" href="#">E-Invitations</a>
+
+    <div class="mx-auto d-flex justify-content-center">
+      <button id="add-text-btn" class="button-border" style="margin-right: 25px;">
+        <%= image_tag("add_text.png", alt: "Logo", width: 15, style:"margin-right: 5px;") %>
+        <span class="h5 pt-3">Add Text</span>
+      </button>
+      <div style="margin-right: 25px; margin-top: 4px;">
+        <select id="font-select" class="form-control py-2 pr-5">
           <option value="Arial">Arial</option>
           <option value="Helvetica">Helvetica</option>
           <option value="Times New Roman">Times New Roman</option>
-          <!-- Add more font options as needed -->
+          <option value="monoscape">Tangerine</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Courier New">Courier New</option>
+          <option value="Garamond">Garamond</option>
+          <option value="Comic Sans MS">Comic Sans MS</option>
+          <option value="Arial Black">Arial Black</option>
+          <option value="Impact">Impact</option>
+          <option value="Palatino Linotype">Palatino Linotype</option>
+          <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
         </select>
-        <input type="color" id="color-picker">
-        <button id="bold-btn">Bold</button>
-        <button id="italic-btn">Italic</button>
-        <button id="save-image-btn">Save Image</button>
-        <a id="download-link" style="display: none;">Download Image</a>
-        <button id="save-template-btn">Save Template</button>
 
       </div>
+      <input type="color" id="color-picker" style="margin-right: 25px; margin-top: 4px;">
+      <button id="bold-btn" class="button-border">
+        <%= image_tag("bold_font.png", alt: "Logo", width: 17, style:"margin-right: 3px;") %>
+      </button>
+      <button id="italic-btn" class="button-border">
+        <%= image_tag("italic_font.png", alt: "Logo", width: 17, style:"margin-right: 2px;") %>
+      </button>
+
+      <button id="underline-btn" class="button-border">
+        <%= image_tag("underline_font.png", alt: "Logo", width: 26, style:"margin-right: 25px; margin-top: 2.5px;") %>
+      </button>
+
+      <div class="d-flex align-items-center" style="margin-right: 15px;">
+        <p class="slider-label">Letter Spacing:</p>
+        <input
+          type="range"
+          id="letter-spacing-slider"
+          min="-100"
+          max="100"
+          value="0"
+          step="1"
+        />
+      </div>
+
+      <div class="d-flex align-items-center">
+        <p class="slider-label">Opacity:</p>
+        <input
+          type="range"
+          id="opacity-slider"
+          min="0"
+          max="1"
+          value="1"
+          step="0.01"
+        />
+      </div>
+    </div>
+
+    <div class="ml-auto d-flex justify-content-center">
+      <a class="download-btn shadow-sm" id="download-link">Download</a>
+      <button class="save-btn" id="save-template-btn">Save</button>
     </div>
   </div>
+</nav>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      var canvas = new fabric.Canvas("fabric-canvas");
+<div>
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="row card-margin">
+      <canvas id="fabric-canvas" width="290" height="430" class="shadow"></canvas>
+    </div>
+  </div>
+</div>
 
-      var originalImageURL = "<%= root_url + url_for(@invitation_card.image) %>"; // Use the actual URL of the image
-      var templateData = <%= @invitation_card.canvas_data.to_json.html_safe %>;
-      
-      fabric.Image.fromURL(originalImageURL, function (img) {
-        if (templateData) {
-          canvas.loadFromJSON(templateData, function () {
-            canvas.renderAll();
-            canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-              scaleX: canvas.width / img.width,
-              scaleY: canvas.height / img.height
-            });
-          });
-        } else {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var canvas = new fabric.Canvas("fabric-canvas");
+
+    var originalImageURL = "<%= root_url + url_for(@invitation_card.image) %>"; // Use the actual URL of the image
+    var templateData = <%= @invitation_card.canvas_data.to_json.html_safe %>;
+    
+    fabric.Image.fromURL(originalImageURL, function (img) {
+      if (templateData) {
+        canvas.loadFromJSON(templateData, function () {
+          canvas.renderAll();
           canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
             scaleX: canvas.width / img.width,
             scaleY: canvas.height / img.height
           });
-        }
-      });
-
-      // Retrieve font list from the system
-      var fontList = ['Arial', 'Helvetica', 'Times New Roman']; // Add more fonts
-
-      var fontSelect = document.getElementById("font-select");
-      fontList.forEach(function(font) {
-        var option = document.createElement("option");
-        option.value = font;
-        option.text = font;
-        fontSelect.add(option);
-      });
-
-      document.getElementById("add-text-btn").addEventListener("click", function () {
-        var text = new fabric.Textbox("Enter text here", {
-          left: 50,
-          top: 50,
-          width: 150,
-          fontSize: 20,
-          fontFamily: "Arial",
-          fill: "black"
         });
-
-        canvas.add(text);
-      });
-
-      document.getElementById("font-select").addEventListener("change", function () {
-        var selectedFont = this.value;
-        var activeObject = canvas.getActiveObject();
-
-        if (activeObject && activeObject.type === "textbox") {
-          activeObject.set("fontFamily", selectedFont);
-          canvas.renderAll();
-        }
-      });
-
-      document.getElementById("color-picker").addEventListener("input", function () {
-        var selectedColor = this.value;
-        var activeObject = canvas.getActiveObject();
-
-        if (activeObject && activeObject.type === "textbox") {
-          activeObject.set("fill", selectedColor);
-          canvas.renderAll();
-        }
-      });
-
-      document.getElementById("bold-btn").addEventListener("click", function () {
-        var activeObject = canvas.getActiveObject();
-
-        if (activeObject && activeObject.type === "textbox") {
-          var fontWeight = activeObject.fontWeight === "bold" ? "normal" : "bold";
-          activeObject.set("fontWeight", fontWeight);
-          canvas.renderAll();
-        }
-      });
-
-      document.getElementById("italic-btn").addEventListener("click", function () {
-        var activeObject = canvas.getActiveObject();
-
-        if (activeObject && activeObject.type === "textbox") {
-          var fontStyle = activeObject.fontStyle === "italic" ? "normal" : "italic";
-          activeObject.set("fontStyle", fontStyle);
-          canvas.renderAll();
-        }
-      });
-
-      // Listen to selection event to update options
-      canvas.on("selection:created", function (e) {
-        var activeObject = e.target;
-        if (activeObject && activeObject.type === "textbox") {
-          document.getElementById("font-select").value = activeObject.fontFamily;
-          document.getElementById("color-picker").value = activeObject.fill;
-        }
-      });
-
-      document.getElementById("save-image-btn").addEventListener("click", function () {
-        var imageDataURL = canvas.toDataURL({
-          format: "png",
-          quality: 1
+      } else {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height
         });
-
-        // Update the download link with the data URL
-        var downloadLink = document.getElementById("download-link");
-        downloadLink.href = imageDataURL;
-        downloadLink.download = "edited_image.png";
-        downloadLink.style.display = "block";
-
-        console.log(imageDataURL); // For demonstration purposes
-      });
-
-
-      document.getElementById("save-template-btn").addEventListener("click", function () {
-        var canvasData = JSON.stringify(canvas.toJSON());
-
-        fetch('/invitation_cards/<%= @invitation_card.id %>/save_template', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': '<%= form_authenticity_token %>'
-          },
-          body: JSON.stringify({ canvas_data: canvasData })
-        })
-        .then(response => {
-          // Handle the response as needed
-          console.log('Template saved successfully');
-        })
-        .catch(error => {
-          console.error('Error saving template:', error);
-        });
-      });
-      
+      }
     });
-  </script>
-</body>
-</html>
+
+    
+
+    document.getElementById("add-text-btn").addEventListener("click", function () {
+      var text = new fabric.Textbox("Enter text here", {
+        left: 50,
+        top: 50,
+        width: 150,
+        fontSize: 20,
+        fontFamily: "Arial",
+        fill: "black"
+      });
+
+      canvas.add(text);
+    });
+
+    document.getElementById("font-select").addEventListener("change", function () {
+      var selectedFont = this.value;
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        activeObject.set("fontFamily", selectedFont);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("color-picker").addEventListener("input", function () {
+      var selectedColor = this.value;
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        activeObject.set("fill", selectedColor);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("bold-btn").addEventListener("click", function () {
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        var fontWeight = activeObject.fontWeight === "bold" ? "normal" : "bold";
+        activeObject.set("fontWeight", fontWeight);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("italic-btn").addEventListener("click", function () {
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        var fontStyle = activeObject.fontStyle === "italic" ? "normal" : "italic";
+        activeObject.set("fontStyle", fontStyle);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("underline-btn").addEventListener("click", function () {
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        var fontStyle = activeObject.underline === true ? false : true;
+        activeObject.set("underline", fontStyle);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("letter-spacing-slider").addEventListener("input", function () {
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        var letterSpacing = parseInt(this.value);
+        activeObject.set("charSpacing", letterSpacing);
+        canvas.renderAll();
+      }
+    });
+
+    document.getElementById("opacity-slider").addEventListener("input", function () {
+      var activeObject = canvas.getActiveObject();
+
+      if (activeObject && activeObject.type === "textbox") {
+        var opacity = parseFloat(this.value);
+        activeObject.set("opacity", opacity);
+        canvas.renderAll();
+      }
+    });
+
+
+
+
+    // Listen to selection event to update options
+    canvas.on("selection:created", function (e) {
+      var activeObject = e.target;
+      if (activeObject && activeObject.type === "textbox") {
+        document.getElementById("font-select").value = activeObject.fontFamily;
+        document.getElementById("color-picker").value = activeObject.fill;
+      }
+    });
+
+    document.getElementById("download-link").addEventListener("click", function () {
+      var imageDataURL = canvas.toDataURL({
+        format: "png",
+        quality: 1
+      });
+
+      var downloadLink = document.getElementById("download-link");
+      downloadLink.href = imageDataURL;
+      downloadLink.download = "<%@invitation_card.card_name%>.png";
+
+    });
+
+
+    document.getElementById("save-template-btn").addEventListener("click", function () {
+      var canvasData = JSON.stringify(canvas.toJSON());
+
+      fetch('/invitation_cards/<%= @invitation_card.id %>/save_template', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': '<%= form_authenticity_token %>'
+        },
+        body: JSON.stringify({ canvas_data: canvasData })
+      })
+      .then(response => {
+        // Handle the response as needed
+        console.log('Template saved successfully');
+      })
+      .catch(error => {
+        console.error('Error saving template:', error);
+      });
+    });
+    
+  });
+</script>

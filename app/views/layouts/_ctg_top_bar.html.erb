@@ -163,8 +163,8 @@
                           <span style="float: right;"><i class="fas fa-angle-right" style="color: #3f3b3b;"></i></span>
                         <%end%>
                         
-                        <% parent_taxons = taxonomy.root.children %>
-                        <% if parent_taxons.any? %>
+                        <% parent_taxons = taxonomy&.root&.children %>
+                        <% if parent_taxons&.any? %>
                           <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 15px;">
                             <div class="parent-taxon row">
                               <div class="col-lg-8">
