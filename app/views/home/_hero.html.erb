@@ -518,14 +518,19 @@ padding: 0px 20px;
 				<% Spree::Taxonomy.all.each do |taxonomy| %>
 					<% taxonomy&.root&.children&.each do |parent_taxon| %>
 						<% parent_taxon&.children&.each do |child_taxon| %>
-				      <li class="slider-li d-grid">
-                  <% if child_taxon&.icon&.attached? %>
-                    <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", style: "width: 110px;")) %>
+              <% child_taxon_permalink = child_taxon&.permalink %>
+                <li class="slider-li d-grid">
+                  <%= link_to "/t/#{child_taxon_permalink}", style:"text-decoration: none;" do %>
+                    <div class="d-flex justify-content-center">
+                      <% if child_taxon&.icon&.attached? %>
+                        <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", style: "width: 85px;")) %>
+                      <% end %>
+                    </div>
+                    <div class="d-flex justify-content-center text-dark" style="font-size: 1.3em;font-weight: 500;">  
+                      <%= child_taxon&.name %>
+                    </div>
                   <% end %>
-                  <div class="d-flex justify-content-center" style="font-size: 1.3em;font-weight: 500;">  
-                    <%= child_taxon&.name %>
-                  </div>
-              </li>
+                </li>
 				    <% end %>
 				  <% end %>
 				<% end %>

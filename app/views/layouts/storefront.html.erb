@@ -48,7 +48,7 @@ span.close-flash {
   <span class="close-flash" onclick="closeFlashMessage(this)"><i class="fa fa-times"></i></span>
 </div>
     <%# <%= render BreadcrumbsComponent.new(@taxon) %>
-    <% if request.path.start_with?('/t') || request.path.start_with?('/products') %>
+    <% if request.path.start_with?('/t') || request.path.start_with?('/products') || request.path.start_with?('/invitation_cards') %>
       <main style="background: #f3f2f0;">
         <%= yield %>
       </main>
