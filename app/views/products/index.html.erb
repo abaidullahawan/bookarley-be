@@ -1,18 +1,15 @@
-<div class="products">
-  <aside>
-    <% if "products" == params[:controller] && @taxon %>
-      <%= render 'shared/search/filters', taxon: @taxon %>
-    <% else %>
-      <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
-    <% end %>
+
+
+<div class="products" style="padding: 4rem 0rem !important;">
+  <aside class="bg-white side-margin side-border h-100 mr-3">
+    <div class="pt-4 pb-2 px-3">
+      <span class="h5">Filter</span>
+    </div>
+    <hr style="color: #a39c9c;">
+    <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
+    <%= render 'shared/search/filters', taxon: @taxon %>
   </aside>
-  <section class="products_section">
-    <% if params[:keywords] && @products.empty? %>
-      <h6>
-        <%= t('spree.no_products_found') %>
-      </h6>
-    <% else %>
+  <section>
       <%= render 'products', products: @products, taxon: @taxon %>
-    <% end %>
-  </section>
+  </section> 
 </div>
