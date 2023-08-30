@@ -13,8 +13,7 @@ class ProductsController < StoreController
   end
 
   def index
-    @searcher = build_searcher(params.merge(include_images: true))
-    @products = @searcher.retrieve_products
+     @products = Spree::Product.all
   end
 
   def show
@@ -42,7 +41,8 @@ class ProductsController < StoreController
     if spree_current_user.try(:has_spree_role?, "admin")
       @products = Spree::Product.with_discarded
     else
-      @products = Spree::Product.available
+      @products = Spree::Product.all
+
     end
     @product = @products.friendly.find(params[:id])
   end
