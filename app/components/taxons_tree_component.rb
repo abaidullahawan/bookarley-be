@@ -32,10 +32,10 @@ class TaxonsTreeComponent < ViewComponent::Base
   end
 
   def tree(root_taxon:, base_class:, max_level:)
-    return if max_level < 1 || root_taxon.children.empty?
+    return if max_level < 1 || root_taxon&.children&.empty?
 
     content_tag :ul, class: base_class do
-      taxons = root_taxon.children.map do |taxon|
+      taxons = root_taxon&.children&.map do |taxon|
         css_class = 'current' if current_taxon&.self_and_ancestors&.include?(taxon)
 
         content_tag :li, class: css_class do
@@ -44,7 +44,7 @@ class TaxonsTreeComponent < ViewComponent::Base
         end
       end
 
-      safe_join(taxons, "\n")
+      safe_join(taxons, "\n") rescue nil
     end
   end
 
