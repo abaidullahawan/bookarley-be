@@ -1,0 +1,41 @@
+<div class="container-fluid" style="padding: 40px;">
+  <div class="card shadow-sm">
+    <div class="card-header py-3">
+      <h4 class="mb-0">Edit Invitation Category</h4>
+    </div>
+    <div class="card-body py-5">
+      <%= form_with(model: @invitation_category, url: invitation_category_path(@invitation_category), local: true, method: :patch, multipart: true) do |form| %>
+        <div class="mb-5">
+          <%= form.label :name, class: 'form-label h5' %>
+          <%= form.text_field :name, class: 'form-control', required: true %>
+        </div>
+
+        <div class="mb-5">
+          <%= form.label :image, class: 'form-label h5' %>
+          <%= form.file_field :image, class: 'form-control', required: true %>
+        </div>
+
+        <div class="mb-5">
+          <%= form.label :parent_id, "Parent Category", class: 'form-label h5' %>
+          <div class="input-group">
+            <%= form.select :parent_id, InvitationCategory.where(parent_id: nil).map { |ic| [ic.name, ic.id] }, { include_blank: 'Select a Parent Category' }, class: 'custom-select form-control' %>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2" style="justify-content: right;">
+          <div class="d-flex">
+            <div>
+              <%= link_to invitation_cards_path, class: 'btn btn-secondary', style:"width: 100px; margin-right: 10px;" do %>
+                Cancel
+              <% end %>
+            </div>
+            <div>
+              <%= form.submit 'Update', class: 'btn btn-warning', style:"width: 100px;" %>
+            </div>
+          </div>  
+        </div>
+      <% end %>
+    </div>  
+  </div>
+</div>
+

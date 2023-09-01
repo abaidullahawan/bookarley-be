@@ -1,4 +1,67 @@
-<!-- app/views/invitation_cards/new.html.erb -->
+<style>
+  /* Initial styles */
+  .custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .invitation-dropdown {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .dropdown-toggle-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  /* Hide the checkbox */
+  .invitation-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    width: 100%;
+    z-index: 1;
+    height: 30vh;
+    overflow-y: auto
+  }
+
+  /* Show the dropdown content when the checkbox is checked */
+  .dropdown-toggle-checkbox:checked + .invitation-dropdown-content {
+    display: block;
+  }
+
+  /* Style your checkboxes and labels as needed */
+  .checkbox-container {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-container input {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+
+
+</style>
 <div class="container-fluid" style="padding: 40px;">
   <div class="card shadow-sm">
     <div class="card-header py-3">
@@ -14,6 +77,26 @@
         <div class="mb-5">
           <%= form.label :image, class: 'form-label h5' %>
           <%= form.file_field :image, class: 'form-control', required: true %>
+        </div>
+
+        <div class="mb-5">
+          <label class="form-label h5">Invitation Category</label>
+          <div class="custom-dropdown">
+            <div class="dropdown-toggle invitation-dropdown" onclick="toggleDropdown()">
+              <span class="float-left">Select Invitation Categories</span>
+              <span class="float-right"><i class="fas fa-angle-down"></i></span>
+            </div>
+            <div class="invitation-dropdown-content" id="categoryDropdown">
+              <% InvitationCategory.all.each do |category| %>
+                <label class="checkbox-container">
+                  <%= form.check_box :invitation_category_ids, { multiple: true }, category.id, nil %>
+                  <span class="checkmark"></span>
+                  <%= category.name %>
+                </label>
+              <% end %>
+            </div>
+          </div>
+          <%= form.hidden_field :invitation_category_ids, multiple: true, value: [] %>
         </div>
 
         <div class="d-flex gap-2" style="justify-content: right;">
@@ -33,3 +116,32 @@
   </div>
 </div>
 
+<script>
+  function toggleDropdown() {
+    var dropdown = document.getElementById("categoryDropdown");
+    if (dropdown.style.display === "block") {
+      dropdown.style.display = "none";
+    } else {
+      dropdown.style.display = "block";
+    }
+  }
+
+  // Add event listeners to update the selected categories
+  var checkboxes = document.querySelectorAll(".checkbox-container input[type='checkbox']");
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", updateSelectedCategories);
+  });
+
+  function updateSelectedCategories() {
+    var selectedCategories = [];
+    checkboxes.forEach(function (checkbox) {
+      if (checkbox.checked) {
+        selectedCategories.push(checkbox.value);
+      }
+    });
+
+    // Update the hidden input value with selected categories
+    var hiddenInput = document.querySelector("input#invitation_card_invitation_category_ids");
+    hiddenInput.value = selectedCategories.join(",");
+  }
+</script>

@@ -1,0 +1,74 @@
+<style>
+  table tr th, td{ 
+    text-align: center;
+  }
+
+  table tr th{ 
+    font-size: 1.3em;
+  }
+
+  table tr td{ 
+    font-size: 1.1em;
+  }
+
+
+</style>
+<div class="card shadow" style="margin-left: 30px; margin-right: 30px; margin-top: 120px; margin-bottom: 15%;">
+  <div class="card-header py-4 pl-4">
+    <h3>Invitation Categories</h3>
+  </div>
+  <div class="p-4">
+    <div>
+      <%= link_to new_invitation_category_path, class:"btn btn-lg btn-success mt-3" do %>
+        <i class="fa fa-plus" style="margin-right: 4px;"></i>Create
+      <% end %>
+    </div>
+    <table class="table mt-3">
+      <thead class="table-primary">
+        <tr>
+          <th class="py-3" scope="col">ID</th>
+          <th class="py-3" scope="col">Image</th>
+          <th class="py-3" scope="col">Title</th>
+          <th class="py-3" scope="col">Total Cards</th>
+          <th class="py-3" scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @invitation_categories.where(parent_id: nil).each do |invitation_category| %>
+        <tr>
+          <th scope="row"><%= invitation_category.id %></th>
+          <td>
+            <% if invitation_category.image.present? %>
+              <%= image_tag(invitation_category.image, width: 50, style:"border-radius: 15px;") %>
+            <% end %>          
+          </td>
+          <td><%= invitation_category.name %></td>
+          <td><%= invitation_category.invitation_cards.count %></td>
+          <td>
+            <%= link_to edit_invitation_category_path(invitation_category), class:"btn btn-lg btn-primary mt-3" do %>
+              Edit
+            <% end %>
+          </td>
+        </tr>
+        <% @invitation_categories&.where(parent_id: invitation_category.id)&.each do |invitation_sub_category| %>
+          <tr style="background: lightgray;">
+            <th scope="row"><%= invitation_sub_category.id %></th>
+            <td>
+            <% if invitation_sub_category.image.present? %>
+              <%= image_tag(invitation_sub_category.image, width: 50, style:"border-radius: 15px;") %>
+            <% end %>
+            </td>
+            <td><%= invitation_sub_category.name %></td>
+            <td><%= invitation_sub_category.invitation_cards.count %></td>
+            <td>
+              <%= link_to edit_invitation_category_path(invitation_sub_category), class:"btn btn-lg btn-primary mt-3" do %>
+                Edit
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>  
+      </tbody>
+    </table>
+  </div>
+</div>
