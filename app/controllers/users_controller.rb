@@ -30,6 +30,7 @@ class UsersController < StoreController
   end
 
   def update
+    @user = Spree::User.find(params[:id])
     load_object
     if @user.update(user_params)
       spree_current_user.reload
@@ -49,10 +50,14 @@ class UsersController < StoreController
     end
   end
 
+  def seller_information
+    @user = spree_current_user    
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(Spree::PermittedAttributes.user_attributes | [:email])
+  params.require(:user).permit(Spree::PermittedAttributes.user_attributes | [:email, :fill_name, :date_of_birth, :gender, :profile_picture, :location, :contact_information, :bio])
   end
 
   def load_object
