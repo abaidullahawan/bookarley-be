@@ -194,14 +194,16 @@
         </ol>
       </nav>
     </div>
-    <div class="col-md-4 d-flex align-items-center justify-content-end">
-      <%= link_to invitation_categories_path, class:"btn px-5", style:"background: #1e396b; color: white; margin-right: 12px;" do %>
-        <i class="fa fa-card" style="margin-right: 5px;"></i>Invitation Card Categories
-      <% end %>
-      <%= link_to new_invitation_card_path, class:"btn px-5", style:"background: green; color: white;" do %>
-        <i class="fa fa-plus" style="margin-right: 5px;"></i>Create
-      <% end %>
-    </div>
+    <% if spree_current_user && spree_current_user.admin? %>
+      <div class="col-md-4 d-flex align-items-center justify-content-end">
+        <%= link_to invitation_categories_path, class:"btn px-5", style:"background: #1e396b; color: white; margin-right: 12px;" do %>
+          <i class="fa fa-card" style="margin-right: 5px;"></i>Invitation Card Categories
+        <% end %>
+        <%= link_to new_invitation_card_path, class:"btn px-5", style:"background: green; color: white;" do %>
+          <i class="fa fa-plus" style="margin-right: 5px;"></i>Create
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -251,12 +253,13 @@
               <i class="fas fa-paint-brush" style="margin-right: 3px;"></i>Customize
             <% end %>
           </div> 
-
-          <div>
-             <%= link_to edit_invitation_card_path(invitation_card), class:"btn btn-sm btn-edit float-left" do %>
-              <i class="fas fa-edit" style="margin-right: 3px;"></i>Edit
-            <% end %>
-          </div>  
+          <% if spree_current_user && spree_current_user.admin? %>
+            <div>
+              <%= link_to edit_invitation_card_path(invitation_card), class:"btn btn-sm btn-edit float-left" do %>
+                <i class="fas fa-edit" style="margin-right: 3px;"></i>Edit
+              <% end %>
+            </div>
+          <% end %>
 
           </div>  
 
