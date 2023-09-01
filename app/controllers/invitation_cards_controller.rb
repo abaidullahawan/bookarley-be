@@ -1,10 +1,12 @@
 # frozen_string_literal: true
+require 'ransack'
 
 class InvitationCardsController < StoreController
   respond_to :html
 
   def index
-    @invitation_cards = InvitationCard.all
+    @q = InvitationCard.ransack(params[:q])
+    @invitation_cards = @q.result(distinct: true)
   end
 
   def new
@@ -46,6 +48,6 @@ class InvitationCardsController < StoreController
   private
 
   def invitation_card_params
-    params.require(:invitation_card).permit(:card_name, :image, :canvas_data)
+    params.require(:invitation_card).permit(:card_name, :image, :canvas_data, invitation_category_ids: [])
   end
 end

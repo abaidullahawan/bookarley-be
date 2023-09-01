@@ -79,6 +79,105 @@
     color: black;
     text-decoration: none;
   }
+
+  :root {
+  --visible-slides: 5;
+}
+
+
+.slider {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.slider-ul {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding-left: 70px;
+  padding-right: 70px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform: translateX(calc(-100% / var(--visible-slides)));
+}
+
+
+.slider-li {
+  position: relative;
+  width: calc(92% / var(--visible-slides));
+  height: 100%;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background: white;
+}
+
+@media(max-width: 992px){
+  .slider-li {
+    width: calc(182% / var(--visible-slides)) !important;
+  }
+}
+
+@media(max-width: 992px){
+  .slider-li {
+    width: calc(233% / var(--visible-slides)) !important;
+  }
+}
+
+@media(max-width: 320px){
+  .slider-li {
+    width: calc(233% / var(--visible-slides)) !important;
+  }
+}
+
+
+@media(max-width: 768px){
+  .slider-li {
+    width: calc(260% / var(--visible-slides)) !important;
+  }
+}
+
+@media(max-width: 430px){
+  .slider-li {
+    width: calc(415% / var(--visible-slides)) !important;
+  }
+}
+
+.slider-nav .prev,
+.slider-nav .next {
+  position: absolute;
+  background: #1e396b;
+  height: 32px;
+  width: 32px;
+  top: 52%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-nav .prev {
+  left: 0px;
+}
+
+.slider-nav .next {
+  right: 0px;
+}
+
+.transition {
+  transition: transform 0.5s ease;
+}
+
+.left {
+  transform: translateX(-100%);
+}
+
+.right {
+  transform: translateX(100%);
+}
          
 
 </style>
@@ -87,7 +186,7 @@
 </div>
 <div class="container-fluid m-0">
   <div class="row px-4 pt-4">
-    <div class="col-md-9">
+    <div class="col-md-8">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href='<% root_path %>'><i class="fa fa-home" style="margin-right: 5px;"></i>Home</a></li>
@@ -95,12 +194,44 @@
         </ol>
       </nav>
     </div>
-    <div class="col-md-3 d-flex align-items-center justify-content-end">
-      <%= link_to new_invitation_card_path, class:"btn btn-lg px-5", style:"background: #1e396b; color: white;" do %>
+    <div class="col-md-4 d-flex align-items-center justify-content-end">
+      <%= link_to invitation_categories_path, class:"btn px-5", style:"background: #1e396b; color: white; margin-right: 12px;" do %>
+        <i class="fa fa-card" style="margin-right: 5px;"></i>Invitation Card Categories
+      <% end %>
+      <%= link_to new_invitation_card_path, class:"btn px-5", style:"background: green; color: white;" do %>
         <i class="fa fa-plus" style="margin-right: 5px;"></i>Create
       <% end %>
     </div>
   </div>
+</div>
+
+<div class="container" style="margin-top: 1%; margin-bottom: 2%;">
+	<div>
+		<div class="slider">
+			<ul class="slider-ul">
+				<% InvitationCategory.all.each do |invitation_category| %>
+          <% if invitation_category.parent_id.present? %>
+              <li class="slider-li d-grid">
+                <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_category.id }) do %>
+                  <div class="d-flex justify-content-center">
+                    <% if invitation_category.image.present? %>
+                      <%= image_tag(invitation_category.image, width: 120, style:"border-radius: 15px;") %>
+                    <% end %>
+                  </div>
+                <% end %>
+                <div class="d-flex justify-content-center text-dark" style="font-size: 1.3em;font-weight: 500;">  
+                  <%= invitation_category&.name %>
+                </div>
+              </li>
+          <% end %>
+				<% end %>
+			</ul>
+      <div class="slider-nav">
+        <div class="prev d-flex justify-content-center align-items-center"><i class="fa fa-arrow-left fa-2x text-light"></i></div>
+        <div class="next d-flex justify-content-center align-items-center"><i class="fa fa-arrow-right fa-2x text-light"></i></div>
+      </div>
+		</div>
+	</div>
 </div>
 
 <hr style="color: lightgray;">
@@ -121,9 +252,8 @@
             <% end %>
           </div> 
 
-
           <div>
-             <%= link_to add_text_invitation_card_path(invitation_card), class:"btn btn-sm btn-edit float-left" do %>
+             <%= link_to edit_invitation_card_path(invitation_card), class:"btn btn-sm btn-edit float-left" do %>
               <i class="fas fa-edit" style="margin-right: 3px;"></i>Edit
             <% end %>
           </div>  
@@ -136,3 +266,66 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    function resetPos(slider) {
+      slider.find('ul li').removeClass('transition');
+      slider.find('ul li').removeClass('left right');
+    }
+
+    function prev(slider) {
+      var sliderLength = slider.find('ul li').length;
+      slider.find('ul li').each(function () {
+        var curPos = parseInt($(this).css('order'));
+        if (curPos < sliderLength) {
+          $(this).css('order', curPos + 1);
+        } else {
+          curPos = 1;
+          $(this).css('order', curPos);
+        }
+      });
+    }
+
+    function next(slider) {
+      var sliderLength = slider.find('ul li').length;
+      slider.find('ul li').each(function () {
+        var curPos = parseInt($(this).css('order'));
+        if (curPos > 1) {
+          $(this).css('order', curPos - 1);
+        } else {
+          curPos = sliderLength;
+          $(this).css('order', curPos);
+        }
+      });
+    }
+
+    $('.prev').on('click', function () {
+      var slider = $(this).closest('.slider');
+      slider.find('ul li').addClass('transition right');
+      setTimeout(function () {
+        prev(slider);
+        resetPos(slider);
+      }, 500);
+    });
+
+    $('.next').on('click', function () {
+      var slider = $(this).closest('.slider');
+      slider.find('ul li').addClass('transition left');
+      setTimeout(function () {
+        next(slider);
+        resetPos(slider);
+      }, 500);
+    });
+
+    function init(slider) {
+      slider.find('ul li').each(function (index) {
+        $(this).css('order', index + 1);
+      });
+    }
+
+    $('.slider').each(function () {
+      init($(this));
+    });
+  });
+</script>

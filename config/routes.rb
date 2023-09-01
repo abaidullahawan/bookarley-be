@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/seller_information', to: 'users#seller_information', as: :seller_information
+  resources :invitation_categories
 
+  get '/seller_information', to: 'users#seller_information', as: :seller_information
 
   devise_for(:user, {
     class_name: 'Spree::User',

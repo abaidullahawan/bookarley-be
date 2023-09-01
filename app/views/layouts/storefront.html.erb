@@ -36,8 +36,9 @@ span.close-flash {
     <%= stylesheet_link_tag 'solidus_starter_frontend', media: 'screen' %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=FontName">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
 
     <%= javascript_importmap_tags %>
 
@@ -52,7 +53,7 @@ span.close-flash {
   <span class="close-flash" onclick="closeFlashMessage(this)"><i class="fa fa-times"></i></span>
 </div>
     <%# <%= render BreadcrumbsComponent.new(@taxon) %>
-    <% if request.path.start_with?('/t') || request.path.start_with?('/products') || request.path.start_with?('/invitation_cards') %>
+    <% if request.path.start_with?('/t') || request.path.start_with?('/products') %>
       <main style="background: #f3f2f0;">
         <%= yield %>
       </main>
