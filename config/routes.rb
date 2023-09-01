@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/seller_information', to: 'users#seller_information', as: :seller_information
+
+
   devise_for(:user, {
     class_name: 'Spree::User',
     singular: :spree_user,
@@ -23,7 +26,7 @@ Rails.application.routes.draw do
     path_names: { sign_out: 'logout' }
   })
 
-  resources :users, only: [:edit, :update]
+  resources :users
 
   devise_scope :spree_user do
     get '/login', to: 'user_sessions#new', as: :login
