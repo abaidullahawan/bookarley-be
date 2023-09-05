@@ -121,11 +121,13 @@
   .more-submenu {
     display: none;
     position: absolute;
-    background-color: white;
+    background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     padding: 5px; 
-    width: 125px;   
+    width: 200px; 
+    border-bottom: 8px solid #f29f37;
+    border-radius: 8px;  
   }
 
   .more-submenu a {
@@ -135,9 +137,9 @@
   .taxonomy-dropdown-hover:hover .more-submenu {
     display: block;
   }
-.sidemenu{
-  font-size: 1em !important;
-}
+  .sidemenu{
+    font-size: 1em !important;
+  }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top mobile-nav-hidden py-2" style="z-index: 2; margin-top: 73px; background: #1e396b;">
@@ -165,18 +167,18 @@
                         
                         <% parent_taxons = taxonomy&.root&.children %>
                         <% if parent_taxons&.any? %>
-                          <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 15px;">
+                          <div class="taxonomy-dropdown-all shadow py-2 px-4" style="border-radius: 8px;">
                             <div class="parent-taxon row">
-                              <div class="col-lg-8">
+                              <div class="col-lg-9">
                                 <div class="row">
                                   <% if taxonomy.name != 'E-Invitations' %>
                                     <% taxonomy.root.children.each do |parent_taxon| %>
-                                      <div class="col-md-5 taxon_name">
+                                      <div class="col-md-4 taxon_name">
                                         <% parent_permalink = parent_taxon&.permalink%>
                                         <%= link_to "/t/#{parent_permalink}", style:"color: #1e396b;" do %>
                                           <%= parent_taxon.name %>
                                         <%end%>
-                                        <div class="child-taxons">
+                                        <div class="child-taxons mb-5">
                                           <% parent_taxon.children.each do |child_taxon| %>
                                           <%child_permalink = child_taxon&.permalink%>
                                           <%= link_to "/t/#{child_permalink}" do %>
@@ -188,11 +190,11 @@
                                     <% end %>
                                   <%else%>
                                     <% InvitationCategory.where(parent_id: nil).each do |invitation_category| %>
-                                      <div class="col-md-5 taxon_name">
+                                      <div class="col-md-4 taxon_name">
                                         <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_category.id }), style:"color: #1e396b;" do %>
                                           <%= invitation_category.name %>
                                         <% end %>
-                                        <div class="child-taxons">
+                                        <div class="child-taxons mb-5">
                                           <% InvitationCategory.where(parent_id: invitation_category.id)&.each do |invitation_sub_category| %>
                                             <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_sub_category.id }) do %>
                                               <span class="child-taxons-name sidemenu my-2"><%= invitation_sub_category.name %></span>
@@ -204,9 +206,23 @@
                                   <% end %>  
                                 </div>
                               </div>
-                              <div class="col-lg-4 d-flex justify-content-center align-items-center">  
-                                <% if taxonomy.icon.attached? %>
-                                  <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                              <div class="col-lg-3 d-flex justify-content-center align-items-center">  
+                                <% if taxonomy.name == 'Venues' %>
+                                  <%= image_tag('venue-background.jpg', class: "w-100 h-100") %>
+                                <% elsif taxonomy.name == 'Vendors' %>  
+                                  <%= image_tag('vendor-background.jpg', class: "w-100 h-100") %>
+                                <% elsif taxonomy.name == 'E-Invitations' %>  
+                                  <%= image_tag('e-invite-background.jpg', class: "w-100 h-100") %>
+                                <% elsif taxonomy.name == 'Party Suppliers' %>  
+                                  <%= image_tag('party.png', class: "w-100 h-100") %>
+                                <% elsif taxonomy.name == 'Real Estate' %>  
+                                  <%= image_tag('real-estate-background.jpg', class: "w-100 h-100") %>
+                                <% elsif taxonomy.name == 'Online Shopping' %>  
+                                  <%= image_tag('online_shopping.jpg', class: "w-100 h-100") %>
+                                <% else %>
+                                  <% if taxonomy.icon.attached? %>
+                                    <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                                  <% end %>
                                 <% end %>
                               </div>  
                             </div>
@@ -234,18 +250,18 @@
                     <% end %>  
                     <% parent_taxons = taxonomy.root.children %>
                     <% if parent_taxons.any? %>
-                      <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2" style="border-radius: 2px;">
+                      <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2">
                         <div class="parent-taxon row">
-                          <div class="col-lg-8">
+                          <div class="col-lg-9">
                             <div class="row">
                               <% if taxonomy.name != 'E-Invitations' %>
                                 <% taxonomy.root.children.each do |parent_taxon| %>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                   <% parent_permalink = parent_taxon&.permalink%>
                                     <%= link_to "/t/#{parent_permalink}", style:"color: #1E396B;" do %>
                                       <%= parent_taxon.name %>
                                     <%end%>
-                                    <div class="child-taxons">
+                                    <div class="child-taxons mb-5">
                                       <% parent_taxon.children.each do |child_taxon| %>
                                         <%child_permalink = child_taxon&.permalink%>
                                         <%= link_to "/t/#{child_permalink}" do %>
@@ -257,11 +273,11 @@
                                 <% end %>
                               <% else %>
                                 <% InvitationCategory.where(parent_id: nil).each do |invitation_category| %>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                     <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_category.id }), style:"color: #1e396b;" do %>
                                       <%= invitation_category.name %>
                                     <% end %>
-                                    <div class="child-taxons">
+                                    <div class="child-taxons mb-5">
                                       <% InvitationCategory.where(parent_id: invitation_category.id)&.each do |invitation_sub_category| %>
                                         <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_sub_category.id }) do %>
                                           <span class="child-taxons-name my-2"><%= invitation_sub_category.name %></span>
@@ -273,9 +289,23 @@
                               <% end %>
                             </div>
                           </div>
-                          <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                            <% if taxonomy.icon.attached? %>
-                              <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                          <div class="col-lg-3 d-flex justify-content-center align-items-center">
+                            <% if taxonomy.name == 'Venues' %>
+                              <%= image_tag('venue-background.jpg', class: "w-100 h-100") %>
+                            <% elsif taxonomy.name == 'Vendors' %>  
+                              <%= image_tag('vendor-background.jpg', class: "w-100 h-100") %>
+                            <% elsif taxonomy.name == 'E-Invitations' %>  
+                              <%= image_tag('e-invite-background.jpg', class: "w-100 h-100") %>
+                            <% elsif taxonomy.name == 'Party Suppliers' %>  
+                              <%= image_tag('party.png', class: "w-100 h-100") %>
+                            <% elsif taxonomy.name == 'Real Estate' %>  
+                              <%= image_tag('real-estate-background.jpg', class: "w-100 h-100") %>
+                            <% elsif taxonomy.name == 'Online Shopping' %>  
+                              <%= image_tag('online_shopping.jpg', class: "w-100 h-100") %>
+                            <% else %>
+                              <% if taxonomy.icon.attached? %>
+                                <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                              <% end %>
                             <% end %>
                           </div>
                         </div>

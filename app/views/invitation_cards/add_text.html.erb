@@ -1,3 +1,4 @@
+<%= render partial: "/invitation_cards/font_families" %>
 <nav class="navbar navbar-light bg-white shadow py-4" style="position: fixed; z-index: 1; width: 100%;">
   <div class="container-fluid">
     <div class="ml-auto d-flex justify-content-center">
@@ -7,21 +8,27 @@
       </button>
       <div style="margin-right: 25px; margin-top: 4px;">
         <select id="font-select" class="form-control py-2 pr-5">
-          <option value="Arial">Arial</option>
-          <option value="Helvetica">Helvetica</option>
-          <option value="Times New Roman">Times New Roman</option>
-          <option value="monoscape">Tangerine</option>
-          <option value="Verdana">Verdana</option>
-          <option value="Georgia">Georgia</option>
-          <option value="Courier New">Courier New</option>
-          <option value="Garamond">Garamond</option>
-          <option value="Comic Sans MS">Comic Sans MS</option>
-          <option value="Arial Black">Arial Black</option>
-          <option value="Impact">Impact</option>
-          <option value="Palatino Linotype">Palatino Linotype</option>
-          <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+          <option value="Arial" class="option-Arial">Arial</option>
+          <option value="Helvetica" class="option-Helvetica">Helvetica</option>
+          <option value="Times New Roman" class="option-TimesNewRoman">Times New Roman</option>
+          <option value="Verdana" class="option-Verdana">Verdana</option>
+          <option value="Georgia" class="option-Georgia">Georgia</option>
+          <option value="Courier New" class="option-CourierNew">Courier New</option>
+          <option value="Kanit" class="option-Kanit">Kanit</option>
+          <option value="Josefin Sans" class="option-JosefinSans">Josefin Sans</option>
+          <option value="Space Grotesk" class="option-SpaceGrotesk">Space Grotesk</option>
+          <option value="Montserrat Alternates" class="option-MontserratAlternates">Montserrat</option>
+          <option value="Pacifico" class="option-Pacifico">Pacifico</option>
+          <option value="Dancing Script" class="option-DancingScript">Dancing Script</option>
+          <option value="Exo 2" class="option-Exo2">Exo 2</option>
+          <option value="Oswald" class="option-Oswald">Oswald</option>
+          <option value="Cormorant Garamond" class="option-CormorantGaramond">Cormorant</option>
+          <option value="Playfair Display SC" class="option-PlayfairDisplaySC">Playfair</option>
+          <option value="Raleway Dots" class="option-RalewayDots">Raleway Dots</option>
+          <option value="Vollkorn" class="option-Vollkorn">Vollkorn</option>
+          <option value="Amatic SC" class="option-AmaticSC">Amatic SC</option>
+          <option value="Cinzel Decorative" class="option-CinzelDecorative">Cinzel</option>
         </select>
-
       </div>
       <input type="color" id="color-picker" style="margin-right: 25px; margin-top: 4px;">
       <button id="bold-btn" class="button-border">
@@ -157,13 +164,29 @@
 
     document.getElementById("font-select").addEventListener("change", function () {
       var selectedFont = this.value;
+      var dropdownText = this.options[this.selectedIndex];
       var activeObject = canvas.getActiveObject();
 
       if (activeObject && activeObject.type === "textbox") {
-        activeObject.set("fontFamily", selectedFont);
+        // Remove existing font classes
+        activeObject.removeStyle("fontFamily");
+
+        // Apply the selected font family as a class
+        activeObject.set({ fontFamily: selectedFont });
         canvas.renderAll();
       }
+
+      // Remove existing font classes from the dropdown text
+      this.classList.forEach(className => {
+        if (className.startsWith("option-")) {
+          this.classList.remove(className);
+        }
+      });
+
+      // Add the selected font class to the dropdown text
+      dropdownText.classList.add("option-" + selectedFont.replace(/\s+/g, ''));
     });
+
 
     document.getElementById("color-picker").addEventListener("input", function () {
       var selectedColor = this.value;

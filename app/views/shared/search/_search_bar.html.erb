@@ -1,18 +1,26 @@
 <style>
-.search_bar_width {
-  width: 300px !important;
-transition: width 0.8s ease-in-out;
-font-size: 14px;
-}
-.search_bar_width:focus {
-  width: 500px !important;
-}
+  .search_bar_width {
+    width: 300px !important;
+    transition: width 0.8s ease-in-out;
+    font-size: 14px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
 
-.form-control:focus {
+  .search_bar_width:focus {
+    width: 500px !important;
+  }
+
+  .form-control:focus {
     border-color: none !important;
     outline: 0;
     box-shadow: none !important;
-}
+  }
+  .search-bar__button{
+    border-top-right-radius: 30px !important;
+    border-bottom-right-radius: 30px !important;
+  }
+
 </style>
 
 <%= form_tag autocomplete_results_path, method: :get, class: "search-bar mx-auto", "data-turbo": true, "data-turbo-stream": true, "data-controller": "search", "data-search-current-class": "autocomplete-results__item--current", "data-search-target": "form" do %>
@@ -22,7 +30,7 @@ font-size: 14px;
 
     <div class="input-group-append">
       <%= button_tag class: "btn btn-lg text-light search-bar__button py-4 product-search-btn", title: 'Search' do %>
-        Search
+        <i class="fa fa-search"></i>
       <% end %>
     </div>
   </div>
