@@ -67,6 +67,55 @@
     z-index: 1;
     margin-bottom: 20px;
     }
+.seller_info p {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.account_btn {
+    border: none;
+    background: #1e396b;
+    padding: 10px 40px;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    font-style: inherit;
+}
+.account_btn:hover {
+    background: #1e396b;
+    color: white;
+}
+.breadcrumb-item a{
+  font-size: 12px;
+  color: #1E396B !important;
+}
+.seller_profile_box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.seller_profile_box img {
+    width: 150px;
+    height: 150px;
+}
+.profile_edit_btn {
+    border: none;
+    background: #1e396b;
+    padding: 10px 40px;
+    border-radius: 2px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    font-style: inherit;
+}
+.profile_edit_btn:hover {
+    background: #1e396b;
+    color: white;
+    
+}
 </style>
 
 
@@ -87,22 +136,28 @@
 
     <div class="row">
       <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body text-center">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+        <div class="card h-100">
+          <div class="card-body text-center seller_profile_box">
+         <% if @user.present? && @user&.profile&.attached? %>
+          <%= image_tag request.base_url + url_for(@user.profile), class: "rounded-circle img-fluid", alt: "...", width: 200, height: 250 %>
+        <% else %>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
               class="rounded-circle img-fluid" style="width: 150px;">
+        <% end %>
+            
             <h3 class="my-3"> <%= @user.full_name %>  </h5>
             <h5 class="text-muted mb-3">Role: seller</h5>
             <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary px-5">Edit</button>
-              
+              <%= link_to seller_information_path, class: 'btn profile_edit_btn' do %>
+                Edit
+              <% end %>
             </div>
           </div>
         </div>
        
       </div>
-      <div class="col-lg-8">
-        <div class="card mb-4">
+      <div class="col-lg-8 seller_info">
+        <div class="card">
           <div class="card-body">
             <div class="row">
               <div class="col-sm-3">
