@@ -57,7 +57,7 @@ class UsersController < StoreController
   private
 
   def user_params
-  params.require(:user).permit(Spree::PermittedAttributes.user_attributes | [:email, :fill_name, :date_of_birth, :gender, :profile_picture, :location, :contact_information, :bio])
+  params.require(:user).permit(Spree::PermittedAttributes.user_attributes | [:email, :full_name, :date_of_birth, :gender, :profile, :location, :contact_information, :bio])
   end
 
   def load_object
