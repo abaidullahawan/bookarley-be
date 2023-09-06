@@ -306,6 +306,10 @@
 
     });
 
+    // Create a mapping object to associate input fields with Fabric.js objects
+    var inputToTextboxMap = {};
+    var uniqueIdCounter = 0;
+
     function updateReplicaInputs() {
       replicaInputs.innerHTML = "";
 
@@ -315,7 +319,18 @@
           replicaInput.type = "text";
           replicaInput.className = "replica-input mb-2";
           replicaInput.value = obj.text;
-          
+
+          // Generate a unique identifier for this textbox
+          var textboxId = "textbox_" + uniqueIdCounter;
+
+          // Increment the unique ID counter
+          uniqueIdCounter++;
+
+          // Store the mapping between input and textbox using the unique identifier
+          inputToTextboxMap[textboxId] = obj;
+
+          replicaInput.setAttribute("data-textbox-id", textboxId);
+
           replicaInput.addEventListener("input", function () {
             obj.text = this.value;
             canvas.renderAll();
@@ -325,6 +340,18 @@
         }
       });
     }
+
+    // Add an event listener to select the corresponding textbox
+    replicaInputs.addEventListener("click", function (e) {
+      if (e.target && e.target.matches(".replica-input")) {
+        var textboxId = e.target.getAttribute("data-textbox-id");
+        var textbox = inputToTextboxMap[textboxId];
+        if (textbox) {
+          canvas.setActiveObject(textbox);
+          canvas.renderAll();
+        }
+      }
+    });
 
     updateReplicaInputs();
 
