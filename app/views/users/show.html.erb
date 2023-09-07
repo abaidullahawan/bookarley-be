@@ -138,7 +138,13 @@
       <div class="col-lg-4">
         <div class="card h-100">
           <div class="card-body text-center seller_profile_box">
-            <%= image_tag('user_profile_icon.png', class: "circle-image") %>        
+         <% if @user.present? && @user&.profile&.attached? %>
+          <%= image_tag request.base_url + url_for(@user.profile), class: "rounded-circle img-fluid", alt: "...", width: 200, height: 250 %>
+        <% else %>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+              class="rounded-circle img-fluid" style="width: 150px;">
+        <% end %>
+            
             <h3 class="my-3"> <%= @user.full_name %>  </h5>
             <h5 class="text-muted mb-3">Role: seller</h5>
             <div class="d-flex justify-content-center mb-2">

@@ -420,16 +420,35 @@
     max-height: 1000px;
   }
   .sidebar-user{
-    width: 60px;
-    height: 54px;
-    padding: 10px;
-    background: #f6f6f6;
+    width: auto;
+    height: 50px;
+    /* padding: 5px; */
     margin-top: 20px;
     margin-left: 20px;
     border-radius: 50%;
 
   }
-
+  .sidebar-user .user_profile{
+    border-radius: 50%; 
+    border: 3px solid lightgray;
+    height: 50px;
+    width: 50px;
+  }
+  .user_email{
+    position: absolute;
+    top: 62px;
+  }
+.top_nav_user_img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: 3px solid lightgray;
+}
+.default_img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
 
 </style>
 
@@ -446,26 +465,37 @@
           <div class="navbar-nav">
           <% if spree_current_user %>
             <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
-                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                 <% if spree_current_user&.profile&.attached? %>
+                      <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+                    <% else %>
+                    <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                  <% end %>
                 <div>
                   <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
                 </div>
             </div>
             
             <div class="register-profile-dropdown">
-              <div class="register-dropdown-content shadow" id="registerDropdownContent">
-                <div class="d-flex justify-content-center">
-                  <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
+                <div class="register-dropdown-content shadow" id="registerDropdownContent">
+                  <div class="d-flex justify-content-center">
+                    <div>
+                      <% if spree_current_user&.profile&.attached? %>
+                        <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+                      <% else %>
+                       <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                      <% end %>
+                    
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
+                    <div><%= spree_current_user.email %></div>
+                  </div>
+                  <hr style="color: #b5b1b1;">
+                  <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
+                  <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                    <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Blogs </a>
+                  <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
                 </div>
-                <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
-                  <div><%= spree_current_user.email %></div>
-                </div>
-                <hr style="color: #b5b1b1;">
-                <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
-                <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Blogs </a>
-                <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
-              </div>
             </div>
           <% else %>
             <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -499,7 +529,11 @@
       <div class="navbar-nav ml-auto">
         <% if spree_current_user %>
           <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section-mobile">
-              <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+            <% if spree_current_user&.profile&.attached? %>
+                <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+              <% else %>
+                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+            <% end %>
               <div>
                 <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
               </div>
@@ -508,7 +542,13 @@
           <div class="register-profile-dropdown-mobile">
             <div class="register-dropdown-content-mobile shadow" id="registerDropdownContent">
               <div class="d-flex justify-content-center">
-                <div><%= image_tag('user_profile_icon.png', class: "circle-image") %></div>
+                <div>
+                 <% if spree_current_user&.profile&.attached? %>
+                <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+              <% else %>
+                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+            <% end %>
+                </div>
               </div>
               <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
                 <div><%= spree_current_user.email %></div>
@@ -541,9 +581,13 @@
   <% if spree_current_user %>
     <div class="d-flex">
       <div class="d-flex justify-content-right sidebar-user mb-5">
-        <%= image_tag("user_profile_icon.png", alt: "Logo", width: 40) %>
+         <% if spree_current_user&.profile&.attached? %>
+          <%= image_tag request.base_url + url_for(spree_current_user.profile), alt: "...",class: "user_profile", width: 40 %>
+        <% else %>
+           <%= image_tag("user_profile_icon.png", alt: "Logo", class:"default_img", width: 40) %>
+        <% end %>
       </div>
-      <div class="d-flex justify-content-center align-items-center" style="font-size: 1.5em; padding: 15px; color: white; font-weight: 400;">
+      <div class="d-flex justify-content-center align-items-center user_email" style="font-size: 1.5em; padding: 15px; color: white; font-weight: 400;">
         <div><%= spree_current_user.email %></div>
       </div>
     </div>  
