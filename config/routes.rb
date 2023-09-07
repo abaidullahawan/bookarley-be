@@ -29,6 +29,12 @@ Rails.application.routes.draw do
 
   resources :users
 
+  resources :blog_posts do
+    collection do
+      get 'blog_list'
+    end
+  end
+  
   devise_scope :spree_user do
     get '/login', to: 'user_sessions#new', as: :login
     post '/login', to: 'user_sessions#create', as: :create_new_session
@@ -87,4 +93,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
 end
