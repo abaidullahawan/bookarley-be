@@ -125,7 +125,7 @@
             <% if blog_post.image.present? %>
               <%= image_tag(blog_post.image, class: "w-100 rounded", height: "200") %>
             <% end %>
-            <div class="blog-item-content bg-white p-4 d-flex flex-column justify-content-between" style="height: fit-content;">
+            <div class="blog-item-content bg-white p-4 d-flex flex-column justify-content-between" style="height: 30vh;">
               <div>
                 <div class="blog-item-meta py-2 mb-3">
                   <span class="text-muted text-capitalize mr-3"><i class="fa fa-star text-warning" style="margin-right: 3px;"></i>4.8 / 5</span>
@@ -137,10 +137,10 @@
                     <i class="fa fa-link"></i> <%= blog_post.title %>
                   </a>
                 </h3>
-                <p class="mb-4 blog-para"><%= blog_post.description.split('.').first %>.</p>
+                <p class="mb-4 blog-para"><%= blog_post.blog_overview %></p>
               </div>
               <div class="d-flex align-items-center justify-content-between">
-                <a href="<%= blog_post.url %>" class="btn btn-small btn-main" style="margin-right: 5px;">
+                <a href="<%= blog_post_path(blog_post) %>" class="btn btn-small btn-main" style="margin-right: 5px;">
                   <i class="fa fa-plus text-white" style="margin-right: 3px;"></i>Read More
                 </a>
               </div>

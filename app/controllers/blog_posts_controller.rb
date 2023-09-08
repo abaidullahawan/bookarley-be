@@ -4,6 +4,10 @@ class BlogPostsController < StoreController
     @blog_posts = Spree::BlogPost.all
   end
 
+  def show
+    @blog_post = Spree::BlogPost.find(params[:id])
+  end
+
   def new
     @blog_post = Spree::BlogPost.new
   end
@@ -47,7 +51,7 @@ class BlogPostsController < StoreController
   private
 
   def blog_post_params
-    params.require(:blog_post).permit(:title, :description, :url, :image)
+    params.require(:blog_post).permit(:title, :blog_overview, :description, :url, :image)
   end
 
 end
