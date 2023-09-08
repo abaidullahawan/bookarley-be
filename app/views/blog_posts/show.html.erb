@@ -1,0 +1,93 @@
+<style>
+  .single-blog{
+    background: #f5f8f9;
+  }
+
+  .blog-item-meta{
+    display: flex;
+    background: #f5f8f9;
+    font-size: 1.3em;
+  }
+
+  .blog-item-meta span{
+    margin-right: 45px;
+  }
+
+  .blog-title a{
+    color: black;
+    text-decoration: none;
+    font-size: 2.7rem;
+  }
+
+  .related-img{
+    height: 10vh;
+  }
+
+  .related-heading{
+    font-weight: 600;
+  }
+
+  .related-title a{
+    font-size: 1.6em;
+    color: black;
+    text-decoration: none;
+  }
+
+  .related-date{
+    font-size: 1.2em;
+  }
+
+
+
+
+</style>
+<section class="section blog-wrap single-blog">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
+									<div class="col-lg-12 mb-5">
+										<div class="single-blog-item pb-5">
+											<%= image_tag(@blog_post.image, class: "w-100 rounded") %>
+											<div class="blog-item-content bg-white p-5">
+												<div class="blog-item-meta py-3 px-4 mb-3">
+                          <span class="text-muted text-capitalize mr-3"><i class="fa fa-star text-warning" style="margin-right: 4px;"></i>4.8 / 5</span>
+                          <span class="text-muted text-capitalize mr-3"><i class="fa fa-comment text-primary" style="margin-right: 4px;"></i>5 Comments</span>
+                          <span class="text-muted text-capitalize mr-3"><i class="fa fa-clock text-danger" style="margin-right: 4px;"></i><%= @blog_post.updated_at.strftime('%d %B, %Y') %></span>
+                        </div> 
+												<h3 class="mt-4 mb-4 blog-title">
+                          <a href="<%= @blog_post.url %>">
+                            <i class="fa fa-link"></i> <%= @blog_post.title %>
+                          </a>
+                        </h3>
+												<div><%= @blog_post.description.html_safe %></div>
+											</div>
+										</div>
+									</div>
+							</div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar-wrap">
+									<div class="sidebar-widget latest-post card border-0 p-4 mb-3">
+										<h2 class="related-heading mb-4">Related Posts</h2>
+                      <% Spree::BlogPost.where.not(id: params[:id]).each do |blog_post| %>
+                        <div class="row border-bottom py-3">
+                          <div class="col-lg-3 d-flex justify-content-center align-items-center">
+                            <%= image_tag(blog_post.image, class: "w-100 related-img") %>
+                          </div>
+                          <div class="col-lg-9">
+                            <div class="media py-3 px-2">
+                              <div class="media-body">
+                                  <h6 class="related-title my-2 mb-3"><a href="#"><%= blog_post.title %></a></h6>
+                                  <span class="related-date text-muted"><%= blog_post.updated_at.strftime('%d %B, %Y') %></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>  
+                      <% end %>  
+									</div>
+							</div>
+            </div>   
+        </div>
+    </div>
+</section>
