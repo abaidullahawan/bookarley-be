@@ -120,6 +120,7 @@
   <div class="container">
     <div class="row">
       <% @blog_posts.each do |blog_post| %>
+        <% @comment_count = Spree::BlogReview.where(spree_blog_post_id: blog_post.id).count %>
         <div class="col-lg-4 col-md-4 mb-5">
           <div class="blog-item shadow-sm">
             <% if blog_post.image.present? %>
@@ -129,7 +130,7 @@
               <div>
                 <div class="blog-item-meta py-2 mb-3">
                   <span class="text-muted text-capitalize mr-3"><i class="fa fa-star text-warning" style="margin-right: 3px;"></i>4.8 / 5</span>
-                  <span class="text-muted text-capitalize mr-3"><i class="fa fa-comment text-primary" style="margin-right: 3px;"></i>5 Comments</span>
+                  <span class="text-muted text-capitalize mr-3"><i class="fa fa-comment text-primary" style="margin-right: 3px;"></i><%= @comment_count %> Comments</span>
                   <span class="text-muted text-capitalize mr-3"><i class="fa fa-clock text-danger" style="margin-right: 3px;"></i><%= blog_post.updated_at.strftime('%d %B, %Y') %></span>
                 </div> 
                 <h3 class="mt-3 mb-3 blog-title">

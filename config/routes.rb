@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :blog_reviews
+  
   devise_scope :spree_user do
     get '/login', to: 'user_sessions#new', as: :login
     post '/login', to: 'user_sessions#create', as: :create_new_session
