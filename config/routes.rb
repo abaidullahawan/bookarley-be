@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :blog_posts do
     collection do
       get 'blog_list'
+      get 'manage_reviews'
     end
   end
   

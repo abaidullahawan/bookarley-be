@@ -48,6 +48,10 @@ class BlogPostsController < StoreController
     @blog_posts = Spree::BlogPost.all
   end
 
+  def manage_reviews
+    @blog_reviews = Spree::BlogReview.all
+  end
+
   private
 
   def blog_post_params

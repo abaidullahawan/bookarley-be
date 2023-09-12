@@ -22,6 +22,16 @@ class BlogReviewsController < StoreController
     end
   end
 
+  def destroy
+    @blog_review = Spree::BlogReview.find(params[:id])
+
+    if @blog_review.destroy
+      redirect_to manage_reviews_blog_posts_path, notice: 'Review was successfully deleted.'
+    else
+      redirect_to manage_reviews_blog_posts_path, alert: 'Failed to delete the blog post.'
+    end
+  end
+
   private
 
   def review_params

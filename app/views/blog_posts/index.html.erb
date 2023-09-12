@@ -95,7 +95,7 @@
 </div>
 <div class="container-fluid m-0">
   <div class="row px-4 pt-4 pb-3">
-    <div class="col-md-8">
+    <div class="col-md-7">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href='<% root_path %>'><i class="fa fa-home" style="margin-right: 5px;"></i>Home</a></li>
@@ -104,7 +104,10 @@
       </nav>
     </div>
     <% if spree_current_user && spree_current_user.admin? %>
-      <div class="col-md-4 d-flex align-items-center justify-content-end">
+      <div class="col-md-5 d-flex align-items-center justify-content-end">
+        <%= link_to manage_reviews_blog_posts_path, class:"btn px-5", style:"background: #f29f37; color: black; margin-right: 12px;" do %>
+          <i class="fa fa-star text-dark" style="margin-right: 5px;"></i>Manage Reviews
+        <% end %>
         <%= link_to blog_list_blog_posts_path, class:"btn px-5", style:"background: #1e396b; color: white; margin-right: 12px;" do %>
           <i class="fa fa-list text-white" style="margin-right: 5px;"></i>Blogs List
         <% end %>
