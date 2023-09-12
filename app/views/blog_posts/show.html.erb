@@ -16,7 +16,7 @@
   .blog-title a{
     color: black;
     text-decoration: none;
-    font-size: 2.7rem;
+    font-size: 2.6rem;
   }
 
   .related-img{
@@ -37,22 +37,122 @@
     font-size: 1.2em;
   }
 
+  .review-fields{
+    padding: 1.4rem 0.75rem !important;
+    font-size: 1.18em;
+  }
 
+  .review-comment{
+    height: 120px;
+    font-size: 1.18em;
+  }
 
+  .btn-main{
+    background: #f75757;
+    color: #fff;
+    font-size: 1.18em;
+  }
 
+  .comment-row{
+    margin-bottom: 14px;
+  }
+
+  .reply-text{
+    text-decoration: none;
+    color: #5d5858;
+    font-size: 1.2em;
+  }
+
+  .posted-text{
+    color: gray;
+    font-size: 1.2em;
+  }
+
+  .comment-para{
+    color: #5f5959;
+    font-size: 1.45em;
+  }
+
+  .star-rating {
+    display: inline-block;
+    font-size: 22px;
+  }
+
+  .submitted-rating{
+    display: inline-block;
+  }
+
+  .star {
+    cursor: pointer;
+    color: #ccc;
+  }
+  
+  .rated-star{
+    cursor: pointer;
+    color: #ccc;
+  }
+
+  .star.filled {
+    color: gold;
+  }
+
+  .circular-review {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    font-weight: bold;
+    color: white;
+  }
+
+  .select-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Adjust the width as needed */
+  }
+
+  /* Style the select itself */
+  .select-container select {
+    width: 100%;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    appearance: none; /* Remove default styles on some browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #636669;
+  }
+
+  /* Style the arrow icon */
+  .select-container::after {
+    content: '\25BC'; /* Unicode character for down arrow */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
 </style>
+
+<% @comment_count = Spree::BlogReview.where(spree_blog_post_id: @blog_post.id).count %>
 <section class="section blog-wrap single-blog">
     <div class="container py-5">
         <div class="row">
             <div class="col-lg-8">
                 <div class="row">
-									<div class="col-lg-12 mb-5">
+									<div class="col-lg-12 mb-3">
 										<div class="single-blog-item pb-5">
 											<%= image_tag(@blog_post.image, class: "w-100 rounded") %>
 											<div class="blog-item-content bg-white p-5">
 												<div class="blog-item-meta py-3 px-4 mb-3">
                           <span class="text-muted text-capitalize mr-3"><i class="fa fa-star text-warning" style="margin-right: 4px;"></i>4.8 / 5</span>
-                          <span class="text-muted text-capitalize mr-3"><i class="fa fa-comment text-primary" style="margin-right: 4px;"></i>5 Comments</span>
+                          <span class="text-muted text-capitalize mr-3" id="comment-count-icon"><i class="fa fa-comment text-primary" style="margin-right: 4px;"></i><%= @comment_count %> Comments</span>
                           <span class="text-muted text-capitalize mr-3"><i class="fa fa-clock text-danger" style="margin-right: 4px;"></i><%= @blog_post.updated_at.strftime('%d %B, %Y') %></span>
                         </div> 
 												<h3 class="mt-4 mb-4 blog-title">
@@ -64,7 +164,101 @@
 											</div>
 										</div>
 									</div>
-							</div>
+							 </div>
+                
+                <div class="row mb-5">
+									<div class="comment-area card border-0 p-5">
+										<h3 class="mb-5" id="comment-count"><%= @comment_count %> Comments</h3>
+                    <div class="row" id="blog-reviews-container">
+                      <% Spree::BlogReview.all.each do |blog_review| %>
+                        <% if blog_review.spree_blog_post_id == @blog_post.id %>
+                          <div class="row comment-row ">
+                            <div class="col-lg-1">
+                              <div class="mr-3 circular-review" style="background-color: <%= blog_review.bg_color %>;">
+                                <%= blog_review.name[0].upcase %>
+                              </div>
+                            </div>
+                            <div class="col-lg-10">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <h4 class="mb-1" style="font-weight: 500;"><%= blog_review.name %></h4>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="float-right">
+                                    <div class="submitted-rating mb-3">
+                                      <% (1..5).each do |rating| %>
+                                        <% if rating <= (blog_review&.rating || 0) %>
+                                          <i class="fa fa-star star filled" data-rating="<%= rating %>"></i>
+                                        <% else %>
+                                          <i class="fa fa-star star" data-rating="<%= rating %>"></i>
+                                        <% end %>
+                                      <% end %>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <div><p style="color: gray; font-size: 1.18em;"><%= blog_review.city %></p></div>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="float-right">
+                                    <a href="#" class="reply-text"><i class="icofont-reply mr-2 text-muted"></i>Reply | </a>
+                                    <span class="posted-text">Posted <%= blog_review.updated_at.strftime('%d %B, %Y') %></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <% if blog_review.comment.present? %>
+                              <div class="row mt-2 mb-3">
+                                <p class="comment-para"><%= blog_review.comment %></p>
+                              </div>
+                            <% end %>
+                          </div>
+                        <% end %>  
+                      <% end %>  
+                    </div>
+									</div>
+								</div>
+
+                <div class="row">
+                  <%= form_with(model: @blog_review, url: blog_reviews_path, local: true, multipart: true, html: { class: 'needs-validation bg-white rounded p-5', novalidate: true }, id: 'blog-review-form') do |f| %>
+										<h2 class="mb-4">Leave a Comment</h2>
+                    <!-- Star Rating Section -->
+                    <div class="star-rating mb-3">
+                      <i class="fa fa-star star form-star" data-rating="1"></i>
+                      <i class="fa fa-star star form-star" data-rating="2"></i>
+                      <i class="fa fa-star star form-star" data-rating="3"></i>
+                      <i class="fa fa-star star form-star" data-rating="4"></i>
+                      <i class="fa fa-star star form-star" data-rating="5"></i>
+                    </div>
+
+                    <!-- Hidden Rating Field -->
+                    <%= f.hidden_field :rating, id: 'rating-input' %>
+
+										<div class="row mb-4">
+											<div class="col-md-6">
+												<div class="form-group">
+													<%= f.text_field :name, class:'form-control review-fields', placeholder:"Enter your Name" %>
+												</div>
+											</div>
+											<div class="col-md-6">
+                        <div class="select-container">
+                          <select name="Location" id="Location" required>
+                            <%= render 'blog_posts/cities_list'%>
+                          </select>
+                      </div>
+                      </div>
+										</div>
+
+                    <%= f.hidden_field :spree_blog_post_id, value: @blog_post.id %>
+                    <%= f.hidden_field :city, id: 'city' %>
+
+                    <%= f.text_area :comment, class:'form-control review-comment', placeholder:"Comment" %>
+                    <%= f.submit 'Submit', id: 'submit-review-button', class:"btn btn-main btn-round-full mt-4 px-4 py-2" %>
+									<% end %>
+
+								</div>
             </div>
             <div class="col-lg-4">
                 <div class="sidebar-wrap">
@@ -91,3 +285,143 @@
         </div>
     </div>
 </section>
+
+<script>
+
+  function incrementCommentCount() {
+    // Get the current comment count
+    const currentCount = parseInt($('#comment-count').text(), 10);
+
+    // Increment the count by 1
+    const newCount = currentCount + 1;
+
+    // Update the displayed count
+    $('#comment-count').text(newCount + ' Comments');
+  }
+
+  function incrementIconCommentCount() {
+    // Get the current comment count
+    const currentCount = parseInt($('#comment-count-icon').text(), 10);
+
+    // Increment the count by 1
+    const newCount = currentCount + 1;
+
+    // Update the displayed count
+    $('#comment-count-icon').html('<i class="fa fa-comment text-primary" style="margin-right: 4px;"></i>' + newCount + ' Comments');
+  }
+
+  $(document).ready(function() {
+    $('#blog-review-form').on('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      var form = $(this);
+      var submitButton = $('#submit-review-button');
+
+      // Disable the submit button to prevent multiple submissions
+      submitButton.prop('disabled', true);
+
+      // Send the AJAX request
+      $.ajax({
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize(), // Serialize the form data
+        dataType: 'json', // Expect JSON response
+        success: function(response) {
+          if (response.errors) {
+            console.error(response.errors);
+          } else {
+            debugger
+
+            incrementCommentCount();
+            incrementIconCommentCount();
+
+            form[0].reset();
+
+            var createdAt = new Date(response.updated_at);
+            var options = { day: 'numeric', month: 'long', year: 'numeric' };
+            var formattedDate = createdAt.toLocaleDateString(undefined, options);
+
+            var newRecordHTML = `
+                <div class="row comment-row">
+                    <div class="col-lg-1">
+                        <div class="mr-3 circular-review" style="background-color: ${response.bg_color};">
+                          ${response.name.charAt(0).toUpperCase()}
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="row">
+                            <div class="col-lg-6">
+                              <h4 class="mb-1" style="font-weight: 500;">${response.name}</h4>
+                            </div>
+                            <div class="col-lg-6">
+                              <div class="float-right">
+                                <div class="submitted-rating">
+                                  ${renderStars(response.rating)}
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div><p style="color: gray; font-size: 1.18em;">${response.city}</p></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="float-right">
+                                    <a href="#" class="reply-text"><i class="icofont-reply mr-2 text-muted"></i>Reply | </a>
+                                    <span class="posted-text">Posted ${formattedDate} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${response.comment ? `
+                      <div class="row mt-4">
+                          <p class="comment-para">${response.comment}</p>
+                      </div>
+                      ` : ''}
+                </div>`;
+
+                function renderStars(rating) {
+                  let starsHTML = '';
+                  for (let i = 1; i <= 5; i++) {
+                      const filledClass = i <= rating ? 'filled' : '';
+                      starsHTML += `<i class="fa fa-star star ${filledClass}" data-rating="${i}"></i>`;
+                  }
+                  return starsHTML;
+                }
+
+
+            // Append the new record to the existing container
+            $('#blog-reviews-container').append(newRecordHTML);
+          }
+        },
+        error: function(xhr) {
+          console.error(xhr.responseText);
+        },
+        complete: function() {
+          // Re-enable the submit button after the request is complete
+          submitButton.prop('disabled', false);
+        }
+      });
+    });
+  });
+
+  $(document).ready(function () {
+    $('.form-star').on('click', function () {
+      const rating = $(this).data('rating');
+      $('#rating-input').val(rating);
+      $('.form-star').removeClass('filled');
+      $(this).prevAll('.form-star').addBack().addClass('filled');
+    });
+    $('#blog-review-form').on('submit', function () {
+      // Reset form star ratings when the form is submitted
+      $('.form-star').removeClass('filled');
+    });
+  });
+
+  $('#Location').on('change', function () {
+    var selectedCity = $(this).val();
+    $('#city').val(selectedCity);
+  });
+
+
+</script>
