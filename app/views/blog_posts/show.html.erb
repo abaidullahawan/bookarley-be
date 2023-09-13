@@ -61,6 +61,7 @@
     text-decoration: none;
     color: #5d5858;
     font-size: 1.2em;
+    cursor: pointer;
   }
 
   .posted-text{
@@ -137,6 +138,35 @@
     right: 10px;
     transform: translateY(-50%);
   }
+
+  .reply-profile {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    font-weight: bold;
+    color: white;
+    background-color: #ffffff;
+    border: 0.5px solid #e4dfdf;
+  }
+
+  .reply-profile img{
+    width: 68%;
+  }
+
+  .mini-line{
+    width: 6%;
+    margin-right: 10px;
+  }
+
+  .view-reply-text{
+    color: #635f5f;
+    font-size: 1.1em;
+    cursor: pointer;
+  }
   
 </style>
 
@@ -164,7 +194,7 @@
 											</div>
 										</div>
 									</div>
-							 </div>
+							  </div>
                 
                 <div class="row mb-5">
 									<div class="comment-area card border-0 p-5">
@@ -203,17 +233,84 @@
                                 </div>
                                 <div class="col-lg-6">
                                   <div class="float-right">
-                                    <a href="#" class="reply-text"><i class="icofont-reply mr-2 text-muted"></i>Reply | </a>
+                                    <span class="reply-text toggle-reply-form" data-blog-review-id="<%= blog_review.id %>"><i class="icofont-reply mr-2 text-muted"></i>Reply | </span>
                                     <span class="posted-text">Posted <%= blog_review.updated_at.strftime('%d %B, %Y') %></span>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <% if blog_review.comment.present? %>
-                              <div class="row mt-2 mb-3">
+                              <div class="row mt-2 mb-2">
                                 <p class="comment-para"><%= blog_review.comment %></p>
                               </div>
                             <% end %>
+
+                            <% if Spree::BlogReply.find_by(spree_blog_reviews_id: blog_review.id).present? %>
+                              <div class="view-replies d-flex px-5 mb-4">
+                                <hr class="mini-line">
+                                <span class="view-reply-option d-flex align-items-center view-reply-text" data-blog-review-id="<%= blog_review.id %>">
+                                  View Replies
+                                </span>
+                              </div>
+                            <% end %>
+
+                            <div class="reply-form-container" id="reply-form-<%= blog_review.id %>" style="display: none;">
+                              <div id="blog-replies-container-<%=blog_review.id%>">
+                                <div class="row px-5">
+                                  <% Spree::BlogReply.all.each do |blog_reply| %>
+                                    <% if blog_reply.spree_blog_reviews_id == blog_review.id %>
+                                      <div class="row comment-row ">
+                                        <div class="col-lg-1">
+                                          <div class="mr-3 reply-profile">
+                                            <%= image_tag("bookarley-logo.png", alt: "Logo") %>
+                                          </div>
+                                        </div>
+                                        <div class="col-lg-10">
+                                          <div class="row">
+                                            <div class="col-lg-6">
+                                              <h4 class="mb-1" style="font-weight: 500;">Admin</h4>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-lg-6">
+                                              <div><p style="color: gray; font-size: 1.18em;">Bookarley</p></div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                              <div class="float-right">
+                                                <span class="posted-text">Posted <%= blog_reply.updated_at.strftime('%d %B, %Y') %></span>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <% if blog_reply.comment.present? %>
+                                          <div class="row mt-2 mb-3">
+                                            <p class="comment-para"><%= blog_reply.comment %></p>
+                                          </div>
+                                        <% end %>
+                                      </div>
+                                    <% end %>  
+                                  <% end %>
+                                </div>
+                              </div>
+                              <%= form_with(model: @blog_reply, url: blog_replies_path, html: { class: 'blog-reply-form needs-validation bg-white rounded px-5 py-2', data: { id: "blog-replies-container-#{blog_review.id}" } }) do |f| %>
+                                <!-- Hidden field to store spree_blog_reviews_id -->
+                                <%= f.hidden_field :spree_blog_reviews_id, value: blog_review.id %>
+                                <!-- Reply content field -->
+                                <div class="row">
+                                  <div class="col-lg-1">
+                                    <div class="mr-3 reply-profile">
+                                      <%= image_tag("bookarley-logo.png", alt: "Logo") %>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-11" style="padding-right: 0">
+                                    <%= f.text_area :comment, class: 'form-control', placeholder: 'Enter your reply' %>
+                                  </div>
+                                </div>
+                                <div class="row float-right">
+                                  <%= f.submit 'Submit', id: 'submit-reply-button', class: 'btn btn-main btn-round-full mt-2', style:"width: 100%;" %>
+                                </div>
+                              <% end %>
+                            </div>
                           </div>
                         <% end %>  
                       <% end %>  
@@ -330,7 +427,6 @@
           if (response.errors) {
             console.error(response.errors);
           } else {
-            debugger
 
             incrementCommentCount();
             incrementIconCommentCount();
@@ -421,6 +517,119 @@
   $('#Location').on('change', function () {
     var selectedCity = $(this).val();
     $('#city').val(selectedCity);
+  });
+
+  $(document).ready(function () {
+    $('.toggle-reply-form').on('click', function () {
+      const blogReviewId = $(this).data('blog-review-id');
+      const replyForm = $('#reply-form-' + blogReviewId);
+
+      replyForm.toggle();
+      // Update the text of .toggle-reply-form based on the visibility
+      if (replyForm.is(':visible')) {
+        $('.view-reply-option').text('Hide Replies');
+      } else{
+        $('.view-reply-option').text('View Replies');
+      }  
+      
+      
+    });
+
+    $('.view-reply-option').on('click', function () {
+      const blogReviewId = $(this).data('blog-review-id');
+      const replyForm = $('#reply-form-' + blogReviewId);
+
+      // Toggle the reply form visibility
+      replyForm.toggle();
+
+      // Update the text of .toggle-reply-form based on the visibility
+      if (replyForm.is(':visible')) {
+        $(this).text('Hide Replies');
+      } else {
+        $(this).text('View Replies');
+      }
+    });
+
+  });
+
+  $(document).ready(function() {
+    function enableSubmitButton() {
+      var submitButton = document.getElementById('submit-reply-button');
+      submitButton.removeAttribute('disabled');
+    }
+
+    $('.blog-reply-form').on('submit', function(e) {
+      e.preventDefault(); // Prevent the default form submission
+
+      var form = $(this);
+      var submitButton = $('#submit-reply-button');
+      var dataId = $(this).data('id')
+
+      // Disable the submit button to prevent multiple submissions
+      submitButton.prop('disabled', true);
+
+      // Send the AJAX request
+      $.ajax({
+        type: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize(), // Serialize the form data
+        dataType: 'json', // Expect JSON response
+        success: function(response) {
+          if (response.errors) {
+            console.error(response.errors);
+          } else {
+
+            form[0].reset();
+
+            var replycreatedAt = new Date(response.updated_at);
+            var reply_options = { day: 'numeric', month: 'long', year: 'numeric' };
+            var replyformattedDate = replycreatedAt.toLocaleDateString(undefined, reply_options);
+
+            var newReply = `
+                <div class="row px-5">
+                    <div class="col-lg-1">
+                        <div class="mr-3 reply-profile">
+                          <%= image_tag("bookarley-logo.png", alt: "Logo") %>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="row">
+                            <div class="col-lg-6">
+                              <h4 class="mb-1" style="font-weight: 500;">Admin</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div><p style="color: gray; font-size: 1.18em;">Bookarley</p></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="float-right">
+                                    <span class="posted-text">Posted ${replyformattedDate} </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ${response.comment ? `
+                      <div class="row mt-4">
+                          <p class="comment-para">${response.comment}</p>
+                      </div>
+                      ` : ''}
+                </div>`;
+
+            // Append the new record to the existing container
+            $("#"+dataId).append(newReply);
+            enableSubmitButton();
+
+          }
+        },
+        error: function(xhr) {
+          console.error(xhr.responseText);
+        },
+        complete: function() {
+          submitButton.prop('disabled', false);
+        }
+      });
+    });
   });
 
 
