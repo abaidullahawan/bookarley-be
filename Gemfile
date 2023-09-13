@@ -82,7 +82,7 @@ gem "stringio", "3.0.7"
 
 gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.6"
 
-gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise'
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.1"
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
