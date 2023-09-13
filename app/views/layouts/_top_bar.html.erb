@@ -476,7 +476,7 @@
           <% if spree_current_user %>
              <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
                  <% if spree_current_user&.profile&.attached? %>
-                      <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+                      <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
                     <% else %>
                     <%= image_tag('user_profile_icon.png', class: "circle-image") %>
                   <% end %>
@@ -489,7 +489,7 @@
               <div class="register-dropdown-content shadow" id="registerDropdownContent">
                  <div class="d-flex justify-content-center">
                       <% if spree_current_user&.profile&.attached? %>
-                        <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+                      <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
                         <% else %>
                         <%= image_tag('user_profile_icon.png', class: "circle-image") %>
                       <% end %>
@@ -537,8 +537,8 @@
         <% if spree_current_user %>
           <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section-mobile">
             <% if spree_current_user&.profile&.attached? %>
-                <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
-              <% else %>
+               <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
+             <% else %>
                 <%= image_tag('user_profile_icon.png', class: "circle-image") %>
             <% end %>
               <div>
@@ -551,8 +551,8 @@
               <div class="d-flex justify-content-center">
                 <div>
                  <% if spree_current_user&.profile&.attached? %>
-                <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
-              <% else %>
+                   <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
+                 <% else %>
                 <%= image_tag('user_profile_icon.png', class: "circle-image") %>
             <% end %>
                 </div>
@@ -589,7 +589,7 @@
     <div class="d-flex">
       <div class="d-flex justify-content-right sidebar-user mb-5">
          <% if spree_current_user&.profile&.attached? %>
-          <%= image_tag request.base_url + url_for(spree_current_user.profile), alt: "...",class: "user_profile", width: 40 %>
+          <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
         <% else %>
            <%= image_tag("user_profile_icon.png", alt: "Logo", class:"default_img", width: 40) %>
         <% end %>
