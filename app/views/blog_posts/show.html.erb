@@ -233,7 +233,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                   <div class="float-right">
-                                    <span class="reply-text toggle-reply-form" data-blog-review-id="<%= blog_review.id %>"><i class="icofont-reply mr-2 text-muted"></i>Reply | </span>
+                                    <% if spree_current_user && spree_current_user.admin? %>
+                                      <span class="reply-text toggle-reply-form" data-blog-review-id="<%= blog_review.id %>"><i class="icofont-reply mr-2 text-muted"></i>Reply | </span>
+                                    <% end %>
                                     <span class="posted-text">Posted <%= blog_review.updated_at.strftime('%d %B, %Y') %></span>
                                   </div>
                                 </div>
@@ -463,7 +465,6 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="float-right">
-                                    <a href="#" class="reply-text"><i class="icofont-reply mr-2 text-muted"></i>Reply | </a>
                                     <span class="posted-text">Posted ${formattedDate} </span>
                                 </div>
                             </div>
