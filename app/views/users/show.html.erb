@@ -138,10 +138,14 @@
       <div class="col-lg-4">
         <div class="card h-100">
           <div class="card-body text-center seller_profile_box">
-            <%= image_tag('user_profile_icon.png', class: "circle-image") %>
-            
+           <% if spree_current_user&.profile&.attached? %>
+                      <%= image_tag request.base_url + url_for(spree_current_user.profile), class:"top_nav_user_img", alt: "...", width: 40 %>
+                    <% else %>
+                    <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                  <% end %>            
             <h3 class="my-3"> <%= @user.full_name %>  </h5>
-            <h5 class="text-muted mb-3">Role: seller</h5>
+            <h5 class="text-muted mb-3"> Role: <%= @user.spree_roles.any? ? @user.spree_roles.first.name : 'Customer' %> </h5>
+
             <div class="d-flex justify-content-center mb-2">
               <%= link_to seller_information_path, class: 'btn profile_edit_btn' do %>
                 Edit
