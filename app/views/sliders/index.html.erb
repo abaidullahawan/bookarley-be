@@ -1,0 +1,63 @@
+<style>
+  table tr th, td{ 
+    text-align: center;
+  }
+
+  table tr th{ 
+    font-size: 1.3em;
+  }
+
+  table tr td{ 
+    font-size: 1.1em;
+  }
+
+</style>
+<div class="card shadow" style="margin-left: 30px; margin-right: 30px; margin-top: 120px; margin-bottom: 15%;">
+  <div class="card-header py-4 pl-4">
+    <h3>Manage Sliders</h3>
+  </div>
+  <div class="row">
+    <%= link_to new_slider_path, class:"btn px-5 mx-4 my-4 text-md", style:"background: green; color: white; width: 120px; font-size: 12px;" do %>
+      <i class="fa fa-plus" style="margin-right: 5px;"></i>Create
+    <% end %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th class="py-3" scope="col">ID</th>
+          <th class="py-3" scope="col">Banner</th>
+          <th class="py-3" scope="col">Title</th>
+          <th class="py-3" scope="col">Priority</th>
+          <th class="py-3" scope="col">URL</th>
+          <th class="py-3" scope="col">Created at</th>
+          <th class="py-3" scope="col">Updated at</th>
+          <th class="py-3" scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sliders.each do |sliders| %>
+          <tr>
+            <th scope="row"><%= sliders.id %></th>
+            <th>
+              <% if sliders.image.present? %>
+                <%= image_tag(sliders.image, width: 50, style:"border-radius: 15px;") %>
+              <% end %>
+            </th>
+            <td><%= sliders.title %></td>
+            <td><%= sliders.priority %></td>
+            <td><%= sliders.url %></td>
+            <td><%= sliders.created_at.strftime('%d %B, %Y') %></td>
+            <td><%= sliders.updated_at.strftime('%d %B, %Y') %></td>
+            <td>
+              <%= link_to edit_slider_path(sliders), class:"btn btn-primary mr-3" do %>
+                Edit
+              <% end %>
+              <%= link_to "Delete", slider_path(sliders), method: :delete, data: { confirm: 'Are you sure you want to delete this slider?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>  
+      </tbody>
+    </table>
+  </div>
+</div>

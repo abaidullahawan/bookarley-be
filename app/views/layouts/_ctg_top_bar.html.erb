@@ -333,11 +333,9 @@
             </div>
         </div>
         <div class="navbar-nav" style="margin-right: 26px">
-        <%if spree_current_user %>
-          <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
-          <% else %>
-          <a href="/login" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
-<%end%>
+          <%if !spree_current_user || !spree_current_user.admin? %>
+            <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
+          <%end%>
         </div>
     </div>
 </nav>

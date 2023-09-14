@@ -51,7 +51,7 @@ button.seller_btn input {
 }
 .form_logo img {
     height: auto;
-    width: 70px;
+    width: 100px;
     line-height: 100px;
 }
 
@@ -70,21 +70,18 @@ button.seller_btn input {
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
-        <div class="card card-registration my-4">
+        <div class="card shadow card-registration my-4">
           <div class="row g-0">
             <div class="col-xl-6 d-none d-xl-block">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                alt="Sample photo" class="img-fluid"
-                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;" />
+              <%= image_tag("seller_img.png", class: "img-fluid", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;") %>
             </div>
             <div class="col-xl-6">
               <div class="card-body p-md-5 text-black seller_info">
-<div class="form_logo text-center pb-4">
-<%= image_tag("bookarley-logo.png", alt:"logo") %>
-</div>
-  <h1 class="form_title">Seller Information</h1>
-  <%= render 'shared/error_messages', target: @user %>
-                  <%# form  %>
+                <div class="form_logo text-center pb-4">
+                <%= image_tag("bookarley-logo.png", alt:"logo") %>
+                </div>
+                  <h1 class="form_title">Seller Information</h1>
+                  <%= render 'shared/error_messages', target: @user %>
                 <% if @user %>
                 <%= form_for @user, url: user_path(@user), method: :put do |f| %>
                             <div class="row">

@@ -499,8 +499,11 @@
                 </div>
                 <hr style="color: #b5b1b1;">
                 <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
-                <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Blogs </a>
+                <% if spree_current_user.admin? %>
+                  <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                  <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
+                  <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
+                <% end %>
                 <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
               </div>
             </div>
@@ -562,8 +565,11 @@
               </div>
               <hr style="color: #b5b1b1;">
               <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-              <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
-              <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Blogs </a>
+              <% if spree_current_user.admin? %>
+                <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
+                <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
+              <% end %>
               <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
             </div>
           </div>

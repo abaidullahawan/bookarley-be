@@ -296,7 +296,7 @@
   width: 150px;
   padding: 9px;
   background: #1e396b;
-  color: #f29f37;
+  color: white;
   font-weight: 400;
   border-radius: 32px;
   margin-bottom: 24px;
@@ -365,23 +365,23 @@
   border-radius: 30px !important;
 }
 
-.about .content .btn-learn-more:hover {
-  background: #1e396b;
-  color: #fff;
-  text-decoration: none;
-}
+  .about .content .btn-learn-more:hover {
+    background: #1e396b;
+    color: #fff;
+    text-decoration: none;
+  }
 
-.box p{
-  font-size: 1.2em;
-  color: slategray;
-}
+  .box p{
+    font-size: 1.2em;
+    color: slategray;
+  }
 
 
-/* unique venue card style  */
-.Unique-Venues-container{
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
+  /* unique venue card style  */
+  .Unique-Venues-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
 
  .image-container {
     overflow: hidden;
@@ -394,112 +394,120 @@
     object-fit: cover;
     transition: transform 0.3s ease-in-out;
     width: 100%;
-}
+  }
 
   .image-container:hover img {
     transform: scale(1.1); /* Zoom effect on hover */
   }
 
-@media screen and (max-width: 767px){
- .image-container img {
-    width: 100%;
-}
+  @media screen and (max-width: 767px){
+    .image-container img {
+      width: 100%;
+    }
 
-.vendor-li {
-    width: calc(427% / var(--visible-slides));
-}
-}
-@media screen and (max-width: 575px){
-.unique-vanue-card {
+    .vendor-li {
+      width: calc(427% / var(--visible-slides));
+    }
+  }
+  @media screen and (max-width: 575px){
+    .unique-vanue-card {
       margin: 0px 15px;
+    }
+
+    .vender-cards .col-lg-4 {
+      padding: 0px 20px;
+    }
+    .static-text-card{
+      padding: 20px 20px 0px 20px;
+    }
+    .section-title {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
 
-  .vender-cards .col-lg-4 {
-padding: 0px 20px;
-  }
-  .static-text-card{
-    padding: 20px 20px 0px 20px;
-  }
-  .section-title {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-}
+  @media (max-width: 499px){
 
-@media (max-width: 499px){
-
-.vendor-ul {
-    padding-left: 80px !important;
-    padding-right: 80px !important;
-}
-.vendor-slider {
-    margin: 0px 20px 0px 0px;
-}
-}
+    .vendor-ul {
+        padding-left: 80px !important;
+        padding-right: 80px !important;
+    }
+    .vendor-slider {
+        margin: 0px 20px 0px 0px;
+    }
+  }
 
   .unique-vanue-card {
-      position: relative;
-      box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
-      border: 0.5px solid #e2e1e1;
-      height: 100%;
+    position: relative;
+    box-shadow: 0px 0 32px rgb(1 41 112 / 8%);
+    border: 0.5px solid #e2e1e1;
+    height: 100%;
   }
   .unique-vanue-card a{
     text-decoration: none;
   }
 
   .unique-vanue-tumb {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0; 
-      background: white;
-      overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; 
+    background: white;
+    overflow: hidden;
   }
 
   .unique-vanue-des {
-      padding: 20px;
-      background-color: white;
+    padding: 20px;
+    background-color: white;
   }
 
-    .unique-vanue-des h4 {
+  .unique-vanue-des h4 {
     text-align: center;
     color: black;
     padding-bottom: 10px;
   }
   .unique-vanue-des p {
-      font-size: 15px;
-      line-height: 22px;
-      color: black;
+    font-size: 15px;
+    line-height: 22px;
+    color: black;
+  }
+
+  .book-now-button{
+    position: absolute;
+    bottom: 1%;
+    left: 24%;
+    background: #f29f37;
+    border: none;
+    color: #1e396b;
+    font-size: 1.3em;
+    font-weight: 500;
+    border-radius: 15px;
+    padding: 5px 25px;
   }
 
 
 </style>
 
 <div class="mt-5">
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-      <li data-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-bs-slide-to="1"></li>
-      <li data-target="#myCarousel" data-bs-slide-to="2"></li>
-      <li data-target="#myCarousel" data-bs-slide-to="3"></li>
-    </ul>
-
+   <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
     <!-- Slides -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <%= image_tag("banner-1-upd.jpg", alt:"Image 1", class:"d-block w-100") %>
+    <% if Spree::Slider.all.count > 0 %>
+      <div class="carousel-inner">
+        <% Spree::Slider.all.each_with_index do |slider, index| %>
+          <div class="carousel-item <%= index == 0 ? 'active' : '' %>">
+            <%= image_tag(slider.image, alt: slider.title, class: 'd-block w-100') %>
+            <a href="<%= slider.url %>" class="slider-button book-now-button btn btn-secondary shadow-sm">Book Now</a>
+          </div>
+        <% end %>
+
       </div>
-      <div class="carousel-item">
-        <%= image_tag("banner-2-upd.jpg", alt:"Image 2", class:"d-block w-100") %>
+    <% else %>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <%= image_tag("banner-1-upd.jpg", alt:"Image 1", class:"d-block w-100") %>
+        </div>
       </div>
-      <div class="carousel-item">
-        <%= image_tag("banner-3-upd.jpg", alt:"Image 3", class:"d-block w-100") %>
-      </div>
-      <div class="carousel-item">
-        <%= image_tag("banner-4-upd.jpg", alt:"Image 4", class:"d-block w-100") %>
-      </div>
-    </div>
+    <% end %>
 
     <!-- Left and right controls -->
     <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
