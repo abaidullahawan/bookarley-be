@@ -39,6 +39,8 @@ Rails.application.routes.draw do
   resources :blog_reviews
 
   resources :blog_replies
+
+  resources :sliders
   
   devise_scope :spree_user do
     get '/login', to: 'user_sessions#new', as: :login
