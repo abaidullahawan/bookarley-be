@@ -19,7 +19,7 @@
     margin-right: 10px;
     margin-left: 20px;
     background: white;
-    width: 300px;
+    width: 225px;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
     border-top-left-radius: 5px !important;
@@ -43,7 +43,7 @@
   .ctg-list-text{
     color: black;
     font-weight: 500;
-    margin-left: 25px;
+    margin-left: 22px;
     font-size: 1.35rem;
   }
 
@@ -140,6 +140,10 @@
   .sidemenu{
     font-size: 1em !important;
   }
+
+  .seller-btn{
+    padding: 8px 22px;
+  }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top mobile-nav-hidden py-2" style="z-index: 2; margin-top: 73px; background: #1e396b;">
@@ -233,116 +237,98 @@
                 </div>
             </div>
 
-           <div class="navbar-nav" style="margin-left: 7px;">
-              <% Spree::Taxonomy.all.each_with_index do |taxonomy, index| %>
+           <div class="navbar-nav">
+              <% Spree::Taxonomy.all.each do |taxonomy| %>
                 <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
                 <% invitation_permalink = invitation_cards_path %>
-                <% if index < 4 %>
-                  <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
-                    <% if taxonomy.name.downcase.include?('e-invitations') %>
-                      <%= link_to invitation_permalink do %>
-                        <span class="taxonomy-name"><%= taxonomy.name %></span>
-                      <%end%>
-                    <% else %>
-                      <%= link_to "/t/#{taxonomy_permalink}" do %>
-                        <span class="taxonomy-name"><%= taxonomy.name %></span>
-                      <%end%>
-                    <% end %>  
-                    <% parent_taxons = taxonomy.root.children %>
-                    <% if parent_taxons.any? %>
-                      <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2">
-                        <div class="parent-taxon row">
-                          <div class="col-lg-9">
-                            <div class="row">
-                              <% if taxonomy.name != 'E-Invitations' %>
-                                <% taxonomy.root.children.each do |parent_taxon| %>
-                                  <div class="col-md-4">
-                                  <% parent_permalink = parent_taxon&.permalink%>
-                                    <%= link_to "/t/#{parent_permalink}", style:"color: #1E396B;" do %>
-                                      <%= parent_taxon.name %>
-                                    <%end%>
-                                    <div class="child-taxons mb-5">
-                                      <% parent_taxon.children.each do |child_taxon| %>
-                                        <%child_permalink = child_taxon&.permalink%>
-                                        <%= link_to "/t/#{child_permalink}" do %>
-                                          <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
-                                        <%end%>
-                                      <% end %>
-                                    </div>
-                                  </div>
-                                <% end %>
-                              <% else %>
-                                <% InvitationCategory.where(parent_id: nil).each do |invitation_category| %>
-                                  <div class="col-md-4">
-                                    <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_category.id }), style:"color: #1e396b;" do %>
-                                      <%= invitation_category.name %>
+                <div class="nav-item nav-link nav-gap ctg-list-text active taxonomy-dropdown">
+                  <% if taxonomy.name.downcase.include?('e-invitations') %>
+                    <%= link_to invitation_permalink do %>
+                      <span class="taxonomy-name"><%= taxonomy.name %></span>
+                    <%end%>
+                  <% else %>
+                    <%= link_to "/t/#{taxonomy_permalink}" do %>
+                      <span class="taxonomy-name"><%= taxonomy.name %></span>
+                    <%end%>
+                  <% end %>  
+                  <% parent_taxons = taxonomy.root.children %>
+                  <% if parent_taxons.any? %>
+                    <div class="taxonomy-dropdown-content shadow py-2 px-4 mt-2">
+                      <div class="parent-taxon row">
+                        <div class="col-lg-9">
+                          <div class="row">
+                            <% if taxonomy.name != 'E-Invitations' %>
+                              <% taxonomy.root.children.each do |parent_taxon| %>
+                                <div class="col-md-4">
+                                <% parent_permalink = parent_taxon&.permalink%>
+                                  <%= link_to "/t/#{parent_permalink}", style:"color: #1E396B;" do %>
+                                    <%= parent_taxon.name %>
+                                  <%end%>
+                                  <div class="child-taxons mb-5">
+                                    <% parent_taxon.children.each do |child_taxon| %>
+                                      <%child_permalink = child_taxon&.permalink%>
+                                      <%= link_to "/t/#{child_permalink}" do %>
+                                        <span class="child-taxons-name my-2"><%= child_taxon.name %></span>
+                                      <%end%>
                                     <% end %>
-                                    <div class="child-taxons mb-5">
-                                      <% InvitationCategory.where(parent_id: invitation_category.id)&.each do |invitation_sub_category| %>
-                                        <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_sub_category.id }) do %>
-                                          <span class="child-taxons-name my-2"><%= invitation_sub_category.name %></span>
-                                        <% end %>
-                                      <% end  %>
-                                    </div>
                                   </div>
-                                <% end %>
+                                </div>
                               <% end %>
-                            </div>
-                          </div>
-                          <div class="col-lg-3 d-flex justify-content-center align-items-center">
-                            <% if taxonomy.name == 'Venues' %>
-                              <%= image_tag('venue-background.jpg', class: "w-100 h-100") %>
-                            <% elsif taxonomy.name == 'Vendors' %>  
-                              <%= image_tag('vendor-background.jpg', class: "w-100 h-100") %>
-                            <% elsif taxonomy.name == 'E-Invitations' %>  
-                              <%= image_tag('e-invite-background.jpg', class: "w-100 h-100") %>
-                            <% elsif taxonomy.name == 'Party Suppliers' %>  
-                              <%= image_tag('party.png', class: "w-100 h-100") %>
-                            <% elsif taxonomy.name == 'Real Estate' %>  
-                              <%= image_tag('real-estate-background.jpg', class: "w-100 h-100") %>
-                            <% elsif taxonomy.name == 'Online Shopping' %>  
-                              <%= image_tag('online_shopping.jpg', class: "w-100 h-100") %>
                             <% else %>
-                              <% if taxonomy.icon.attached? %>
-                                <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                              <% InvitationCategory.where(parent_id: nil).each do |invitation_category| %>
+                                <div class="col-md-4">
+                                  <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_category.id }), style:"color: #1e396b;" do %>
+                                    <%= invitation_category.name %>
+                                  <% end %>
+                                  <div class="child-taxons mb-5">
+                                    <% InvitationCategory.where(parent_id: invitation_category.id)&.each do |invitation_sub_category| %>
+                                      <%= link_to invitation_cards_path(q: { invitation_categories_id_eq: invitation_sub_category.id }) do %>
+                                        <span class="child-taxons-name my-2"><%= invitation_sub_category.name %></span>
+                                      <% end %>
+                                    <% end  %>
+                                  </div>
+                                </div>
                               <% end %>
                             <% end %>
                           </div>
                         </div>
+                        <div class="col-lg-3 d-flex justify-content-center align-items-center">
+                          <% if taxonomy.name == 'Venues' %>
+                            <%= image_tag('venue-background.jpg', class: "w-100 h-100") %>
+                          <% elsif taxonomy.name == 'Vendors' %>  
+                            <%= image_tag('vendor-background.jpg', class: "w-100 h-100") %>
+                          <% elsif taxonomy.name == 'E-Invitations' %>  
+                            <%= image_tag('e-invite-background.jpg', class: "w-100 h-100") %>
+                          <% elsif taxonomy.name == 'Party Suppliers' %>  
+                            <%= image_tag('party.png', class: "w-100 h-100") %>
+                          <% elsif taxonomy.name == 'Real Estate' %>  
+                            <%= image_tag('real-estate-background.jpg', class: "w-100 h-100") %>
+                          <% elsif taxonomy.name == 'Online Shopping' %>  
+                            <%= image_tag('online_shopping.jpg', class: "w-100 h-100") %>
+                          <% else %>
+                            <% if taxonomy.icon.attached? %>
+                              <%= render(ImageComponent.new(image: taxonomy.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                            <% end %>
+                          <% end %>
+                        </div>
                       </div>
-                    <% end %>
-                  </div>
-                <% end %>
-              <% end %>
-              <div class="nav-item nav-link nav-gap ctg-list-text text-white taxonomy-dropdown-hover">
-                <% taxonomies = Spree::Taxonomy.all %>
-                <% if taxonomies.size >= 4 %>
-                  <span class="taxonomy-name">More <i class="fas fa-angle-down"></i></span>
-                  <div class="more-submenu">
-                    <div class="dropdown-wrapper">
-                      <% taxonomies.drop(4).each do |taxonomy| %>
-                        <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink %>
-                        <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-link py-3" do %>
-                          <div class="py-2" style="margin-left: 8px; color: #3f3b3b;"><%= taxonomy.name %></div>
-                        <% end %>
-                      <% end %>
                     </div>
-                  </div>
-                <% end %>
-              </div>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
         </div>
        
 
         <div class="navbar-nav" style="margin-right: 26px">
-  <% if !spree_current_user || !spree_current_user.admin? %>
-  <% if spree_current_user.present? %>
-    <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
-    <%else%>
-    <%= link_to "Become a Seller", login_path, class: "px-5 py-3 seller-btn btn btn-lg" %>
-    <% end %>
-  <% end %>
-</div>
+          <% if !spree_current_user || !spree_current_user.admin? %>
+            <% if spree_current_user.present? %>
+              <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
+            <%else%>
+              <%= link_to "Become a Seller", login_path, class: "px-5 py-3 seller-btn btn btn-lg" %>
+            <% end %>
+          <% end %>
+        </div>
     </div>
 </nav>
 
