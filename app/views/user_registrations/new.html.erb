@@ -58,9 +58,12 @@
   height: auto;
   width: 70px;
   line-height: 100px;
-  
 }
 
+.error-message{
+color: red;
+font-size: 12px;
+}
 </style>
 
 <article class="auth-main-container row" id="new-customer">
@@ -81,10 +84,13 @@
     </div>
 
     <div class="auth-form__input-wrapper">
-      <div class="text-input">
-        <%= f.label :password, "#{t("spree.password")}:" %>
-        <%= f.password_field :password, placeholder: "Enter Password" %>
-      </div>
+        <div class="text-input">
+          <%= f.label :password, "#{t("spree.password")}:" %>
+          <%= f.password_field :password, placeholder: "Enter Password" %>
+        </div>
+        <div class="error-message" id="password-error" style="display: none;">
+          Password must be at least 6 characters long and contain at least 1 alphabet and special character.
+        </div>
     </div>
 
     <div class="auth-form__input-wrapper">
@@ -95,7 +101,7 @@
     </div>
 
     <div class="auth-form__input-wrapper">
-      <%= f.button t("spree.create"), name: :commit, class: 'button-primary button-primary--full-width' %>
+      <%= f.button t("spree.create"), name: :commit, class: 'button-primary button-primary--full-width sign-up-submit' %>
     </div>
 <div class="form_bottom_text">
     <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
@@ -109,3 +115,25 @@
 
 
 </article>
+
+<script>
+  $(document).ready(function() {
+    $('.sign-up-submit').on('click', function(e){
+      var $passwordInput = $('#spree_user_password');
+      var $passwordError = $('#password-error');
+  
+        var password = $passwordInput.val();
+  
+        // Check if the password meets the criteria
+        var isValid = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/.test(password);
+  
+        // Show/hide the error message based on validation result
+        if (isValid) {
+          $passwordError.hide();
+        } else {
+          $passwordError.show();
+          e.preventDefault()
+        }
+    })
+  });
+</script>

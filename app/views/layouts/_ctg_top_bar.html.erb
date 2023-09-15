@@ -332,11 +332,17 @@
               </div>
             </div>
         </div>
+       
+
         <div class="navbar-nav" style="margin-right: 26px">
-          <%if !spree_current_user || !spree_current_user.admin? %>
-            <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
-          <%end%>
-        </div>
+  <% if !spree_current_user || !spree_current_user.admin? %>
+  <% if spree_current_user.present? %>
+    <a href="/seller_information" class="px-5 py-3 seller-btn btn btn-lg" type="button">Become a Seller</a>
+    <%else%>
+    <%= link_to "Become a Seller", login_path, class: "px-5 py-3 seller-btn btn btn-lg" %>
+    <% end %>
+  <% end %>
+</div>
     </div>
 </nav>
 
