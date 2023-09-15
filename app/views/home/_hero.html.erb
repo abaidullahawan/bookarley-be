@@ -626,15 +626,20 @@
       <ul class="vendor-ul">
         <% Spree::Taxonomy.where(name: "Vendors").each do |taxonomy| %>
           <% taxonomy.root.children.each do |parent_taxon| %>
+            <% parent_taxon_permalink = parent_taxon&.permalink %>
             <li class="vendor-li card shadow-sm d-grid">
-              <div class="image-section">
-                <% if parent_taxon&.icon&.attached? %>
-                  <%= render(ImageComponent.new(image: parent_taxon.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                <div class="image-section">
+                  <%= link_to "/t/#{parent_taxon_permalink}", style:"text-decoration: none;" do %>
+                    <% if parent_taxon&.icon&.attached? %>
+                      <%= render(ImageComponent.new(image: parent_taxon.icon, size: :small, itemprop: "image", style: "width: 100%;")) %>
+                    <% end %>
+                  <% end %>
+                </div>
+                <%= link_to "/t/#{parent_taxon_permalink}", style:"text-decoration: none; margin-top: 25px; color: black; width: 100%;" do %>
+                  <div class="text-section">
+                    <%= parent_taxon.name %>
+                  </div> 
                 <% end %>
-              </div>
-              <div class="text-section">
-                <%= parent_taxon.name %>
-              </div>  
             </li>
           <% end %>
         <% end %>

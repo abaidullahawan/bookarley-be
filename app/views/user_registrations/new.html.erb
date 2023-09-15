@@ -1,5 +1,5 @@
 <style>
-.auth-main-container {
+  .auth-main-container {
     width: 65%;
     display: flex;
     flex-direction: row;
@@ -7,114 +7,147 @@
     margin: 0 auto;
     padding: 6em 2em;
     justify-content: space-between;
-}
-.text-input input {
-    background: transparent;
+  }
+  .text-input input {
+    background: #e8f0fe;
     border-bottom: 2px solid #1e396b !important;
     outline: none !important;
     border: none;
-}
-.button-primary{
-  background-color: #1e396b;
-}
-.form_bottom_text{
-  font-size: 15px;
-  text-align: center;
-}
+  }
 
-@media  screen and (max-width: 1023px){
-  .auth-main-container {
-    width: 100% !important;
-}
-}
-@media  screen and (max-width: 767px){
-  .form_col {
-    padding: 50px 20px !important;
-}
- .image_col img {
-     padding-left: 0px !important;
-     margin-top: 30px;
-}
-}
+  .button-primary{
+    background-color: #1e396b;
+  }
+  .form_bottom_text{
+    font-size: 15px;
+    text-align: center;
+  }
 
-.form_col{
-  padding: 60px 30px;
-}
-.image_col img {
+  @media  screen and (max-width: 1023px){
+    .auth-main-container {
+      width: 100% !important;
+    }
+  }
+
+  @media  screen and (max-width: 767px){
+    .form_col {
+      padding: 50px 20px !important;
+    }
+  .image_col img {
+      padding-left: 0px !important;
+      margin-top: 30px;
+    }
+  }
+
+  .form_col{
+    padding: 60px 30px;
+  }
+
+  .image_col img {
     padding-left: 50px;
     width: 100% 
-}
+  }
 
-.form_title{
-  text-align: center;
-  padding-bottom: 30px;
-  text-transform: capitalize;
-  font-size: 24px;
-  line-height: 1;
-  font-weight: 600;
-  color: #37517e;
-}
-.form_logo img{
-  height: auto;
-  width: 70px;
-  line-height: 100px;
-}
+  .form_title{
+    text-align: center;
+    padding-bottom: 30px;
+    text-transform: capitalize;
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 600;
+    color: #37517e;
+  }
 
-.error-message{
-color: red;
-font-size: 12px;
-}
+  .form_logo img{
+    height: auto;
+    width: 70px;
+    line-height: 100px;
+    
+  }
+
+  .password-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e8f0fe;
+  }
+
+  .password-icon {
+    cursor: pointer;
+    margin-right: 12px;
+  }
+
+  .border-field{
+    border-bottom: 2px solid #1e396b !important;
+  }
+
+  .text-input input{
+    border: solid 1px #e8f0fe !important;
+  }
+
+  .error-message{
+    color: red;
+    font-size: 12px;
+  }
 </style>
 
 <article class="auth-main-container row" id="new-customer">
-<div class="col-lg-6 form_col shadow">
-<div class="form_logo text-center pb-4">
-<%= image_tag("bookarley-logo.png", alt:"logo") %>
-</div>
-  <h1 class="form_title">Registration Form</h1>
-
-  <%= render 'shared/error_messages', target: resource %>
-
-  <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
-    <div class="auth-form__input-wrapper">
-      <div class="text-input">
-        <%= f.label :email, "#{t("spree.email")}:" %>
-        <%= f.email_field :email, placeholder: 'name@example.com' %>
-      </div>
+  <div class="col-lg-6 form_col shadow">
+    <div class="form_logo text-center pb-4">
+      <%= image_tag("bookarley-logo.png", alt:"logo") %>
     </div>
+    <h1 class="form_title">Registration Form</h1>
 
-    <div class="auth-form__input-wrapper">
+    <%= render 'shared/error_messages', target: resource %>
+
+    <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
+      <div class="auth-form__input-wrapper border-field">
+        <div class="text-input">
+          <%= f.label :email, "#{t("spree.email")}:" %>
+          <%= f.email_field :email, placeholder: 'username@example.com' %>
+        </div>
+        
+      </div>
+
+      <div class="auth-form__input-wrapper border-field">
         <div class="text-input">
           <%= f.label :password, "#{t("spree.password")}:" %>
-          <%= f.password_field :password, placeholder: "Enter Password" %>
+          <div class="password-display">
+            <%= f.password_field :password, id: "password-field", placeholder: "Enter a Password" %>
+            <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
+          </div>
         </div>
         <div class="error-message" id="password-error" style="display: none;">
           Password must be at least 6 characters long and contain at least 1 alphabet and special character.
         </div>
-    </div>
-
-    <div class="auth-form__input-wrapper">
-      <div class="text-input">
-        <%= f.label :password_confirmation, "#{t("spree.confirm_password")}:" %>
-        <%= f.password_field :password_confirmation, placeholder: "Enter Confirm Password" %>
       </div>
-    </div>
 
-    <div class="auth-form__input-wrapper">
-      <%= f.button t("spree.create"), name: :commit, class: 'button-primary button-primary--full-width sign-up-submit' %>
-    </div>
-<div class="form_bottom_text">
-    <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
-    </div>
-  <% end %>
+
+      <div class="auth-form__input-wrapper border-field">
+        <div class="text-input">
+          <%= f.label :password_confirmation, "Password Confirmation:" %>
+          <div class="password-display">
+            <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
+            <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-form__input-wrapper">
+        <%= f.button t("spree.create"), name: :commit, class: 'sign-up-submit button-primary button-primary--full-width' %>
+      </div>
+      <div class="form_bottom_text">
+        <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
+      </div>
+    <% end %>
   </div>
 
-<div class= "col-lg-6 image_col" >
-<%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
+  <div class= "col-lg-6 image_col" >
+    <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
   </div>
-
-
 </article>
+
+
 
 <script>
   $(document).ready(function() {
@@ -135,5 +168,36 @@ font-size: 12px;
           e.preventDefault()
         }
     })
+
+    const confirmField = document.getElementById("confirm-field");
+    const confirmToggle = document.getElementById("confirm-toggle");
+
+    debugger
+    const passwordField = document.getElementById("password-field");
+    const passwordToggle = document.getElementById("password-toggle");
+
+    passwordToggle.addEventListener("click", function() {
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        passwordToggle.classList.remove("fa-eye-slash");
+        passwordToggle.classList.add("fa-eye");
+      } else {
+        passwordField.type = "password";
+        passwordToggle.classList.remove("fa-eye");
+        passwordToggle.classList.add("fa-eye-slash");
+      }
+    });
+
+    confirmToggle.addEventListener("click", function() {
+      if (confirmField.type === "password") {
+        confirmField.type = "text";
+        confirmToggle.classList.remove("fa-eye-slash");
+        confirmToggle.classList.add("fa-eye");
+      } else {
+        confirmField.type = "password";
+        confirmToggle.classList.remove("fa-eye");
+        confirmToggle.classList.add("fa-eye-slash");
+      }
+    });
   });
 </script>

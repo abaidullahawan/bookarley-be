@@ -22,7 +22,15 @@ class AutocompleteResultsController < StoreController
   def autocomplete_products
     if params[:keywords].present?
       searcher = build_searcher(params.merge(per_page: 5))
-      searcher.retrieve_products
+      product_results = searcher.retrieve_products
+
+      name_results = Spree::Product
+        .where(Spree::Product.arel_table[:name].matches("%#{params[:keywords]}%"))
+        .limit(5)
+
+      combined_results = product_results | name_results
+
+      combined_results
     else
       Spree::Product.none
     end
