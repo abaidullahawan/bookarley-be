@@ -64,6 +64,19 @@ button.seller_btn input {
   font-weight: 600;
   color: #37517e;
 }
+.phone_error_message{
+  color: red;
+}
+input.no-arrows {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield; /* Other browsers */
+}
+/* Remove up and down arrows in WebKit-based browsers (Chrome, Safari) for the specific number input field */
+input.no-arrows::-webkit-inner-spin-button,
+input.no-arrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
 </style>
 
 <section class="h-100">
@@ -87,14 +100,14 @@ button.seller_btn input {
                             <div class="row">
                                 <div class="col-md-12 mb-4"> 
                                     <div class="form-outline">
-                                        <%= f.label :full_name, "Full Name", class:"form-label" %>
+                                        <%= f.label :full_name, "Full Name *", class:"form-label" %>
                                         <%= f.text_field :full_name, placeholder: 'Enter Full Name',  class:"form-control text-input form-control-lg", required: true %>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :email, "Email", class:"form-label" %>
+                                        <%= f.label :email, "Email *", class:"form-label" %>
                                         <%= f.email_field :email, placeholder: 'example@gmail.com',  class:"form-control text-input form-control-lg", required: true %>
                                     </div>
                                 </div>
@@ -104,13 +117,13 @@ button.seller_btn input {
                                <div class="col-md-12 mb-4">
                                    <div class="form-outline">
                                         <%= f.label :date_of_birth, "Date of Birth", class: "form-label" %>
-                                        <%= f.date_field :date_of_birth, class: "form-control text-input form-control-lg", required: true %>
+                                        <%= f.date_field :date_of_birth, class: "form-control text-input form-control-lg" %>
                                     </div>
                                 </div>
 
                                  <div class="col-md-12 mb-2">
                                       <div class="form-outline">
-                                        <%= f.label :gender, "Gender", class: "form-label" %><br>
+                                        <%= f.label :gender, "Gender *", class: "form-label" %><br>
                                         <%= f.radio_button :gender, "male", required: true %> <%= f.label :gender_male, "Male", class: "radio_btn" %>
                                         <%= f.radio_button :gender, "female" %> <%= f.label :gender_female, "Female", class: "radio_btn" %>
                                       </div>
@@ -120,13 +133,16 @@ button.seller_btn input {
                             <div class="row">
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :contact_information, "Phone Number", class: "form-label" %>
-                                        <%= f.text_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg", required: true %>
+                                        <%= f.label :contact_information, "Phone Number *", class: "form-label" %>
+                                        <%= f.number_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg no-arrows", id: "phone_for_country", required: true %>
                                     </div>
+                                      <div class="phone_error_message" id="phone-error" style="display: none;">
+                                        Enter Valid Phone Number
+                                      </div>
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :location, "Location", class: "form-label" %>
+                                        <%= f.label :location, "Location *", class: "form-label" %>
                                         <%= f.select :location, options_for_select(["Select City", "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"]), {}, class: "form-control cities_list form-control-lg", required: true %>
                                     </div>
                                 </div>
@@ -136,19 +152,19 @@ button.seller_btn input {
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
                                     <%= f.label :profile_picture, "Profile Picture", class: "form-label" %>
-                                    <%= f.file_field :profile, class: "form-control upload_img form-control-lg", required: true %>
+                                    <%= f.file_field :profile, class: "form-control upload_img form-control-lg" %>
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
                                     <%= f.label :bio, "Bio", class: "form-label" %>
-                                    <%= f.text_area :bio, placeholder: 'Enter your bio', class: "form-control text-input form-control-lg", required: true %>
+                                    <%= f.text_area :bio, placeholder: 'Enter your bio', class: "form-control text-input form-control-lg" %>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-start pt-3">
-                                <button type="button" class="btn seller_btn"> <%= f.submit %></button>
+                                <button type="button" class="btn seller_btn phone_length"> <%= f.submit %></button>
                             </div>
                     <% end %>
                     <% else %>
@@ -164,3 +180,21 @@ button.seller_btn input {
   </div>
 
 </section>
+
+<script>
+  $(document).ready(function() {
+    var $phoneInput = $('#phone_for_country');
+    var $phoneError = $('#phone-error');
+    
+    $phoneInput.on('input', function(e) {
+      var phoneNumber = $phoneInput.val();
+      // Show/hide the error message based on validation result
+      if (phoneNumber.length >= 3 && phoneNumber.length <= 11) {
+        $phoneError.show();
+      } else {
+        $phoneError.hide();
+        e.preventDefault();
+      }
+    });
+  });
+</script>
