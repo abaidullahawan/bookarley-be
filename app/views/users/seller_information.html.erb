@@ -77,6 +77,11 @@ input.no-arrows::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
 }
+.mendatory_start:after{
+content: " *";
+  color: red;
+}
+
 </style>
 
 <section class="h-100">
@@ -100,14 +105,14 @@ input.no-arrows::-webkit-outer-spin-button {
                             <div class="row">
                                 <div class="col-md-12 mb-4"> 
                                     <div class="form-outline">
-                                        <%= f.label :full_name, "Full Name *", class:"form-label" %>
+                                        <%= f.label :full_name, "Full Name", class:"form-label mendatory_start" %>
                                         <%= f.text_field :full_name, placeholder: 'Enter Full Name',  class:"form-control text-input form-control-lg", required: true %>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :email, "Email *", class:"form-label" %>
+                                        <%= f.label :email, "Email", class:"form-label mendatory_start" %>
                                         <%= f.email_field :email, placeholder: 'example@gmail.com',  class:"form-control text-input form-control-lg", required: true %>
                                     </div>
                                 </div>
@@ -123,7 +128,7 @@ input.no-arrows::-webkit-outer-spin-button {
 
                                  <div class="col-md-12 mb-2">
                                       <div class="form-outline">
-                                        <%= f.label :gender, "Gender *", class: "form-label" %><br>
+                                        <%= f.label :gender, "Gender", class: "form-label mendatory_start" %><br>
                                         <%= f.radio_button :gender, "male", required: true %> <%= f.label :gender_male, "Male", class: "radio_btn" %>
                                         <%= f.radio_button :gender, "female" %> <%= f.label :gender_female, "Female", class: "radio_btn" %>
                                       </div>
@@ -133,8 +138,8 @@ input.no-arrows::-webkit-outer-spin-button {
                             <div class="row">
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :contact_information, "Phone Number *", class: "form-label" %>
-                                        <%= f.number_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg no-arrows", id: "phone_for_country", required: true %>
+                                        <%= f.label :contact_information, "Phone Number", class: "form-label mendatory_start" %>
+                                        <%= f.text_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg no-arrows", id: "phone_for_country", required: true %>
                                     </div>
                                       <div class="phone_error_message" id="phone-error" style="display: none;">
                                         Enter Valid Phone Number
@@ -142,7 +147,7 @@ input.no-arrows::-webkit-outer-spin-button {
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <div class="form-outline">
-                                        <%= f.label :location, "Location *", class: "form-label" %>
+                                        <%= f.label :location, "Location", class: "form-label mendatory_start" %>
                                         <%= f.select :location, options_for_select(["Select City", "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"]), {}, class: "form-control cities_list form-control-lg", required: true %>
                                     </div>
                                 </div>
@@ -189,7 +194,7 @@ input.no-arrows::-webkit-outer-spin-button {
     $phoneInput.on('input', function(e) {
       var phoneNumber = $phoneInput.val();
       // Show/hide the error message based on validation result
-      if (phoneNumber.length >= 3 && phoneNumber.length <= 11) {
+      if (phoneNumber.length >= 3 && phoneNumber.length <= 10) {
         $phoneError.show();
       } else {
         $phoneError.hide();
