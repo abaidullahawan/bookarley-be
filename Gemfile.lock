@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/abaidullahawan/solidus.git
-  revision: dd04940c4844fadcab872e67ef2a4bf50590a73f
-  tag: v0.0.6
+  revision: 0bf9f81a7cf1f7aa57ed2440e49829887402bf87
+  tag: v0.0.7
   specs:
     solidus (4.2.0.dev)
       solidus_api (= 4.2.0.dev)
@@ -156,7 +156,7 @@ GEM
     airbrussh (1.4.2)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
-    autoprefixer-rails (10.4.13.0)
+    autoprefixer-rails (10.4.15.0)
       execjs (~> 2)
     awesome_nested_set (3.5.0)
       activerecord (>= 4.0.0, < 7.1)
@@ -240,7 +240,7 @@ GEM
     discard (1.3.0)
       activerecord (>= 4.2, < 8)
     erubi (1.12.0)
-    execjs (2.8.1)
+    execjs (2.9.1)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -290,7 +290,7 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    kt-paperclip (7.2.0)
+    kt-paperclip (7.2.1)
       activemodel (>= 4.2.0)
       activesupport (>= 4.2.0)
       marcel (~> 1.0.1)
@@ -496,7 +496,7 @@ GEM
     terrapin (0.6.0)
       climate_control (>= 0.0.3, < 1.0)
     thor (1.2.2)
-    tilt (2.2.0)
+    tilt (2.3.0)
     timeout (0.4.0)
     tinymce-rails (5.10.2)
       railties (>= 3.1.1)
