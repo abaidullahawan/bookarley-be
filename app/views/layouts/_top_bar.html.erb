@@ -504,6 +504,9 @@
                   <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
                   <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
                 <% end %>
+                <% if spree_current_user.has_spree_role?('seller') %>
+                  <a href="/admin/products" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-user-cog profile-icons"></i> Seller Dashboard </a>
+                <% end %>
                 <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
               </div>
             </div>
