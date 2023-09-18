@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :invitation_categories
+  resources :subscriptions, only: [:new, :create, :index]
 
   get '/seller_information', to: 'users#seller_information', as: :seller_information
 
