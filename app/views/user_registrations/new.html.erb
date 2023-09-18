@@ -152,7 +152,7 @@
 <script>
   $(document).ready(function() {
     $('.sign-up-submit').on('click', function(e){
-      var $passwordInput = $('#spree_user_password');
+      var $passwordInput = $('#password-field');
       var $passwordError = $('#password-error');
   
         var password = $passwordInput.val();
@@ -172,7 +172,6 @@
     const confirmField = document.getElementById("confirm-field");
     const confirmToggle = document.getElementById("confirm-toggle");
 
-    debugger
     const passwordField = document.getElementById("password-field");
     const passwordToggle = document.getElementById("password-toggle");
 

@@ -102,7 +102,7 @@
       <div class="auth-form__input-wrapper border-field">
         <div class="text-input">
           <%= f.label :email, "#{t("spree.email")}:" %>
-          <%= f.email_field :email, placeholder: 'username@example.com' %>
+          <%= f.email_field :email, placeholder: 'username@example.com', autocomplete: 'off' %>
         </div>
       </div>
 
@@ -110,7 +110,7 @@
         <div class="text-input">
           <%= f.label :password, "#{t("spree.password")}:" %>
           <div class="password-display">
-            <%= f.password_field :password, id: "password-field", placeholder: "Enter your Password" %>
+            <%= f.password_field :password, id: "password-field", placeholder: "Enter your Password", autocomplete: 'off' %>
             <i class="fas fa-eye-slash" id="password-toggle"></i>
           </div>
         </div>

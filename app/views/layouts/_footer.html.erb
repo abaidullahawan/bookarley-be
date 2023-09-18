@@ -30,12 +30,17 @@
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
     text-align: left;
   }
-
+  .subscription_field::placeholder {
+    color: grey;
+    font-weight: 400;
+}
   #footer .footer-newsletter form input[type=email] {
     border: 0;
-    padding: 4px 8px;
+    padding: 10px 8px;
     width: calc(100% - 100px);
     outline: none;
+    font-size: 15px;
+    font-weight: 500;
   }
 
   #footer .footer-newsletter form input[type=submit] {
@@ -199,9 +204,12 @@
         <div class="col-lg-6">
           <h4>Join Our Newsletter</h4>
           <p>We have thousands of verified venues and vendors from all over Pakistan</p>
-          <form action="" method="post">
-            <input type="email" name="email"><input type="submit" value="Subscribe">
-          </form>
+         
+            <%= form_with model: @subscription, url: subscriptions_path, method: :post do |form| %>
+                <%= form.email_field :email, class: 'form-control', placeholder: "Your Email Address", class: "subscription_field" %>
+                <%= form.submit 'Subscribe', class: 'btn btn-primary' %>
+            <% end %>
+
         </div>
       </div>
     </div>
