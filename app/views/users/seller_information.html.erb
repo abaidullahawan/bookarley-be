@@ -1,86 +1,86 @@
 <style>
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-font-size: 1rem;
-line-height: 2.15;
-padding-left: .75em;
-padding-right: .75em;
-}
-.card-registration .select-arrow {
-top: 13px;
-}
+  .card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+  }
+  .card-registration .select-arrow {
+  top: 13px;
+  }
 
-.text-input {
-    background: transparent;
-    border-bottom: 2px solid #1e396b !important;
-    outline: none !important;
-    border: none;
-    border-radius: 0px;
-}
+  .text-input {
+      background: transparent;
+      border-bottom: 2px solid #1e396b !important;
+      outline: none !important;
+      border: none;
+      border-radius: 0px;
+  }
 
-.seller_info .form-label {
-    font-size: 15px;
-}
-.upload_img{
-  padding: 10px 15px;
-  border: 2px solid #1e396b;
-}
-.cities_list {
-    height: 45px !important;
-  border: 2px solid #1e396b;
-}
-.radio_btn {
-    font-size: 15px;
-}
-input[type=file]::file-selector-button:hover {
-  background-color: #81ecec !important;
-  border: 2px solid #00cec9 !important;
-}
+  .seller_info .form-label {
+      font-size: 15px;
+  }
+  .upload_img{
+    padding: 10px 15px;
+    border: 2px solid #1e396b;
+  }
+  .cities_list {
+      height: 45px !important;
+    border: 2px solid #1e396b;
+  }
+  .radio_btn {
+      font-size: 15px;
+  }
+  input[type=file]::file-selector-button:hover {
+    background-color: #81ecec !important;
+    border: 2px solid #00cec9 !important;
+  }
 
-button.seller_btn input {
-    border: none;
-    background: #1e396b;
-    padding: 15px 30px;
-    border-radius: 2px;
-    font-size: 15px;
+  button.seller_btn input {
+      border: none;
+      background: #1e396b;
+      padding: 15px 30px;
+      border-radius: 2px;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      font-style: inherit;
+  }
+  .form_logo{
+    padding-top: 40px;
+  }
+  .form_logo img {
+      height: auto;
+      width: 100px;
+      line-height: 100px;
+  }
+
+  .form_title{
+    text-align: center;
+    padding-bottom: 30px;
+    text-transform: capitalize;
+    font-size: 24px;
+    line-height: 1;
     font-weight: 600;
-    color: white;
-    font-style: inherit;
-}
-.form_logo{
-  padding-top: 40px;
-}
-.form_logo img {
-    height: auto;
-    width: 100px;
-    line-height: 100px;
-}
-
-.form_title{
-  text-align: center;
-  padding-bottom: 30px;
-  text-transform: capitalize;
-  font-size: 24px;
-  line-height: 1;
-  font-weight: 600;
-  color: #37517e;
-}
-.phone_error_message{
-  color: red;
-}
-input.no-arrows {
-  -moz-appearance: textfield; /* Firefox */
-  appearance: textfield; /* Other browsers */
-}
-/* Remove up and down arrows in WebKit-based browsers (Chrome, Safari) for the specific number input field */
-input.no-arrows::-webkit-inner-spin-button,
-input.no-arrows::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
-.mendatory_start:after{
-content: " *";
-  color: red;
-}
+    color: #37517e;
+  }
+  .phone_error_message{
+    color: red;
+  }
+  input.no-arrows {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield; /* Other browsers */
+  }
+  /* Remove up and down arrows in WebKit-based browsers (Chrome, Safari) for the specific number input field */
+  input.no-arrows::-webkit-inner-spin-button,
+  input.no-arrows::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .mendatory_start:after{
+  content: " *";
+    color: red;
+  }
 
 </style>
 
@@ -98,83 +98,91 @@ content: " *";
                 <div class="form_logo text-center pb-4">
                 <%= image_tag("bookarley-logo.png", alt:"logo") %>
                 </div>
+                <% if spree_current_user.has_spree_role?("seller")%>
                   <h1 class="form_title">Seller Information</h1>
+                <% else %>  
+                  <h1 class="form_title">Account Information</h1>
+                <% end %>
                   <%= render 'shared/error_messages', target: @user %>
                 <% if @user %>
-                <%= form_for @user, url: user_path(@user), method: :put do |f| %>
-                            <div class="row">
-                                <div class="col-md-12 mb-4"> 
-                                    <div class="form-outline">
-                                        <%= f.label :full_name, "Full Name", class:"form-label mendatory_start" %>
-                                        <%= f.text_field :full_name, placeholder: 'Enter Full Name',  class:"form-control text-input form-control-lg", required: true %>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 mb-4">
-                                    <div class="form-outline">
-                                        <%= f.label :email, "Email", class:"form-label mendatory_start" %>
-                                        <%= f.email_field :email, placeholder: 'example@gmail.com',  class:"form-control text-input form-control-lg", required: true %>
-                                    </div>
-                                </div>
+                  <%= form_for @user, url: user_path(@user), method: :put do |f| %>
+                    <div class="row">
+                        <div class="col-md-12 mb-4"> 
+                            <div class="form-outline">
+                                <%= f.label :full_name, "Full Name", class:"form-label mendatory_start" %>
+                                <%= f.text_field :full_name, placeholder: 'Enter Full Name',  class:"form-control text-input form-control-lg", required: true %>
                             </div>
+                        </div>
 
-                            <div class="row">
-                               <div class="col-md-12 mb-4">
-                                   <div class="form-outline">
-                                        <%= f.label :date_of_birth, "Date of Birth", class: "form-label" %>
-                                        <%= f.date_field :date_of_birth, class: "form-control text-input form-control-lg" %>
-                                    </div>
-                                </div>
-
-                                 <div class="col-md-12 mb-2">
-                                      <div class="form-outline">
-                                        <%= f.label :gender, "Gender", class: "form-label mendatory_start" %><br>
-                                        <%= f.radio_button :gender, "male", required: true %> <%= f.label :gender_male, "Male", class: "radio_btn" %>
-                                        <%= f.radio_button :gender, "female" %> <%= f.label :gender_female, "Female", class: "radio_btn" %>
-                                      </div>
-                                </div>
+                        <div class="col-lg-12 mb-4">
+                            <div class="form-outline">
+                                <%= f.label :email, "Email", class:"form-label mendatory_start" %>
+                                <%= f.email_field :email, placeholder: 'example@gmail.com',  class:"form-control text-input form-control-lg", required: true %>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="row">
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-outline">
-                                        <%= f.label :contact_information, "Phone Number", class: "form-label mendatory_start" %>
-                                        <%= f.text_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg no-arrows", id: "phone_for_country", required: true %>
-                                    </div>
-                                      <div class="phone_error_message" id="phone-error" style="display: none;">
-                                        Enter Valid Phone Number
-                                      </div>
-                                </div>
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-outline">
-                                        <%= f.label :location, "Location", class: "form-label mendatory_start" %>
-                                        <%= f.select :location, options_for_select(["Select City", "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"]), {}, class: "form-control cities_list form-control-lg", required: true %>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="form-outline">
+                                <%= f.label :date_of_birth, "Date of Birth", class: "form-label" %>
+                                <%= f.date_field :date_of_birth, class: "form-control text-input form-control-lg", max: Date.current.strftime('%Y-%m-%d') %>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-outline">
-                                    <%= f.label :profile_picture, "Profile Picture", class: "form-label" %>
-                                    <%= f.file_field :profile, class: "form-control upload_img form-control-lg" %>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mb-4">
-                                    <div class="form-outline">
-                                    <%= f.label :bio, "Bio", class: "form-label" %>
-                                    <%= f.text_area :bio, placeholder: 'Enter your bio', class: "form-control text-input form-control-lg" %>
-                                    </div>
-                                </div>
-                            </div>
+                          <div class="col-md-12 mb-2">
+                              <div class="form-outline">
+                                <%= f.label :gender, "Gender", class: "form-label mendatory_start" %><br>
+                                <%= f.radio_button :gender, "male", required: true %> <%= f.label :gender_male, "Male", class: "radio_btn" %>
+                                <%= f.radio_button :gender, "female" %> <%= f.label :gender_female, "Female", class: "radio_btn" %>
+                              </div>
+                        </div>
+                    </div>
 
-                            <div class="d-flex justify-content-start pt-3">
-                                <button type="button" class="btn seller_btn phone_length"> <%= f.submit %></button>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="form-outline">
+                                <%= f.label :contact_information, "Phone Number", class: "form-label mendatory_start" %>
+                                <%= f.text_field :contact_information, placeholder: '+92 322 123 4567', class: "form-control text-input form-control-lg no-arrows", id: "phone_for_country", required: true %>
                             </div>
-                    <% end %>
-                    <% else %>
-                    <!-- Handle the case when @user is nil or empty -->
-                    <% end %>
+                              <div class="phone_error_message" id="phone-error" style="display: none;">
+                                Enter Valid Phone Number
+                              </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="form-outline">
+                                <%= f.label :location, "Location", class: "form-label mendatory_start" %>
+                                <%= f.select :location, options_for_select(["Select City", "Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"], f.object.location), {}, class: "form-control cities_list form-control-lg", required: true %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                          <%= f.label :profile_picture, "Profile Picture", class: "form-label" %>
+                          <div class="form-outline w-100">
+                            <% if f.object.profile.attached? %>
+                              <%= image_tag f.object.profile, style:"width: 10%;" %>
+                            <% end %>
+                            <%= f.file_field :profile, class: "form-control upload_img form-control-lg" %>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="form-outline">
+                            <%= f.label :bio, "Bio", class: "form-label" %>
+                            <%= f.text_area :bio, placeholder: 'Enter your bio', class: "form-control text-input form-control-lg" %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-start pt-3">
+                        <button type="button" class="btn seller_btn phone_length"><%= f.submit "Update" %></button>
+                    </div>
+                  <% end %>
+                <% else %>
+                <!-- Handle the case when @user is nil or empty -->
+                <% end %>
 
               </div>
             </div>
