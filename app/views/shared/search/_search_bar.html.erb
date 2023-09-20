@@ -21,6 +21,24 @@
     border-bottom-right-radius: 30px !important;
   }
 
+  @media(max-width: 768px){
+    .input-group{
+      position: relative;
+      display: flex;
+      flex-wrap: inherit;
+      align-items: stretch;
+      width: 100%;
+    }
+    .search-bar{
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .product-search-btn{
+      height: 100%;
+      background: #f3a039 !important;
+    }
+  }
+
 </style>
 
 <%= form_tag autocomplete_results_path, method: :get, class: "search-bar mx-auto", "data-turbo": true, "data-turbo-stream": true, "data-controller": "search", "data-search-current-class": "autocomplete-results__item--current", "data-search-target": "form" do %>

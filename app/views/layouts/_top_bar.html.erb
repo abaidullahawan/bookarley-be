@@ -350,7 +350,7 @@
     overflow: hidden;
   }
   .sidebar-content {
-    max-height: calc(80vh - 70px);
+    max-height: calc(68vh - 70px);
     overflow-y: auto;
     border-radius: 10px;
   }
@@ -608,6 +608,7 @@
       </div>
     </div> 
   <% end %>
+  <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
   <div class="mx-3">
     <div class="sidebar-content">
       <% Spree::Taxonomy.all.each do |taxonomy| %>
