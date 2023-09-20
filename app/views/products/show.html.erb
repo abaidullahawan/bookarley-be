@@ -33,6 +33,48 @@
     top: auto;
     bottom: -5px;
 }
+.whatsapp_button .fab.fa-whatsapp {
+  color: #25D366; /* Official WhatsApp green color */
+}
+.model_content{
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+.model_prod_img {
+    height: 80px;
+    width: 80px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.phone_item{
+  background: #0000801f;
+    padding: 10px 15px;
+    border-radius: 5px;
+    align-items: center;
+}
+.phone_list i {
+    color: #1E396B;
+}
+.model_btn{
+  border: none;
+  color: #1E396B;
+}
+.model_btn span{
+  font-size: 25px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 466px){
+  .mobile_justify_btns {
+    display: flex;
+    flex-direction: column;
+}
+.mobile_justify_btns button {
+    margin-bottom: 10px;
+}
+}
+
 </style>
 
 <% @body_id = 'product-details' %>
@@ -69,9 +111,11 @@
           </div>
 
           <hr />
-
-          <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-heart fa-lg"></i> Add to Favourites </a>
-          <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-phone fa-lg"></i> Call Now </a>
+          <div class="mobile_justify_btns">
+            <button class="btn btn-primary shadow-0 border border-2 border-primary"> <i class="me-1 fa fa-heart fa-lg"></i> Add to Favourites </button>
+            <button class="btn btn-light border border-secondary py-2 icon-hover px-3" id= "phoneNumber" target= "blank" > <i class="me-1 fa fa-phone fa-lg"></i> Call Now </button>
+            <button class="btn btn-light border border-secondary py-2 icon-hover px-3 whatsapp_button" id= "whatsappButton" target= "blank" > <i class="me-1 fab fa-whatsapp fa-lg"></i> WhatsApp </button>
+          </div>
         </div>
       </main>
     </div>
@@ -90,7 +134,7 @@
       data-mdb-ripple-color="light">
       
         <%= link_to product_path(similar_product), itemprop: 'url' do %>
-           <%= render(ImageComponent.new(image: similar_product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"Laptop")) %>
+           <%= render(ImageComponent.new(image: similar_product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"img")) %>
         <% end %>
       <a href="#!">
         <div class="mask"></div>
@@ -139,3 +183,56 @@
   <% end%>
   </div>
   </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="phoneNumberModal" tabindex="-1" role="dialog" aria-labelledby="phoneNumberModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content px-4 py-3">
+      <div class="modal-header">
+        <h2 class="modal-title" id="phoneNumberModalLabel"> Customer Details </h2>
+        <button type="button" class="close model_btn" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="model_content">
+          <span>
+           <%= render(ImageComponent.new(image: @product.gallery.images.first, size: :small, itemprop: "image", class:"model_prod_img", alt:"img")) %>
+          </span>
+          <h3 style="text-transform: capitalize;"> <%= @product.name%> </h3>
+        </div>
+        <div class="phone_list mt-3" style="font-size: 15px;">
+        <div class="d-flex phone_item mb-3"><i class="fa fa-phone-volume" style="flex-grow: 1;"></i> <a href="tel:+923228234927" style="flex-grow: 30; color: #1E396B; text-decoration: none;">03228234927</a> <i class="fa fa-copy copy-icon flex-grow: 3"></i></div>
+        <div class="d-flex phone_item mb-3"><i class="fa fa-phone-volume" style="flex-grow: 1;"></i> <a href="tel:+923228234927" style="flex-grow: 30; color: #1E396B; text-decoration: none;">03228234927</a> <i class="fa fa-copy copy-icon flex-grow: 3"></i></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+  $('#whatsappButton').on('click', function() {
+    // Define your WhatsApp number and message here
+    var whatsappNumber = '+923228234927';
+    var productName = "<%= @product.name %>";
+    var message = "Hello, " + productName + " I visited your profile at Bookarley and wanted to ask a couple of questions";
+
+    // Construct the WhatsApp URL
+    var whatsappURL = 'https://api.whatsapp.com/send?phone=' + whatsappNumber + '&text=' + encodeURIComponent(message);
+
+    // Redirect to WhatsApp
+     window.open(whatsappURL, '_blank');
+  });
+
+ $('#phoneNumber').on('click', function() {
+    // Show the modal when the button is clicked
+    $('#phoneNumberModal').modal('show');
+  });
+
+});
+</script>
