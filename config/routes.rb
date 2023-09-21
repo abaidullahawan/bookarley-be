@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   get '/seller_information', to: 'users#seller_information', as: :seller_information
 
+  get '/favourite_products', to: 'products#favourite_products', as: :favourite_products
+
   devise_for(:user, {
     class_name: 'Spree::User',
     singular: :spree_user,
@@ -58,7 +60,12 @@ Rails.application.routes.draw do
 
   resource :account, controller: 'users'
 
-  resources :products, only: [:index, :show]
+  resources :products do
+    member do
+      get 'add_to_favorites'
+      get 'remove_from_favorites'
+    end
+  end
 
   resources :autocomplete_results, only: :index
 

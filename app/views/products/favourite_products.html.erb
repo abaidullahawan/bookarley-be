@@ -8,9 +8,6 @@
     <%= render 'shared/search/filters', taxon: @taxon %>
   </aside>
   <section>
-      <%= render 'products', products: @products, taxon: @taxon %>
+      <%= render 'products', products: @favourite_products, taxon: @taxon %>
   </section> 
-
-  <turbo-frame id="add_product_to_favorite">
-  </turbo-frame>
 </div>

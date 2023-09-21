@@ -38,7 +38,6 @@ gem 'aws-sdk-s3', require: false
 
 gem 'tinymce-rails'
 
-
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -82,7 +81,7 @@ gem "stringio", "3.0.7"
 
 gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.8"
 
-gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.2"
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.3"
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
