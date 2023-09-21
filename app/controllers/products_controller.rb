@@ -2,7 +2,7 @@
 
 class ProductsController < StoreController
   before_action :load_product, only: :show
-  before_action :load_taxon, only: :index
+  before_action :load_taxon, only: [:index, :favourite_products]
 
   helper 'spree/products', 'spree/taxons', 'taxon_filters'
 
@@ -13,7 +13,7 @@ class ProductsController < StoreController
   end
 
   def index
-     @products = Spree::Product.all
+    @products = Spree::Product.all
   end
 
   def show
@@ -26,6 +26,40 @@ class ProductsController < StoreController
     @product_properties = @product.product_properties.includes(:property)
     @taxon = Spree::Taxon.find(params[:taxon_id]) if params[:taxon_id]
   end
+
+  def add_to_favorites
+    product = Spree::Product.find(params[:id])
+    favorite = Favorite.create(user_id: spree_current_user.id, product_id: product.id)
+    if favorite
+      render turbo_stream: turbo_stream.replace(
+        "add-to-favorites-link-#{product.id}", partial: 'products/remove_from_favroite_partial', locals: { product: product }
+      )
+    else
+      render turbo_stream: turbo_stream.replace(
+        "add-to-favorites-link-#{product.id}", partial: 'products/remove_from_favroite_partial', locals: { product: product }
+      )
+    end
+  end
+
+  def remove_from_favorites
+    product = Spree::Product.find(params[:id])
+    favorite = Favorite.find_by(user_id: spree_current_user.id, product_id: product.id)
+    if favorite.destroy
+      render turbo_stream: turbo_stream.replace(
+        "remove-from-favorites-link-#{product.id}", partial: 'products/add_to_favroite_partial', locals: { product: product }
+      )
+    else
+      render turbo_stream: turbo_stream.replace(
+        "remove-from-favorites-link-#{product.id}", partial: 'products/add_to_favroite_partial', locals: { product: product }
+      )
+    end
+  end
+
+  def favourite_products
+    @user_favorites = Favorite.where(user_id: spree_current_user.id)
+    @favourite_products = Spree::Product.where(id: @user_favorites.pluck(:product_id))
+  end
+
 
   private
 

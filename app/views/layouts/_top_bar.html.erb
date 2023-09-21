@@ -449,14 +449,20 @@
   }
 .top_nav_user_img {
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     border: 3px solid lightgray;
 }
 .default_img {
     border-radius: 50%;
     height: 50px;
     width: 50px;
+}
+
+.fvt-icon{
+  font-size: 22px;
+  color: #1e396b;
+  cursor: pointer;
 }
 
 
@@ -471,53 +477,65 @@
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-          <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+          <% user_agent = request.user_agent.to_s.downcase %>
+          <% if !user_agent.match(/iphone|android|webos|blackberry|mobile/) %>
+            <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+          <% end %>
           <div class="navbar-nav">
-          <% if spree_current_user %>
-             <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
-                 <% if spree_current_user&.profile&.attached? %>
-                      <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
-                    <% else %>
-                    <%= image_tag('user_profile_icon.png', class: "circle-image") %>
-                  <% end %>
-                <div>
-                  <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
-                </div>
-            </div>
-            
-            <div class="register-profile-dropdown">
-              <div class="register-dropdown-content shadow" id="registerDropdownContent">
-                 <div class="d-flex justify-content-center">
-                      <% if spree_current_user&.profile&.attached? %>
-                      <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
-                        <% else %>
-                        <%= image_tag('user_profile_icon.png', class: "circle-image") %>
-                      <% end %>
-                  </div>
-                <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
-                  <div><%= spree_current_user.email %></div>
-                </div>
-                <hr style="color: #b5b1b1;">
-                <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
-                <% if spree_current_user.admin? %>
-                  <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
-                  <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
-                  <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
-                <% end %>
-                <% if spree_current_user.has_spree_role?('seller') %>
-                  <a href="/admin/products" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-user-cog profile-icons"></i> Seller Dashboard </a>
-                <% end %>
-                <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
+            <% if spree_current_user %>
+              <div class="btn-group d-flex justify-content-center align-items-center" style="margin-right: 15px;">
+                <%= link_to favourite_products_path do %> 
+                  <i class="fas fa-heart fa-2x fvt-icon"></i>
+                <% end %>  
               </div>
-            </div>
-          <% else %>
-            <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <%= image_tag('user_profile_icon.png', class: "circle-image") %>
-                <div>
-                  <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+              <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
+                  <% if spree_current_user&.profile&.attached? %>
+                        <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
+                      <% else %>
+                      <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                    <% end %>
+                  <div>
+                    <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+                  </div>
+              </div>
+
+              <div class="register-profile-dropdown">
+                <div class="register-dropdown-content shadow" id="registerDropdownContent">
+                  <div class="d-flex justify-content-center">
+                        <% if spree_current_user&.profile&.attached? %>
+                        <%= image_tag rails_blob_url(spree_current_user.profile), class: "top_nav_user_img", alt: "...", width: 40 %>
+                          <% else %>
+                          <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                        <% end %>
+                    </div>
+                  <div class="d-flex justify-content-center" style="font-size: 1.3em; padding: 3px; color: #1e396b; font-weight: 400;">
+                    <div><%= spree_current_user.email %></div>
+                  </div>
+                  <hr style="color: #b5b1b1;">
+                  <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
+                  <% if spree_current_user.admin? %>
+                    <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                    <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
+                    <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
+                  <% end %>
+                  <% if spree_current_user.has_spree_role?('seller') %>
+                    <a href="/admin/products" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-user-cog profile-icons"></i> Seller Dashboard </a>
+                  <% end %>
+                  <%= link_to raw('<i class="fas fa-sign-out-alt profile-icons"></i> ' + I18n.t('spree.logout')), destroy_spree_user_session_path, method: :delete, class: 'text-danger mb-3', style: "font-size: 1.1em;" %>  
                 </div>
-            </div>
-          <% end %>  
+              </div>
+            <% else %>
+              <div class="btn-group d-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 15px;">
+                <i class="fas fa-heart fa-2x fvt-icon"></i>
+              </div>
+
+              <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <%= image_tag('user_profile_icon.png', class: "circle-image") %>
+                  <div>
+                    <i class="fa fa-angle-down" style="padding-left: 5px; font-size: 1.2em;"></i>
+                  </div>
+              </div>
+            <% end %>  
           </div>
       </div>
   </div>
@@ -608,7 +626,9 @@
       </div>
     </div> 
   <% end %>
-  <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+  <% if user_agent.match(/iphone|android|webos|blackberry|mobile/) %>
+    <%= render 'shared/search/search_bar', class:"mx-auto", taxons: taxons, taxon: taxon %>
+  <% end %>
   <div class="mx-3">
     <div class="sidebar-content">
       <% Spree::Taxonomy.all.each do |taxonomy| %>

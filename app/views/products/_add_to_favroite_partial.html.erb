@@ -1,0 +1,9 @@
+<style>
+  .favorite-icon{
+    color: #1e396b;
+  }
+</style>
+
+<%= link_to add_to_favorites_product_path(product.id), id: "add-to-favorites-link-#{product.id}", data: { turbo: true } do %>
+  <i class="far fa-heart fa-2x favorite-icon"></i>
+<% end %>

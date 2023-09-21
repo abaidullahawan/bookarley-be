@@ -6,9 +6,10 @@ class UserSessionsController < Devise::SessionsController
   after_action :set_current_order, only: :create
 
   def create
-    authenticate_spree_user!
-
-    if spree_user_signed_in?
+    if valid_credentials?
+      # User provided valid credentials
+      authenticate_spree_user!
+      
       respond_to do |format|
         format.html do
           flash[:success] = I18n.t('spree.logged_in_succesfully')
@@ -17,9 +18,12 @@ class UserSessionsController < Devise::SessionsController
         format.js { render success_json }
       end
     else
+      # User provided invalid credentials
       respond_to do |format|
         format.html do
           flash.now[:error] = t('devise.failure.invalid')
+          flash.now[:error] = t('devise.failure.email_invalid') if invalid_email?
+          flash.now[:error] = t('devise.failure.password_invalid') if invalid_password?
           render :new
         end
         format.js do
@@ -55,5 +59,20 @@ class UserSessionsController < Devise::SessionsController
         bill_address: spree_current_user.bill_address
       }.to_json
     }
+  end
+
+  def valid_credentials?
+    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
+    spree_user&.valid_password?(params[:spree_user][:password])
+  end
+
+  def invalid_email?
+    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
+    spree_user.nil? || !spree_user.valid_password?(params[:spree_user][:password])
+  end
+
+  def invalid_password?
+    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
+    spree_user.present? && !spree_user.valid_password?(params[:spree_user][:password])
   end
 end
