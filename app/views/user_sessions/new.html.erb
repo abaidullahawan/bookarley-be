@@ -1,11 +1,9 @@
 <style>
   .auth-main-container {
-      width: 65%;
       display: flex;
       flex-direction: row;
       align-items: center;
       margin: 0 auto;
-      padding: 6em 2em;
       justify-content: space-between;
   }
 
@@ -36,22 +34,22 @@
   }
   .image_col img {
     padding-left: 50px;
-    width: 100%;
+    width: 75%;
   }
 
   .form_title{
     text-align: center;
     padding-bottom: 30px;
     text-transform: capitalize;
-    font-size: 24px;
+    font-size: 30px;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 200;
     color: #37517e;
   }
 
   .form_logo img{
     height: auto;
-    width: 70px;
+    width: 130px;
     line-height: 100px;
     
   }
@@ -91,8 +89,11 @@
 
 <% @body_id = 'login' %>
 
-<article class="auth-main-container row" id="existing-customer">
-  <div class="col-lg-6 form_col shadow">
+<article class="auth-main-container row"  style="background: aliceblue;" id="existing-customer">
+  <div class= "col-lg-6 d-flex justify-content-center image_col">
+    <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
+  </div>
+  <div class="col-lg-6 bg-white form_col">
     <div class="form_logo text-center pb-4">
       <%= image_tag("bookarley-logo.png", alt:"logo") %>
     </div>
@@ -132,10 +133,6 @@
         <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.create_a_new_account"), signup_path %> | <%= link_to I18n.t("spree.forgot_password"), recover_password_path %>
       </div>
     <% end %>
-  </div>
-
-  <div class= "col-lg-6 image_col" >
-    <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
   </div>
 </article>
 

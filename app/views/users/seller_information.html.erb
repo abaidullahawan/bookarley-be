@@ -25,7 +25,7 @@
     border: 2px solid #1e396b;
   }
   .cities_list {
-      height: 45px !important;
+    height: 45px !important;
     border: 2px solid #1e396b;
   }
   .radio_btn {
@@ -61,7 +61,7 @@
     text-transform: capitalize;
     font-size: 24px;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 250;
     color: #37517e;
   }
   .phone_error_message{
@@ -84,16 +84,15 @@
 
 </style>
 
-<section class="h-100">
-  <div class="container py-5 h-100">
+  <div class="container-fluid m-0 h-100" style="background: aliceblue;">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col">
-        <div class="card shadow card-registration my-4">
+        <div class="card-registration">
           <div class="row g-0">
             <div class="col-xl-6 d-none d-xl-block">
               <%= image_tag("seller_img.png", class: "img-fluid", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;") %>
             </div>
-            <div class="col-xl-6">
+            <div class="col-xl-6 bg-white">
               <div class="card-body p-md-5 text-black seller_info">
                 <div class="form_logo text-center pb-4">
                 <%= image_tag("bookarley-logo.png", alt:"logo") %>
@@ -192,7 +191,6 @@
     </div>
   </div>
 
-</section>
 
 <script>
   $(document).ready(function() {
