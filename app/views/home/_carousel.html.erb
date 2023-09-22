@@ -1,0 +1,235 @@
+<style>
+.slick-prev, .slick-next {
+  position: absolute;
+  top: 135%;
+  font-size: 1.8rem;
+}
+
+.slick-prev {
+  left: 0;
+}
+
+.slick-next {
+  right: 0;
+}
+
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+      touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-list:focus {
+  outline: none;
+}
+
+.slick-list.dragging {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+}
+
+.slick-track:before,
+.slick-track:after {
+    display: table;
+    content: '';
+}
+
+.slick-track:after {
+    clear: both;
+}
+
+.slick-loading .slick-track {
+    visibility: hidden;
+}
+
+.slick-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+
+[dir='rtl'] .slick-slide {
+    float: right;
+}
+
+.slick-slide img {
+    display: block;
+}
+
+.slick-slide.slick-loading img {
+    display: none;
+}
+
+.slick-slide.dragging img {
+    pointer-events: none;
+}
+.slick-initialized .slick-slide {
+    display: block;
+}
+.slick-loading .slick-slide {
+    visibility: hidden;
+}
+.slick-vertical .slick-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+.slides {
+    transition: filter .4s;
+    margin: 0px 40px;
+}
+
+.slick-prev {
+    left: 0;
+}
+.slick-prev, .slick-next {
+    position: absolute;
+    top: 22%;
+    font-size: 1.8rem;
+}
+
+.section {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.sliders{
+    height: 150px !important;
+}
+.section{
+    margin-top: 5%;
+    margin-bottom: 2%;
+}
+
+@media screen and (max-width: 1400px){
+    .section {
+    max-width: 1120px;
+}
+}
+
+@media screen and (max-width: 1199px){
+    .section {
+    max-width: 960px;
+}
+}
+@media screen and (max-width: 992px){
+    .section {
+    max-width: 720px;
+}
+}
+@media screen and (max-width: 767px){
+    .section {
+    max-width: 540px;
+}
+}
+@media screen and (max-width: 560px){
+    .section {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 10%;
+}
+}
+
+.client_logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.arrow_style{
+    color: white;
+    background: #1e396b;
+    padding: 8px;
+    border-radius: 50%;
+}
+</style>
+
+<section class="trigger section gutter-horizontal bg-gray gutter-vertical--m gutter-horizontal">
+    <div class="customer-logos sliders d-flex">
+
+        <% Spree::Taxonomy.all.each do |taxonomy| %>
+                    <% taxonomy&.root&.children&.each do |parent_taxon| %>
+                        <% parent_taxon&.children&.each do |child_taxon| %>
+                <% child_taxon_permalink = child_taxon&.permalink %>
+                    <div class="slide-in-right slides">
+                        <%= link_to "/t/#{child_taxon_permalink}", style:"text-decoration: none;", class: "client_logo" do %>
+                            <div>
+                                <% if child_taxon&.icon&.attached? %>
+                                <%= render(ImageComponent.new(image: child_taxon.icon, size: :small, itemprop: "image", style: "width: 85px;")) %>
+                                <% end %>
+                            </div>
+                            <div class="text-dark" style="font-size: 1.3em;font-weight: 500; width: max-content;">  
+                                <%= child_taxon&.name %>
+                            </div>
+                        <% end %>
+                    </div>
+                <% end %>
+            <% end %>
+        <% end %>
+
+    </div>
+</section>
+
+<script>
+    $(document).ready(function(){
+        $('.customer-logos').slick({
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        autoplay: false,
+        autoplaySpeed: 1500,
+        arrows: true,
+        dots: false,
+        pauseOnHover: false,
+        prevArrow: '<i class="slick-prev fas fa-arrow-left arrow_style"></i>',
+        nextArrow: '<i class="slick-next fas fa-arrow-right arrow_style"></i>',
+        responsive: [{
+        breakpoint: 993,
+        settings: {
+            slidesToShow: 3
+        }
+        }, {
+        breakpoint: 520,
+        settings: {
+            slidesToShow: 2
+        }
+        }]
+        });
+    });
+</script>
