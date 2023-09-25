@@ -465,6 +465,29 @@
   cursor: pointer;
 }
 
+.fvt-container {
+  position: relative;
+  display: inline-block;
+}
+
+
+.fvt-badge {
+  position: absolute;
+  top: -4px;
+  right: -12px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 </style>
 
@@ -484,9 +507,13 @@
           <div class="navbar-nav">
             <% if spree_current_user %>
               <div class="btn-group d-flex justify-content-center align-items-center" style="margin-right: 15px;">
+                <% fvt_count = Favorite.all.where(user_id: spree_current_user.id).count %>
                 <%= link_to favourite_products_path do %> 
-                  <i class="fas fa-heart fa-2x fvt-icon"></i>
-                <% end %>  
+                  <div class="fvt-container">
+                    <i class="fas fa-heart fa-2x fvt-icon"></i>
+                    <div class="fvt-badge"><%= fvt_count %></div>
+                  </div>
+                <% end %>
               </div>
               <div class="btn-group d-flex justify-content-center align-items-center" style="cursor: pointer;" id="profile-section">
                   <% if spree_current_user&.profile&.attached? %>

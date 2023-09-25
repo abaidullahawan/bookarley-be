@@ -38,7 +38,7 @@
   }
 
   .form_col{
-    padding: 60px 30px;
+    padding: 70px 30px;
   }
 
   .image_col img {
@@ -58,7 +58,7 @@
 
   .form_logo img{
     height: auto;
-    width: 130px;
+    width: 80px;
     line-height: 100px;
     
   }
@@ -90,6 +90,36 @@
     transition: width 0.8s ease-in-out;
     border-radius: inherit;
    }
+   .otp-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .otp-input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .text-input input, .password-display, .field-radius{
+    border-radius: 30px;
+  }
+
+  .otp-text{
+    color: gray;
+    font-size: 14px;
+  }
+
+  .loader {
+    animation-duration: 0.3s;
+    margin-left: 3px;
+  }
 
 </style>
 
@@ -98,49 +128,64 @@
     <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
   </div>
   <div class="col-lg-6 bg-white form_col">
-    <div class="form_logo text-center pb-4">
+    <div class="form_logo text-center logo-hide pb-4">
       <%= image_tag("bookarley-logo.png", alt:"logo") %>
     </div>
-    <h1 class="form_title">Registration Form</h1>
+    <h1 class="form_title logo-hide">Registration Form</h1>
 
     <%= render 'shared/error_messages', target: resource %>
 
     <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
-      <div class="auth-form__input-wrapper border-field">
-        <div class="text-input">
-          <%= f.label :email, "#{t("spree.email")}:" %>
-          <%= f.email_field :email, placeholder: 'username@example.com' %>
+      <div class="registration-fields">
+        <div class="auth-form__input-wrapper">
+          <div class="text-input">
+            <%= f.label :email, "#{t("spree.email")}:" %>
+            <%= f.email_field :email, placeholder: 'username@example.com' %>
+          </div>
+          
         </div>
-        
-      </div>
 
-      <div class="auth-form__input-wrapper border-field">
-        <div class="text-input">
-          <%= f.label :password, "#{t("spree.password")}:" %>
-          <div class="password-display">
-            <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
-            <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
+        <div class="auth-form__input-wrapper">
+          <div class="text-input">
+            <%= f.label :password, "#{t("spree.password")}:" %>
+            <div class="password-display" >
+              <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
+              <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
+            </div>
+          </div>
+          <div>
+          <span id="StrengthDisp" class="badge displayBadge">Weak</span>
           </div>
         </div>
-        <div>
-         <span id="StrengthDisp" class="badge displayBadge">Weak</span>
-        </div>
-      </div>
-
-
-      <div class="auth-form__input-wrapper border-field">
-        <div class="text-input">
-          <%= f.label :password_confirmation, "Password Confirmation:" %>
-          <div class="password-display">
-            <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
-            <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
+        <div class="auth-form__input-wrapper">
+          <div class="text-input">
+            <%= f.label :password_confirmation, "Password Confirmation:" %>
+            <div class="password-display">
+              <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
+              <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
+            </div>
           </div>
         </div>
+
+        <div id= "proceed-button" class= 'button-primary button-primary--full-width d-flex justify-content-center align-items-center field-radius mb-3' style="cursor: pointer;">Proceed</div>
       </div>
 
-      <div class="auth-form__input-wrapper">
-        <%= f.button t("spree.create"), name: :commit, class: 'sign-up-submit button-primary button-primary--full-width' %>
+      <div id="otp-input"  style="display: none;">
+        <div class="form_logo text-center pb-4">
+          <%= image_tag("otp-logo.png", alt:"logo") %>
+        </div>
+        <h1 class="form_title pb-3">OTP Verification</h1>
+            <p class="otp-text text-center mb-4">Generating OTP, please wait for <span id="otp-timer">5</span> seconds<span class="loader"><i class="fa fa-spinner fa-spin ml-3"></i></span></p>
+          <div class="otp-container">
+          <% 6.times do |i| %>
+            <%= text_field_tag "otp_code[#{i}]", "", class: 'otp-input-field otp-input', maxlength: 1 %>
+          <% end %>
+          </div>
+        <div class="auth-form__input-wrapper d-flex justify-content-center">
+          <%= f.button t("spree.Verfiy"), name: :commit, class: 'sign-up-submit button-primary w-50 field-radius', id:"new_spree_user" %>
+        </div>
       </div>
+  
       <div class="form_bottom_text">
         <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
       </div>
@@ -152,48 +197,48 @@
 
 <script>
   $(document).ready(function() {
-            let timeout;
-            let password = $('.PassEntry');
-            let strengthBadge = $('#StrengthDisp');
-            let strongPassword = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}$');
-            let mediumPassword = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9]).{4,}$');
+    let timeout;
+    let password = $('.PassEntry');
+    let strengthBadge = $('#StrengthDisp');
+    let strongPassword = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{6,}$');
+    let mediumPassword = new RegExp('^(?=.*[a-zA-Z])(?=.*[0-9]).{4,}$');
 
-            $('.sign-up-submit').on('click', function() {
-                StrengthChecker(password.val());
-            });
+    $('.sign-up-submit').on('click', function() {
+        StrengthChecker(password.val());
+    });
 
-            function StrengthChecker(PasswordParameter) {
-                if (strongPassword.test(PasswordParameter)) {
-                    strengthBadge.css({'background-color': 'green','width': '100%'});
-                    strengthBadge.text('Strong');
-                } else if (mediumPassword.test(PasswordParameter)) {
-                    strengthBadge.css({'background-color': 'blue','width': '60%'});
-                    strengthBadge.text('Medium');
-                } else {
-                    strengthBadge.css('background-color', 'red');
-                    strengthBadge.css({'background-color': 'red','width': '30%'});
-                    strengthBadge.text('Weak');
-                }
-            }
+    function StrengthChecker(PasswordParameter) {
+        if (strongPassword.test(PasswordParameter)) {
+            strengthBadge.css({'background-color': 'green','width': '100%'});
+            strengthBadge.text('Strong');
+        } else if (mediumPassword.test(PasswordParameter)) {
+            strengthBadge.css({'background-color': 'blue','width': '60%'});
+            strengthBadge.text('Medium');
+        } else {
+            strengthBadge.css('background-color', 'red');
+            strengthBadge.css({'background-color': 'red','width': '30%'});
+            strengthBadge.text('Weak');
+        }
+    }
 
-            password.on("input", function() {
-                strengthBadge.css('display', 'block');
-                clearTimeout(timeout);
-                timeout = setTimeout(function() {
-                    StrengthChecker(password.val());
-                }, 500);
-                if (password.val().length !== 0) {
-                    strengthBadge.css('display', 'block');
-                } else {
-                    strengthBadge.css('display', 'none');
-                }
-            });  
+    password.on("input", function() {
+        strengthBadge.css('display', 'block');
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            StrengthChecker(password.val());
+        }, 500);
+        if (password.val().length !== 0) {
+            strengthBadge.css('display', 'block');
+        } else {
+            strengthBadge.css('display', 'none');
+        }
+    });  
 
-        const confirmField = document.getElementById("confirm-field");
-        const confirmToggle = document.getElementById("confirm-toggle");
+    const confirmField = document.getElementById("confirm-field");
+    const confirmToggle = document.getElementById("confirm-toggle");
 
-        const passwordField = document.getElementById("password-field");
-        const passwordToggle = document.getElementById("password-toggle");
+    const passwordField = document.getElementById("password-field");
+    const passwordToggle = document.getElementById("password-toggle");
 
     passwordToggle.addEventListener("click", function() {
       if (passwordField.type === "password") {
@@ -219,4 +264,49 @@
       }
     });
   });
+</script>
+
+<script>
+  // Add this script to your view or assets/application.js
+  $(document).ready(function() {
+    $('#proceed-button').on('click', function() {
+      // Hide the registration fields and show OTP input fields
+      $('.logo-hide').hide();
+      $('.registration-fields').hide();
+      $('#otp-input').show();
+
+      // Initialize the countdown timer
+      let countdown = 5;
+      const timerElement = $('#otp-timer');
+
+      const timerInterval = setInterval(function() {
+        countdown -= 1;
+        timerElement.text(countdown);
+
+        if (countdown === 0) {
+          clearInterval(timerInterval); // Stop the timer
+          timerElement.text(''); // Clear the timer text
+          $('.otp-text').text('OTP Code has been generated successfully!');
+          
+          // Generate a random 6-digit OTP after 5 seconds
+          setTimeout(function() {
+            let otp = '';
+            for (let i = 0; i < 6; i++) {
+              otp += Math.floor(Math.random() * 10); // Generate a random digit (0-9)
+            }
+
+            $('.otp-input-field').each(function(index) {
+              $(this).val(otp[index]);
+            });
+          }, 50); // 5000 milliseconds (5 seconds)
+        }
+      }, 1000); // Update every 1 second
+    });
+
+    $('#create-button').on('click', function() {
+      // Submit the form
+      $('form#new_spree_user').submit();
+    });
+  });
+
 </script>
