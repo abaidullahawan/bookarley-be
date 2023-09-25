@@ -49,9 +49,8 @@
 
   .form_logo img{
     height: auto;
-    width: 130px;
+    width: 80px;
     line-height: 100px;
-    
   }
 
   input#spree_user_remember_me {
@@ -61,6 +60,7 @@
 
   .select_box label{
     font-size: 12px;
+    margin-left: 6px;
   }
 
   .password-display {
@@ -83,6 +83,9 @@
     border: solid 1px #e8f0fe !important;
   }
 
+  .text-input input, .password-display, .field-radius{
+    border-radius: 30px;
+  }
 
 </style>
 
@@ -100,14 +103,14 @@
     <h1 class="form_title">Login Form</h1>
 
     <%= form_for Spree::User.new, as: :spree_user, url: create_new_session_path, html: { class: "auth-form" } do |f| %>
-      <div class="auth-form__input-wrapper border-field">
+      <div class="auth-form__input-wrapper">
         <div class="text-input">
           <%= f.label :email, "#{t("spree.email")}:" %>
           <%= f.email_field :email, placeholder: 'username@example.com', autocomplete: 'off', required: true %>
         </div>
       </div>
 
-      <div class="auth-form__input-wrapper border-field password-input">
+      <div class="auth-form__input-wrapper password-input">
         <div class="text-input">
           <%= f.label :password, "#{t("spree.password")}:" %>
           <div class="password-display">
@@ -117,7 +120,7 @@
         </div>
       </div>
 
-      <div class="auth-form__input-wrapper select_box">
+      <div class="auth-form__input-wrapper select_box d-flex">
         <%= f.check_box :remember_me, tabindex: 3 %>
         <%= f.label :remember_me, I18n.t("spree.remember_me") %>
       </div>
@@ -125,7 +128,7 @@
       <div class="auth-form__input-wrapper">
         <%= f.button(
           t("spree.login"),
-          class: 'button-primary button-primary--full-width',
+          class: 'button-primary button-primary--full-width field-radius',
           name: :commit
         ) %>
       </div>
