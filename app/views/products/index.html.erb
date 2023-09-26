@@ -7,8 +7,14 @@
     <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
     <%= render 'shared/search/filters', taxon: @taxon %>
   </aside>
+  <% if params[:keywords].present? %>
+    <% product_keywords = params[:keywords] %>
+    <% @all_products = Spree::Product.where("name LIKE ?", "%#{product_keywords}%")%>
+  <% else %>
+    <% @all_products = @products %>
+  <% end %>
   <section>
-      <%= render 'products', products: @products, taxon: @taxon %>
+      <%= render 'products', products: @all_products, taxon: @taxon %>
   </section> 
 
   <turbo-frame id="add_product_to_favorite">
