@@ -18,9 +18,12 @@
     outline: 0;
     box-shadow: none !important;
   }
-  .search-bar__button{
+  .smart_search_button{
     border-top-right-radius: 30px !important;
     border-bottom-right-radius: 30px !important;
+    background: #103577 !important;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
   }
 
   @media(max-width: 768px){
@@ -35,7 +38,7 @@
       margin-top: 30px;
       margin-bottom: 30px;
     }
-    .product-search-btn{
+    .smart-search-color{
       height: 100%;
       background: #f3a039 !important;
     }
@@ -44,16 +47,33 @@
 </style>
 
 <%= form_tag autocomplete_results_path, method: :get, class: "search-bar mx-auto", "data-turbo": true, "data-turbo-stream": true, "data-controller": "search", "data-search-current-class": "autocomplete-results__item--current", "data-search-target": "form" do %>
-
   <div class="input-group">
-    <%= search_field_tag :keywords, params[:keywords], placeholder: "Search Products", class: "form-control search-bar__input search_bar_width px-5", autocomplete: "off", "data-action": "input->search#fetchResults keydown.down->search#nextResult keydown.up->search#previousResult keydown.enter->search#openResult:prevent:stop keydown.esc->search#reset:prevent:stop click@window->search#focusOut", "data-search-target": "keywords" %>
+    <%= search_field_tag :keywords, params[:keywords], placeholder: "Search Products", class: "form-control search-bar__input search_bar_width px-5", autocomplete: "off", "data-action": "input->search#fetchResults keydown.down->search#nextResult keydown.up->search#previousResult keydown.enter->search#openResult:prevent:stop keydown.esc->search#reset:prevent:stop click@window->search#focusOut", "data-search-target": "keywords", onkeyup: "$(this).closest('form').find('button.product-search-btn').click()" %>
+
+    <div class="input-group-append d-none">
+      <%= button_tag class: "btn btn-lg text-light search-bar__button py-4 product-search-btn", title: 'Search' do %>
+        <i class="fa fa-search"></i>
+      <% end %>
+    </div>
 
     <div class="input-group-append">
-      <%= button_tag class: "btn btn-lg text-light search-bar__button py-4 product-search-btn", title: 'Search' do %>
+      <%= button_tag type: 'submit', class: "btn btn-lg text-light px-5 py-4 smart_search_button smart-search-color", id:"all-result-search", title: 'Search' do %>
         <i class="fa fa-search"></i>
       <% end %>
     </div>
   </div>
 
-  <div id="autocomplete-results" class="autocomplete-results" data-search-target="results"></div>
+  <div id="autocomplete-results" class="autocomplete-results shadow-sm" data-search-target="results"></div>
 <% end %>
+
+<script>
+  document.addEventListener("click", function(event) {
+    const suggestionBox = document.getElementById("autocomplete-results");
+    const form = document.querySelector("[data-controller='search']");
+    const target = event.target;
+    
+    if (suggestionBox && !suggestionBox.contains(target) && !form.contains(target)) {
+      suggestionBox.style.display = "none";
+    }
+  });
+</script>
