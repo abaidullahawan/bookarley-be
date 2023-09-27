@@ -13,7 +13,7 @@ class ProductsController < StoreController
   end
 
   def index
-    @products = Spree::Product.all
+    @products = Spree::Product.where("is_pending IS NULL OR is_approved IS NULL OR is_rejected IS NULL OR is_approved = ?", true).all
   end
 
   def show
