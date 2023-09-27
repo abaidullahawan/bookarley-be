@@ -34,7 +34,7 @@ module SolidusStripe
               "calculated_statement_descriptor" => "NEBULAB SRL",
               "captured" => true,
               "created" => 1_674_022_049,
-              "currency" => "usd",
+              "currency" => "PKR",
               "customer" => nil,
               "description" => "(created by Stripe CLI)",
               "destination" => nil,

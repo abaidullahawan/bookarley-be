@@ -8,8 +8,9 @@ class UserRegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(spree_user_params)
+    resource.skip_confirmation! if resource.phone_number.present?
     if resource.save
-      resource.confirm
+      # resource.confirm
       set_flash_message(:notice, :signed_up)
       sign_in(:spree_user, resource)
       session[:spree_user_signup] = true
@@ -35,7 +36,7 @@ class UserRegistrationsController < Devise::RegistrationsController
   private
 
   def spree_user_params
-    params.require(:spree_user).permit(Spree::PermittedAttributes.user_attributes | [:email])
+    params.require(:spree_user).permit(Spree::PermittedAttributes.user_attributes | [:email, :phone_number])
   end
 
   def redirect_logged_in_users
@@ -43,5 +44,10 @@ class UserRegistrationsController < Devise::RegistrationsController
       flash[:notice] = "You are already signed in."
       redirect_to root_path
     end
+  end
+
+ 
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, [:phone_number])
   end
 end

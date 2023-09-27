@@ -90,10 +90,10 @@ RSpec.describe 'Visiting Products', type: :system, inaccessible: true do
 
     it 'has correct schema.org/Offer attributes' do
       expect(page).to have_css("#product_#{product.id} [itemprop='price'][content='19.99']")
-      expect(page).to have_css("#product_#{product.id} [itemprop='priceCurrency'][content='USD']")
+      expect(page).to have_css("#product_#{product.id} [itemprop='priceCurrency'][content='PKR']")
       click_link product.name
       expect(page).to have_css("[itemprop='price'][content='19.99']")
-      expect(page).to have_css("[itemprop='priceCurrency'][content='USD']")
+      expect(page).to have_css("[itemprop='priceCurrency'][content='PKR']")
     end
   end
 

@@ -105,8 +105,8 @@
     <%= form_for Spree::User.new, as: :spree_user, url: create_new_session_path, html: { class: "auth-form" } do |f| %>
       <div class="auth-form__input-wrapper">
         <div class="text-input">
-          <%= f.label :email, "#{t("spree.email")}:" %>
-          <%= f.email_field :email, placeholder: 'username@example.com', autocomplete: 'off', required: true %>
+          <%= f.label 'email_or_phone_number', "Email or Phone Number" %>
+          <%= f.text_field :login, placeholder: 'Enter email or phone number', required: true %>
         </div>
       </div>
 

@@ -22,8 +22,8 @@ class UserSessionsController < Devise::SessionsController
       respond_to do |format|
         format.html do
           flash.now[:error] = t('devise.failure.invalid')
-          flash.now[:error] = t('devise.failure.email_invalid') if invalid_email?
-          flash.now[:error] = t('devise.failure.password_invalid') if invalid_password?
+          # flash.now[:error] = t('devise.failure.email_invalid') if invalid_email?
+          # flash.now[:error] = t('devise.failure.password_invalid') if invalid_password?
           render :new
         end
         format.js do
@@ -62,17 +62,18 @@ class UserSessionsController < Devise::SessionsController
   end
 
   def valid_credentials?
-    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
-    spree_user&.valid_password?(params[:spree_user][:password])
+    login_param = sign_in_params[:login].downcase
+    spree_user = Spree::User.find_by('lower(email) = ? OR phone_number = ?', login_param, login_param)
+    spree_user&.valid_password?(sign_in_params[:password])
   end
 
-  def invalid_email?
-    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
-    spree_user.nil? || !spree_user.valid_password?(params[:spree_user][:password])
-  end
+  # def invalid_email?
+  #   spree_user = Spree::User.find_by(email: params[:spree_user][:email])
+  #   spree_user.nil? || !spree_user.valid_password?(params[:spree_user][:password])
+  # end
 
-  def invalid_password?
-    spree_user = Spree::User.find_by(email: params[:spree_user][:email])
-    spree_user.present? && !spree_user.valid_password?(params[:spree_user][:password])
-  end
+  # def invalid_password?
+  #   spree_user = Spree::User.find_by(email: params[:spree_user][:email])
+  #   spree_user.present? && !spree_user.valid_password?(params[:spree_user][:password])
+  # end
 end

@@ -60,7 +60,6 @@
     height: auto;
     width: 80px;
     line-height: 100px;
-    
   }
 
   .password-display {
@@ -88,7 +87,7 @@
     text-align: center;
     font-size: 12px;
     transition: width 0.8s ease-in-out;
-    border-radius: inherit;
+    border-radius: 30px;
    }
    .otp-container {
     display: flex;
@@ -121,53 +120,134 @@
     margin-left: 3px;
   }
 
+/* toggle button  */
+.slide-controls{
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 80%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.slide-controls .slide_toggle{
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+.slide-controls label.signup{
+  color: #000;
+}
+.slide-controls .slider-tab{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 30px;
+  background-color: rgb(242, 159, 55);
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+input[type="radio"]{
+  display: none;
+}
+#email:checked ~ .slider-tab{
+  left: 50%;
+}
+#email:checked ~ label.email{
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+#email:checked ~ label.phone{
+  color: #000;
+}
+#phone:checked ~ label.email{
+  color: #000;
+}
+#phone:checked ~ label.phone{
+  cursor: help;
+  user-select: none;
+}
+
 </style>
 
 <article class="auth-main-container row" style="background: aliceblue;" id="new-customer">
-  <div class= "col-lg-6 d-flex justify-content-center image_col" >
-    <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
-  </div>
-  <div class="col-lg-6 bg-white form_col">
-    <div class="form_logo text-center logo-hide pb-4">
-      <%= image_tag("bookarley-logo.png", alt:"logo") %>
-    </div>
-    <h1 class="form_title logo-hide">Registration Form</h1>
-
-    <%= render 'shared/error_messages', target: resource %>
-
-    <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
-      <div class="registration-fields">
-        <div class="auth-form__input-wrapper">
-          <div class="text-input">
-            <%= f.label :email, "#{t("spree.email")}:" %>
-            <%= f.email_field :email, placeholder: 'username@example.com' %>
+      <div class= "col-lg-6 d-flex justify-content-center image_col" >
+        <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
+      </div>
+    <div class="col-lg-6 bg-white form_col">
+          <div class="form_logo text-center logo-hide pb-4">
+            <%= image_tag("bookarley-logo.png", alt:"logo") %>
           </div>
-          
-        </div>
+          <div class="logo-hide">
+             <h1 class="form_title">Registration Form</h1>
+              <div class="toggle_button text-center">
+                <%# toggle button  %>
+                  <div class="slide-controls">
+                    <input type="radio" name="slide_toggle" id="email" >
+                    <input type="radio" name="slide_toggle" id="phone" checked>
+                    <label for="phone" class="slide_toggle phone">Email</label>
+                    <label for="email" class="slide_toggle email">Phone</label>
+                    <div class="slider-tab"></div>
+                  </div>
+                <%# toggle end  %>
+              </div>
+           </div>
 
-        <div class="auth-form__input-wrapper">
-          <div class="text-input">
-            <%= f.label :password, "#{t("spree.password")}:" %>
-            <div class="password-display" >
-              <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
-              <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
+        <%= render 'shared/error_messages', target: resource %>
+
+        <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
+        <div class="registration-fields">
+                <div class="auth-form__input-wrapper" id= "email_field">
+                  <div class="text-input">
+                    <%= f.label :email, "#{t("spree.email")}" %>
+                    <%= f.email_field :email, placeholder: 'username@example.com', disabled: false %>
+                  </div>
+                </div>
+
+                <div class="auth-form__input-wrapper" style="display: none;" id= "phone_number_field">
+                    <div class="text-input">
+                      <%= f.label :phone_number, "Phone Number" %>
+                      <%= f.text_field :phone_number, placeholder: 'Enter Phone number', disabled: true %>
+                    </div>
+                </div>
+
+            <div class="auth-form__input-wrapper">
+              <div class="text-input">
+                <%= f.label :password, "#{t("spree.password")}" %>
+                <div class="password-display" >
+                  <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
+                  <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
+                </div>
+              </div>
+              <div>
+              <span id="StrengthDisp" class="badge displayBadge">Weak</span>
+              </div>
             </div>
-          </div>
-          <div>
-          <span id="StrengthDisp" class="badge displayBadge">Weak</span>
-          </div>
-        </div>
-        <div class="auth-form__input-wrapper">
-          <div class="text-input">
-            <%= f.label :password_confirmation, "Password Confirmation:" %>
-            <div class="password-display">
-              <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
-              <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
-            </div>
-          </div>
-        </div>
 
-        <div id= "proceed-button" class= 'button-primary button-primary--full-width d-flex justify-content-center align-items-center field-radius mb-3' style="cursor: pointer;">Proceed</div>
+            <div class="auth-form__input-wrapper">
+              <div class="text-input">
+                <%= f.label :password_confirmation, "Password Confirmation" %>
+                <div class="password-display">
+                  <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
+                  <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
+                </div>
+              </div>
+            </div>
+
+            <div id= "proceed-button" class= 'button-primary button-primary--full-width d-flex justify-content-center align-items-center field-radius mb-3' style="cursor: pointer;">Proceed</div>
       </div>
 
       <div id="otp-input"  style="display: none;">
@@ -192,6 +272,20 @@
     <% end %>
   </div>
 </article>
+
+<script>
+  $(document).ready(function() {
+    $('input[name="slide_toggle"]').change(function() {
+      if ($("#email").is(":checked")) {
+        $("#email_field").hide().find('input').prop('disabled', true);
+        $("#phone_number_field").show().find('input').prop('disabled', false);
+      } else {
+        $("#email_field").show().find('input').prop('disabled', false);
+        $("#phone_number_field").hide().find('input').prop('disabled', true);
+      }
+    });
+  });
+</script>
 
 
 
