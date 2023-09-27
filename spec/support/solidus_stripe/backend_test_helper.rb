@@ -44,7 +44,7 @@ module SolidusStripe::BackendTestHelper
         amount: (order.outstanding_balance * 100).to_i,
         capture_method: 'manual',
         confirm: true,
-        currency: 'usd',
+        currency: 'PKR',
         payment_method: stripe_payment_method_id
       )
     end
