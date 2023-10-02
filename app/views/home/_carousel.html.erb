@@ -1,12 +1,9 @@
 <style>
-.slick-prev, .slick-next {
-  position: absolute;
-  top: 135%;
-  font-size: 1.8rem;
-}
+
 
 .slick-prev {
   left: 0;
+  z-index: 1;
 }
 
 .slick-next {
@@ -48,10 +45,10 @@
 .slick-slider .slick-track,
 .slick-slider .slick-list {
     -webkit-transform: translate3d(0, 0, 0);
-       -moz-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-         -o-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
 
 .slick-track {
@@ -188,7 +185,7 @@
                     <% taxonomy&.root&.children&.each do |parent_taxon| %>
                         <% parent_taxon&.children&.each do |child_taxon| %>
                 <% child_taxon_permalink = child_taxon&.permalink %>
-                    <div class="slide-in-right slides">
+                    <div class="slides">
                         <%= link_to "/t/#{child_taxon_permalink}", style:"text-decoration: none;", class: "client_logo" do %>
                             <div>
                                 <% if child_taxon&.icon&.attached? %>
@@ -209,16 +206,15 @@
 
 <script>
     $(document).ready(function(){
+
         $('.customer-logos').slick({
         slidesToShow: 6,
         slidesToScroll: 1,
         autoplay: false,
-        autoplaySpeed: 1500,
         arrows: true,
-        dots: false,
-        pauseOnHover: false,
         prevArrow: '<i class="slick-prev fas fa-arrow-left arrow_style"></i>',
         nextArrow: '<i class="slick-next fas fa-arrow-right arrow_style"></i>',
+        autoplaySpeed: 1500,
         responsive: [{
         breakpoint: 993,
         settings: {

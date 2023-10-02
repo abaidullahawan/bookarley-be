@@ -177,10 +177,15 @@ input[type="radio"]{
   color: #000;
 }
 #phone:checked ~ label.phone{
-  cursor: help;
+  cursor: pointer;
   user-select: none;
 }
 
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none; /* Initially hide error messages */
+}
 </style>
 
 <article class="auth-main-container row" style="background: aliceblue;" id="new-customer">
@@ -196,8 +201,8 @@ input[type="radio"]{
               <div class="toggle_button text-center">
                 <%# toggle button  %>
                   <div class="slide-controls">
-                    <input type="radio" name="slide_toggle" id="email" >
-                    <input type="radio" name="slide_toggle" id="phone" checked>
+                    <input type="radio" name="slide_toggle" class='email_check' id="email" >
+                    <input type="radio" name="slide_toggle" class='phone_check' id="phone" checked>
                     <label for="phone" class="slide_toggle phone">Email</label>
                     <label for="email" class="slide_toggle email">Phone</label>
                     <div class="slider-tab"></div>
@@ -213,14 +218,16 @@ input[type="radio"]{
                 <div class="auth-form__input-wrapper" id= "email_field">
                   <div class="text-input">
                     <%= f.label :email, "#{t("spree.email")}" %>
-                    <%= f.email_field :email, placeholder: 'username@example.com', disabled: false %>
+                    <%= f.email_field :email, placeholder: 'username@example.com', disabled: false, id: 'user_email' %>
+                    <span class="error-message" id="email-error-message">Invalid email address</span>
                   </div>
                 </div>
 
                 <div class="auth-form__input-wrapper" style="display: none;" id= "phone_number_field">
                     <div class="text-input">
                       <%= f.label :phone_number, "Phone Number" %>
-                      <%= f.text_field :phone_number, placeholder: 'Enter Phone number', disabled: true %>
+                      <%= f.text_field :phone_number, placeholder: 'Enter Phone number', disabled: true, type: 'tel', id: 'user_phone_number' %>
+                      <span class="error-message" id="phone-error-message">Invalid phone number</span>
                     </div>
                 </div>
 
@@ -274,6 +281,82 @@ input[type="radio"]{
 </article>
 
 <script>
+    $(document).ready(function() {
+      // Add event listener for the Proceed button
+          $('#proceed-button').on('click', function() {
+            debugger
+            // Remove any existing error messages
+            $('.error-message').hide();
+
+            // Check whether email or phone number is selected
+        if ($(".phone_check").is(":checked")) {
+          var email = $('#user_email').val();
+          if (!isValidEmail(email)) {
+            $('#email-error-message').show(); // Show the error message
+            return;
+          }
+        } 
+        else if ($(".email_check").is(":checked")) {
+          var phoneNumber = $('#user_phone_number').val();
+          if (!isValidPhoneNumber(phoneNumber)) {
+            $('#phone-error-message').show(); // Show the error message
+            return;
+          }
+        }
+
+            // Hide the registration fields and show OTP input fields
+            $('.logo-hide').hide();
+            $('.registration-fields').hide();
+            $('#otp-input').show();
+
+            // Initialize the countdown timer
+            let countdown = 5;
+            const timerElement = $('#otp-timer');
+
+            const timerInterval = setInterval(function() {
+              countdown -= 1;
+              timerElement.text(countdown);
+
+              if (countdown === 0) {
+                clearInterval(timerInterval); // Stop the timer
+                timerElement.text(''); // Clear the timer text
+                $('.otp-text').text('OTP Code has been generated successfully!');
+
+                // Generate a random 6-digit OTP after 5 seconds
+                setTimeout(function() {
+                  let otp = '';
+                  for (let i = 0; i < 6; i++) {
+                    otp += Math.floor(Math.random() * 10); // Generate a random digit (0-9)
+                  }
+
+                  $('.otp-input-field').each(function(index) {
+                    $(this).val(otp[index]);
+                  });
+                }, 5000); // 5000 milliseconds (5 seconds)
+              }
+            }, 1000); // Update every 1 second
+      });
+
+      // Email validation function
+      function isValidEmail(email) {
+        // Regular expression for a valid email address
+        var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        return emailPattern.test(email);
+      }
+
+      // Phone number validation function
+      function isValidPhoneNumber(phoneNumber) {
+        // Regular expression for a valid phone number (allows only digits)
+        var phonePattern = /^[0-9]{11}$/;
+        return phonePattern.test(phoneNumber);
+      }
+
+
+    });
+
+</script>
+
+<script>
   $(document).ready(function() {
     $('input[name="slide_toggle"]').change(function() {
       if ($("#email").is(":checked")) {
@@ -286,8 +369,6 @@ input[type="radio"]{
     });
   });
 </script>
-
-
 
 <script>
   $(document).ready(function() {
@@ -361,46 +442,14 @@ input[type="radio"]{
 </script>
 
 <script>
-  // Add this script to your view or assets/application.js
-  $(document).ready(function() {
-    $('#proceed-button').on('click', function() {
-      // Hide the registration fields and show OTP input fields
-      $('.logo-hide').hide();
-      $('.registration-fields').hide();
-      $('#otp-input').show();
 
-      // Initialize the countdown timer
-      let countdown = 5;
-      const timerElement = $('#otp-timer');
 
-      const timerInterval = setInterval(function() {
-        countdown -= 1;
-        timerElement.text(countdown);
+$(document).ready(function() {
 
-        if (countdown === 0) {
-          clearInterval(timerInterval); // Stop the timer
-          timerElement.text(''); // Clear the timer text
-          $('.otp-text').text('OTP Code has been generated successfully!');
-          
-          // Generate a random 6-digit OTP after 5 seconds
-          setTimeout(function() {
-            let otp = '';
-            for (let i = 0; i < 6; i++) {
-              otp += Math.floor(Math.random() * 10); // Generate a random digit (0-9)
-            }
-
-            $('.otp-input-field').each(function(index) {
-              $(this).val(otp[index]);
-            });
-          }, 50); // 5000 milliseconds (5 seconds)
-        }
-      }, 1000); // Update every 1 second
-    });
-
-    $('#create-button').on('click', function() {
-      // Submit the form
-      $('form#new_spree_user').submit();
-    });
+  $('#create-button').on('click', function() {
+    // Submit the form
+    $('form#new_spree_user').submit();
   });
+});
 
 </script>
