@@ -152,9 +152,6 @@ a.taxonomy-links {
     color: black;
 }
 
-.card.product_listing:hover {
-    transform: scale(1.03);
-}
 .product_row{
   margin-bottom: 60px;
 }
@@ -169,15 +166,131 @@ a.taxonomy-links {
 }
 }
 
+/* Product carousel card  */
+
+.post-slide{
+    background: #fff;
+    margin: 20px 15px 20px;
+    border-radius: 15px;
+    padding-top: 1px;
+    box-shadow: 0px 14px 22px -9px #bbcbd8;
+}
+.post-slide .post-img{
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: -12px 15px 8px 15px;
+    margin-left: -10px;
+}
+.post-slide .post-img img{
+    width: 100%;
+    height: auto;
+    transform: scale(1,1);
+    transition:transform 0.2s linear;
+}
+.post-slide:hover .post-img img{
+    transform: scale(1.1,1.1);
+}
+.post-slide .over-layer{
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
+    opacity:0;
+    background: linear-gradient(-45deg, rgba(6,190,244,0.75) 0%, rgba(45,112,253,0.6) 100%);
+    transition:all 0.50s linear;
+}
+.post-slide:hover .over-layer{
+    opacity:1;
+    text-decoration:none;
+}
+.post-slide .over-layer i{
+    position: relative;
+    top:45%;
+    text-align:center;
+    display: block;
+    color:#fff;
+    font-size:25px;
+}
+.post-slide .post-content{
+    background:#fff;
+    padding: 2px 20px 40px;
+    border-radius: 15px;
+}
+.post-slide .post-title a{
+    font-size:15px;
+    font-weight:bold;
+    color:#333;
+    display: inline-block;
+    text-transform:uppercase;
+    transition: all 0.3s ease 0s;
+}
+.post-slide .post-title a:hover{
+    text-decoration: none;
+    color:#3498db;
+}
+.post-slide .post-description{
+    line-height:24px;
+    color:#808080;
+    margin-bottom:25px;
+}
+.post-slide .post-date{
+    color:#a9a9a9;
+    font-size: 14px;
+}
+.post-slide .post-date i{
+    font-size:20px;
+    margin-right:8px;
+    color: #CFDACE;
+}
+.post-slide .read-more{
+    padding: 7px 20px;
+    float: right;
+    font-size: 12px;
+    background: #2196F3;
+    color: #ffffff;
+    box-shadow: 0px 10px 20px -10px #1376c5;
+    border-radius: 25px;
+    text-transform: uppercase;
+}
+.post-slide .read-more:hover{
+    background: #3498db;
+    text-decoration:none;
+    color:#fff;
+}
+
+/* product carousel  */
+
+.products-slider.slick-initialized.slick-slider {
+    width: 100% !important;
+    padding: 0px;
+}
+.products-slider .slick-prev {
+    top: 105% !important;
+}
+.products-slider .slick-next {
+    top: 105% !important;
+    right: 10px;
+}
+.products-slider .slick-prev {
+    left: auto !important;
+    right: 60px;
+}
+.card.product_listing {
+    margin: 0px 15px !important;
+}
+.slick-arrow:hover {
+    background: #f29f37;
+}
 </style>
 <%= render 'hero' %>
-
 
 <div class="container mb-5 mt-5 px-4">
     <% displayed_products = Set.new %>
     <% Spree::Taxonomy.all.each do |taxonomy| %>
       <% products_present = false %>
-      <% taxonomy&.root&.taxonomy&.taxons&.each do |taxon| %>
+      <% taxonomy&.taxons&.each do |taxon| %>
         <% if taxon&.products&.any? %>
           <% products_present = true %>
           <% break %>
@@ -185,90 +298,90 @@ a.taxonomy-links {
       <% end %>
       
       <% if products_present %>
-      <div class="title-row mb-4"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2> 
-          <% taxonomy.root.taxonomy.taxons.each do |taxon| %>
-        <% if taxon.products.count > 4 %>   
-          <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-          <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-links" do %>
-              <h4 class="view_more_btn">
-                View More
-                  <i class="fa fa-arrow-right"></i>
-              </h4>
+        <div class="title-row mb-4"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2> 
+              <% taxonomy.taxons.each do |taxon| %>
+                <% if taxon.products.count > 4 %>   
+                  <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
+                  <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-links" do %>
+                      <h4 class="view_more_btn">
+                        View More
+                          <i class="fa fa-arrow-right"></i>
+                      </h4>
+                <%end%>
+              <%end%>
           <%end%>
-        <%end%>
-      <%end%>
-      </div>
+        </div>
         <div class="row product_row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <% displayed_count = 0 %>
-        <% taxonomy&.root&.taxonomy&.taxons&.each do |taxon| %>
-          <% taxon&.products&.each do |product| %>
-            <% unless displayed_products.include?(product.id) %>
-              <% displayed_products.add(product.id) %>
-              <% displayed_count += 1 %>
-              <% if displayed_count <= 4 %>
-                <% if product.is_approved.nil? || product.is_pending.nil? || product.is_rejected.nil? || product.is_approved == true %>
-                  <div class="col">
-                    <div class="card product_listing" style="border-radius: 15px;">
-                      <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
-                        data-mdb-ripple-color="light">
-                          <%= link_to product_path(product), itemprop: 'url' do %>
-                            <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"product-img", alt:"product-listing")) %>
-                          <% end %>
-                        <a href="#!">
-                          <div class="mask"></div>
-                        </a>
-                      </div>
-                      <div class="card-body pb-0">
-                        <div class="d-flex justify-content-between">
-                          <div>
-                            <h5><%= product.name  %></h5>
-                            <div class="d-flex flex-row">
-                              <div class="dot"></div>
-                              <div class="mt-1 mb-1 spec-1">
-                                <% product.stores.each do |store| %>
-                                  <%= store.name %>
-                                <% end %>
+        <div class="products-slider">
+          <% displayed_count = 0 %>
+          <% taxonomy&.taxons&.each do |taxon| %>
+            <% taxon&.products&.each do |product| %>
+              <% unless displayed_products.include?(product.id) %>
+                <% displayed_products.add(product.id) %>
+                <% displayed_count += 1 %>
+                <% if displayed_count <= 6 %>
+                  <% if product.is_approved.nil? || product.is_pending.nil? || product.is_rejected.nil? || product.is_approved == true %>
+                    <div class="col">
+                      <div class="card product_listing" style="border-radius: 15px;">
+                        <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+                          data-mdb-ripple-color="light">
+                            <%= link_to product_path(product), itemprop: 'url' do %>
+                              <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"product-img", alt:"product-listing")) %>
+                            <% end %>
+                        
+                        </div>
+                        <div class="card-body pb-0">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h5><%= product.name  %></h5>
+                              <div class="d-flex flex-row">
+                                <div class="dot"></div>
+                                <div class="mt-1 mb-1 spec-1">
+                                  <% product.stores.each do |store| %>
+                                    <%= store.name %>
+                                  <% end %>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <hr class="my-0" />
-                      <div class="card-body pb-0">
-                        <div class="d-flex justify-content-between">
-                          <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        <hr class="my-0" />
+                        <div class="card-body pb-0">
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                            </div>
                           </div>
+                          <h5 class="large text-muted">PKR <%= product.price %></h5>
                         </div>
-                        <h5 class="large text-muted">PKR <%= product.price %></h5>
-                      </div>
-                      <hr class="my-0" />
-                      <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
-                          <% if Current.spree_user %>
-                            <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: product&.id) %>
-                            <% if !fav_product&.present? %>
-                              <%= render partial: 'products/add_to_favroite_partial', locals: {product: product} %>
-                            <% else %>
-                              <%= render partial: 'products/remove_from_favroite_partial', locals: {product: product} %>
+                        <hr class="my-0" />
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+                            <% if Current.spree_user %>
+                              <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: product&.id) %>
+                              <% if !fav_product&.present? %>
+                                <%= render partial: 'products/add_to_favroite_partial', locals: {product: product} %>
+                              <% else %>
+                                <%= render partial: 'products/remove_from_favroite_partial', locals: {product: product} %>
+                              <% end %>
                             <% end %>
-                          <% end %>
-                          <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
-                            View
-                          <% end %>  
+                            <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+                              View
+                            <% end %>  
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
     <% end %>
   <% end %>
@@ -280,3 +393,28 @@ a.taxonomy-links {
   <%= image_tag("bookarley-logo.png", alt: "Logo", width: 120) %>
   </a>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".products-slider").slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            autoplay: false,
+            arrows: true,
+            prevArrow: '<i class="slick-prev fas fa-arrow-left arrow_style"></i>',
+            nextArrow: '<i class="slick-next fas fa-arrow-right arrow_style"></i>',
+            autoplaySpeed: 1500,
+            responsive: [{
+            breakpoint: 993,
+            settings: {
+                slidesToShow: 3
+            }
+            }, {
+            breakpoint: 520,
+            settings: {
+                slidesToShow: 2
+            }
+            }]
+            });
+    });
+</script>
