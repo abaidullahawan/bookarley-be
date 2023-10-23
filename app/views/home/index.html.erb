@@ -288,103 +288,106 @@ a.taxonomy-links {
 
 <div class="container mb-5 mt-5 px-4">
     <% displayed_products = Set.new %>
-    <% Spree::Taxonomy.all.each do |taxonomy| %>
-      <% products_present = false %>
-      <% taxonomy&.taxons&.each do |taxon| %>
-        <% if taxon&.products&.any? %>
-          <% products_present = true %>
-          <% break %>
-        <% end %>
-      <% end %>
-      
-      <% if products_present %>
-        <div class="title-row mb-4"><h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2> 
-              <% taxonomy.taxons.each do |taxon| %>
-                <% if taxon.products.count > 4 %>   
-                  <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink%>
-                  <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-links" do %>
-                      <h4 class="view_more_btn">
-                        View More
-                          <i class="fa fa-arrow-right"></i>
-                      </h4>
-                <%end%>
-              <%end%>
-          <%end%>
-        </div>
-        <div class="row product_row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <div class="products-slider">
-          <% displayed_count = 0 %>
+      <% Spree::Taxonomy.all.each do |taxonomy| %>
+          <% products_present = false %>
           <% taxonomy&.taxons&.each do |taxon| %>
-            <% taxon&.products&.each do |product| %>
-              <% unless displayed_products.include?(product.id) %>
-                <% displayed_products.add(product.id) %>
-                <% displayed_count += 1 %>
-                <% if displayed_count <= 6 %>
-                  <% if product.is_approved.nil? || product.is_pending.nil? || product.is_rejected.nil? || product.is_approved == true %>
-                    <div class="col">
-                      <div class="card product_listing" style="border-radius: 15px;">
-                        <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
-                          data-mdb-ripple-color="light">
-                            <%= link_to product_path(product), itemprop: 'url' do %>
-                              <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"product-img", alt:"product-listing")) %>
-                            <% end %>
-                        
-                        </div>
-                        <div class="card-body pb-0">
-                          <div class="d-flex justify-content-between">
-                            <div>
-                              <h5><%= product.name  %></h5>
-                              <div class="d-flex flex-row">
-                                <div class="dot"></div>
-                                <div class="mt-1 mb-1 spec-1">
-                                  <% product.stores.each do |store| %>
-                                    <%= store.name %>
-                                  <% end %>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <hr class="my-0" />
-                        <div class="card-body pb-0">
-                          <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                            </div>
-                          </div>
-                          <h5 class="large text-muted">PKR <%= product.price %></h5>
-                        </div>
-                        <hr class="my-0" />
-                        <div class="card-body">
-                          <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
-                            <% if Current.spree_user %>
-                              <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: product&.id) %>
-                              <% if !fav_product&.present? %>
-                                <%= render partial: 'products/add_to_favroite_partial', locals: {product: product} %>
-                              <% else %>
-                                <%= render partial: 'products/remove_from_favroite_partial', locals: {product: product} %>
-                              <% end %>
-                            <% end %>
-                            <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
-                              View
-                            <% end %>  
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  <% end %>
-                <% end %>
-              <% end %>
+            <% if taxon&.products&.any? %>
+              <% products_present = true %>
+              <% break %>
             <% end %>
           <% end %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
+          
+          <% if products_present %>
+                <div class="title-row mb-4">
+                      <h2 style="font-size: 3em; font-weight: 500;"><%= taxonomy.name %></h2>
+                      <% view_more_shown = false %>
+                    <% taxonomy.taxons.each do |taxon| %>
+                        <% if taxon.products.count > 4 && !view_more_shown %>
+                          <% taxonomy_permalink = taxonomy.taxons.where(name: taxonomy.name)&.first&.permalink %>
+                          <%= link_to "/t/#{taxonomy_permalink}", class: "taxonomy-links" do %>
+                            <h4 class="view_more_btn">
+                              View More
+                              <i class="fa fa-arrow-right"></i>
+                            </h4>
+                          <% end %>
+                          <% view_more_shown = true %>
+                        <% end %>
+                    <% end %>
+                </div>
+                <div class="row product_row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
+                  <div class="products-slider">
+                    <% displayed_count = 0 %>
+                    <% taxonomy&.taxons&.each do |taxon| %>
+                      <% taxon&.products&.each do |product| %>
+                        <% unless displayed_products.include?(product.id) %>
+                          <% displayed_products.add(product.id) %>
+                          <% displayed_count += 1 %>
+                          <% if displayed_count <= 6 %>
+                            <% if product.is_approved.nil? || product.is_pending.nil? || product.is_rejected.nil? || product.is_approved == true %>
+                              <div class="col">
+                                <div class="card product_listing" style="border-radius: 15px;">
+                                  <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+                                    data-mdb-ripple-color="light">
+                                      <%= link_to product_path(product), itemprop: 'url' do %>
+                                        <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"product-img", alt:"product-listing")) %>
+                                      <% end %>
+                                  
+                                  </div>
+                                  <div class="card-body pb-0">
+                                    <div class="d-flex justify-content-between">
+                                      <div>
+                                        <h5><%= product.name  %></h5>
+                                        <div class="d-flex flex-row">
+                                          <div class="dot"></div>
+                                          <div class="mt-1 mb-1 spec-1">
+                                            <% product.stores.each do |store| %>
+                                              <%= store.name %>
+                                            <% end %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <hr class="my-0" />
+                                  <div class="card-body pb-0">
+                                    <div class="d-flex justify-content-between">
+                                      <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                      </div>
+                                    </div>
+                                    <h5 class="large text-muted">PKR <%= product.price %></h5>
+                                  </div>
+                                  <hr class="my-0" />
+                                  <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+                                      <% if Current.spree_user %>
+                                        <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: product&.id) %>
+                                        <% if !fav_product&.present? %>
+                                          <%= render partial: 'products/add_to_favroite_partial', locals: {product: product} %>
+                                        <% else %>
+                                          <%= render partial: 'products/remove_from_favroite_partial', locals: {product: product} %>
+                                        <% end %>
+                                      <% end %>
+                                      <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+                                        View
+                                      <% end %>  
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </div>
+              </div>
+          <% end %>
+       <% end %>
 </div>
 
 
