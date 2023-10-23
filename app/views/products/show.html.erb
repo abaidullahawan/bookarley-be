@@ -132,7 +132,7 @@
 
   <% @similar_products = @product.taxons.where(parent_id: nil).first %>
   <div class="products-grid">
-  <% @similar_products.products.each do |similar_product| %>
+  <% @similar_products&.products&.each do |similar_product| %>
 <div class="card" style="border-radius: 15px;">
     <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
       data-mdb-ripple-color="light">
@@ -208,9 +208,9 @@
       <div class="modal-body">
         <div class="model_content">
           <span>
-           <%= render(ImageComponent.new(image: @product.gallery.images.first, size: :small, itemprop: "image", class:"model_prod_img", alt:"img")) %>
+           <%= render(ImageComponent.new(image: @product&.gallery.images.first, size: :small, itemprop: "image", class:"model_prod_img", alt:"img")) %>
           </span>
-          <h3 style="text-transform: capitalize;"> <%= @product.name%> </h3>
+          <h3 style="text-transform: capitalize;"> <%= @product&.name%> </h3>
         </div>
         <div class="phone_list mt-3" style="font-size: 15px;">
         <div class="d-flex phone_item mb-3"><i class="fa fa-phone-volume" style="flex-grow: 1;"></i> <a href="tel:+923228234927" style="flex-grow: 30; color: #1E396B; text-decoration: none;">03228234927</a> <i class="fa fa-copy copy-icon flex-grow: 3"></i></div>
