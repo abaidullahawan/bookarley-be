@@ -33,8 +33,8 @@
 
 <div class="products-grid">
   <% product_list = products %>
-  <% if product_list.size > 0 %>
-    <% product_list.each do |product| %>
+  <% if product_list&.size.to_i > 0 %>
+    <% product_list&.each do |product| %>
       <%= cache [I18n.locale, current_pricing_options, @taxon, product] do %>
         <%= render ProductCardComponent.new(
           product,
@@ -50,5 +50,5 @@
 </div>
 
 <div class="mt-5 px-5">
-  <div class="paginate-text">Showing Total <span class="paginate-value"><%= products.size %></span> Items</div>
+  <div class="paginate-text">Showing Total <span class="paginate-value"><%= products&.size %></span> Items</div>
 </div>
