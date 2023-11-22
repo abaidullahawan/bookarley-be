@@ -251,6 +251,9 @@ input[type="radio"]{
                   <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
                   <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
                 </div>
+                <div>
+                <span class="error-message" id="password-error-message"></span>
+                </div>
               </div>
             </div>
 
@@ -283,8 +286,7 @@ input[type="radio"]{
 <script>
     $(document).ready(function() {
       // Add event listener for the Proceed button
-          $('#proceed-button').on('click', function() {
-            debugger
+      $('#proceed-button').on('click', function() {
             // Remove any existing error messages
             $('.error-message').hide();
 
@@ -303,6 +305,11 @@ input[type="radio"]{
             return;
           }
         }
+
+          // Check if password and confirm password are similar and not empty
+          if (!arePasswordsValid()) {
+            return;
+          }
 
             // Hide the registration fields and show OTP input fields
             $('.logo-hide').hide();
@@ -351,9 +358,93 @@ input[type="radio"]{
         return phonePattern.test(phoneNumber);
       }
 
+        // Password validation function
+        function arePasswordsValid() {
+          var password = $('#password-field').val();
+          var confirmPassword = $('#confirm-field').val();
+          var errorMessage = $('#password-error-message');
+
+          // Check if passwords are similar and not empty
+          if (password === '' || confirmPassword === '') {
+            $('#password-error-message').text('Password and confirm password cannot be empty').show();
+            return false;
+          } else if (password !== confirmPassword) {
+            $('#password-error-message').text(`Password Confirmation doesn't match Password`).show();
+            return false;
+          }
+
+          return true;
+        }
+
+            // Hide the error message when the password field is focused
+        $('#password-field').focus(function() {
+          $('#password-error-message').hide();
+        });
+
+        // Hide the error message when the confirm password field is focused
+        $('#confirm-field').focus(function() {
+          $('#password-error-message').hide();
+        });
+
 
     });
 
+</script>
+
+<script>
+  $(document).ready(function() {
+    // Get the email or phone input field
+    var emailInput = $('#user_email');
+    var phoneInput = $('#user_phone_number')
+
+    // Get the error message element
+    var errorMessageEmail = $('#email-error-message');
+    var errorMessagePhone = $('#phone-error-message');
+
+
+    // Attach an input event listener to the email input
+    emailInput.on('input', function() {
+      // Check if the entered email is valid
+      if (isValidEmail(emailInput.val())) {
+        // Hide the error message if the email is valid
+        errorMessageEmail.hide();
+      } else {
+        // Show the error message if the email is invalid and input length is more than 1
+        if (emailInput.val().length > 1) {
+          errorMessageEmail.show();
+        } else {
+          errorMessageEmail.hide();
+        }
+      }
+    });
+
+    phoneInput.on('input', function() {
+      // Check if the entered email is valid
+      if (isValidPhone(phoneInput.val())) {
+        // Hide the error message if the email is valid
+        errorMessagePhone.hide();
+      } else {
+        // Show the error message if the email is invalid and input length is more than 1
+        if (phoneInput.val().length > 1) {
+          errorMessagePhone.show();
+        } else {
+          errorMessagePhone.hide();
+        }
+      }
+      
+    })
+
+    // Function to validate email format
+    function isValidEmail(email) {
+      var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+      return emailRegex.test(email);
+    }
+     // Function to validate phone format
+    function isValidPhone(phone) {
+      var phoneRegex = /^[0-9]{11}$/;
+      return phoneRegex.test(phone);
+    }
+  });
 </script>
 
 <script>
@@ -440,6 +531,8 @@ input[type="radio"]{
     });
   });
 </script>
+
+
 
 <script>
 
