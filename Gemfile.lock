@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/abaidullahawan/solidus.git
-  revision: c9508c8b4d6f7c9d674f9a8da51ba1d03b3f104d
-  tag: v0.0.9
+  revision: f34d3e4dc2e3519aabea6c6cfe2f1f1b213e7b38
+  tag: v0.0.10
   specs:
     solidus (4.2.0.dev)
       solidus_api (= 4.2.0.dev)
@@ -55,8 +55,8 @@ GIT
 
 GIT
   remote: https://github.com/abaidullahawan/solidus_auth_devise.git
-  revision: 6eb3c03ebcf72fc6e85ffe9020a21b1a96ae747c
-  tag: v0.0.5
+  revision: 4e8bc298dfa9de6ae9562570608c8faee523c913
+  tag: v0.0.6
   specs:
     solidus_auth_devise (2.5.8)
       deface (~> 1.0)
