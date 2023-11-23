@@ -3,7 +3,8 @@
 class UsersController < StoreController
   skip_before_action :set_current_order, only: :show, raise: false
   prepend_before_action :authorize_actions, only: :new
-
+  before_action :custom_authenticate_spree_user!
+  
   include Taxonomies
 
   def show
@@ -81,5 +82,11 @@ class UsersController < StoreController
 
   def accurate_title
     I18n.t('spree.my_account')
+  end
+
+  def custom_authenticate_spree_user!
+    unless spree_user_signed_in?
+      redirect_to login_path, alert: 'You need to signin to continue'
+    end
   end
 end

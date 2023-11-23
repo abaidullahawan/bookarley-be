@@ -1,4 +1,6 @@
 class SlidersController < StoreController
+  before_action :custom_authenticate_spree_user!
+
   respond_to :html
   def index
     @sliders = Spree::Slider.order(priority: :asc).all
@@ -48,6 +50,12 @@ class SlidersController < StoreController
 
   def slider_params
     params.require(:slider).permit(:title, :priority, :url, :image)
+  end
+
+  def custom_authenticate_spree_user!
+    unless spree_user_signed_in?
+      redirect_to login_path, alert: 'You need to signin to continue'
+    end
   end
 
 end

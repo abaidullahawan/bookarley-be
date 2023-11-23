@@ -1,4 +1,7 @@
 class BlogPostsController < StoreController
+
+  before_action :custom_authenticate_spree_user!
+  
   respond_to :html
   def index
     @blog_posts = Spree::BlogPost.all
@@ -56,6 +59,12 @@ class BlogPostsController < StoreController
 
   def blog_post_params
     params.require(:blog_post).permit(:title, :blog_overview, :description, :url, :image)
+  end
+
+  def custom_authenticate_spree_user!
+    unless spree_user_signed_in?
+      redirect_to login_path, alert: 'You need to signin to continue'
+    end
   end
 
 end

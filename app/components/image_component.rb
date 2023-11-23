@@ -13,7 +13,13 @@ class ImageComponent < ViewComponent::Base
   def call
     ActiveStorage::Current.host = request.host_with_port
     if image
-      image_tag image.url(size), default_options.merge(options)
+      image_extension = File.extname(image.filename.to_s).downcase
+
+      if image_extension == '.jfif'
+        content_tag :div, nil, class: ['image-placeholder', size].join(' ')
+      else
+        image_tag image.url(size), default_options.merge(options)
+      end
     else
       content_tag :div, nil, class: ['image-placeholder', size].join(' ')
     end
