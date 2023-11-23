@@ -86,6 +86,12 @@
   .text-input input, .password-display, .field-radius{
     border-radius: 30px;
   }
+  .error-message {
+  color: red;
+  font-size: 12px;
+  padding-left: 10px;
+  display: none; 
+}
 
 </style>
 
@@ -106,8 +112,9 @@
       <div class="auth-form__input-wrapper">
         <div class="text-input">
           <%= f.label 'email_or_phone_number', "Email or Phone Number" %>
-          <%= f.text_field :login, placeholder: 'Enter email or phone number', required: true %>
+          <%= f.text_field :login, placeholder: 'Enter email or phone number', id:'user_email', required: true, autofocus: true %>
         </div>
+        <span class="error-message" id="email-phone-error-message"></span>
       </div>
 
       <div class="auth-form__input-wrapper password-input">
@@ -155,6 +162,30 @@
         passwordToggle.classList.add("fa-eye-slash");
       }
     });
+  });
+
+</script>
+
+<script>
+  $(document).ready(function() {
+    // Add event listener for input changes
+    $('#user_email').on('input', function() {
+      // Remove any existing error messages
+      var input = $(this).val()
+      var phonePattern = /^(\+92|92|0)-?3\d{2}-?\d{7}$/;
+      var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+      if(input.length > 1){ 
+        if (phonePattern.test(input)) {
+          $('#email-phone-error-message').hide();
+        } else if (emailPattern.test(input)) {
+          $('#email-phone-error-message').hide();
+        } else {
+          $('#email-phone-error-message').text('Email or Phone is not valid').show();
+        }
+      }
+
+    });
+
   });
 </script>
 

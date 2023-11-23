@@ -13,7 +13,11 @@
       class: 'product-thumbnails__all w-100 card p-2 mb-3',
       data: { js: 'product-thumbnail', js_id: image.viewable_id }
     ) do %>
-      <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
+      <% image_extension = File.extname(image.filename.to_s).downcase %>
+      <% if image_extension == '.jfif'%>
+      <%else%>
+        <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
+      <%end%>
     <% end %>
   <% end %>
 
@@ -26,7 +30,11 @@
         class: 'product-thumbnails__variant',
         data: { js: 'variant-thumbnail', js_id: image.viewable_id }
       ) do %>
+      <% image_extension = File.extname(image.filename.to_s).downcase %>
+      <% if image_extension == '.jfif'%>
+      <%else%>
         <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
+      <%end%>
       <% end %>
     <% end %>
   <% end %>
