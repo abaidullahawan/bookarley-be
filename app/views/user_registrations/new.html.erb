@@ -347,34 +347,34 @@ input[type="radio"]{
       // Email validation function
       function isValidEmail(email) {
         // Regular expression for a valid email address
-        var emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var emailPattern = /^[A-Za-z0-9._%]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
         return emailPattern.test(email);
       }
 
       // Phone number validation function
       function isValidPhoneNumber(phoneNumber) {
         // Regular expression for a valid phone number (allows only digits)
-        var phonePattern = /^[0-9]{11}$/;
+        var phonePattern = /^\+?92[0-9]{10}$/;
         return phonePattern.test(phoneNumber);
       }
 
-        // Password validation function
-        function arePasswordsValid() {
-          var password = $('#password-field').val();
-          var confirmPassword = $('#confirm-field').val();
-          var errorMessage = $('#password-error-message');
+      // Password validation function
+      function arePasswordsValid() {
+        var password = $('#password-field').val();
+        var confirmPassword = $('#confirm-field').val();
+        var errorMessage = $('#password-error-message');
 
-          // Check if passwords are similar and not empty
-          if (password === '' || confirmPassword === '') {
-            $('#password-error-message').text('Password and confirm password cannot be empty').show();
-            return false;
-          } else if (password !== confirmPassword) {
-            $('#password-error-message').text(`Password Confirmation doesn't match Password`).show();
-            return false;
-          }
-
-          return true;
+        // Check if passwords are similar and not empty
+        if (password === '' || confirmPassword === '') {
+          $('#password-error-message').text('Password and confirm password cannot be empty').show();
+          return false;
+        } else if (password !== confirmPassword) {
+          $('#password-error-message').text(`Password Confirmation doesn't match Password`).show();
+          return false;
         }
+
+        return true;
+      }
 
             // Hide the error message when the password field is focused
         $('#password-field').focus(function() {
@@ -436,12 +436,12 @@ input[type="radio"]{
 
     // Function to validate email format
     function isValidEmail(email) {
-      var emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+      var emailRegex = /^[A-Za-z0-9._%]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
       return emailRegex.test(email);
     }
      // Function to validate phone format
     function isValidPhone(phone) {
-      var phoneRegex = /^[0-9]{11}$/;
+     var phoneRegex = /^\+?92[0-9]{10}$/;
       return phoneRegex.test(phone);
     }
   });
