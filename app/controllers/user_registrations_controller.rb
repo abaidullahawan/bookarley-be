@@ -8,8 +8,10 @@ class UserRegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(spree_user_params)
-    resource.skip_confirmation! if resource.phone_number.present?
+    resource.skip_confirmation! if resource.phone_number.present? 
     if resource.save
+      
+      return redirect_to otp_path(resource_id: resource.id)
       # resource.confirm
       set_flash_message(:notice, :signed_up)
       sign_in(:spree_user, resource)
@@ -22,6 +24,23 @@ class UserRegistrationsController < Devise::RegistrationsController
       end
     end
   end
+
+  def otp 
+    if params[:resource_id]
+      @user = Spree::User.find(params[:resource_id])
+    else
+      redirect_to root_path
+    end
+  end
+
+  def otp_verification
+    flash[:notice] = "You have to confirm your account before continuing."
+    redirect_to root_path
+  end
+
+
+
+
 
   protected
 

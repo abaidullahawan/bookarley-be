@@ -1,0 +1,260 @@
+<style>
+  .auth-main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+  .text-input input {
+    background: #e8f0fe;
+    border-bottom: 2px solid #1e396b !important;
+    outline: none !important;
+    border: none;
+  }
+
+  .button-primary{
+    background-color: #1e396b;
+  }
+  .form_bottom_text{
+    font-size: 15px;
+    text-align: center;
+  }
+
+  @media  screen and (max-width: 1023px){
+    .auth-main-container {
+      width: 100% !important;
+    }
+  }
+
+  @media  screen and (max-width: 767px){
+    .form_col {
+      padding: 50px 20px !important;
+    }
+  .image_col img {
+      padding-left: 0px !important;
+      margin-top: 30px;
+    }
+  }
+
+  .form_col{
+    padding: 70px 30px;
+  }
+
+  .image_col img {
+    padding-left: 50px;
+    width: 75% 
+  }
+
+  .form_title{
+    text-align: center;
+    padding-bottom: 30px;
+    text-transform: capitalize;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 200;
+    color: #37517e;
+  }
+
+  .form_logo img{
+    height: auto;
+    width: 80px;
+    line-height: 100px;
+  }
+
+  .password-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e8f0fe;
+  }
+
+  .password-icon {
+    cursor: pointer;
+    margin-right: 12px;
+  }
+
+  .border-field{
+    border-bottom: 2px solid #1e396b !important;
+  }
+
+  .text-input input{
+    border: solid 1px #e8f0fe !important;
+  }
+  .displayBadge{
+    margin-top: 1%; 
+    display: none; 
+    text-align: center;
+    font-size: 12px;
+    transition: width 0.8s ease-in-out;
+    border-radius: 30px;
+   }
+   .otp-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .otp-input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .text-input input, .password-display, .field-radius{
+    border-radius: 30px;
+  }
+
+  .otp-text{
+    color: gray;
+    font-size: 14px;
+  }
+
+  .loader {
+    animation-duration: 0.3s;
+    margin-left: 3px;
+  }
+
+/* toggle button  */
+.slide-controls{
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 80%;
+  overflow: hidden;
+  margin: 30px 0 10px 0;
+  justify-content: space-between;
+  border: 1px solid lightgrey;
+  border-radius: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.slide-controls .slide_toggle{
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 48px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.6s ease;
+}
+.slide-controls label.signup{
+  color: #000;
+}
+.slide-controls .slider-tab{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+  z-index: 0;
+  border-radius: 30px;
+  background-color: rgb(242, 159, 55);
+  transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+input[type="radio"]{
+  display: none;
+}
+#email:checked ~ .slider-tab{
+  left: 50%;
+}
+#email:checked ~ label.email{
+  color: #fff;
+  cursor: default;
+  user-select: none;
+}
+#email:checked ~ label.phone{
+  color: #000;
+}
+#phone:checked ~ label.email{
+  color: #000;
+}
+#phone:checked ~ label.phone{
+  cursor: pointer;
+  user-select: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none; /* Initially hide error messages */
+}
+</style>
+
+<article class="auth-main-container row" style="background: aliceblue;" id="new-customer">
+      <div class= "col-lg-6 d-flex justify-content-center image_col" >
+        <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
+      </div>
+    <div class="col-lg-6 bg-white form_col">
+          <div class="form_logo text-center logo-hide pb-4">
+            <%= image_tag("bookarley-logo.png", alt:"logo") %>
+          </div>
+          
+
+
+<%= form_for @user, url: otp_verification_path, method: :post, id: 'otp-form' do |f| %>
+      <div id="otp-input" >
+        <div class="form_logo text-center pb-4">
+          <%= image_tag("otp-logo.png", alt:"logo") %>
+        </div>
+        <h1 class="form_title pb-3">OTP Verification</h1>
+            <p class="otp-text text-center mb-4">Generating OTP, please wait for <span id="otp-timer">5</span> seconds<span class="loader"><i class="fa fa-spinner fa-spin ml-3"></i></span></p>
+          <div class="otp-container">
+          <% 6.times do |i| %>
+            <%= text_field_tag "otp_code[#{i}]", "", class: 'otp-input-field otp-input', maxlength: 1 %>
+          <% end %>
+          </div>
+        <div class="auth-form__input-wrapper d-flex justify-content-center">
+        <%= f.submit 'Submit', id: 'create_button', style: "display: none;", class: 'sign-up-submit button-primary w-50 field-radius' %>
+        </div>
+      </div>
+
+<% end %>      
+  
+
+  </div>
+</article>
+
+<script>
+    $(document).ready(function() {
+
+            // Initialize the countdown timer
+            let countdown = 5;
+            const timerElement = $('#otp-timer');
+
+            const timerInterval = setInterval(function() {
+              countdown -= 1;
+              timerElement.text(countdown);
+
+              if (countdown === 0) {
+                clearInterval(timerInterval); // Stop the timer
+                timerElement.text(''); // Clear the timer text
+                $('.otp-text').text('OTP Code has been generated successfully!');
+
+                 // Show the submit button
+                 $('#create_button').show();
+
+                // Generate a random 6-digit OTP after 5 seconds
+                setTimeout(function() {
+                  let otp = '';
+                  for (let i = 0; i < 6; i++) {
+                    otp += Math.floor(Math.random() * 10); // Generate a random digit (0-9)
+                  }
+
+                  $('.otp-input-field').each(function(index) {
+                    $(this).val(otp[index]);
+                  });
+                }, 5000); // 5000 milliseconds (5 seconds)
+              }
+            }, 1000); // Update every 1 second
+
+    });
+
+</script>
