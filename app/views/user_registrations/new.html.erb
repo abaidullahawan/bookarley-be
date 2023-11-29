@@ -189,15 +189,15 @@ input[type="radio"]{
 </style>
 
 <article class="auth-main-container row" style="background: aliceblue;" id="new-customer">
-      <div class= "col-lg-6 d-flex justify-content-center image_col" >
-        <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
-      </div>
+    <div class= "col-lg-6 d-flex justify-content-center image_col" >
+      <%= image_tag("bookarley-form.png", alt:"Image 1", class:"d-block") %>
+    </div>
     <div class="col-lg-6 bg-white form_col">
           <div class="form_logo text-center logo-hide pb-4">
             <%= image_tag("bookarley-logo.png", alt:"logo") %>
           </div>
           <div class="logo-hide">
-             <h1 class="form_title">Registration Form</h1>
+            <h1 class="form_title">Registration Form</h1>
               <div class="toggle_button text-center">
                 <%# toggle button  %>
                   <div class="slide-controls">
@@ -209,187 +209,71 @@ input[type="radio"]{
                   </div>
                 <%# toggle end  %>
               </div>
-           </div>
+          </div>
 
         <%= render 'shared/error_messages', target: resource %>
 
         <%= form_for resource, as: :spree_user, url: registration_path(resource), html: { class: "auth-form" } do |f| %>
-        <div class="registration-fields">
-                <div class="auth-form__input-wrapper" id= "email_field">
-                  <div class="text-input">
-                    <%= f.label :email, "#{t("spree.email")}" %>
-                    <%= f.email_field :email, placeholder: 'username@example.com', disabled: false, id: 'user_email' %>
-                    <span class="error-message" id="email-error-message">Invalid email address</span>
+          <div class="registration-fields">
+                  <div class="auth-form__input-wrapper" id= "email_field">
+                    <div class="text-input">
+                      <%= f.label :email, "#{t("spree.email")}" %>
+                      <%= f.email_field :email, placeholder: 'username@example.com', disabled: false, id: 'user_email' %>
+                      <span class="error-message" id="email-error-message">Invalid email address</span>
+                    </div>
+                  </div>
+
+                  <div class="auth-form__input-wrapper" style="display: none;" id= "phone_number_field">
+                      <div class="text-input">
+                        <%= f.label :phone_number, "Phone Number" %>
+                        <%= f.text_field :phone_number, placeholder: 'Enter Phone number', disabled: true, type: 'tel', id: 'user_phone_number' %>
+                        <span class="error-message" id="phone-error-message">Invalid phone number</span>
+                      </div>
+                  </div>
+
+              <div class="auth-form__input-wrapper">
+                <div class="text-input">
+                  <%= f.label :password, "#{t("spree.password")}" %>
+                  <div class="password-display" >
+                    <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
+                    <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
                   </div>
                 </div>
-
-                <div class="auth-form__input-wrapper" style="display: none;" id= "phone_number_field">
-                    <div class="text-input">
-                      <%= f.label :phone_number, "Phone Number" %>
-                      <%= f.text_field :phone_number, placeholder: 'Enter Phone number', disabled: true, type: 'tel', id: 'user_phone_number' %>
-                      <span class="error-message" id="phone-error-message">Invalid phone number</span>
-                    </div>
-                </div>
-
-            <div class="auth-form__input-wrapper">
-              <div class="text-input">
-                <%= f.label :password, "#{t("spree.password")}" %>
-                <div class="password-display" >
-                  <%= f.password_field :password, class:"PassEntry", id: "password-field", placeholder: "Enter a Password" %>
-                  <i class="fas fa-eye-slash password-icon" id="password-toggle"></i>
-                </div>
-              </div>
-              <div>
-              <span id="StrengthDisp" class="badge displayBadge">Weak</span>
-              </div>
-            </div>
-
-            <div class="auth-form__input-wrapper">
-              <div class="text-input">
-                <%= f.label :password_confirmation, "Password Confirmation" %>
-                <div class="password-display">
-                  <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
-                  <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
-                </div>
                 <div>
-                <span class="error-message" id="password-error-message"></span>
+                <span id="StrengthDisp" class="badge displayBadge">Weak</span>
                 </div>
               </div>
-            </div>
 
-            <div id= "proceed-button" class= 'button-primary button-primary--full-width d-flex justify-content-center align-items-center field-radius mb-3' style="cursor: pointer;">Proceed</div>
-      </div>
+              <div class="auth-form__input-wrapper">
+                <div class="text-input">
+                  <%= f.label :password_confirmation, "Password Confirmation" %>
+                  <div class="password-display">
+                    <%= f.password_field :password_confirmation, id: "confirm-field", placeholder: "Re-Enter your Password" %>
+                    <i class="fas fa-eye-slash password-icon" id="confirm-toggle"></i>
+                  </div>
+                  <div>
+                  <span class="error-message" id="password-error-message"></span>
+                  </div>
+                </div>
+              </div>
 
-      <div id="otp-input"  style="display: none;">
-        <div class="form_logo text-center pb-4">
-          <%= image_tag("otp-logo.png", alt:"logo") %>
-        </div>
-        <h1 class="form_title pb-3">OTP Verification</h1>
-            <p class="otp-text text-center mb-4">Generating OTP, please wait for <span id="otp-timer">5</span> seconds<span class="loader"><i class="fa fa-spinner fa-spin ml-3"></i></span></p>
-          <div class="otp-container">
-          <% 6.times do |i| %>
-            <%= text_field_tag "otp_code[#{i}]", "", class: 'otp-input-field otp-input', maxlength: 1 %>
-          <% end %>
           </div>
-        <div class="auth-form__input-wrapper d-flex justify-content-center">
-          <%= f.button t("spree.Verfiy"), name: :commit, class: 'sign-up-submit button-primary w-50 field-radius', id:"new_spree_user" %>
-        </div>
-      </div>
+            <%= f.button(
+              t("spree.signup
+              "),
+              class: 'button-primary button-primary--full-width field-radius',
+              name: :commit
+             )
+            %>
   
-      <div class="form_bottom_text">
-        <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
-      </div>
-    <% end %>
+          <div class="form_bottom_text">
+            <%= I18n.t("spree.or") %> <%= link_to I18n.t("spree.login_as_existing"), login_path %>
+          </div>
+        <% end %>
   </div>
 </article>
 
-<script>
-    $(document).ready(function() {
-      // Add event listener for the Proceed button
-      $('#proceed-button').on('click', function() {
-            // Remove any existing error messages
-            $('.error-message').hide();
 
-            // Check whether email or phone number is selected
-        if ($(".phone_check").is(":checked")) {
-          var email = $('#user_email').val();
-          if (!isValidEmail(email)) {
-            $('#email-error-message').show(); // Show the error message
-            return;
-          }
-        } 
-        else if ($(".email_check").is(":checked")) {
-          var phoneNumber = $('#user_phone_number').val();
-          if (!isValidPhoneNumber(phoneNumber)) {
-            $('#phone-error-message').show(); // Show the error message
-            return;
-          }
-        }
-
-          // Check if password and confirm password are similar and not empty
-          if (!arePasswordsValid()) {
-            return;
-          }
-
-            // Hide the registration fields and show OTP input fields
-            $('.logo-hide').hide();
-            $('.registration-fields').hide();
-            $('#otp-input').show();
-
-            // Initialize the countdown timer
-            let countdown = 5;
-            const timerElement = $('#otp-timer');
-
-            const timerInterval = setInterval(function() {
-              countdown -= 1;
-              timerElement.text(countdown);
-
-              if (countdown === 0) {
-                clearInterval(timerInterval); // Stop the timer
-                timerElement.text(''); // Clear the timer text
-                $('.otp-text').text('OTP Code has been generated successfully!');
-
-                // Generate a random 6-digit OTP after 5 seconds
-                setTimeout(function() {
-                  let otp = '';
-                  for (let i = 0; i < 6; i++) {
-                    otp += Math.floor(Math.random() * 10); // Generate a random digit (0-9)
-                  }
-
-                  $('.otp-input-field').each(function(index) {
-                    $(this).val(otp[index]);
-                  });
-                }, 5000); // 5000 milliseconds (5 seconds)
-              }
-            }, 1000); // Update every 1 second
-      });
-
-      // Email validation function
-      function isValidEmail(email) {
-        // Regular expression for a valid email address
-        var emailPattern = /^[A-Za-z0-9._%]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-        return emailPattern.test(email);
-      }
-
-      // Phone number validation function
-      function isValidPhoneNumber(phoneNumber) {
-        // Regular expression for a valid phone number (allows only digits)
-        var phonePattern = /^\+?92[0-9]{10}$/;
-        return phonePattern.test(phoneNumber);
-      }
-
-      // Password validation function
-      function arePasswordsValid() {
-        var password = $('#password-field').val();
-        var confirmPassword = $('#confirm-field').val();
-        var errorMessage = $('#password-error-message');
-
-        // Check if passwords are similar and not empty
-        if (password === '' || confirmPassword === '') {
-          $('#password-error-message').text('Password and confirm password cannot be empty').show();
-          return false;
-        } else if (password !== confirmPassword) {
-          $('#password-error-message').text(`Password Confirmation doesn't match Password`).show();
-          return false;
-        }
-
-        return true;
-      }
-
-            // Hide the error message when the password field is focused
-        $('#password-field').focus(function() {
-          $('#password-error-message').hide();
-        });
-
-        // Hide the error message when the confirm password field is focused
-        $('#confirm-field').focus(function() {
-          $('#password-error-message').hide();
-        });
-
-
-    });
-
-</script>
 
 <script>
   $(document).ready(function() {
@@ -441,7 +325,7 @@ input[type="radio"]{
     }
      // Function to validate phone format
     function isValidPhone(phone) {
-     var phoneRegex = /^\+?92[0-9]{10}$/;
+     var phoneRegex = /^(?:\+92)?[0-9]{10}$/;
       return phoneRegex.test(phone);
     }
   });
@@ -532,17 +416,3 @@ input[type="radio"]{
   });
 </script>
 
-
-
-<script>
-
-
-$(document).ready(function() {
-
-  $('#create-button').on('click', function() {
-    // Submit the form
-    $('form#new_spree_user').submit();
-  });
-});
-
-</script>

@@ -51,6 +51,8 @@ Rails.application.routes.draw do
     match '/logout', to: 'user_sessions#destroy', as: :logout, via: Devise.sign_out_via
     get '/signup', to: 'user_registrations#new', as: :signup
     post '/signup', to: 'user_registrations#create', as: :registration
+    get '/otp', to: 'user_registrations#otp', as: :otp
+    post '/otp_verification', to: 'user_registrations#otp_verification', as: :otp_verification
     get '/password/recover', to: 'user_passwords#new', as: :recover_password
     post '/password/recover', to: 'user_passwords#create', as: :reset_password
     get '/password/change', to: 'user_passwords#edit', as: :edit_password
