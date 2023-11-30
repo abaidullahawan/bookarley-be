@@ -416,3 +416,40 @@ input[type="radio"]{
   });
 </script>
 
+<script>
+  $(document).ready(function () {
+    // Password validation function
+    function arePasswordsValid() {
+      var password = $('#password-field').val();
+      var confirmPassword = $('#confirm-field').val();
+      var errorMessage = $('#password-error-message');
+
+      // Check if passwords are similar and not empty
+      if (password === '' || confirmPassword === '') {
+        $('#password-error-message').text('Password and confirm password cannot be empty').show();
+        return false;
+      } else if (password !== confirmPassword) {
+        $('#password-error-message').text(`Passwords do not match.`).show();
+        return false;
+      }
+
+      $('#password-error-message').hide(); // Hide the error message if passwords are valid
+      return true;
+    }
+
+    // Hide the error message when the password field is focused
+    $('#password-field').focus(function () {
+      $('#password-error-message').hide();
+    });
+
+    // Hide the error message when the confirm password field is focused
+    $('#confirm-field').focus(function () {
+      $('#password-error-message').hide();
+    });
+
+    // Add an input event listener to both password and confirm password fields
+    $('#password-field, #confirm-field').on('input', function () {
+      arePasswordsValid();
+    });
+  });
+</script>
