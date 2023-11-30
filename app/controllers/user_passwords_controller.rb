@@ -8,15 +8,25 @@ class UserPasswordsController < Devise::PasswordsController
   # overridden to:
   #   respond_with resource, location: login_path
   #
+
   def create
-    self.resource = resource_class.send_reset_password_instructions(params[resource_name])
+    email = params["spree_user"]["email"]
+    existing_user = Spree::User.find_by(email: email)
+
+    if existing_user
+      self.resource = resource_class.send_reset_password_instructions(params[resource_name])
 
     set_flash_message(:notice, :send_instructions) if is_navigational_format?
 
-    if resource.errors.empty?
-      respond_with resource, location: login_path
+      if resource.errors.empty?
+        respond_with resource, location: login_path
+      else
+        respond_with_navigational(resource) { render :new }
+      end
     else
-      respond_with_navigational(resource) { render :new }
+      # The user doesn't exist, show validation error
+      flash.now[:alert] = t("spree.user_not_found", default: "User with this email doesn't exist.")
+      render :new
     end
   end
 

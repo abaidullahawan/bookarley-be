@@ -81,7 +81,7 @@ gem "stringio", "3.0.7"
 
 gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.11"
 
-gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.7"
+gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.8"
 gem "responders"
 gem "canonical-rails"
 gem "solidus_support"
@@ -112,3 +112,4 @@ group :development, :test do
 end
 
 gem "solidus_stripe", "~> 5.a"
+gem 'paranoia'

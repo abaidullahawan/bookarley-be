@@ -34,7 +34,7 @@ class UserRegistrationsController < Devise::RegistrationsController
   end
 
   def otp_verification
-    flash[:notice] = "You have to confirm your account before continuing."
+    flash[:notice] = "You have to confirm your email verification account before continuing."
     redirect_to root_path
   end
 
