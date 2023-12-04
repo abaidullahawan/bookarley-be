@@ -234,11 +234,10 @@ iframe{
 
 <!--Google Maps-->
 
-<%if @similar_products.present? %>
   <div class="products title">
   <h2>Similar Products</h2>
   </div>
- <%end%> 
+
 <div class="products similar_products">
 
   <% @similar_products = @product.taxons.where(parent_id: nil).first %>
