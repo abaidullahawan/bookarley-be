@@ -20,6 +20,12 @@
 .empty-product img{
   width: 320px;
 }
+
+.product_listing_img_fluid {
+    width: 100% !important;
+    height: 200px !important;
+}
+
 @media screen and (max-width: 599px){
   .empty-product{
   padding-left: 0px;
@@ -44,7 +50,7 @@
                 size: :small,
                 itemprop: "image",
                 style:"border-top-left-radius: 15px; border-top-right-radius: 15px;",
-                class:"img-fluid",
+                class:"img-fluid product_listing_img_fluid",
                 alt:"product-listing")
               ) %>
             <% end %>
