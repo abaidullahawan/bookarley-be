@@ -35,12 +35,65 @@
   <% product_list = products %>
   <% if product_list&.size.to_i > 0 %>
     <% product_list&.each do |product| %>
-      <%= cache [I18n.locale, current_pricing_options, @taxon, product] do %>
-        <%= render ProductCardComponent.new(
-          product,
-          price: product.price_for_options(current_pricing_options),
-        ) %>
-      <% end %>
+      <div class="card product_listing" style="border-radius: 15px;">
+        <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
+          data-mdb-ripple-color="light">
+            <%= link_to product_path(product), itemprop: 'url' do %>
+              <%= render(ImageComponent.new(
+                image: product.gallery.images.first,
+                size: :small,
+                itemprop: "image",
+                style:"border-top-left-radius: 15px; border-top-right-radius: 15px;",
+                class:"img-fluid",
+                alt:"product-listing")
+              ) %>
+            <% end %>
+        </div>
+        <div class="card-body pb-0">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h5><%= product.name  %></h5>
+              <div class="d-flex flex-row">
+                <div class="dot"></div>
+                <div class="mt-1 mb-1 spec-1">
+                  <% product.stores.each do |store| %>
+                    <%= store.name %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body pb-0">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row justify-content-end mt-1 mb-4" style="color: orange;">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+          <h5 class="large text-muted">PKR <%= product.price %></h5>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center pb-2 mb-1">
+            <% if Current.spree_user %>
+              <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: product&.id) %>
+              <% if !fav_product&.present? %>
+                <%= render partial: 'products/add_to_favroite_partial', locals: {product: product} %>
+              <% else %>
+                <%= render partial: 'products/remove_from_favroite_partial', locals: {product: product} %>
+              <% end %>
+            <% end %>
+            <%= link_to product_path(product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
+              View
+            <% end %>  
+          </div>
+        </div>
+      </div>
     <% end %>
   <% else %>  
     <div class="d-flex justify-content-center mb-5 empty-product">
