@@ -10,7 +10,7 @@ class ProductCardComponent < ViewComponent::Base
   attr_reader :product, :locale, :price
 
   def main_image
-    product.gallery.images.first
+    product.gallery.images.first.attachment
   end
 
   def display_price

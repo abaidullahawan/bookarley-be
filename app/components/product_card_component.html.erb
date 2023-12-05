@@ -23,19 +23,14 @@
     <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
       data-mdb-ripple-color="light">
         <%= link_to product_path(product), itemprop: 'url' do %>
-          <% product.gallery.images.each do |image| %>
-          <% next if image.attachment.blank? %>
-            <%# <%= render(ImageComponent.new(image: main_image, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"img-fluid", alt:"img")) %>
-            <%= render(ImageComponent.new(
-              image: image.attachment,
-              size: :small,
-              class: "img-fluid",
-              style:"border-top-left-radius: 15px; border-top-right-radius: 15px;",
-              itemprop: "image",
-              data: { js: 'product-main-image' }
-            )) %>
-
-          <%end%> 
+          <%= render(ImageComponent.new(
+            image: main_image,
+            size: :small,
+            itemprop: "image",
+            style:"border-top-left-radius: 15px; border-top-right-radius: 15px;",
+            class:"img-fluid",
+            alt:"img")
+          ) %>
         <% end %>
       <a href="#!">
         <div class="mask"></div>
