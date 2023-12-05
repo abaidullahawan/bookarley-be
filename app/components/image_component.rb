@@ -18,7 +18,7 @@ class ImageComponent < ViewComponent::Base
       if image_extension == '.jfif'
         content_tag :div, nil, class: ['image-placeholder', size].join(' ')
       else
-        image_tag image.url(size), default_options.merge(options)
+        image_tag image.url
       end
     else
       content_tag :div, nil, class: ['image-placeholder', size].join(' ')
