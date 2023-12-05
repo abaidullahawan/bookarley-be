@@ -6,37 +6,21 @@
 
 <ul class="product-thumbnails">
   <% product.gallery.images.each do |image| %>
-    <% next if image.viewable_id != product.master.id %>
+    <% next if image.attachment.blank? %>
 
-    <%= content_tag(
-      :li,
-      class: 'product-thumbnails__all w-100 card p-2 mb-3',
-      data: { js: 'product-thumbnail', js_id: image.viewable_id }
-    ) do %>
+    <li class='product-thumbnails__all w-100 card p-2 mb-3'>
       <% image_extension = File.extname(image.filename.to_s).downcase %>
       <% if image_extension == '.jfif'%>
       <%else%>
-        <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
+        <%= render(ImageComponent.new(
+            image: image.attachment,
+            size: :product,
+            class: "w-100",
+            itemprop: "image"
+          ))
+        %>
       <%end%>
-    <% end %>
-  <% end %>
-
-  <% if product.has_variants? %>
-    <% product.gallery.images.each do |image| %>
-      <% next if image.viewable_id == product.master.id %>
-
-      <%= content_tag(
-        :li,
-        class: 'product-thumbnails__variant',
-        data: { js: 'variant-thumbnail', js_id: image.viewable_id }
-      ) do %>
-      <% image_extension = File.extname(image.filename.to_s).downcase %>
-      <% if image_extension == '.jfif'%>
-      <%else%>
-        <%= link_to(image_tag(image.url(:mini)), image.url(:product)) %>
-      <%end%>
-      <% end %>
-    <% end %>
+    </li>
   <% end %>
 </ul>
 
