@@ -24,7 +24,7 @@
       data-mdb-ripple-color="light">
         <%= link_to product_path(product), itemprop: 'url' do %>
           <%= render(ImageComponent.new(
-            image: main_image,
+            image: product.gallery.images.first,
             size: :small,
             itemprop: "image",
             style:"border-top-left-radius: 15px; border-top-right-radius: 15px;",
