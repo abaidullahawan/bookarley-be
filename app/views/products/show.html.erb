@@ -9,233 +9,262 @@
  .shadow-start {
     box-shadow: 15px 0 0px -15px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
   }
-.similar_product_img{
-  width: 100%;
-  height: 200px;
-}
+  .similar_product_img{
+    width: 100%;
+    height: 200px;
+  }
 
-.products.title {
-    padding-bottom: 0px !important;
-    padding-left: 50px !important;
-    position: relative;
-}
+  .products.title {
+      padding-bottom: 0px !important;
+      padding-left: 50px !important;
+      position: relative;
+  }
 
-.products.similar_products {
-    padding-top: 4rem !important;
-}
+  .products.similar_products {
+      padding-top: 4rem !important;
+  }
 
-.products.title h2::before {
-  content: "";
-    position: absolute;
-    height: 5px;
-    width: 100px;
-    background: #ffc107;
-    top: auto;
-    bottom: -5px;
-}
+  .products.title h2::before {
+    content: "";
+      position: absolute;
+      height: 5px;
+      width: 100px;
+      background: #ffc107;
+      top: auto;
+      bottom: -5px;
+  }
 
-.whatsapp_button .fab.fa-whatsapp {
-  color: #25D366; /* Official WhatsApp green color */
-}
-.model_content{
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 20px;
-}
-.model_prod_img {
-    height: 80px;
-    width: 80px;
-    margin-right: 10px;
-    border-radius: 50%;
-}
-.phone_item{
-  background: #0000801f;
-    padding: 10px 15px;
-    border-radius: 5px;
-    align-items: center;
-}
-.phone_list i {
+  .whatsapp_button .fab.fa-whatsapp {
+    color: #25D366; /* Official WhatsApp green color */
+  }
+  .model_content{
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+  .model_prod_img {
+      height: 80px;
+      width: 80px;
+      margin-right: 10px;
+      border-radius: 50%;
+  }
+  .phone_item{
+    background: #0000801f;
+      padding: 10px 15px;
+      border-radius: 5px;
+      align-items: center;
+  }
+  .phone_list i {
+      color: #1E396B;
+  }
+  .model_btn{
+    border: none;
     color: #1E396B;
-}
-.model_btn{
-  border: none;
-  color: #1E396B;
-}
-.model_btn span{
-  font-size: 25px;
-    padding: 10px;
-}
+  }
+  .model_btn span{
+    font-size: 25px;
+      padding: 10px;
+  }
 
 
-#phoneNumber{
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.meta_desc h1{
-  font-size: 3rem;
-  margin-left: 10px;
-}
-.meta_desc i{
-  font-size: 3rem;
-  color: #ffc107  ;
-}
-.meta_desc_title{
-  display: flex;
-  align-items:center;
-}
-.meta_desc .desc_details{
-  font-size: 1.9rem;
-}
-.bottom_detail {
+  #phoneNumber{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .meta_desc h1{
+    font-size: 3rem;
+    margin-left: 10px;
+  }
+  .meta_desc i{
+    font-size: 3rem;
+    color: #ffc107  ;
+  }
+  .meta_desc_title{
     display: flex;
-    justify-content: space-between;
-    margin-top: 29px;
-}
-.prod_price {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.prod_price span{
-font-size: 1.9rem;
-color: #ffc107;
-}
-.prod_price h5{
-  font-size: 1.6rem;
-  font-style: italic;
-  background-color: #ffc107;
-  color: #3f464b;
-  padding: 0.5em 1em;
-  border-radius: 4px;
-}
-/* product price media  */
-@media screen and (max-width: 767px){
+    align-items:center;
+  }
+  .meta_desc .desc_details{
+    margin-left: 29px;
+  }
+  .bottom_detail {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 29px;
+  }
   .prod_price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .prod_price span{
+  font-size: 1.9rem;
+  color: #ffc107;
+  }
+  .prod_price h5{
+    font-size: 1.6rem;
+    font-style: italic;
+    background-color: #ffc107;
+    color: #3f464b;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+  }
+  /* product price media  */
+  @media screen and (max-width: 767px){
+    .prod_price {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+    }
+    .prod_price h3{
+      margin-bottom: 15px;
+    }
+    /* main product sec  media*/
+    .main_prod_sec{
+      padding: 40px 30px !important;
+    }
+
+    /*google map media  */
+    .map-container {
+        padding-bottom: 55% !important;
+        }
+        iframe {
+        height: 100% !important;
+    }
+    body{
+      width: 100%;
+    }
+    .map-image{
+      width: 60vw;
+    }
+    .mention-text{
+      width: 100% !important;
+      margin-left: auto;
+    }
+  }
+
+  /* google map  */
+  .map-container{
+    overflow:hidden;
+    padding-bottom:35%;
+    position:relative;
+  }
+  iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+  }
+
+  /* google map media  */
+  @media screen and (max-width: 520px){
+  .map-container {
+      padding-bottom: 80%;
+      }
+      iframe {
+      height: 100%;
+  }
+  }
+  .ml-0{
+    margin-left: 0px !important;
+  }
+  .product-thumbnails__all img{
+    width: 100%;
+  }
+  .prices-container{
+    background: #f1f1f1;
+    border: none;
+    border-radius: 6px;
+    padding: 16px 27px;
     display: flex;
-    align-items: start;
-    flex-direction: column;
-}
-.prod_price h3{
-  margin-bottom: 15px;
-}
-/* main product sec  media*/
-.main_prod_sec{
-  padding: 40px 30px !important;
-}
-
-/*google map media  */
- .map-container {
-    padding-bottom: 55% !important;
-    }
-    iframe {
-    height: 100% !important;
-}
-}
-
-/* google map  */
-.map-container{
-  overflow:hidden;
-  padding-bottom:35%;
-  position:relative;
-}
-iframe{
-  left:0;
-  top:0;
-  height:100%;
-  width:100%;
-  position:absolute;
-}
-
-/* google map media  */
-@media screen and (max-width: 520px){
- .map-container {
-    padding-bottom: 80%;
-    }
-    iframe {
-    height: 100%;
-}
-}
-
-
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 10px;
+  }
+  .inside-container{
+    padding: 18px 24px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: 24px;
+    background-color: rgb(241, 241, 241, 0.4);
+    margin-left: 1px;
+  }
+  .product-header__title{
+    font-size: 4rem;
+    text-transform: capitalize;
+  }
+  .text-center{
+    text-align: center;
+  }
+  .border-bottom{
+    border-bottom: 3px solid gray !important;
+    cursor: pointer;
+  }
+  .active{
+    transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    border-color: #103577 !important;
+    color: #103577;
+  }
+  .mention-text{
+    background-color: rgba(63,70,75,.1);
+    color: #3f464b;
+    padding: 0.5em 1em;
+    width: 50%;
+    margin: 0 0 10px;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.5rem;
+    margin-left: auto;
+  }
 </style>
-
 <% @body_id = 'product-details' %>
 <% cache [I18n.locale, current_pricing_options, @product] do %>
-    <div class="row shadow m-0 main_prod_sec" style="padding: 45px;">
-      <aside class="col-lg-6 bg-white shadow-start product-padding d-flex justify-content-center align-items-center" style="margin-bottom: 0px; border-left: 15px solid #ffc107;">
-        <div class="row w-100">
-          <div class="col-md-3">
-            <%= render 'product_thumbnails', product: @product %>
-          </div>
-          <div class="col-md-9">
-            <%= render 'product_image', product: @product %>
-          </div>
-        </div>
-       
-      </aside>
-      <main class="col-lg-6 bg-white shadow-start product-padding d-flex justify-content-center">
-        <div class="ps-lg-3">
-          <%= render 'product_header', product: @product %>
-
-          <div class="row mt-4 mb-4">
-            <dt class="col-3 mb-2 h4">Stores:</dt>
-            <dd class="col-9">
-              <% @product.stores.each do |store| %>
-                <span class="px-3 py-2 text-dark mr-3 p" style="background: #e0dfdf; border-radius: 10px;"><%= store.name %></span>
-              <% end %>
-            </dd>
-
-            <dt class="col-3 pt-4 h4">Cities:</dt>
-            <dd class="col-9 pt-4" ><span class="px-3 py-2 text-dark mr-3 p" style="background: #e0dfdf; border-radius: 10px;">Lahore</span></dd>
-
-            <dt class="col-3 pt-5">Created at</dt>
-            <dd class="col-9 pt-5"><%= @product.created_at %></dd>
-
-            <dt class="col-3 pt-3">Updated at</dt>
-            <dd class="col-9 pt-3"><%= @product.updated_at %></dd>
-
-          </div>
-          <div class="meta_desc pt-3 pb-2">
-            <div class="meta_desc_title pb-2">
-            <i class="fa fa-folder "></i>
-            <h1> Description </h1>
-            </div>
-            <p class="desc_details"> <%= @product&.description %> </p>
-          </div>
-
+  <div class="row shadow m-0 main_prod_sec" style="padding: 45px;">
+    <main class="col-lg-6 bg-white shadow-start product-padding d-flex justify-content-center">
+      <div class="ps-lg-3 col-12">
+        <%= render 'product_header', product: @product %>
+        <div class='col-12' id='details'>
+          <%= render 'details' %>
           <hr />
-          <div class="mobile_justify_btns d-flex align-items-center mb-4">
-            <% if Current.spree_user %>
-              <% fav_product = Favorite.find_by(user_id: Current.spree_user&.id, product_id: @product&.id) %>
-              <% if !fav_product&.present? %>
-                <%= render partial: 'products/add_to_favroite_partial', locals: {product: @product} %>
-              <% else %>
-                <%= render partial: 'products/remove_from_favroite_partial', locals: {product: @product} %>
-              <% end %>    
-            <% end %>          
-            <button class="btn btn-light border border-secondary py-2 icon-hover px-3" id= "phoneNumber" target= "blank" > <i class="me-1 fa fa-phone fa-lg"></i> Call Now </button>
-            <button class="btn btn-light border border-secondary py-2 icon-hover px-3 whatsapp_button" id= "whatsappButton" target= "blank" > <i class="me-1 fab fa-whatsapp fa-lg"></i> WhatsApp </button>
-          </div>
-
-          <div class="prod_price pt-3">
-            <h3><span>Price:</span> <%= @product&.prices&.first&.amount.to_d %> PKR </h3>
-            <h5>"Unlock special deals by mentioning Bookarley." </h5>
-          </div>
-          
         </div>
-      </main>
-    </div>
+        <div class='col-12' id='pricing'>
+          <%= render 'prices' %>
+          <hr />
+        </div>
+        <div class='col-12' id='locations'>
+          <%= render 'locations' %>
+        </div>
+      </div>
+    </main>
+    <aside class="col-lg-6 bg-white shadow-start product-padding d-flex" style="margin-bottom: 0px;">
+      <div class="w-100">
+        <div class="col-md-12">
+          <%= render 'product_image', product: @product %>
+        </div>
+        <div class="col-md-12">
+          <%= render 'product_thumbnails', product: @product %>
+        </div>
+        <div class='row'>
+          <div class='col-12' style='text-align: right;'>
+            <h3 class='my-4' style='color: #103577;'>Price Range</h3>
+            <h3 class='my-4'>PKR <%= @product.prices&.pluck(:amount)&.min.to_i %> - PKR <%= @product.prices&.pluck(:amount)&.max.to_i %> </h3>
+            <div class='mention-text'>Mention Bookarley to get a good deal</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
 <% end %>
-
-<!--Google map-->
-<%# <div id="map-container-google" class="z-depth-1-half map-container">
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d92286.80347883476!2d74.3187441513074!3d31.52767163875403!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab!5e0!3m2!1sen!2s!4v1701690670109!5m2!1sen!2s" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div> %>
-
-<!--Google Maps-->
-
   <div class="products title">
-  <h2>Similar Products</h2>
+    <h2>Similar Products</h2>
   </div>
 
 <div class="products similar_products">
@@ -246,7 +275,6 @@ iframe{
 <div class="card" style="border-radius: 15px;">
     <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
       data-mdb-ripple-color="light">
-      
         <%= link_to product_path(similar_product), itemprop: 'url' do %>
            <%= render(ImageComponent.new(image: similar_product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"img")) %>
         <% end %>
@@ -295,10 +323,10 @@ iframe{
         <% end %>
         <%= link_to product_path(similar_product), itemprop: 'url', type:"button", class:"btn btn-primary px-4" do %>
           View
-        <% end %>  
+        <% end %>
       </div>
     </div>
-  </div> 
+  </div>
   <% end%>
   </div>
   </div>
@@ -327,31 +355,68 @@ iframe{
         <div class="d-flex phone_item mb-3"><i class="fa fa-phone-volume" style="flex-grow: 1;"></i> <a href="tel:+923228234927" style="flex-grow: 30; color: #1E396B; text-decoration: none;">03228234927</a> <i class="fa fa-copy copy-icon flex-grow: 3"></i></div>
         </div>
       </div>
-      
     </div>
   </div>
 </div>
 
 
 <script>
-$(document).ready(function() {
-  $('#whatsappButton').on('click', function() {
-    // Define your WhatsApp number and message here
-    var whatsappNumber = '+923228234927';
-    var productName = "<%= @product.name %>";
-    var message = "Hello, " + productName + " I visited your profile at Bookarley and wanted to ask a couple of questions";
+  $(document).ready(function() {
+    $('#whatsappButton').on('click', function() {
+      // Define your WhatsApp number and message here
+      var whatsappNumber = '+923228234927';
+      var productName = "<%= @product.name %>";
+      var message = "Hello, " + productName + " I visited your profile at Bookarley and wanted to ask a couple of questions";
 
-    // Construct the WhatsApp URL
-    var whatsappURL = 'https://api.whatsapp.com/send?phone=' + whatsappNumber + '&text=' + encodeURIComponent(message);
+      // Construct the WhatsApp URL
+      var whatsappURL = 'https://api.whatsapp.com/send?phone=' + whatsappNumber + '&text=' + encodeURIComponent(message);
 
-    // Redirect to WhatsApp
-     window.open(whatsappURL, '_blank');
+      // Redirect to WhatsApp
+      window.open(whatsappURL, '_blank');
+    });
+
+  $('#phoneNumber').on('click', function() {
+      // Show the modal when the button is clicked
+      $('#phoneNumberModal').modal('show');
+    });
+
+$('.tab-buttons').on('click', function () {
+    var data_id = $(this).data('id');
+    $('.tab-buttons').removeClass('active');
+    $(this).addClass('active');
+
+    $('#pricing, #details, #locations, #header-section').fadeOut('fast', function () {
+      // Hide all sections before showing the selected one
+      switch (data_id) {
+        case 'pricing':
+          $('#pricing').fadeIn('fast');
+          break;
+        case 'locations':
+          $('#locations').fadeIn('fast');
+          break;
+        default:
+          // Default case shows all sections
+          $('#pricing, #details, #locations, #header-section').fadeIn('fast');
+      }
+    });
   });
+    // $('.tab-buttons').on('click', function () {
+    //   var data_id = $(this).data('id');
+    //   $('.tab-buttons').removeClass('active');
+    //   $(this).addClass('active');
 
- $('#phoneNumber').on('click', function() {
-    // Show the modal when the button is clicked
-    $('#phoneNumberModal').modal('show');
+    //   $('#pricing, #details, #locations, #header-section').addClass('d-none');
+
+    //   switch (data_id) {
+    //     case 'pricing':
+    //       $('#pricing').removeClass('d-none');
+    //       break;
+    //     case 'locations':
+    //       $('#locations').removeClass('d-none');
+    //       break;
+    //     default:
+    //       $('#pricing, #details, #locations, #header-section').removeClass('d-none');
+    //   }
+    // });
   });
-
-});
 </script>
