@@ -1,21 +1,15 @@
-<style>
-  .product-thumbnails__all img{
-    width: 100%;
-  }
-</style>
-
-<ul class="product-thumbnails">
+<ul class="d-flex overflow-auto p-0">
   <% product.gallery.images.each do |image| %>
     <% next if image.attachment.blank? %>
 
-    <li class='product-thumbnails__all w-100 card p-2 mb-3'>
+    <li class='product-thumbnails__all col-2 card p-2 mb-3'>
       <% image_extension = File.extname(image.filename.to_s).downcase %>
       <% if image_extension == '.jfif'%>
       <%else%>
         <%= render(ImageComponent.new(
             image: image.attachment,
             size: :product,
-            class: "w-100",
+            class: "w-100 h-100",
             itemprop: "image"
           ))
         %>
@@ -23,4 +17,3 @@
     </li>
   <% end %>
 </ul>
-

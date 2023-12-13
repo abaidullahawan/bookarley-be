@@ -1,46 +1,36 @@
-<style>
-.product-header__title{
-  font-size: 4rem;
-  text-transform: capitalize;
-}
-</style>
-
 <header class="product-header">
-  <h1 class="product-header__title" itemprop="name">
-    <%= product.name %>
-  </h1>
-
-  <div class="d-flex flex-row my-3">
-    <div class="text-warning mb-1 me-2">
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fa fa-star"></i>
-      <i class="fas fa-star"></i>
-      <span class="ms-1">
-        5
-      </span>
+  <div class="row mb-5">
+    <div class='col-3 border-bottom text-center active tab-buttons' data-id='details'>
+      <h3 class='pb-2'>Details</h3>
     </div>
-    <%# <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>154 orders</span>
-    <span class="text-success ms-2">In stock</span> %>
+    <div class='col-3 border-bottom text-center tab-buttons' data-id='pricing'>
+      <h3 class='pb-2'>Pricing</h3>
+    </div>
+    <div class='col-3 border-bottom text-center tab-buttons' data-id='locations'>
+      <h3 class='pb-2'>Location</h3>
+    </div>
   </div>
-
-  <% if product.price_for_options(current_pricing_options)&.money and !product.price.nil? %>
-    <h1 class="product-header__title font-weight-bold" style="font-weight: 700;" id="product-price">
-      <%= content_tag(
-        :span,
-        display_price(product),
-        itemprop: 'price',
-        content: product.price_for_options(current_pricing_options)&.money.to_d,
-        data: { js: 'price' }
-      ) %>
-
-      <%= content_tag(
-        :span,
-        nil,
-        itemprop: 'priceCurrency',
-        content: current_pricing_options.currency
-      ) %>
+  <div id='header-section'>
+    <h1 class="product-header__title" itemprop="name">
+      <%= product.name %>
     </h1>
-  <% end %>
+
+    <div class="d-flex flex-row my-4">
+      <div class="text-warning mb-1 me-2">
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fa fa-star"></i>
+        <i class="fas fa-star"></i>
+        <span class="ms-1">
+          5
+        </span>
+      </div>
+      <h3 style='margin-left: 10px;'>
+        <i class='fas fa-map-marker-alt'></i>
+        <%= @product.address %>
+      </h3>
+    </div>
+    <hr />
+  </div>
 </header>

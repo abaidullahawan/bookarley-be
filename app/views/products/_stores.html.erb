@@ -1,0 +1,6 @@
+<dt class="col-3 mb-2 h4">Stores:</dt>
+<dd class="col-9">
+  <% @product.stores.each do |store| %>
+    <span class="px-3 py-2 text-dark mr-3 p" style="background: #e0dfdf; border-radius: 10px;"><%= store.name %></span>
+  <% end %>
+</dd>

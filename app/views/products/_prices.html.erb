@@ -1,0 +1,50 @@
+<style>
+  .cursor-pointer{
+    cursor: pointer;
+  }
+  .collapsed {
+    display: none;
+  }
+
+  .rotated {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+</style>
+
+<div>
+  <h1 class='ml-0 mb-4 mt-2'>Pricing</h1>
+  <% @product.prices.each_with_index do |p, index| %>
+    <div>
+      <div class='prices-container'>
+        <h3><%= p.title %></h3>
+        <div class='d-flex'>
+          <h3><%= p.amount.to_i %></h3>
+          <i class='fas fa-chevron-down cursor-pointer collapse-button <%= index == 0 ? "rotated" : "" %>' style='margin: 3px 0px 0px 5px; font-size: 20px;'></i>
+        </div>
+      </div>
+      <div class='row inside-container <%= index == 0 ? "" : "collapsed" %>'>
+        <% p.product_properties.each do |pp| %>
+          <div class='row col-12 col-lg-6'>
+            <div class='col-1'><%= image_tag pp.property.logo.attachment.url, width: '20px', height: '20px' %></div>
+            <div class='col-11'>
+              <h2>
+                <%= pp.property.name %>
+              </h2>
+              <h5><%= pp.value %></h5>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.collapse-button').on('click', function () {
+      var container = $(this).closest('.prices-container').next('.inside-container');
+      container.slideToggle();
+      $(this).toggleClass('rotated');
+    });
+  });
+</script>

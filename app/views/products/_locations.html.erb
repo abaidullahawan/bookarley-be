@@ -1,0 +1,12 @@
+<div>
+  <h1>Location</h1>
+  <%= link_to "#{@product.pin_point}", target: '_blank' do %>
+    <%= image_tag("map.jpg", alt: "Logo", class: 'mb-4 map-image') %>
+  <% end %>
+  <div>
+    <h3>
+      <i class='fas fa-map-marker-alt'></i>
+      <%= @product.address %>
+    </h3>
+  </div>
+</div>
