@@ -261,7 +261,7 @@ input[type="radio"]{
             <%= f.button(
               t("spree.signup
               "),
-              class: 'button-primary button-primary--full-width field-radius',
+              class: 'button-primary button-primary--full-width field-radius sign-up-submit',
               name: :commit
              )
             %>
@@ -328,11 +328,7 @@ input[type="radio"]{
      var phoneRegex = /^(?:\+92)?[0-9]{10}$/;
       return phoneRegex.test(phone);
     }
-  });
-</script>
 
-<script>
-  $(document).ready(function() {
     $('input[name="slide_toggle"]').change(function() {
       if ($("#email").is(":checked")) {
         $("#email_field").hide().find('input').prop('disabled', true);
@@ -342,6 +338,24 @@ input[type="radio"]{
         $("#phone_number_field").hide().find('input').prop('disabled', true);
       }
     });
+
+    $('.sign-up-submit').on('click', function(){
+      var password = $('#password-field').val();
+      var confirmPassword = $('#confirm-field').val();
+      var errorMessage = $('#password-error-message');
+      var checked_radio = $("#email").is(":checked") ? 'phone' : 'email'
+      if (password === '' || confirmPassword === '') {
+        return false;
+      } else if (password !== confirmPassword) {
+        return false;
+      } else if ((checked_radio === 'email') && (!isValidEmail($('#user_email').val()))){
+        return false;
+      } else if ((checked_radio === 'phone') && (!isValidPhone($('#user_phone_number').val()))){
+        return false;
+      } else{
+        return true;
+      }
+    })
   });
 </script>
 

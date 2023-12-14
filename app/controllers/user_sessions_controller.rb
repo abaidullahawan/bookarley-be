@@ -26,14 +26,14 @@ class UserSessionsController < Devise::SessionsController
       if @is_invalid
         respond_to do |format|
           format.html do
-            flash.now[:error] = t('devise.failure.invalid')
+            flash.now[:error] = @flash_error
             # flash.now[:error] = t('devise.failure.email_invalid') if invalid_email?
             # flash.now[:error] = t('devise.failure.password_invalid') if invalid_password?
             render :new
           end
           format.js do
-            render json: { error: t('devise.failure.invalid') },
-              status: :unprocessable_entity
+            render json: { error: @flash_error },
+                   status: :unprocessable_entity
           end
         end
       end
@@ -70,7 +70,13 @@ class UserSessionsController < Devise::SessionsController
   def valid_credentials?
     login_param = sign_in_params[:login].downcase
     spree_user = Spree::User.find_by('lower(email) = ? OR phone_number = ?', login_param, login_param)
-    spree_user&.valid_password?(sign_in_params[:password])
+    valid_password = spree_user&.valid_password?(sign_in_params[:password])
+    if !spree_user.present?
+      @flash_error = 'Email or Phone Number not exist in database.'
+    elsif !valid_password
+      @flash_error = 'Invalid Password'
+    end
+    valid_password
   end
 
   def check_failed_attempts
