@@ -87,10 +87,10 @@ z-index: 1;
   </head>
   <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-turbo="false">
     <%= render 'layouts/header', taxons: @taxons, taxon: @taxon %>
-   <div class="flash-container">
-  <%= flash_messages %>
-  <span class="close-flash" onclick="closeFlashMessage(this)"><i class="fa fa-times"></i></span>
-</div>
+    <div class="flash-container">
+      <%= flash_messages %>
+      <span class="close-flash" onclick="closeFlashMessage(this)"><i class="fa fa-times"></i></span>
+    </div>
     <%# <%= render BreadcrumbsComponent.new(@taxon) %>
     <% if request.path.start_with?('/t') || request.path.start_with?('/products') %>
       <main style="background: #f3f2f0;">
