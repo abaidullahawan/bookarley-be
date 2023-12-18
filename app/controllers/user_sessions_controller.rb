@@ -85,7 +85,8 @@ class UserSessionsController < Devise::SessionsController
     if user && user.exceeded_login_attempts?
       sign_out user
       @is_invalid = false
-      flash.now[:error] = 'Too many login attempts. Please try again later after 1 hour.'
+      remaining_minutes = (((user.last_login_attempt_at+1.hours) - DateTime.current) / 1.minute).to_i
+      flash.now[:error] = "Too many failed login attempts. Please try again later after #{remaining_minutes} minutes."
 
       render :new
     end
@@ -93,12 +94,12 @@ class UserSessionsController < Devise::SessionsController
 
   def record_failed_login_attempt
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
-    user.update(last_login_attempt_at: Time.current) if user.present?
+    user.update_columns(last_login_attempt_at: Time.current) if user.present?
   end
-  
+
   def reset_failed_login_attempts
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
-    user.update(failed_attempts: 0) if user.present?
+    user.update_columns(failed_attempts: 0) if user.present?
   end
 
   # def invalid_email?
