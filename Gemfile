@@ -79,7 +79,7 @@ group :test do
 end
 gem "stringio", "3.0.7"
 
-gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.12"
+gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.13"
 
 gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.10"
 gem "responders"
@@ -113,3 +113,6 @@ end
 
 gem "solidus_stripe", "~> 5.a"
 gem 'paranoia'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
