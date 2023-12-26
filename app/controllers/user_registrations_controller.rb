@@ -8,9 +8,10 @@ class UserRegistrationsController < Devise::RegistrationsController
 
   def create
     build_resource(spree_user_params)
-    resource.skip_confirmation! if resource.phone_number.present? 
+    resource.otp_code = generate_pin
+    resource.otp_generated_at = DateTime.now
+    resource.skip_confirmation! if resource.phone_number.present?
     if resource.save
-      
       return redirect_to otp_path(resource_id: resource.id)
       # resource.confirm
       set_flash_message(:notice, :signed_up)
@@ -25,7 +26,7 @@ class UserRegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def otp 
+  def otp
     if params[:resource_id]
       @user = Spree::User.find(params[:resource_id])
     else
@@ -34,13 +35,16 @@ class UserRegistrationsController < Devise::RegistrationsController
   end
 
   def otp_verification
-    flash[:notice] = "You have to confirm your email verification account before continuing."
-    redirect_to root_path
+    @user = Spree::User.find_by_id(params[:user_id])
+    if @user.otp_code.eql?(params[:otp_values])
+      @user.confirm
+      flash[:notice] = 'You have successfully verified your account and now you can login.'
+      redirect_to login_path
+    else
+      flash[:alert] = 'Pin is incorrect'
+      redirect_to otp_path(resource_id: params[:user_id])
+    end
   end
-
-
-
-
 
   protected
 
@@ -59,14 +63,17 @@ class UserRegistrationsController < Devise::RegistrationsController
   end
 
   def redirect_logged_in_users
-    if spree_current_user.present?
-      flash[:notice] = "You are already signed in."
-      redirect_to root_path
-    end
+    return unless spree_current_user.present?
+
+    flash[:notice] = 'You are already signed in.'
+    redirect_to root_path
   end
 
- 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, [:phone_number])
+  end
+
+  def generate_pin
+    SecureRandom.hex(3).to_s
   end
 end

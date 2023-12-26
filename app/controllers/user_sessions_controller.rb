@@ -82,33 +82,26 @@ class UserSessionsController < Devise::SessionsController
   def check_failed_attempts
     @is_invalid = true
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
-    if user && user.exceeded_login_attempts?
+    if user && (user.failed_attempts_count.to_i >= 5) && (user.last_login_attempt_at.to_i >= 1.hour.ago.to_i)
       sign_out user
       @is_invalid = false
       remaining_minutes = (((user.last_login_attempt_at+1.hours) - DateTime.current) / 1.minute).to_i
       flash.now[:error] = "Too many failed login attempts. Please try again later after #{remaining_minutes} minutes."
-
       render :new
     end
   end
 
   def record_failed_login_attempt
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
-    user.update_columns(last_login_attempt_at: Time.current) if user.present?
+    if !(user && (user.failed_attempts_count.to_i >= 5) && (user.last_login_attempt_at.to_i >= 1.hour.ago.to_i))
+      user.update_columns(last_login_attempt_at: Time.current, failed_attempts_count: user.failed_attempts.to_i+1) if user.present?
+    end
   end
 
   def reset_failed_login_attempts
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
-    user.update_columns(failed_attempts: 0) if user.present?
+    if !(user && (user.failed_attempts_count.to_i >= 5) && (user.last_login_attempt_at.to_i >= 1.hour.ago.to_i))
+      user.update_columns(last_login_attempt_at: nil, failed_attempts_count: nil) if user.present?
+    end
   end
-
-  # def invalid_email?
-  #   spree_user = Spree::User.find_by(email: params[:spree_user][:email])
-  #   spree_user.nil? || !spree_user.valid_password?(params[:spree_user][:password])
-  # end
-
-  # def invalid_password?
-  #   spree_user = Spree::User.find_by(email: params[:spree_user][:email])
-  #   spree_user.present? && !spree_user.valid_password?(params[:spree_user][:password])
-  # end
 end
