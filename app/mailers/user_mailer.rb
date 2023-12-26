@@ -9,11 +9,9 @@ class UserMailer < Spree::BaseMailer
   end
 
   def confirmation_instructions(user, token, _opts = {})
-    @store = Spree::Store.default
-    hostname = Rails.env.development? ? 'localhost' : 'bookarley.com'
-    @confirmation_url = spree_user_confirmation_url(confirmation_token: token, host: hostname)
-    if user.email.present?
-      mail to: user.email, from: from_address(@store), subject: "#{@store.name} #{I18n.t(:subject, scope: [:devise, :mailer, :confirmation_instructions])}"
-    end
+    @user = user
+    return unless user.email.present?
+
+    mail to: user.email, from: 'info@bookarley.com', subject: 'Pin Verification code'
   end
 end
