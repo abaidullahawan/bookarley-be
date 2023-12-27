@@ -320,7 +320,7 @@ input[type="radio"]{
 
     // Function to validate email format
     function isValidEmail(email) {
-      var emailRegex = /^[A-Za-z0-9._%]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+      var emailRegex = /^[A-Za-z0-9._%]*[A-Za-z][A-Za-z0-9._%]*@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
       return emailRegex.test(email);
     }
      // Function to validate phone format
