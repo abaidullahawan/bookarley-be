@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     post '/signup', to: 'user_registrations#create', as: :registration
     get '/otp', to: 'user_registrations#otp', as: :otp
     post '/otp_verification', to: 'user_registrations#otp_verification', as: :otp_verification
+    get '/resend_otp', to: 'user_registrations#resend_otp', as: :resend_otp
     get '/password/recover', to: 'user_passwords#new', as: :recover_password
     post '/password/recover', to: 'user_passwords#create', as: :reset_password
     get '/password/change', to: 'user_passwords#edit', as: :edit_password

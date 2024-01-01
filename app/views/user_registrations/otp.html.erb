@@ -206,11 +206,14 @@ input[type="radio"]{
           <%= hidden_field_tag 'user_id', params[:resource_id] %>
           <%= hidden_field_tag "otp_values", "", id: 'otp_values' %>
           <% 6.times do |i| %>
-            <%= text_field_tag "otp_code[#{i}]", "", class: 'otp-input-field otp-input', maxlength: 1, data: { index: i } %>
+            <%= text_field_tag "otp_code[#{i}]", "", class: 'otp-input-field otp-input', maxlength: 1, data: { index: i }, required: true %>
           <% end %>
           </div>
         <div class="auth-form__input-wrapper d-flex justify-content-center">
-        <%= f.submit 'Submit', id: 'create_button', class: 'sign-up-submit button-primary w-50 field-radius d-none' %>
+          <%= f.submit 'Submit', id: 'create_button', class: 'sign-up-submit button-primary w-50 field-radius' %>
+        </div>
+        <div class='text-center'>
+          <%= link_to 'Resend OTP', resend_otp_path(user_id: params[:resource_id])%>
         </div>
       </div>
     <% end %>
@@ -226,12 +229,6 @@ input[type="radio"]{
       var currentValues = $('#otp_values').val().split('');
       currentValues[index] = value;
       $('#otp_values').val(currentValues.join(''));
-
-      if ($('#otp_values').val().length == 6) {
-        $('#create_button').removeClass('d-none');
-      } else {
-        $('#create_button').addClass('d-none');
-      }
 
       if (index < 5 && value !== '') {
         $('.otp-input-field[data-index=' + (index + 1) + ']').focus();
