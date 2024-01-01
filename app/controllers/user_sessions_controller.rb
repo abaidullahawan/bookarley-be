@@ -82,6 +82,10 @@ class UserSessionsController < Devise::SessionsController
   def check_failed_attempts
     @is_invalid = true
     user = Spree::User.find_by(email: params[:spree_user][:login]) || Spree::User.find_by(phone_number: params[:spree_user][:login])
+    if !user.confirmed?
+      flash.now[:error] = 'Please confirm your account first.'
+      redirect_to otp_path(resource_id: user.id)
+    end
     if user && (user.failed_attempts_count.to_i >= 5) && (user.last_login_attempt_at.to_i >= 1.hour.ago.to_i)
       sign_out user
       @is_invalid = false

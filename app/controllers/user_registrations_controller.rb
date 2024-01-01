@@ -29,6 +29,10 @@ class UserRegistrationsController < Devise::RegistrationsController
   def otp
     if params[:resource_id]
       @user = Spree::User.find(params[:resource_id])
+      if @user.confirmed?
+        flash[:alert] = 'Your account is already confimed.'
+        redirect_to root_path
+      end
     else
       redirect_to root_path
     end
@@ -37,13 +41,32 @@ class UserRegistrationsController < Devise::RegistrationsController
   def otp_verification
     @user = Spree::User.find_by_id(params[:user_id])
     if @user.otp_code.eql?(params[:otp_values])
-      @user.confirm
-      flash[:notice] = 'You have successfully verified your account and now you can login.'
-      redirect_to login_path
+      if @user.otp_generated_at.to_i <= 30.minute.ago.to_i
+        flash[:alert] = 'Your OTP has expired. Please request another OTP to verify your account.'
+        redirect_to otp_path(resource_id: params[:user_id])
+      else
+        @user.confirm
+        @user.update(otp_code: nil, otp_generated_at: nil)
+        flash[:notice] = 'You have successfully verified your account and now you can login.'
+        redirect_to login_path
+      end
     else
       flash[:alert] = 'Pin is incorrect'
       redirect_to otp_path(resource_id: params[:user_id])
     end
+  end
+
+  def resend_otp
+    @user = Spree::User.find_by_id(params[:user_id])
+    if @user.otp_generated_at.to_i >= 5.minute.ago.to_i
+      remaining_minutes = (((@user.otp_generated_at+5.minutes) - DateTime.current) / 1.minute).to_i
+      flash[:alert] = "Please retry after #{remaining_minutes} minutes"
+    else
+      @user.update(otp_code: generate_pin, otp_generated_at: DateTime.now)
+      UserMailer.confirmation_instructions(@user, 'token', nil).deliver_now
+      flash[:notice] = 'An OTP has been sent to your email.'
+    end
+    redirect_to otp_path(resource_id: params[:user_id])
   end
 
   protected
