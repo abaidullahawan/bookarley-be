@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "product_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -514,6 +521,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "country_iso", limit: 2
+    t.string "title"
     t.index ["country_iso"], name: "index_spree_prices_on_country_iso"
     t.index ["variant_id", "currency"], name: "index_spree_prices_on_variant_id_and_currency"
   end
@@ -545,7 +553,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer "position", default: 0
+    t.bigint "price_id"
     t.index ["position"], name: "index_spree_product_properties_on_position"
+    t.index ["price_id"], name: "index_spree_product_properties_on_price_id"
     t.index ["product_id"], name: "index_product_properties_on_product_id"
     t.index ["property_id"], name: "index_spree_product_properties_on_property_id"
   end
@@ -565,10 +575,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.boolean "promotionable", default: true
     t.string "meta_title"
     t.datetime "discontinue_on", precision: nil
+    t.boolean "is_approved"
+    t.boolean "is_rejected"
+    t.text "reason"
+    t.boolean "is_pending"
+    t.bigint "spree_user_id"
+    t.boolean "is_favourite"
+    t.text "address"
+    t.text "pin_point"
     t.index ["available_on"], name: "index_spree_products_on_available_on"
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at"
     t.index ["name"], name: "index_spree_products_on_name"
     t.index ["slug"], name: "index_spree_products_on_slug", unique: true
+    t.index ["spree_user_id"], name: "index_spree_products_on_spree_user_id"
   end
 
   create_table "spree_products_stores", id: false, force: :cascade do |t|
@@ -696,6 +715,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.string "presentation", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "field_type"
+    t.text "value"
   end
 
   create_table "spree_property_prototypes", id: :serial, force: :cascade do |t|
@@ -1164,6 +1185,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.index ["taxonomy_id"], name: "index_taxons_on_taxonomy_id"
   end
 
+  create_table "spree_templates", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "spree_unit_cancels", id: :serial, force: :cascade do |t|
     t.integer "inventory_unit_id", null: false
     t.string "reason"
@@ -1232,8 +1260,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
     t.string "location"
     t.text "bio"
     t.string "contact_information"
+    t.string "phone_number"
+    t.string "otp_code"
+    t.datetime "last_login_attempt_at"
+    t.integer "failed_attempts_count"
+    t.datetime "otp_generated_at"
     t.index ["deleted_at"], name: "index_spree_users_on_deleted_at"
-    t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["reset_password_token"], name: "index_spree_users_on_reset_password_token_solidus_auth_devise", unique: true
     t.index ["spree_api_key"], name: "index_spree_users_on_spree_api_key"
   end
@@ -1333,6 +1365,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_18_091955) do
   add_foreign_key "solidus_stripe_slug_entries", "spree_payment_methods", column: "payment_method_id"
   add_foreign_key "spree_blog_replies", "spree_blog_reviews", column: "spree_blog_reviews_id"
   add_foreign_key "spree_blog_reviews", "spree_blog_posts"
+  add_foreign_key "spree_products", "spree_users"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"
   add_foreign_key "spree_tax_rate_tax_categories", "spree_tax_categories", column: "tax_category_id"

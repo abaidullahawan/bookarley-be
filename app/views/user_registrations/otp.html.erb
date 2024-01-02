@@ -213,7 +213,7 @@ input[type="radio"]{
           <%= f.submit 'Submit', id: 'create_button', class: 'sign-up-submit button-primary w-50 field-radius' %>
         </div>
         <div class='text-center'>
-          <%= link_to 'Resend OTP', resend_otp_path(user_id: params[:resource_id])%>
+          <%= link_to 'Resend OTP', resend_otp_path(user_id: params[:resource_id]), class: 'btn btn-outline-secondary btn-lg field-radius'%>
         </div>
       </div>
     <% end %>
