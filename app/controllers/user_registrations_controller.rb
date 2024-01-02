@@ -60,7 +60,7 @@ class UserRegistrationsController < Devise::RegistrationsController
     @user = Spree::User.find_by_id(params[:user_id])
     if @user.otp_generated_at.to_i >= 5.minute.ago.to_i
       remaining_minutes = (((@user.otp_generated_at+5.minutes) - DateTime.current) / 1.minute).to_i
-      flash[:alert] = "Please retry after #{remaining_minutes} minutes"
+      flash[:alert] = "You can request to resend OTP in #{remaining_minutes} minutes"
     else
       @user.update(otp_code: generate_pin, otp_generated_at: DateTime.now)
       UserMailer.confirmation_instructions(@user, 'token', nil).deliver_now
