@@ -16,4 +16,6 @@ class HomeController < StoreController
   def term_of_services; end
 
   def privacy_policy; end
+
+  def flash_sale; end
 end

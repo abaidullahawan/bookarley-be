@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'services_term', to: 'home#term_of_services', as: :term_of_services
   get 'services_and_term', to: 'home#term_and_services', as: :term_and_services
   get 'privacy_policy', to: 'home#privacy_policy'
+  get 'flash_sale', to: 'home#flash_sale'
 
   resources :invitation_cards do
     member do
