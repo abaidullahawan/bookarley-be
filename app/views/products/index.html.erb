@@ -1,11 +1,55 @@
 <div class="products" style="padding: 4rem 0rem !important;">
-  <aside class="bg-white side-margin side-border h-100 mr-3">
-    <div class="pt-4 pb-2 px-3">
-      <span class="h5">Filter</span>
+  <aside class="bg-white side-margin side-border mr-3" style='width: 250px;'>
+    <div class="filters-container" style='background-color: #103577; color: white; text-center'>
+      <span>Filters</span>
     </div>
-    <hr style="color: #a39c9c;">
-    <%= render 'shared/navigation/taxonomies', taxon: @taxon %>
-    <%= render 'shared/search/filters', taxon: @taxon %>
+    <%= search_form_for @q, url: products_path, class: "admin-controls", method: "get" do |f| %>
+      <div class='collapse-button' data-id='keywords'>
+        <span>Search by Keywords</span>
+        <i class='fa fa-caret-down collapse-arrow' style='margin-top: 7px;'></i>
+      </div>
+      <div id='keywords' class="collapsible-content expanded my-4">
+        <div class='d-flex'>
+          <%= f.text_field :name_cont, placeholder: "eg. Hotel ....", class: 'ml-auto field-border price-fields', style: 'width: 180px;' %>
+          <%= f.submit "Go", class: 'btn btn-primary mr-auto', style: 'border-radius: 0px;' %>
+        </div>
+      </div>
+      <div class='collapse-button' data-id='categories' style='background-color: #d9d9d9;'>
+        <span>Categories</span>
+        <i class='fa fa-caret-down collapse-arrow' style='margin-top: 7px;'></i>
+      </div>
+      <div id='categories' class="collapsible-content expanded">
+        <% Spree::Taxonomy.all.each do |nomy| %>
+          <div class='collapse-button' data-id="Taxonomy-<%= nomy.id %>">
+            <span><%= nomy.name %></span>
+            <i class='fa fa-caret-down collapse-arrow' style='margin-top: 7px;'></i>
+          </div>
+          <div id="Taxonomy-<%= nomy.id %>" class="collapsible-content expanded">
+            <% nomy.taxons.each do |tax| %>
+              <div class='d-flex m-3'>
+                <% is_selected = tax.id.to_s.eql?(params.dig(:q, :classifications_taxon_id_eq).to_s) %>
+                <input type="radio" class="taxon-radio" id="<%= tax.name %>" name="tic" value="<%= tax.id %>" <%= "checked" if is_selected %>>
+                <label class='p-0 mb-0 ml-2' style='margin-left: 10px;' for="<%= tax.name %>"><%= tax.name %></label><br>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div class='collapse-button' data-id='prices'>
+        <span>Price Range</span>
+        <i class='fa fa-caret-down collapse-arrow' style='margin-top: 7px;'></i>
+      </div>
+      <div id='prices' class="collapsible-content expanded my-4">
+        <div class='d-flex'>
+          <%= f.number_field :prices_amount_gteq, placeholder: "Min Amount", class: 'price-fields field-border ml-auto' %>
+          <%= f.number_field :prices_amount_lteq, placeholder: "Max Amount", class: 'price-fields field-border' %>
+          <%= f.submit "Go", class: 'btn btn-primary mr-auto', style: 'border-radius: 0px;' %>
+        </div>
+      </div>
+      <%= f.hidden_field :classifications_taxon_id_eq %>
+    <% end %>
+    <%#= render 'shared/navigation/taxonomies', taxon: @taxon %>
+    <%#= render 'shared/search/filters', taxon: @taxon %>
   </aside>
   <% if params[:keywords].present? %>
     <% product_keywords = params[:keywords] %>
@@ -15,8 +59,30 @@
   <% end %>
   <section>
       <%= render 'products', products: @all_products, taxon: @taxon %>
-  </section> 
+  </section>
 
   <turbo-frame id="add_product_to_favorite">
   </turbo-frame>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('.taxon-radio').change(function() {
+      var selectedTaxonId = $(this).val();
+      $('#q_classifications_taxon_id_eq').val(selectedTaxonId)
+      $(this).closest('form').submit()
+    });
+    $('.collapse-button').on('click', function(){
+      var targetId = $(this).data('id');
+      var $target = $('#' + targetId);
+
+      $target.slideToggle();
+      var $caretIcon = $(this).find('.collapse-arrow');
+      if ($caretIcon.hasClass('fa-caret-down')) {
+          $caretIcon.removeClass('fa-caret-down').addClass('fa-caret-up');
+      } else {
+          $caretIcon.removeClass('fa-caret-up').addClass('fa-caret-down');
+      }
+    });
+  });
+</script>
