@@ -108,6 +108,11 @@
   <% end %>
 </div>
 
-<div class="mt-5 px-5">
-  <div class="paginate-text">Showing Total <span class="paginate-value"><%= products&.size %></span> Items</div>
+<div class="col-lg-12 digg_pagination my-2">
+  <div class="float-left page_info">
+    <%= page_entries_info @products %>
+  </div>
+  <div class="float-right">
+    <%= paginate @products, :container => false %>
+  </div>
 </div>

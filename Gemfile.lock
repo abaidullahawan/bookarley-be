@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/abaidullahawan/solidus.git
-  revision: 412a25503ff26ef0f75b51a083f1c05a345ae2f6
-  tag: v0.0.14
+  revision: 7209096827c5540e6a520652b101d0b6db408933
+  tag: v0.0.15
   specs:
     solidus (4.2.0.dev)
       solidus_api (= 4.2.0.dev)
@@ -589,6 +589,7 @@ DEPENDENCIES
   ffaker (~> 2.13)
   importmap-rails
   jbuilder
+  kaminari
   omniauth
   omniauth-facebook
   omniauth-google-oauth2

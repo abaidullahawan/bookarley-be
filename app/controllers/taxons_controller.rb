@@ -8,6 +8,7 @@ class TaxonsController < StoreController
   respond_to :html
 
   def show
+    redirect_to products_path(q: {classifications_taxon_id_eq: @taxon.id})
     @products = @taxon.products.includes(:variants_including_master, :taxons)
 
     respond_to do |format|

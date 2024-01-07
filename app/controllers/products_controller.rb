@@ -13,7 +13,8 @@ class ProductsController < StoreController
   end
 
   def index
-    @products = Spree::Product.where("is_pending IS NULL OR is_approved IS NULL OR is_rejected IS NULL OR is_approved = ?", true).all
+    @q = Spree::Product.where('is_pending IS NULL OR is_approved IS NULL OR is_rejected IS NULL OR is_approved = ?', true).ransack(params[:q])
+    @products = @q.result.page(params[:page]).per(50)
   end
 
   def show

@@ -48,6 +48,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 
 gem 'ransack'
+gem "kaminari"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -79,7 +80,7 @@ group :test do
 end
 gem "stringio", "3.0.7"
 
-gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.14"
+gem "solidus", github: 'abaidullahawan/solidus', tag: "v0.0.15"
 
 gem "solidus_auth_devise", github: 'abaidullahawan/solidus_auth_devise', tag: "v0.0.11"
 gem "responders"

@@ -5,7 +5,7 @@
     <% taxonomies.each do |taxonomy| %>
       <% cache [I18n.locale, taxonomy, taxon, max_level] do %>
         <%= render(TaxonsTreeComponent.new(
-          title: t('spree.browse_by_category', taxonomy: taxonomy.name),
+          title: t("spree.browse_by_category #{taxonomy.name}", taxonomy: taxonomy.name),
           root_taxon: taxonomy.root,
           current_taxon: taxon,
           max_level: max_level,
