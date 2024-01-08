@@ -4,11 +4,11 @@
       <span>Filters</span>
     </div>
     <%= search_form_for @q, url: products_path, class: "admin-controls", method: "get" do |f| %>
-      <div class='collapse-button' data-id='keywords'>
+      <div class='collapse-button' data-id='keywords-search'>
         <span>Search by Keywords</span>
         <i class='fa fa-caret-down collapse-arrow' style='margin-top: 7px;'></i>
       </div>
-      <div id='keywords' class="collapsible-content expanded my-4">
+      <div id='keywords-search' class="collapsible-content expanded my-4">
         <div class='d-flex'>
           <%= f.text_field :name_cont, placeholder: "eg. Hotel ....", class: 'ml-auto field-border price-fields', style: 'width: 180px;' %>
           <%= f.submit "Go", class: 'btn btn-primary mr-auto', style: 'border-radius: 0px;' %>
