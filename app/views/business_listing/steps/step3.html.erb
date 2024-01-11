@@ -1,0 +1,177 @@
+<style>
+  .contact-title{
+    font-size: 26px;
+    font-weight: 500;
+    color: #534f4f;
+  }
+
+  .contact-para{
+    font-size: 14px;
+    color: #0d0c0c;
+    font-weight: 200;
+    position: relative;
+  }
+
+  .contact-para:before{
+    content: "";
+    position: absolute;
+    bottom: -52%;
+    left: 5%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background-color: #f1a351;
+    border-radius: 3px;
+  }
+
+  .contact-para:after{
+    content: "";
+    position: absolute;
+    bottom: -52%;
+    left: 5%;
+    transform: translateX(30px);
+    width: 10px;
+    height: 3px;
+    background-color: #504f93;
+    border-radius: 3px;
+  }
+
+  .custom-font {
+    font-size: 13px;
+    color: #5b5656;
+  }
+
+  .back-next-btn{
+    padding: 10px 45px;
+    font-size: 15px;
+    border-radius: 30px;
+    
+  }
+
+  .btn-next{
+    background: #1d3969;
+    color: white;
+  }
+
+  .btn-next:hover{
+    background: white;
+    color: black;
+    border: 1px solid lightgray;
+  }
+
+  .btn-back:hover{
+    background: white;
+    color: black;
+    border: 1px solid lightgray;
+  }
+
+  .btn-back{
+    background: white;
+    color: #374c7f;
+    border: 1px solid #374c7f;
+  }
+
+  .social-field{
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0;
+  }
+
+  .fb-icon{
+    color: blue;
+    font-size: 18px;
+  }
+
+  .insta-icon{
+    color: purple;
+    font-size: 18px;
+  }
+</style>
+
+<div class="container-fluid m-0 h-100" style="background: aliceblue;">
+  <div class="card-registration">
+    <div class="row g-0">
+      <div class="col-xl-6 d-flex justify-content-center align-items-center">
+        <%= image_tag("seller_img.png", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; width: 68%;") %>
+      </div>
+      <div class="col-xl-6 bg-white">
+        <div class="container px-5" style="padding-top: 38px;">
+          <h1 class="contact-title">Contact Details</h1>
+          <p class="contact-para px-2">Stay in touch with ease</p>
+          <div class="container" style="margin-top: 50px;">
+              <%= form_for :business, url: business_listing_process_step3_path do |f| %>
+                <div class="row mb-5">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Full Name *</label>
+                      <%= f.text_field :owner_name, class:"form-control custom-font", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Profile Image</label>
+                        <%= f.file_field :image, class: 'form-control custom-font' %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Email *</label>
+                      <%= f.text_field :email, class:"form-control custom-font", required: true %>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Phone *</label>
+                      <%= f.text_field :phone, class:"form-control custom-font", required: true %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">City *</label>
+                        <%= f.select :city, ["Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"], { prompt: "Select a City" }, { class: "form-control custom-font", required: true } %>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font"><i class="fas fa-link" style="margin-right: 5px;"></i>Link Your Social Media</label>
+                  <div class="col-lg-12 mb-3">
+                    <div class="row form-group">
+                      <div class="col-lg-1 d-flex justify-content-center">
+                        <label for="social_media_1" class="uppercase text-sm text-gray-600 font-bold fb-icon"><i class="fab fa-facebook mt-3"></i></label>
+                      </div> 
+                      <div class="col-lg-11"> 
+                        <%= f.text_field :social_media, class:"form-control custom-font social-field", name: 'business[social_media][]' %>
+                      </div>  
+                    </div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="row form-group">
+                      <div class="col-lg-1 d-flex justify-content-center">
+                        <label for="social_media_1" class="uppercase text-sm text-gray-600 font-bold insta-icon"><i class="fab fa-instagram mt-3"></i></label>
+                      </div> 
+                      <div class="col-lg-11"> 
+                        <%= f.text_field :social_media, class:"form-control custom-font social-field", name: 'business[social_media][]' %>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+                  <div>
+                    <%= link_to "Back", root_path, class:"btn back-next-btn btn-back" %>
+                  </div>
+                  <div> 
+                    <%= f.submit "Next", class:"btn back-next-btn btn-next" %>
+                  </div>  
+                </div>
+              <% end %>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+</div>
