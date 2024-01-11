@@ -118,4 +118,32 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
+  namespace :business_listing do
+    get 'step1', to: 'steps#step1'
+    post 'process_step1', to: 'steps#process_step1'
+  
+    get 'step2', to: 'steps#step2'
+    post 'process_step2', to: 'steps#process_step2'
+  
+    get 'step3', to: 'steps#step3'
+    post 'process_step3', to: 'steps#process_step3'
+  
+    get 'step4', to: 'steps#step4'
+    post 'process_step4', to: 'steps#process_step4'
+  
+    get 'step5', to: 'steps#step5'
+    post 'process_step5', to: 'steps#process_step5'
+  
+    get 'step6', to: 'steps#step6'
+    post 'save_business_listing', to: 'steps#save_business_listing'
+  
+    get 'login_page', to: 'steps#login_page'
+    post 'process_login_page', to: 'steps#process_login_page'
+  
+    get 'signup_page', to: 'steps#signup_page'
+    post 'process_signup_page', to: 'steps#process_signup_page'
+  
+    get 'confirmation', to: 'steps#confirmation'
+  end
+
 end

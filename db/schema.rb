@@ -61,6 +61,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "businesses", force: :cascade do |t|
+    t.string "owner_name"
+    t.string "brand_name"
+    t.string "email"
+    t.string "phone"
+    t.string "website"
+    t.string "city"
+    t.string "category"
+    t.string "sub_category"
+    t.string "expertise"
+    t.string "amenties"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "social_media", default: [], array: true
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "product_id"
@@ -583,7 +600,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
     t.boolean "is_favourite"
     t.text "address"
     t.text "pin_point"
+    t.bigint "business_id"
+    t.string "category"
+    t.string "sub_category"
+    t.string "down_payment"
+    t.string "down_payment_type"
+    t.string "cancellation_policy"
+    t.integer "minimum_price"
+    t.integer "maximum_price"
+    t.integer "capacity"
+    t.string "staff", default: [], array: true
+    t.string "features", default: [], array: true
+    t.jsonb "feature_data", default: {}
     t.index ["available_on"], name: "index_spree_products_on_available_on"
+    t.index ["business_id"], name: "index_spree_products_on_business_id"
     t.index ["deleted_at"], name: "index_spree_products_on_deleted_at"
     t.index ["name"], name: "index_spree_products_on_name"
     t.index ["slug"], name: "index_spree_products_on_slug", unique: true
@@ -1365,6 +1395,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
   add_foreign_key "solidus_stripe_slug_entries", "spree_payment_methods", column: "payment_method_id"
   add_foreign_key "spree_blog_replies", "spree_blog_reviews", column: "spree_blog_reviews_id"
   add_foreign_key "spree_blog_reviews", "spree_blog_posts"
+  add_foreign_key "spree_products", "businesses"
   add_foreign_key "spree_products", "spree_users"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"

@@ -23,10 +23,10 @@
     <% results[:products].each do |product| %>
       <li class="autocomplete-results__item "
           data-search-target="result">
-          <%= link_to product_path(product), itemprop: 'url' do %>
+          <%= link_to products_path(q: {name_cont: product.name}), itemprop: 'url' do %>
             <%= render(ImageComponent.new(image: product.gallery.images.first, size: :small, itemprop: "image", class:"product-img", alt:"product-listing")) %>
           <% end %>
-        <%= link_to product.name, product_path(product) %>
+        <%= link_to product.name, products_path(q: {name_cont: product.name}) %>
       </li>
     <% end %>
 

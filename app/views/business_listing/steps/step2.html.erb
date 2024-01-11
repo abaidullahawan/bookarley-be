@@ -1,0 +1,139 @@
+<style>
+  .form_logo img{
+    height: auto;
+    width: 200px;
+    line-height: 100px;
+  }
+
+  .category-cards {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+  }
+
+  .category-card {
+    border: 0.5px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 40px;
+    width: 35%;
+    margin-bottom: 8px;
+    text-decoration: none;
+  }
+
+  .category-card:hover {
+    border-color: #374c7f; 
+  }
+
+  .category-card.selected {
+    border-color: #374c7f; 
+  }
+
+  .step1-heading{
+    font-weight: 200;
+    font-size: 28px;
+    color: gray;
+  }
+
+  .step1-margin{
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+  }
+
+  .back-next-btn{
+    padding: 10px 45px;
+    font-size: 15px;
+    border-radius: 30px;
+    
+  }
+
+  .btn-next{
+    background: #1d3969;
+    color: white;
+  }
+
+  .btn-next:hover{
+    background: white;
+    color: black;
+    border: 1px solid lightgray;
+  }
+
+  .btn-back:hover{
+    background: white;
+    color: black;
+    border: 1px solid lightgray;
+  }
+
+  .btn-back{
+    background: white;
+    color: #374c7f;
+    border: 1px solid #374c7f;
+  }
+
+  .ctg-name{
+    font-size: 18px;
+    color: #736c6c;
+    margin-left: 10px;
+    font-weight: 600;
+  }
+
+  .bk-text{
+    color: darkblue;
+    font-weight: bold;
+  }
+
+  .ls-text{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 22px;
+  }
+</style>
+
+<div class="container-fluid m-0 h-100" style="background: aliceblue;">
+  <div class="card-registration">
+    <div class="row g-0">
+      <div class="col-xl-6 d-flex justify-content-center align-items-center">
+        <%= image_tag("seller_img.png", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; width: 68%;") %>
+      </div>
+      <div class="col-xl-6 bg-white">
+      <div class="container">
+        <div class="step1-margin">
+          <h1 class="step1-heading text-center">Experience More with <span class="bk-text">Bookarley!</span></h1>
+        </div>
+        <div class="form_logo text-center pb-4">
+          <%= image_tag("exp-1.jpg", alt:"logo") %>
+        </div>
+        <div class="category-cards d-flex justify-content-center px-5">
+          <div class="category-div" style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+            <a href="<%= login_path %>" class="category-card card shadow-sm d-flex pl-5 mb-5">
+              <div class="d-flex align-items-center px-4 py-1">
+                <%= image_tag("login-icon.png", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; width: 25%;") %>
+                <div class="ctg-name">
+                  Login
+                </div>
+              </div>
+            </a>
+            <a href="<%= signup_path %>" class="category-card card shadow-sm d-flex pl-5">
+              <div class="d-flex align-items-center px-4 py-1">
+                <%= image_tag("login-icon.png", style:"border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; width: 25%;") %>
+                <div class="ctg-name">
+                  Signup
+                </div>
+              </div>
+            </a>
+          </div>  
+        </div>
+        <div  class="px-5" style="display: flex; justify-content: space-between; margin-top: 100px;">
+          <div>
+            <%= link_to "Back", root_path, class:"btn back-next-btn btn-back" %>
+          </div>
+          <div> 
+            <%= link_to "Skip & Continue", business_listing_step3_path, class:"btn back-next-btn btn-next" %>
+          </div>  
+        </div>
+      </div>  
+      </div>  
+    </div>
+  </div>
+</div>

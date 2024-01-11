@@ -323,7 +323,10 @@
               <% end %>
             </div>
         </div>
-       
+
+       <div class="navbar-nav" style="margin-right: 26px">
+          <%= link_to "+ Add Post", business_listing_step1_path, class: "px-5 py-3 seller-btn btn btn-lg" %>
+        </div>
 
         <div class="navbar-nav" style="margin-right: 26px">
           <% if !spree_current_user || !spree_current_user.admin? %>
@@ -333,7 +336,7 @@
                 Update Account
               <% else %>
                 Become a Seller
-              <% end %>  
+              <% end %>
               </a>
             <%else%>
               <%= link_to "Become a Seller", login_path, class: "px-5 py-3 seller-btn btn btn-lg" %>
