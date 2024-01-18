@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_16_140403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -1295,6 +1295,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_134440) do
     t.datetime "last_login_attempt_at"
     t.integer "failed_attempts_count"
     t.datetime "otp_generated_at"
+    t.string "provider"
+    t.string "uid"
     t.index ["deleted_at"], name: "index_spree_users_on_deleted_at"
     t.index ["reset_password_token"], name: "index_spree_users_on_reset_password_token_solidus_auth_devise", unique: true
     t.index ["spree_api_key"], name: "index_spree_users_on_spree_api_key"
