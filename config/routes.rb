@@ -30,9 +30,10 @@ Rails.application.routes.draw do
       sessions: 'user_sessions',
       registrations: 'user_registrations',
       passwords: 'user_passwords',
-      confirmations: 'user_confirmations'
+      confirmations: 'user_confirmations',
+      omniauth_callbacks: 'user/omniauth_callbacks'
     },
-    skip: [:unlocks, :omniauth_callbacks],
+    skip: [:unlocks],
     path_names: { sign_out: 'logout' }
   })
 

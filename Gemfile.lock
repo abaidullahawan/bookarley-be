@@ -55,8 +55,8 @@ GIT
 
 GIT
   remote: https://github.com/abaidullahawan/solidus_auth_devise.git
-  revision: 07f72e4f5cd85967d6e616d9575a78ad04d2d516
-  tag: v0.0.11
+  revision: ce696f9ebdb35a7b7cf6acffa7b0618fd667534f
+  tag: v0.0.12
   specs:
     solidus_auth_devise (2.5.8)
       deface (~> 1.0)
@@ -367,6 +367,9 @@ GEM
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
       omniauth (~> 2.0)
+    omniauth-rails_csrf_protection (1.0.1)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.23.0)
     paranoia (2.6.2)
@@ -593,6 +596,7 @@ DEPENDENCIES
   omniauth
   omniauth-facebook
   omniauth-google-oauth2
+  omniauth-rails_csrf_protection
   paranoia
   pg (~> 1.1)
   puma (~> 5.0)

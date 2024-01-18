@@ -104,15 +104,14 @@
         </div>
         <div class="social_login">
             <div class="">
-                <a href="#" type="button" class="social_box fb">
-                    <span class="icon"><i class="fab fa-facebook"></i></span>
-                    <span class="icon_title">Connect with Facebook</span>
-                </a>
-
-                <a href="#" type="button" class="social_box google">
-                    <span class="icon"><i class="fab fa-google-plus"></i></span>
-                    <span class="icon_title">Connect with Google</span>
-                </a>
+              <%= button_to spree_user_facebook_omniauth_authorize_path, method: :post, class: "social_box fb", type: "button", style: 'width: 100%; border: none;' do %>
+                <span class="icon"><i class="fab fa-facebook"></i></span>
+                <span class="icon_title">Connect with Facebook</span>
+              <% end %>
+              <%= button_to spree_user_google_oauth2_omniauth_authorize_path, method: :post, class: "social_box google", type: "button", style: 'width: 100%; border: none;' do %>
+                <span class="icon"><i class="fab fa-google-plus"></i></span>
+                <span class="icon_title">Connect with Google</span>
+              <% end %>
             </div>
 
             <div class="centeredText">
