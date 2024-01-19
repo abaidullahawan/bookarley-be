@@ -55,8 +55,8 @@ GIT
 
 GIT
   remote: https://github.com/abaidullahawan/solidus_auth_devise.git
-  revision: ce696f9ebdb35a7b7cf6acffa7b0618fd667534f
-  tag: v0.0.12
+  revision: b94e9d68c069649bf4f4954e3ce9f2df95b378e8
+  tag: v0.0.13
   specs:
     solidus_auth_devise (2.5.8)
       deface (~> 1.0)
