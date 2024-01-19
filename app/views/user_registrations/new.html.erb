@@ -186,6 +186,16 @@ input[type="radio"]{
   font-size: 12px;
   display: none; /* Initially hide error messages */
 }
+
+.iti--allow-dropdown{
+  width: 100%;
+}
+.iti__country-name{
+  color: black;
+}
+.iti__active .iti__country-name{
+  color: #103577 !important;
+}
 </style>
 
 <article class="auth-main-container row" style="background: aliceblue;" id="new-customer">
@@ -274,6 +284,47 @@ input[type="radio"]{
 </article>
 
 
+<%# <script>
+  const input = document.querySelector("#user_phone_number");
+  window.intlTelInput(input, {
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+    initialCountry: "pk"
+  });
+</script> %>
+
+<script>
+  const input = document.querySelector("#user_phone_number");
+  
+  window.intlTelInput(input, {
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+    initialCountry: "pk", // Set the ISO 3166-1 alpha-2 country code for Pakistan
+    separateDialCode: true, // Display the country code separately
+    
+    // Callback when the country is changed
+    onCountryChange: function (e, countryData) {
+      debugger
+      if (!e.currentTarget.value) {
+        // Reset the validation status and error message when the country changes
+        e.currentTarget.setCustomValidity('');
+      }
+    },
+    
+    // Callback when the input is validated
+    onPhoneNumberValid: function (e, number, countryData) {
+      debugger
+      // Reset the validation status and error message
+      e.currentTarget.setCustomValidity('');
+    },
+    
+    // Callback when the input is invalid
+    onPhoneNumberInvalid: function (e, number, countryData) {
+      debugger
+      // Set a custom error message
+      e.currentTarget.setCustomValidity('Please enter a valid phone number.');
+    }
+  });
+</script>
+
 
 <script>
   $(document).ready(function() {
@@ -302,21 +353,20 @@ input[type="radio"]{
       }
     });
 
-    phoneInput.on('input', function() {
-      // Check if the entered email is valid
-      if (isValidPhone(phoneInput.val())) {
-        // Hide the error message if the email is valid
-        errorMessagePhone.hide();
-      } else {
-        // Show the error message if the email is invalid and input length is more than 1
-        if (phoneInput.val().length > 1) {
-          errorMessagePhone.show();
-        } else {
-          errorMessagePhone.hide();
-        }
-      }
-      
-    })
+    // phoneInput.on('input', function() {
+    //   // Check if the entered email is valid
+    //   if (isValidPhone(phoneInput.val())) {
+    //     // Hide the error message if the email is valid
+    //     errorMessagePhone.hide();
+    //   } else {
+    //     // Show the error message if the email is invalid and input length is more than 1
+    //     if (phoneInput.val().length > 1) {
+    //       errorMessagePhone.show();
+    //     } else {
+    //       errorMessagePhone.hide();
+    //     }
+    //   }
+    // })
 
     // Function to validate email format
     function isValidEmail(email) {
