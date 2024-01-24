@@ -103,6 +103,9 @@ z-index: 1;
       </main>
     <% end %>
     <%= render 'layouts/footer' %>
+    <% if get_session_expiry_time %>
+      <%= render partial: 'layouts/session_expiry_modal' %>
+    <% end %>
   </body>
 
 
