@@ -7,6 +7,7 @@ class UserSessionsController < Devise::SessionsController
   before_action :check_failed_attempts, only: [:create]
 
   def create
+    session.delete(:ignore_modal)
     if valid_credentials?
       # User provided valid credentials
       authenticate_spree_user!

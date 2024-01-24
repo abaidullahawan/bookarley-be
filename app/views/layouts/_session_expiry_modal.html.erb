@@ -1,0 +1,77 @@
+<style>
+  .action_btns {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .action_btns button {
+    font-size: 1.4em;
+    width: 100px;
+  }
+
+  .login-modal{
+    --bs-modal-width: 350px !important;
+  }
+  .login-text-style{
+    font-size: 15px; 
+    font-weight: 500; 
+    padding: 2px;
+    color: white;
+  }
+  .expiry_text{
+    color: black;
+    font-size: 15px;
+    padding: 20px 50px;
+    font-weight: bold;
+  }
+</style>
+
+<div class="modal login-modal fade" id="sessionExpiry" tabindex="-1" aria-labelledby="sessionExpiryLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #ff3333;">
+        <h5 class="modal-title login-text-style" id="sessionExpiryLabel">Session Alert!</h5>
+        <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center py-3">
+          <%= image_tag("bookarley-logo.png", alt: "Logo", width: 80) %>
+        </div>
+        <div class='expiry_text'>
+          Your session will expire in 5 minutes. Do you want to extend it to 30 minutes? If yes, then click on the 'Extend' button.
+        </div>
+
+        <div class="action_btns">
+          <button class='extend-button btn btn-outline-success' data-status= 'true' >Extend</button>
+          <button class='extend-button btn btn-outline-danger' data-status= 'false' >Ignore</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if !session[:ignore_modal].present? %>
+  <script>
+    $(document).ready(function(){
+      $('#sessionExpiry').modal('show')
+    })
+  </script>
+<% end %>
+<script>
+  $(document).ready(function(){
+    $('.extend-button').on('click', function(){
+      debugger
+      $.ajax({
+        url: '/session_expiry_extend',
+        type: 'GET',
+        data: { extend: $(this).data('status') },
+        dataType: 'script',
+        success: function (result) {
+          $('#sessionExpiry').modal('hide')
+        },
+        error: function (){
+          window.alert("something wrong!");
+        }
+      });
+    })
+  })
+</script>

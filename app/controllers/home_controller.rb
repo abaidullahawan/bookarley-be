@@ -18,4 +18,12 @@ class HomeController < StoreController
   def privacy_policy; end
 
   def flash_sale; end
+
+  def session_expiry_extend
+    if params[:extend].eql?('false')
+      session[:ignore_modal] = true
+    else
+      spree_current_user.update(current_sign_in_at: spree_current_user.current_sign_in_at+30.minutes)
+    end
+  end
 end
