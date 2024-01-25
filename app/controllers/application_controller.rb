@@ -12,11 +12,11 @@ class ApplicationController < ActionController::Base
 
   def get_session_expiry_time
     return false unless spree_current_user&.present?
-  
+
     if spree_current_user.remember_created_at.nil?
-      return spree_current_user.current_sign_in_at < Time.zone.now + 5.minutes
+      return spree_current_user.current_sign_in_at + 30.minutes < Time.zone.now + 5.minutes
     end
-  
+
     false
   end
 end
