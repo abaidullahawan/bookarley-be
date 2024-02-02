@@ -318,7 +318,7 @@ a.taxonomy-links {
                   <div class="products-slider">
                     <% displayed_count = 0 %>
                     <% taxonomy&.taxons&.each do |taxon| %>
-                      <% taxon&.products&.each do |product| %>
+                      <% taxon&.products.where(is_approved: true)&.each do |product| %>
                         <% unless displayed_products.include?(product.id) %>
                           <% displayed_products.add(product.id) %>
                           <% displayed_count += 1 %>

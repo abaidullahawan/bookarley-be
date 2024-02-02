@@ -26,7 +26,11 @@
       <div class='row inside-container <%= index == 0 ? "" : "collapsed" %>'>
         <% p.product_properties.each do |pp| %>
           <div class='row col-12 col-lg-6'>
-            <div class='col-1'><%= image_tag pp.property.logo.attachment.url, width: '20px', height: '20px' %></div>
+            <div class='col-1'>
+              <% if pp&.property&.logo&.attachment.present? %>
+                <%= image_tag pp&.property&.logo&.attachment&.url, width: '20px', height: '20px' %>
+              <% end %>
+            </div>
             <div class='col-11'>
               <h2>
                 <%= pp.property.name %>

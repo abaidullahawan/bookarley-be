@@ -2,11 +2,15 @@
   <div>
     <h1 class='ml-0 mb-4 mt-2'>Details</h1>
     <div class='row'>
-      <% @product.properties.where(field_type: 'Details').each do |f| %>
-        <% f.product_properties.each do |pp| %>
+      <% @product.product_properties.each do |pp| %>
+        <% if pp.property.field_type.eql?('Details') %>
           <div class='col-lg-6 col-12 my-3'>
             <div class='row'>
-              <div class='col-1'><%= image_tag pp.property.logo.attachment.url, width: '20px', height: '20px' %></div>
+              <div class='col-1'>
+                <% if pp&.property&.logo&.attachment.present? %>
+                  <%= image_tag pp&.property&.logo&.attachment&.url, width: '20px', height: '20px' %>
+                <% end %>
+              </div>
               <div class='col-11'>
                 <h2>
                   <%= pp.property.name %>

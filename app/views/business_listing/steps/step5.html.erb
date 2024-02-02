@@ -189,6 +189,27 @@
     font-size: 1.7rem;
   }
 
+  .card-registration .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .card-registration .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
+
 </style>
 
 <div class="container-fluid m-0 h-100" style="background: aliceblue;">
@@ -203,321 +224,50 @@
           <p class="contact-para px-2">Describe your best product here</p>
           <div class="container" style="margin-top: 50px;">
               <%= form_for :product, url: business_listing_process_step5_path do |f| %>
-                <div class="row mb-5">
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Minimum Price *</label>
-                        <input name="fullname" class="form-control custom-font" type="text" placeholder="">
+                <div id="additionalPackagesContainer">
+                  <div class="row mb-5">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Package Title *</label>
+                        <%= f.text_field :package_title, class: "form-control custom-font", required: true %>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Maximum Price *</label>
-                      <%= f.text_field :capacity, class:"form-control custom-font" %>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-5">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Capacity</label>
-                        <input name="fullname" class="form-control custom-font" type="text" placeholder="">
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-5">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Staff *</label>
-                      <div class="category-cards">
-                        <div class="category-card card shadow-sm d-flex pl-5" data-value="<%= "Male" %>">
-                          <div class="d-flex align-items-center px-4 py-2">
-                            <div>
-                              <i class="fas fa-mars male-icon"></i>
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center ctg-name">
-                              <%= "Male" %>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="category-card card shadow-sm d-flex pl-5" data-value="<%= "Female" %>">
-                          <div class="d-flex align-items-center px-4 py-2">
-                            <div>
-                              <i class="fas fa-venus female-icon"></i>
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center ctg-name">
-                              <%= "Female" %>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="category-card card shadow-sm d-flex pl-5" data-value="<%= "Other" %>">
-                          <div class="d-flex align-items-center px-4 py-2">
-                            <div>
-                              <i class="fa fa-transgender non-binary-icon"></i>
-                            </div>
-                            <div class="d-flex justify-content-center align-items-center ctg-name">
-                              <%= "Other" %>
-                            </div>
-                          </div>
-                        </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Package Price *</label>
+                        <%= f.number_field :package_price, class: "form-control custom-font", required: true %>
                       </div>
                     </div>
                   </div>
-                </div>
-                <%= f.hidden_field :staff, id: 'staff-field' %>
-                
-                <div class="row mb-5">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                        <button type="button" class="feature-btn" data-bs-toggle="modal" data-bs-target="#iconModal">
-                          <i class="fa fa-plus-circle" style="margin-right: 5px;"></i>Add some features
-                        </button>
-                        <div id="selectedCardsContainer">
+                  <div class="row mb-5" id="extraFieldsContainer">
+                    <% @extra_fields.each_with_index do |ef, i| %>
+                      <div class="col-lg-6 mt-3">
+                        <div class="form-group">
+                          <label for="<%= "extra_field_#{i}" %>" class="uppercase text-sm text-gray-600 font-bold custom-font"><%= ef.name %></label>
+                          <%= text_field_tag "extra_fields[][name]", ef.name, class: "form-control custom-font d-none" %>
+                          <%= text_field_tag "extra_fields[][id]", ef.id, class: "form-control custom-font d-none" %>
+                          <%= text_field_tag "extra_fields[][value]", nil, class: "form-control custom-font", id: "extra_field_#{i}", required: true %>
                         </div>
-                        <div class="modal fade" id="iconModal" tabindex="-1" role="dialog" aria-labelledby="iconModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header text-white" style="background: #1e396b;">
-                                <h4 class="modal-title" id="iconModalLabel">Select some features of your choice</h4>
-                                <button type="button" class="close md-close-btn" data-bs-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body py-5">                              
-                                <div class="feature-cards">
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-utensils feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Catering Services</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-utensil-spoon feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Buffet System</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-car feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Parking</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-snowflake feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Air Conditioning</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-music feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">DJ System</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-drum feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Dance Floor</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-paint-brush feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Makeup Room</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-shield-alt feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">COVID Compliance</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-wifi feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">WIFI</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-couch feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Reception Area</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-heart feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Ceremony Area</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-clock feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Time Flexibility</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-child feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Play Ground</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-user-shield feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Security</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-bus feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Transportation</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-wheelchair feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Accessibility</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-calendar-check feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Event Coordinator</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-broom feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Cleanup Service</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-restroom feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Restrooms</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="feature-card card shadow-sm d-flex pl-5">
-                                    <div class="d-flex align-items-center px-4 py-2">
-                                      <div>
-                                        <i class="fas fa-umbrella feature-icon"></i>
-                                      </div>
-                                      <div class="d-flex justify-content-center align-items-center ctg-name">
-                                        <h5 class="feature-title">Backup Plan</h5>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary btn-lg" id="saveIcons">Save</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
+                      </div>
+                    <% end %>
                   </div>
                 </div>
-                <%= f.hidden_field :feature_data, id: "product_feature_data" %>
-                <div class="row mb-5">
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Description</label>
-                        <%= f.text_area :description, class:"form-control custom-font" %>
-                    </div>
-                  </div>
+                <div class="field">
+                  <%= f.label :images, "Select images:" %>
+                  <%= f.file_field :images, accept: "image/*", multiple: true, required: true %>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 100px;">
                   <div>
-                    <%= link_to "Back", root_path, class:"btn back-next-btn btn-back" %>
+                    <%= link_to "Back", business_listing_step4_path(back: true), class:"btn back-next-btn btn-back" %>
                   </div>
-                  <div> 
-                    <%= f.submit "Next", class:"btn back-next-btn btn-next" %>
-                  </div>  
+                  <div>
+                    <%= f.submit "Create", class:"btn back-next-btn btn-next" %>
+                  </div>
                 </div>
               <% end %>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 </div>
@@ -591,10 +341,3 @@
     }
   });
 </script>
-
-
-
-
-
-
-

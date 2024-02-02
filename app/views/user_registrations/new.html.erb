@@ -302,7 +302,6 @@ input[type="radio"]{
     
     // Callback when the country is changed
     onCountryChange: function (e, countryData) {
-      debugger
       if (!e.currentTarget.value) {
         // Reset the validation status and error message when the country changes
         e.currentTarget.setCustomValidity('');
@@ -311,14 +310,12 @@ input[type="radio"]{
     
     // Callback when the input is validated
     onPhoneNumberValid: function (e, number, countryData) {
-      debugger
       // Reset the validation status and error message
       e.currentTarget.setCustomValidity('');
     },
     
     // Callback when the input is invalid
     onPhoneNumberInvalid: function (e, number, countryData) {
-      debugger
       // Set a custom error message
       e.currentTarget.setCustomValidity('Please enter a valid phone number.');
     }
