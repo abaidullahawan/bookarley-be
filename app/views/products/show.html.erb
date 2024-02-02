@@ -271,7 +271,7 @@
 
   <% @similar_products = @product.taxons.where(parent_id: nil).first %>
   <div class="products-grid">
-  <% @similar_products&.products&.each do |similar_product| %>
+  <% @similar_products&.products.where(is_approved: true)&.each do |similar_product| %>
 <div class="card" style="border-radius: 15px;">
     <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
       data-mdb-ripple-color="light">

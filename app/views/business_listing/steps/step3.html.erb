@@ -86,6 +86,26 @@
     color: purple;
     font-size: 18px;
   }
+  .card-registration .form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .card-registration .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+  }
 </style>
 
 <div class="container-fluid m-0 h-100" style="background: aliceblue;">
@@ -104,13 +124,13 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Full Name *</label>
-                      <%= f.text_field :owner_name, class:"form-control custom-font", required: true %>
+                      <%= f.text_field :owner_name, value: session[:business_owner_name], class:"form-control custom-font", required: true %>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Profile Image</label>
-                        <%= f.file_field :image, class: 'form-control custom-font' %>
+                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">City *</label>
+                        <%= f.select :city, options_for_select(["Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"], session[:business_city]), { prompt: "Select a City" }, { class: "form-control custom-font", required: true } %>
                     </div>
                   </div>
                 </div>
@@ -118,60 +138,40 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Email *</label>
-                      <%= f.text_field :email, class:"form-control custom-font", required: true %>
+                      <%= f.text_field :email, value: session[:business_email], class:"form-control custom-font", required: true %>
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Phone *</label>
-                      <%= f.text_field :phone, class:"form-control custom-font", required: true %>
+                      <%= f.text_field :phone, value: session[:business_phone], class:"form-control custom-font", required: true %>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-5">
                   <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">City *</label>
-                        <%= f.select :city, ["Karachi", "Lahore", "Islamabad", "Rawalpindi", "Faisalabad"], { prompt: "Select a City" }, { class: "form-control custom-font", required: true } %>
+                      <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font">Store Name *</label>
+                      <%= f.text_field :brand_name, value: session[:business_brand_name], class:"form-control custom-font", required: true %>
                     </div>
                   </div>
                 </div>
-                <div class="row mb-5">
-                  <label for="fullname" class="uppercase text-sm text-gray-600 font-bold custom-font"><i class="fas fa-link" style="margin-right: 5px;"></i>Link Your Social Media</label>
-                  <div class="col-lg-12 mb-3">
-                    <div class="row form-group">
-                      <div class="col-lg-1 d-flex justify-content-center">
-                        <label for="social_media_1" class="uppercase text-sm text-gray-600 font-bold fb-icon"><i class="fab fa-facebook mt-3"></i></label>
-                      </div> 
-                      <div class="col-lg-11"> 
-                        <%= f.text_field :social_media, class:"form-control custom-font social-field", name: 'business[social_media][]' %>
-                      </div>  
-                    </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="row form-group">
-                      <div class="col-lg-1 d-flex justify-content-center">
-                        <label for="social_media_1" class="uppercase text-sm text-gray-600 font-bold insta-icon"><i class="fab fa-instagram mt-3"></i></label>
-                      </div> 
-                      <div class="col-lg-11"> 
-                        <%= f.text_field :social_media, class:"form-control custom-font social-field", name: 'business[social_media][]' %>
-                      </div>  
-                    </div>
-                  </div>
-                </div>
-                
                 <div style="display: flex; justify-content: space-between; margin-top: 50px;">
                   <div>
-                    <%= link_to "Back", root_path, class:"btn back-next-btn btn-back" %>
+                    <% if spree_current_user.present? %>
+                      <%= link_to "Back", business_listing_step1_path(back: true), class:"btn back-next-btn btn-back" %>
+                    <% else %>
+                      <%= link_to "Back", business_listing_step2_path(back: true), class:"btn back-next-btn btn-back" %>
+                    <% end %>
                   </div>
-                  <div> 
+                  <div>
                     <%= f.submit "Next", class:"btn back-next-btn btn-next" %>
-                  </div>  
+                  </div>
                 </div>
               <% end %>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 </div>
