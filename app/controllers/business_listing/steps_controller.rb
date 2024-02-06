@@ -74,10 +74,10 @@ module BusinessListing
         end
       end
       Spree::Classification.create(product_id: @product.id, taxon_id: session[:product_sub_category_id])
-      session[:extra_fields].each_with_index do |ef, index|
+      session[:extra_fields]&.each_with_index do |ef, index|
         Spree::ProductProperty.create(value: ef['value'], property_id: ef['id'], position: index, product_id: @product.id)
       end
-      params[:extra_fields].each_with_index do |ef, index|
+      params[:extra_fields]&.each_with_index do |ef, index|
         Spree::ProductProperty.create(value: ef['value'], property_id: ef['id'], position: index, product_id: @product.id, price_id: @product&.prices&.first&.id)
       end
       destroy_sessions
@@ -86,7 +86,6 @@ module BusinessListing
 
     def step6
       @product = Spree::Product.find_by_id(params[:resource])
-      @business = Business.find_by_id(@product.business_id)
     end
 
     def save_business_listing

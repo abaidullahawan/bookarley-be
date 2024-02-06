@@ -230,25 +230,25 @@
                 Name:
               </h4>
               <h4 class='col-8'>
-                <%= @business.owner_name %>
+                <%= @product.business&.owner_name %>
               </h4>
               <h4 class='col-4'>
                 Email:
               </h4>
               <h4 class='col-8'>
-                <%= @business.email %>
+                <%= @product.business&.email %>
               </h4>
               <h4 class='col-4'>
                 Phone:
               </h4>
               <h4 class='col-8'>
-                <%= @business.phone %>
+                <%= @product.business&.phone %>
               </h4>
               <h4 class='col-4'>
                 City:
               </h4>
               <h4 class='col-8'>
-                <%= @business.city %>
+                <%= @product.business&.city %>
               </h4>
             </div>
             <h2 class='mt-4 mb-4'>Product Information</h2>
