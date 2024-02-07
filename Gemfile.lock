@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/abaidullahawan/solidus.git
-  revision: fb96ac7b5bb1482b29eb0099c78974513e73fdf7
-  tag: v0.0.19
+  revision: c9afdf9194f664a70cbb3660da38d98357b234ba
+  tag: v0.0.20
   specs:
     solidus (4.2.0.dev)
       solidus_api (= 4.2.0.dev)

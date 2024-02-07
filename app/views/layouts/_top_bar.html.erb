@@ -552,7 +552,7 @@
                   <hr style="color: #b5b1b1;">
                   <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
                   <% if spree_current_user.admin? %>
-                    <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                    <a href="/admin/dashboards/home" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
                     <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
                     <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
                   <% end %>
@@ -625,7 +625,7 @@
               <hr style="color: #b5b1b1;">
               <%= link_to raw('<i class="fas fa-user profile-icons"></i> ' + I18n.t('my_account')), account_path, class: 'text-dark my-3', style: "font-size: 1.1em;" %>
               <% if spree_current_user.admin? %>
-                <a href="/admin/orders" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
+                <a href="/admin/dashboards/home" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fas fa-cogs profile-icons"></i> Admin Dashboard </a>
                 <a href="<%= sliders_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-newspaper profile-icons"></i> Manage Sliders </a>
                 <a href="<%= blog_posts_path %>" class= 'text-dark mb-3', style= "font-size: 1.1em;"> <i class="fa fa-comments profile-icons"></i> Blog Posts </a>
               <% end %>
