@@ -269,14 +269,14 @@
 
 <div class="products similar_products">
 
-  <% @similar_products = @product.taxons.where(parent_id: nil).first %>
+  <% @similar_products = @product&.taxons&.where(parent_id: nil)&.first %>
   <div class="products-grid">
   <% @similar_products&.products.where(is_approved: true)&.each do |similar_product| %>
 <div class="card" style="border-radius: 15px;">
     <div class="bg-image hover-overlay ripple ripple-surface ripple-surface-light"
       data-mdb-ripple-color="light">
         <%= link_to product_path(similar_product), itemprop: 'url' do %>
-           <%= render(ImageComponent.new(image: similar_product.gallery.images.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"img")) %>
+           <%= render(ImageComponent.new(image: similar_product&.gallery&.images&.first, size: :small, itemprop: "image", style:"border-top-left-radius: 15px; border-top-right-radius: 15px;", class:"similar_product_img", alt:"img")) %>
         <% end %>
       <a href="#!">
         <div class="mask"></div>
